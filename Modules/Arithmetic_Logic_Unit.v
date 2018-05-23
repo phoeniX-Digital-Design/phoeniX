@@ -109,12 +109,12 @@ module Arithmetic_Logic_Unit
             {`SLTI,     `OP_IMM} : 
             begin 
                 alu_enable = 1'b1; 
-                alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;  
+                alu_output = $signed(operand_1) < $signed(operand_2) ? 32'd1 : 32'd0;  
             end
             {`SLTIU,    `OP_IMM} : 
             begin 
                 alu_enable = 1'b1; 
-                alu_output = operand_1 < operand_2 ? 1 : 0;
+                alu_output = operand_1 < operand_2 ? 32'd1 : 32'd0;
             end
             {`XORI,     `OP_IMM} : 
             begin 
@@ -145,7 +145,7 @@ module Arithmetic_Logic_Unit
                     begin 
                         shift_direction = `RIGHT; 
                         shift_input = operand_1; 
-                        shift_amount = $signed(operand_2[4 : 0]); 
+                        shift_amount = operand_2[4 : 0]; 
                         alu_output = shift_result; 
                     end     
                 endcase
@@ -167,12 +167,12 @@ module Arithmetic_Logic_Unit
             {`SLT,      `OP} : 
             begin 
                 alu_enable = 1'b1; 
-                alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;    
+                alu_output = $signed(operand_1) < $signed(operand_2) ? 32'd1 : 32'd0;    
             end
             {`SLTU,     `OP} : 
             begin 
                 alu_enable = 1'b1; 
-                alu_output = operand_1 < operand_2 ? 1 : 0;
+                alu_output = operand_1 < operand_2 ? 32'd1 : 32'd0;
             end
             {`XOR,      `OP} : 
             begin 

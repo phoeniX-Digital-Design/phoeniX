@@ -37,7 +37,7 @@ module Control_Status_Register_File
                 default :       csr_read_data = 32'bz;
             endcase
         end
-        else csr_read_data <= 32'bz;
+        else csr_read_data = 32'bz;
     end    
     
     always @(negedge clk or posedge reset) 

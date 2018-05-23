@@ -31,11 +31,22 @@ module Fetch_Unit
 
     always @(*) 
     begin
-        memory_interface_enable = enable;
-        memory_interface_state = `READ;
-        memory_interface_frame_mask = 4'b1111;
-        memory_interface_address = pc;  
-        next_pc = {incrementer_result, 2'b00};
+        if (enable)
+        begin
+            memory_interface_enable = `ENABLE;
+            memory_interface_state = `READ;
+            memory_interface_frame_mask = 4'b1111;
+            memory_interface_address = pc;  
+            next_pc = {incrementer_result, 2'b00};    
+        end
+        else
+        begin
+            memory_interface_enable = `DISABLE;
+            memory_interface_state = 'bz;
+            memory_interface_frame_mask = 'bz;
+            memory_interface_address = 'bz;  
+            next_pc = 'bz;
+        end
     end
 endmodule
 
@@ -118,10 +129,14 @@ module Mux_2to1_Incrementer
 
     always @(*) 
     begin
-        case (select)
-            1'b0: begin data_out = data_in_1; end
-            1'b1: begin data_out = data_in_2; end
-            default: begin data_out = {LEN{1'bz}}; end
-        endcase
+        if (select)
+            data_out <= data_in_2;
+        else
+            data_out <= data_in_1;
+        // case (select)
+        //     1'b0: begin data_out = data_in_1; end
+        //     1'b1: begin data_out = data_in_2; end
+        //     default: begin data_out = {LEN{1'bz}}; end
+        // endcase
     end
 endmodule
