@@ -17,15 +17,8 @@ module Fetch_Unit
     output reg  [ 3 : 0]   memory_interface_frame_mask
 );
 
-    always @(*) 
-    begin
-        memory_interface_enable = enable;
-        memory_interface_state = `READ;
-        memory_interface_frame_mask = 4'b1111;
-        memory_interface_address = pc;  
-    end
+    wire [31 : 2] incrementer_result;
 
-    wire [29 : 0] incrementer_result;
     Incrementer 
     #(
         .LEN(30)
@@ -36,8 +29,12 @@ module Fetch_Unit
         .result(incrementer_result)
     );
 
-    always @(*)
+    always @(*) 
     begin
+        memory_interface_enable = enable;
+        memory_interface_state = `READ;
+        memory_interface_frame_mask = 4'b1111;
+        memory_interface_address = pc;  
         next_pc = {incrementer_result, 2'b00};
     end
 endmodule
@@ -68,8 +65,7 @@ module Incrementer
     genvar i;
     generate
         for (i = 1; i < COUNT; i = i + 1)
-        begin
-
+        begin : Incrementer_Generate_Block
             Incrementer_Unit IU
             (
                 .value(value`SLICE),
@@ -85,6 +81,7 @@ module Incrementer
                 .data_out({carry_chain[i], result`SLICE})
             );
         end
+
         if (COUNT * 4 < LEN)
             assign result[LEN - 1 : (COUNT * 4)] = value[LEN - 1 : (COUNT * 4)] + carry_chain[COUNT - 1]; 
     endgenerate
@@ -101,7 +98,7 @@ module Incrementer_Unit
     assign result[2] = value[1] ^ value[0];
     wire   C1   = value[1] & value[0];
     wire   C2   = value[2] & value[3];
-    assign Cout   = C1 & C2;
+    assign Cout = C1 & C2;
     wire   C3   = C1 & value[2];
     assign result[3] = value[2] ^ C1;
     assign result[4] = value[3] ^ C3;

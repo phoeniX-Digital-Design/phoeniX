@@ -2,7 +2,7 @@
 
 module Immediate_Generator 
 (
-	input wire [31 : 0] instruction,
+	input wire [31 : 7] instruction,
 	input wire [ 2 : 0] instruction_type,
 
 	output reg [31 : 0] immediate

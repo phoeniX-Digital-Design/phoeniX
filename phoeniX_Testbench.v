@@ -1,8 +1,8 @@
-`timescale 1 ns / 1 ps
+`timescale 1 ns / 1 ns
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-    `define FIRMWARE "Dhrystone/dhrystone_firmware.hex"
+    `define FIRMWARE "Software\\User_Codes\\test\\test_firmware.hex"
 `endif /*FIRMWARE*/
 
 `ifndef START_ADDRESS
@@ -18,7 +18,7 @@ module phoeniX_Testbench;
     //////////////////////
     // Clock Generation //
     //////////////////////
-    parameter CLK_PERIOD = 1.613;
+    parameter CLK_PERIOD = 2;
     reg clk = 1'b1;
     initial begin forever #(CLK_PERIOD/2) clk = ~clk; end
     //initial #(20000 * CLK_PERIOD) $finish;

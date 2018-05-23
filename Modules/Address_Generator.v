@@ -49,6 +49,7 @@ module Address_Generator
 */
 endmodule
 
+/*
 module Kogge_Stone_Adder
 (
     input  wire          carry_in,
@@ -288,6 +289,7 @@ module Grey_Cell
 );
     assign output_g = input_gk | (input_gj & input_pk);
 endmodule
+*/
 
 module Address_Generator_CLA #(parameter LEN = 32) 
 (
@@ -312,14 +314,14 @@ module Address_Generator_CLA #(parameter LEN = 32)
 
     generate
         for (i = 1 ; i <= LEN; i = i + 1)
-        begin
+        begin : Address_Generator_CLA_Generate_Block_1
             assign Carry[i] = G[i - 1] | (P[i - 1] & Carry[i - 1]);
         end
     endgenerate
 
     generate
         for (i = 0; i < LEN; i = i + 1)
-        begin
+        begin : Address_Generator_CLA_Generate_Block_2
             Full_Adder_CLA FA (.A(A[i]), .B(B[i]), .C_in(Carry[i]), .C_out(CarryX[i + 1]), .Sum(Sum[i]));
         end
     assign C_out = Carry[LEN];

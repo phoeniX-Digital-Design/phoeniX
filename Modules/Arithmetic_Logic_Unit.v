@@ -292,7 +292,7 @@ module Arithmetic_Logic_Unit
     // --------------------------------------------------------------------------------------------------
     generate 
         if (GENERATE_CIRCUIT_1)
-        begin : ALU_Adder_Generate_Block_1
+        begin : Arithmetic_Logic_Unit_Adder_Circuit_Generate_Block_1
             // Circuit 1 (default) instantiation
             //----------------------------------
             Approximate_Accuracy_Controllable_Adder 
@@ -312,7 +312,7 @@ module Arithmetic_Logic_Unit
             // End of Circuit 1 instantiation
         end
         if (GENERATE_CIRCUIT_2)
-        begin : ALU_Adder_Generate_Block_2
+        begin : Arithmetic_Logic_Unit_Adder_Circuit_Generate_Block_2
             // Circuit 2 instantiation
             //-------------------------------
 
@@ -320,7 +320,7 @@ module Arithmetic_Logic_Unit
             // End of Circuit 2 instantiation
         end
         if (GENERATE_CIRCUIT_3)
-        begin : ALU_Adder_Generate_Block_3
+        begin : Arithmetic_Logic_Unit_Adder_Circuit_Generate_Block_3
             // Circuit 3 instantiation
             //-------------------------------
 
@@ -328,7 +328,7 @@ module Arithmetic_Logic_Unit
             // End of Circuit 3 instantiation
         end
         if (GENERATE_CIRCUIT_4)
-        begin : ALU_Adder_Generate_Block_4
+        begin : Arithmetic_Logic_Unit_Adder_Circuit_Generate_Block_4
             // Circuit 4 instantiation
             //-------------------------------
 
@@ -385,10 +385,13 @@ module Reverser_Circuit
 );
 
     wire [N - 1 : 0] temp;
-    generate
-        genvar i;
+    
+    genvar i;
+    generate    
         for (i = 0 ; i <= N - 1 ; i = i + 1)
+        begin : Reverser_Circuit_Generate_Block
             assign temp[i] = input_value[N - 1 - i];
+        end
     endgenerate
     // enable = 1 (RIGHT) -> reverse module does nothing 
     // enable = 0 (LEFT)  -> result = temp (reversed)
@@ -441,7 +444,7 @@ module Approximate_Accuracy_Controllable_Adder
         // ------------------- //
 
         for (i = 4; i < APX_LEN; i = i + 4)
-        begin : Adder_Approximate_Part_Generate_Block
+        begin : Approximate_Accuracy_Controllable_Adder_Approximate_Part_Generate_Block
             wire HA_Carry;
             wire EC_RCA_Carry;
             wire [i + 3 : i] EC_RCA_Output;
@@ -491,7 +494,7 @@ module Approximate_Accuracy_Controllable_Adder
         // ------------- //
 
         for (i = APX_LEN; i < LEN; i = i + 4)
-        begin : Adder_Exact_Part_Generate_Block
+        begin : Approximate_Accuracy_Controllable_Adder_Exact_Part_Generate_Block
             wire HA_Carry;
             wire RCA_Carry;
             wire [i + 3 : i] RCA_Output;
