@@ -31,7 +31,7 @@ module Register_File
         if (reset)
         begin
             for (i = 0; i < $pow(2, DEPTH); i = i + 1)
-                Registers[i] = {WIDTH{1'b0}};
+                Registers[i] <= {WIDTH{1'b0}};
         end
         else if (write_enable == `ENABLE)
         begin
