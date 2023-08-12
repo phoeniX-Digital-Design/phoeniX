@@ -17,5 +17,5 @@ module Address_Generator
 );
 
       assign address = PC + immediate;
-      
+    
 endmodule
