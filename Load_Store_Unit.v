@@ -18,6 +18,6 @@ module Load_Store_Unit
 
       // -------------- INSTRUCTION DECODING MUST BE ADDED --------------
 
-      Memory_Interface data_memory (CLK, 1'b0, enbale, read_enable, write_enable, address, Load_Data, Store_Data);
+      // Memory_Interface data_memory (CLK, 1'b0, enbale, read_enable, write_enable, address, Load_Data, Store_Data);
 
 endmodule
