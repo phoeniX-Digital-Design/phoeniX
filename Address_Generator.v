@@ -8,7 +8,7 @@
       So no determination (Mux) will be needed here.(I-J-B immediate)
 */
 
-module Address_Generator 
+module Address_Generator
 (
       input [31 : 0] immediate,
       input [31 : 0] PC,
@@ -16,6 +16,6 @@ module Address_Generator
       output [31 : 0] address
 );
 
-      address = PC + immediate;
+      assign address = PC + immediate;
       
 endmodule
