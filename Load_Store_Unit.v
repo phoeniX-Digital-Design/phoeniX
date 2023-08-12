@@ -12,7 +12,6 @@ module Load_Store_Unit
       input  [31 : 0] Store_Data,
       output [31 : 0] Load_Data
 );
-      reg [15 : 0] address = bus_rs1 + immediate;
       wire enable;
       wire read_enable;  // Load Instruction
       wire write_enable; // Store Instruction

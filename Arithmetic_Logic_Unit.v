@@ -3,7 +3,7 @@
     - This unit executes R-Type and I-Type instructions of 'I' and 'F' standard RV32 extension
     - Inputs bus_rs1, bus_rs2 comes from Register_File
     - Input immediate comes from Immediate_Generator
-    - Inputs Forward_rs1, Forward_rs2 comes from the execution-unit output (bypassed)
+    - Inputs forward_rs1, forward_rs2 comes from the execution-unit output (bypassed)
     - Input signals opcode, funct3, funct7, comes from Instruction_Decoder
     - Input signals mux1_select, mux2_select comes from Control_Unit
     - Supported Instructions :
@@ -25,8 +25,8 @@ module Arithmetic_Logic_Unit
     input [31 : 0] bus_rs1,             // Register Source 1
     input [31 : 0] bus_rs2,             // Register Source 2
     input [31 : 0] immediate,           // Immediate Source
-    input [31 : 0] Forward_rs1,         // Forwarded Data 1
-    input [31 : 0] Forward_rs2,         // Forwarded Data 2
+    input [31 : 0] forward_rs1,         // Forwarded Data 1
+    input [31 : 0] forward_rs2,         // Forwarded Data 2
 
     output reg [31 : 0] alu_output      // ALU Result
 );
@@ -37,17 +37,18 @@ module Arithmetic_Logic_Unit
     // Bypassing (Data Forwarding) Multiplexer 1
     always @(*) begin
         case (mux1_select)
-            2'b00: operand_1 = bus_rs1;
-            2'b01: operand_1 = Forward_rs1;
-            2'b10: operand_1 = PC;
+            2'b00 : operand_1 = bus_rs1;
+            2'b01 : operand_1 = forward_rs1;
+            2'b10 : operand_1 = PC;
         endcase
     end
     // Bypassing (Data Forwarding) Multiplexer 2
     always @(*) begin
         case (mux2_select)
-            2'b00: operand_2 = bus_rs2;
-            2'b01: operand_2 = Forward_rs2;
-            2'b10: operand_2 = immediate;
+            2'b00 : operand_2 = bus_rs2;
+            2'b01 : operand_2 = forward_rs2;
+            2'b10 : operand_2 = immediate;
+            2'b11 : operand_2 = 32'd4;
         endcase
     end
 
@@ -75,6 +76,11 @@ module Arithmetic_Logic_Unit
             17'b0100000_101_0110011 : alu_output = operand_1 >> $signed(operand_2);                 // SRA
             17'b0000000_110_0110011 : alu_output = operand_1 | operand_2;                           // OR
             17'b0000000_111_0110011 : alu_output = operand_1 & operand_2;                           // AND
+            // JAL and JALR Instructions
+            17'bxxxxxxx_xxx_1101111 : alu_output = operand_1 + operand_2;                           // JAL
+            17'bxxxxxxx_000_1100111 : alu_output = operand_1 + operand_2;                           // JALR
+            // AUIPC Instruction
+            17'bxxxxxxx_xxx_0010011 : alu_output = operand_1 + operand_2;                           // AUIPC
             default: alu_output = 32'bz; 
         endcase
     end
