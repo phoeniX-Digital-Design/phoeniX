@@ -19,9 +19,10 @@ module Arithmetic_Logic_Unit
     input [6 : 0] funct7,       // ALU Operation
     input [4 : 0] FLEN,         // FCVT Shift Length
     
-    input mux1_select,          // Bypass Mux for operand_1
+    input [1 : 0] mux1_select,  // Bypass Mux for operand_1
     input [1 : 0] mux2_select,  // Bypass Mux for operand_2
 
+    input [31 : 0] PC,          // Program Counter Register
     input [31 : 0] bus_rs1,     // Register Source 1
     input [31 : 0] bus_rs2,     // Register Source 2
     input [31 : 0] immediate,   // Immediate Source
@@ -37,8 +38,9 @@ module Arithmetic_Logic_Unit
     // Bypassing (Data Forwarding) Multiplexer 1
     always @(*) begin
         case (mux1_select)
-            1'b0: operand_1 = bus_rs1;
-            1'b1: operand_1 = Forward_rs1;
+            2'b00: operand_1 = bus_rs1;
+            2'b01: operand_1 = Forward_rs1;
+            2'b10: operand_1 = PC;
         endcase
     end
     // Bypassing (Data Forwarding) Multiplexer 2
