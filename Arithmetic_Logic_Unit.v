@@ -12,7 +12,7 @@
                  XORI - ORI  - ANDI               SLT  - SLTU - XOR                         FADD.S
                  SLLI - SRLI - SRAI               SRL  - SRA  - OR  - AND                   FSUB.S           
 */
-module Arithmetic_Logic_Unit
+module Arithmetic_Logic_Unit 
 (
     input [6 : 0] opcode,       // ALU Operation
     input [2 : 0] funct3,       // ALU Operation
