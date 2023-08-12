@@ -14,21 +14,21 @@
 */
 module Arithmetic_Logic_Unit 
 (
-    input [6 : 0] opcode,       // ALU Operation
-    input [2 : 0] funct3,       // ALU Operation
-    input [6 : 0] funct7,       // ALU Operation
+    input [6 : 0] opcode,               // ALU Operation
+    input [2 : 0] funct3,               // ALU Operation
+    input [6 : 0] funct7,               // ALU Operation
     
-    input [1 : 0] mux1_select,  // Bypass Mux for operand_1
-    input [1 : 0] mux2_select,  // Bypass Mux for operand_2
+    input [1 : 0] mux1_select,          // Bypass Mux for operand_1
+    input [1 : 0] mux2_select,          // Bypass Mux for operand_2
 
-    input [31 : 0] PC,          // Program Counter Register
-    input [31 : 0] bus_rs1,     // Register Source 1
-    input [31 : 0] bus_rs2,     // Register Source 2
-    input [31 : 0] immediate,   // Immediate Source
-    input [31 : 0] Forward_rs1, // Forwarded Data 1
-    input [31 : 0] Forward_rs2, // Forwarded Data 2
+    input [31 : 0] PC,                  // Program Counter Register
+    input [31 : 0] bus_rs1,             // Register Source 1
+    input [31 : 0] bus_rs2,             // Register Source 2
+    input [31 : 0] immediate,           // Immediate Source
+    input [31 : 0] Forward_rs1,         // Forwarded Data 1
+    input [31 : 0] Forward_rs2,         // Forwarded Data 2
 
-    output reg [31 : 0] alu_output // ALU Result
+    output reg [31 : 0] alu_output      // ALU Result
 );
 
     reg [31 : 0] operand_1;
