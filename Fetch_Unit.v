@@ -24,5 +24,4 @@ module Fetch_Unit
       Register pc_register (CLK, enable, PC_register_input, PC);
 
       Memory_Interface instruction_memory (CLK, Reset, 1'b1, 1'b1, 1'b0, PC/4, 32'b0, instruction);
-      
 endmodule
