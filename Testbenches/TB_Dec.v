@@ -1,4 +1,4 @@
-`include "Instruction_Decoder.v"
+`include "..\\Instruction_Decoder.v"
 
 module TB_Dec;
 
