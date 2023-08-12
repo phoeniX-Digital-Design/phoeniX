@@ -1,6 +1,6 @@
 /*
     RV32IMF Core - Arithmetic Logic Unit
-    - This unit executes R-Type and I-Type instructions of 'I' and 'F' standard RV32 extension
+    - This unit executes R-Type and I-Type instructions
     - Inputs bus_rs1, bus_rs2 comes from Register_File
     - Input immediate comes from Immediate_Generator
     - Inputs forward_rs1, forward_rs2 comes from the execution-unit output (bypassed)
