@@ -8,16 +8,15 @@
     - Input signals mux1_select, mux2_select comes from Control_Unit
     - Supported Instructions :
 
-        I-TYPE : ADDI - SLTI - SLTIU     R-TYPE : ADD  - SUB  - SLL           F-Extension : FCVT.S.W
-                 XORI - ORI  - ANDI               SLT  - SLTU - XOR                         FADD.S
-                 SLLI - SRLI - SRAI               SRL  - SRA  - OR  - AND                   FSUB.S           
+        I-TYPE : ADDI - SLTI - SLTIU     R-TYPE : ADD  - SUB  - SLL           
+                 XORI - ORI  - ANDI               SLT  - SLTU - XOR                         
+                 SLLI - SRLI - SRAI               SRL  - SRA  - OR  - AND                             
 */
 module Arithmetic_Logic_Unit 
 (
     input [6 : 0] opcode,       // ALU Operation
     input [2 : 0] funct3,       // ALU Operation
     input [6 : 0] funct7,       // ALU Operation
-    input [4 : 0] FLEN,         // FCVT Shift Length
     
     input [1 : 0] mux1_select,  // Bypass Mux for operand_1
     input [1 : 0] mux2_select,  // Bypass Mux for operand_2
@@ -76,10 +75,6 @@ module Arithmetic_Logic_Unit
             17'b0100000_101_0110011 : alu_output = operand_1 >> $signed(operand_2);                 // SRA
             17'b0000000_110_0110011 : alu_output = operand_1 | operand_2;                           // OR
             17'b0000000_111_0110011 : alu_output = operand_1 & operand_2;                           // AND
-            // F-Extension Arithmetic
-            17'b1101000_xxx_1010011 : alu_output = operand_1 << FLEN;                               // FCVT.S.W
-            17'b0000000_xxx_1010011 : alu_output = operand_1 + operand_2;                           // FADD.S
-            17'b0000100_xxx_1010011 : alu_output = operand_1 - operand_2;                           // FSUB.S
             default: alu_output = 32'bz; 
         endcase
     end
