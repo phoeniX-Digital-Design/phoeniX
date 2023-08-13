@@ -2,62 +2,68 @@
 
 module TB_Mem;
 
-  reg clk;
-  reg reset;
-  reg enable;
-  reg read_enable;
-  reg write_enable;
-  reg [15:0] address;
-  reg [31:0] dataIn;
-  wire [31:0] dataOut;
-  
-  wire [31 : 0] Data = uut.memory[2];
+    reg CLK = 1'b0;
+    reg reset;
 
-  Memory_Interface uut 
-  (
-    .clk(clk),
-    .reset(reset),
-    .enable(enable),
-    .read_enable(read_enable),
-    .write_enable(write_enable),
-    .address(address),
-    .dataIn(dataIn),
-    .dataOut(dataOut)
-  );
+    reg enable;
+    reg memory_state;
 
-  // Clock generation
-  always #1 clk = ~clk;
-  
-  initial begin
+    reg [3 : 0] frame_mask;
 
-    // Reset
-    clk = 1'b0;
-    reset = 1'b1;
-    enable = 1'b0;
-    address = 16'b0;
-    dataIn = 32'b0;
+    reg [31 : 0] address;
+    
+    wire [31 : 0] data;
+    wire memory_done;
 
-    // Wait for a few clock cycles
-    #10;
-    reset = 1'b0;
+    Memory_Interface uut 
+    (
+        CLK,
+        enable,
+        memory_state,
+        frame_mask,
+        address,
+        data,
+        memory_done
+    );
 
-    // Write operation
-    enable = 1'b1;
-    write_enable = 1'b1;
-    address = 16'b0000000000000010;
-    dataIn = 32'b01010101010101010101010101010101;
-    #10;
+    // Clock generation
+    always #1 CLK = ~CLK;
 
-    // Read operation
-    enable = 1'b1;
-    read_enable = 1'b1;
-    write_enable = 1'b0;
-    address = 16'b0000000000000010;
-    #10;
+    initial begin
 
-    $display ("Data = %b ", Data);
-    $finish;
+        // Reset
+        reset = 1'b1;
+        enable = 1'b0;
+        address = 32'b0;
 
-  end
+        // Wait for a few clock cycles
+        #10;
+        reset = 1'b0;
 
+        // Fetch Test
+        enable = 1'b1;
+        memory_state = uut.READ;
+        frame_mask = 4'b1111;
+        address = 32'h04;
+
+        #10 $display ("--> Testing Fetch Operation: ADDRESS = %h\tDATA = %h\n", address, data);
+        #10;
+
+        // // Write operation
+        // enable = 1'b1;
+        // write_enable = 1'b1;
+        // address = 16'b0000000000000010;
+        // dataIn = 32'b01010101010101010101010101010101;
+        // #10;
+
+        // // Read operation
+        // enable = 1'b1;
+        // read_enable = 1'b1;
+        // write_enable = 1'b0;
+        // address = 16'b0000000000000010;
+        // #10;
+
+        // $display ("Data = %b ", Data);
+        $finish;
+    end
 endmodule
