@@ -65,6 +65,7 @@ module Arithmetic_Logic_Unit
             17'b0000000_001_0010011 : alu_output = operand_1 << operand_2 [4 : 0];                  // SLLI
             17'b0000000_101_0010011 : alu_output = operand_1 >> operand_2 [4 : 0];                  // SRLI
             17'b0100000_101_0010011 : alu_output = operand_1 >> $signed(operand_2 [4 : 0]);         // SRAI
+
             // R-TYPE Instructions
             17'b0000000_000_0110011 : alu_output = operand_1 + operand_2;                           // ADD
             17'b0100000_000_0110011 : alu_output = operand_1 - operand_2;                           // SUB
@@ -76,9 +77,11 @@ module Arithmetic_Logic_Unit
             17'b0100000_101_0110011 : alu_output = operand_1 >> $signed(operand_2);                 // SRA
             17'b0000000_110_0110011 : alu_output = operand_1 | operand_2;                           // OR
             17'b0000000_111_0110011 : alu_output = operand_1 & operand_2;                           // AND
+
             // JAL and JALR Instructions
             17'bxxxxxxx_xxx_1101111 : alu_output = operand_1 + operand_2;                           // JAL
             17'bxxxxxxx_000_1100111 : alu_output = operand_1 + operand_2;                           // JALR
+            
             // AUIPC Instruction
             17'bxxxxxxx_xxx_0010011 : alu_output = operand_1 + operand_2;                           // AUIPC
             default: alu_output = 32'bz; 
