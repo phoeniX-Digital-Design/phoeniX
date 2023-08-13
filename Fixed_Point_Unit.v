@@ -60,8 +60,16 @@ module Fixed_Point_Unit #(parameter FLEN = 10)
             end
             17'b1101000_xxx_1010011 : begin 
                 if (read_index_2 == 5'b00001) 
-                    fpu_output = operand_1 << FLEN;                                   // FCVT.S.W
-            end        
+                    fpu_output = operand_1 << FLEN;                                   // FCVT.S.WU
+            end
+            17'b1100000_xxx_1010011 : begin
+                if (read_index_2 == 5'b00000)
+                    fpu_output = $signed(operand_1 >> FLEN);                          // FCVT.W.S
+            end
+            17'b1100000_xxx_1010011 : begin 
+                if (read_index_2 == 5'b00001) 
+                    fpu_output = operand_1 >> FLEN;                                   // FCVT.WU.S
+            end    
 
             default: fpu_output = 32'bz; 
         endcase
