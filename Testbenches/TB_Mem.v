@@ -13,6 +13,10 @@ module TB_Mem;
     reg [31 : 0] address;
     
     wire [31 : 0] data;
+    reg  [31 : 0] data_reg;
+
+    assign data = data_reg;
+
     wire memory_done;
 
     Memory_Interface uut 
@@ -28,8 +32,18 @@ module TB_Mem;
 
     // Clock generation
     always #1 CLK = ~CLK;
+    
+    // Memory Initialize
+    
 
     initial begin
+
+        $dumpfile("Test_Mem.vcd");
+        $dumpvars(0, TB_Mem);
+
+        $readmemh("..\\Instruction_Memory.txt", uut.Memory);
+
+        data_reg = 32'bz;
 
         // Reset
         reset = 1'b1;
@@ -41,29 +55,36 @@ module TB_Mem;
         reset = 1'b0;
 
         // Fetch Test
+        #1 enable = 1'b1;
+        memory_state = uut.READ;
+        frame_mask = 4'b1111;
+        address = 32'h04;
+        #10
+        enable = 1'b0;
+        $display ("--> Testing Fetch Operation: ADDRESS = %h\tDATA = %h\n", address, data);
+        #10;
+
+        // Write operation
+        enable = 1'b1;
+        memory_state = uut.WRITE;
+        address = 32'h04;
+        frame_mask = 4'b0011;
+        data_reg = 16'hFD;
+        #6
+        enable = 1'b0;
+        data_reg = 32'bz;
+        $display ("--> Testing Write Operation: ADDRESS = %h\tDATA = %h\n", address, data);
+        #10;
+
+        // Read operation
         enable = 1'b1;
         memory_state = uut.READ;
         frame_mask = 4'b1111;
         address = 32'h04;
-
-        #10 $display ("--> Testing Fetch Operation: ADDRESS = %h\tDATA = %h\n", address, data);
-        #10;
-
-        // // Write operation
-        // enable = 1'b1;
-        // write_enable = 1'b1;
-        // address = 16'b0000000000000010;
-        // dataIn = 32'b01010101010101010101010101010101;
-        // #10;
-
-        // // Read operation
-        // enable = 1'b1;
-        // read_enable = 1'b1;
-        // write_enable = 1'b0;
-        // address = 16'b0000000000000010;
-        // #10;
-
-        // $display ("Data = %b ", Data);
+        #10
+        enable = 1'b0;
+        $display ("--> Testing Read Operation: ADDRESS = %h\tDATA = %h\n", address, data);
+        #10
         $finish;
     end
 endmodule

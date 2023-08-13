@@ -1,0 +1,317 @@
+$date
+	Sun Aug 13 16:44:44 2023
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module TB_Mem $end
+$var wire 32 ! data [31:0] $end
+$var wire 1 " memory_done $end
+$var reg 1 # CLK $end
+$var reg 32 $ address [31:0] $end
+$var reg 32 % data_reg [31:0] $end
+$var reg 1 & enable $end
+$var reg 4 ' frame_mask [3:0] $end
+$var reg 1 ( memory_state $end
+$var reg 1 ) reset $end
+$scope module uut $end
+$var wire 1 # CLK $end
+$var wire 32 * address [31:0] $end
+$var wire 32 + data [31:0] $end
+$var wire 1 & enable $end
+$var wire 4 , frame_mask [3:0] $end
+$var wire 1 ( memory_state $end
+$var parameter 4 - B_0001 $end
+$var parameter 4 . B_0010 $end
+$var parameter 4 / B_0100 $end
+$var parameter 4 0 B_1000 $end
+$var parameter 4 1 FINISH $end
+$var parameter 4 2 H_0011_1 $end
+$var parameter 4 3 H_0011_2 $end
+$var parameter 4 4 H_1100_1 $end
+$var parameter 4 5 H_1100_2 $end
+$var parameter 1 6 READ $end
+$var parameter 4 7 STABLE $end
+$var parameter 1 8 WRITE $end
+$var parameter 4 9 W_1111_1 $end
+$var parameter 4 : W_1111_2 $end
+$var parameter 4 ; W_1111_3 $end
+$var parameter 4 < W_1111_4 $end
+$var reg 32 = data_in [31:0] $end
+$var reg 1 " memory_done $end
+$var reg 4 > next_state [3:0] $end
+$var reg 4 ? state [3:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b1100 <
+b1011 ;
+b1010 :
+b1001 9
+18
+b0 7
+06
+b1000 5
+b111 4
+b110 3
+b101 2
+b1101 1
+b100 0
+b11 /
+b10 .
+b1 -
+$end
+#0
+$dumpvars
+bx ?
+bx >
+bx =
+bx ,
+bx +
+b0 *
+1)
+x(
+bx '
+0&
+bz %
+b0 $
+0#
+x"
+bx !
+$end
+#1
+bz !
+bz +
+bz =
+0"
+b0 ?
+1#
+#2
+0#
+#3
+1#
+#4
+0#
+#5
+1#
+#6
+0#
+#7
+1#
+#8
+0#
+#9
+1#
+#10
+0#
+0)
+#11
+b0zzzzzzzzzzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzzzzzzzzzz +
+b0zzzzzzzzzzzzzzzzzzzzzzzz =
+b1001 ?
+b1010 >
+1#
+b100 $
+b100 *
+b1111 '
+b1111 ,
+0(
+1&
+#12
+0#
+#13
+b10000zzzzzzzzzzzzzzzz !
+b10000zzzzzzzzzzzzzzzz +
+b10000zzzzzzzzzzzzzzzz =
+b1011 >
+b1010 ?
+1#
+#14
+0#
+#15
+b1000000000101zzzzzzzz !
+b1000000000101zzzzzzzz +
+b1000000000101zzzzzzzz =
+b1100 >
+b1011 ?
+1#
+#16
+0#
+#17
+b100000000010110010011 !
+b100000000010110010011 +
+b100000000010110010011 =
+b1101 >
+b1100 ?
+1#
+#18
+0#
+#19
+1"
+b0 >
+b1101 ?
+1#
+#20
+0#
+#21
+bz !
+bz +
+bz =
+0"
+b1001 >
+b0 ?
+1#
+0&
+#22
+0#
+#23
+1#
+#24
+0#
+#25
+1#
+#26
+0#
+#27
+1#
+#28
+0#
+#29
+1#
+#30
+0#
+#31
+b101 ?
+b110 >
+1#
+b11111101 !
+b11111101 +
+b11111101 %
+b11 '
+b11 ,
+1(
+1&
+#32
+0#
+#33
+b1101 >
+b110 ?
+1#
+#34
+0#
+#35
+1"
+b0 >
+b1101 ?
+1#
+#36
+0#
+#37
+0"
+b0 ?
+b101 >
+1#
+bz !
+bz +
+bz %
+0&
+#38
+0#
+#39
+1#
+#40
+0#
+#41
+1#
+#42
+0#
+#43
+1#
+#44
+0#
+#45
+1#
+#46
+0#
+#47
+b0zzzzzzzzzzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzzzzzzzzzz +
+b0zzzzzzzzzzzzzzzzzzzzzzzz =
+b1001 ?
+b1010 >
+1#
+b1111 '
+b1111 ,
+0(
+1&
+#48
+0#
+#49
+b10000zzzzzzzzzzzzzzzz !
+b10000zzzzzzzzzzzzzzzz +
+b10000zzzzzzzzzzzzzzzz =
+b1011 >
+b1010 ?
+1#
+#50
+0#
+#51
+b1000000000000zzzzzzzz !
+b1000000000000zzzzzzzz +
+b1000000000000zzzzzzzz =
+b1100 >
+b1011 ?
+1#
+#52
+0#
+#53
+b100000000000011111101 !
+b100000000000011111101 +
+b100000000000011111101 =
+b1101 >
+b1100 ?
+1#
+#54
+0#
+#55
+1"
+b0 >
+b1101 ?
+1#
+#56
+0#
+#57
+bz !
+bz +
+bz =
+0"
+b1001 >
+b0 ?
+1#
+0&
+#58
+0#
+#59
+1#
+#60
+0#
+#61
+1#
+#62
+0#
+#63
+1#
+#64
+0#
+#65
+1#
+#66
+0#
+#67
+1#

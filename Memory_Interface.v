@@ -47,9 +47,15 @@ module Memory_Interface
     always @(*)
     begin
         next_state = 'bx;
+
+        
         
         case (state)
             STABLE : begin
+
+                memory_done <= 1'b0;
+                data_in <= 32'bz;
+                
                 if (frame_mask == 4'b0000)  next_state = STABLE;
 
                 if (frame_mask == 4'b0001)  next_state = B_0001;
@@ -143,7 +149,7 @@ module Memory_Interface
     end
 
     assign data = data_in;
-    
+
     /*
 	always @(*) begin
 
