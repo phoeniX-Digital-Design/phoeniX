@@ -15,6 +15,9 @@ module Fixed_Point_Unit #(parameter FLEN = 10)
     input [6 : 0] opcode,               // FPU Operation
     input [2 : 0] funct3,               // FPU Operation
     input [6 : 0] funct7,               // FPU Operation
+
+    input [4 : 0] read_index_1,         // Register Address 1
+    input [4 : 0] read_index_2,         // Register Address 2
     
     input         mux1_select,          // Bypass Mux for operand_1
     input         mux2_select,          // Bypass Mux for operand_2
@@ -51,7 +54,14 @@ module Fixed_Point_Unit #(parameter FLEN = 10)
             // F-TYPE Intructions
             17'b0000000_xxx_1010011 : fpu_output = operand_1 + operand_2;             // FADD.S
             17'b0000100_xxx_1010011 : fpu_output = operand_1 - operand_2;             // FSUB.S
-            17'b1101000_xxx_1010011 : fpu_output = $signed(operand_1) << FLEN;        // FCVT.S.W
+            17'b1101000_xxx_1010011 : begin
+                if (read_index_2 == 5'b00000)
+                    fpu_output = $signed(operand_1) << FLEN;                          // FCVT.S.W
+            end
+            17'b1101000_xxx_1010011 : begin 
+                if (read_index_2 == 5'b00001) 
+                    fpu_output = operand_1 << FLEN;                                   // FCVT.S.W
+            end        
 
             default: fpu_output = 32'bz; 
         endcase
