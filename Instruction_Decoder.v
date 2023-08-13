@@ -40,7 +40,7 @@ module Instruction_Decoder
 
     assign instruction_type_j = instruction[6 : 2] == 5'b11011;
 
-    assign instruction_type = (instruction_type_i) ? `I_TYPE : 
+    assign instruction_type =   (instruction_type_i) ? `I_TYPE : 
                                 (instruction_type_b) ? `B_TYPE :
                                 (instruction_type_s) ? `S_TYPE :
                                 (instruction_type_u) ? `U_TYPE : 
