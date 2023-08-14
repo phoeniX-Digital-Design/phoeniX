@@ -8,7 +8,7 @@ module Fetch_Unit
 
     input [31 : 0] PC,
 
-	input [31 : 0] address,		                // Branch address generated in Address Generator
+	input [31 : 0] address,		                            // Branch address generated in Address Generator
 	input jump_branch_enable,		                        // Generated in Branch Unit module
 
     output [31 : 0] next_PC,
