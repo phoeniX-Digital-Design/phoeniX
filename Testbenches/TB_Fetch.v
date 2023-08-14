@@ -2,69 +2,80 @@
 
 module TB_Fetch;
 
-    reg CLK = 1'b0;
-    reg enable;
+    parameter RESET_ADDRESS = 32'hFFFFFFFC;
 
-    reg [31 : 0] address;
-    reg branch_enable;
-    reg jump_enable;
-    reg Reset;
-    
-    wire [31 : 0] instruction;
-    reg  [31 : 0] instruction_reg;
-    assign instruction = instruction_reg;
+    reg CLK = 1'b1;
+    reg CLK_MEM = 1'b1;
+
+    reg reset = 1'b1;
+    reg enable = 1'b0;
+
+    reg [31 : 0] PC;
+    reg [31 : 0] instruction;
+
+    reg [31 : 0] address_generated;
+    reg jump_branch_enable;
+
+    wire [31 : 0] next_PC;   
+    wire [31 : 0] next_instruction;
     wire fetch_done;
 
     Fetch_Unit uut 
     (
-        CLK,
+        CLK_MEM,
         enable,
-        address,
-        branch_enable,
-        jump_enable,
-        Reset,
-        instruction,
+        
+        PC,
+        address_generated,
+        jump_branch_enable,
+            
+        next_PC,
+        next_instruction,
         fetch_done
     );
 
+    // Instrution Register Behaviour
+    always @(posedge CLK)
+    begin
+        instruction <= next_instruction;    
+    end
+
+    // PC Register Behaviour
+    always @(posedge CLK) 
+    begin
+        if (reset)
+            PC <= RESET_ADDRESS;
+        else
+            PC <= next_PC; 
+    end
+
     // Clock generation
-    always #1 CLK = ~CLK;
-    
-    // Memory Initialize
-    
+    always #1 CLK_MEM = ~CLK_MEM;
+    always #6 CLK = ~CLK;
 
     initial begin
 
         $dumpfile("Test_Fetch.vcd");
-        $dumpvars(0, TB_Mem);
+        $dumpvars(0, TB_Fetch);
 
         $readmemh("..\\Instruction_Memory.txt", uut.instruction_memory.Memory);
 
-        instruction_reg = 32'bz;
 
         // Reset
-        #10;
-        Reset = 1'b1;
-        enable = 1'b1;
-        address = 32'b0;
-        branch_enable = 1'b0;
-        jump_enable = 1'b0;
-        $display ("--> Testing Fetch Operation: ADDRESS = %h\tDATA = %h\n", address, instruction);
+        #12
+        reset = 1'b1;
+        enable = 1'b0;
+        $display ("--> Testing Fetch Operation at Reset: PC = %h\n", PC);
 
         // Wait for a few clock cycles
-        #10;
-        enable = 1'b0;
-        Reset  = 1'b0;
-
-        // Fetch Test
-        #1 enable = 1'b1;
-        branch_enable = 1'b1;
-        jump_enable   = 1'b0;
-        address = 32'h04;
-        #10
-        enable = 1'b0;
-        $display ("--> Testing Fetch Operation: ADDRESS = %h\tDATA = %h\n", address, instruction);
-        #10;
+        #12;
+        reset  = 1'b0;
+        // #2
+        enable = 1'b1;
+        jump_branch_enable = 1'b0;
+        #12
+        $display ("--> Testing Fetch Operation: ADDRESS = %h\tDATA = %h\n", PC, instruction);
+        #48;
 
         $finish;
     end

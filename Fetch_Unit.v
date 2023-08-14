@@ -1,12 +1,9 @@
-`include "Memory_Interface.v"
+// `include "Memory_Interface.v"
+`include "..\\Memory_Interface.v"
 
 module Fetch_Unit 
-#(
-    parameter RESET_ADDRESS = 32'hFFFC
-)
 (
     input CLK,
-    input reset, 			                // Set PC address to RESET_ADDDRESS
 	input enable,			                // Memory Interface module enable pin (from Control Unit)
 
     input [31 : 0] PC,
@@ -19,7 +16,7 @@ module Fetch_Unit
 	output fetch_done			            // output "memory_done" in Memory Interface module
 );
 
-    assign next_PC = reset ? RESET_ADDRESS : jump_branch_enable ? address_generated : PC + 4;
+    assign next_PC = jump_branch_enable ? address_generated : PC + 32'd4;
 
 	Memory_Interface instruction_memory (
         .CLK(CLK),
