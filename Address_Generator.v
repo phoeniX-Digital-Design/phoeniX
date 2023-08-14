@@ -10,12 +10,16 @@
 
 module Address_Generator
 (
-    input  [31 : 0] immediate,
+    input  address_type,
+    input  [31 : 0] bus_rs1,
     input  [31 : 0] PC,
+    input  [31 : 0] immediate,
 
     output [31 : 0] address_generated
 );
+    wire [31 : 0] data;
 
-    assign address_generated = PC + immediate;
+    assign data = address_type ? bus_rs1 : PC;
+    assign address_generated = data + immediate;
     
 endmodule
