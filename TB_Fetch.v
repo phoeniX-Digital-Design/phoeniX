@@ -1,4 +1,4 @@
-`include "..\\Fetch_Unit.v"
+`include "Fetch_Unit.v"
 
 module TB_Fetch;
 
@@ -12,7 +12,9 @@ module TB_Fetch;
     
     wire [31 : 0] instruction;
     reg  [31 : 0] instruction_reg;
+
     assign instruction = instruction_reg;
+    
     wire fetch_done;
 
     Fetch_Unit uut 
@@ -36,9 +38,9 @@ module TB_Fetch;
     initial begin
 
         $dumpfile("Test_Fetch.vcd");
-        $dumpvars(0, TB_Mem);
+        $dumpvars(0, TB_Fetch);
 
-        $readmemh("..\\Instruction_Memory.txt", uut.instruction_memory.Memory);
+        $readmemh("Instruction_Memory.txt", uut.instruction_memory.Memory);
 
         instruction_reg = 32'bz;
 
