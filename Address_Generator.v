@@ -10,8 +10,8 @@
 
 module Address_Generator
 (
-    input [31 : 0] immediate,
-    input [31 : 0] PC,
+    input  [31 : 0] immediate,
+    input  [31 : 0] PC,
 
     output [31 : 0] address
 );
