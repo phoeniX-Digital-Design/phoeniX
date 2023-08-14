@@ -14,10 +14,10 @@ module TB_Fetch;
     reg [31 : 0] instruction;
 
     reg [31 : 0] address_generated;
-    reg jump_branch_enable;
+    reg jump_branch_enable = 1'b0;
 
     wire [31 : 0] next_PC;   
-    wire [31 : 0] next_instruction;
+    wire [31 : 0] latched_instruction;
     wire fetch_done;
 
     Fetch_Unit uut 
@@ -30,15 +30,14 @@ module TB_Fetch;
         jump_branch_enable,
             
         next_PC,
-        next_instruction,
+        latched_instruction,
         fetch_done
     );
 
     // Instrution Register Behaviour
     always @(posedge CLK)
     begin
-        if (fetch_done)
-            instruction <= next_instruction;    
+        instruction <= latched_instruction;    
     end
 
     // PC Register Behaviour
@@ -61,25 +60,22 @@ module TB_Fetch;
 
         $readmemh("..\\Instruction_Memory.txt", uut.instruction_memory.Memory);
 
-        // #10
-        // forever #6 CLK =~ CLK;
-
         // Reset
         #14
         reset = 1'b1;
         enable = 1'b0;
-        $display ("--> Testing Fetch Operation at Reset: PC = %h\n", PC);
 
         // Wait for a few clock cycles
         #12;
         reset  = 1'b0;
-        // #2
+        #10;
         enable = 1'b1;
-        jump_branch_enable = 1'b0;
+        #36
+        address_generated = 32'h0;
+        jump_branch_enable = 1'b1;
         #12
-        $display ("--> Testing Fetch Operation: ADDRESS = %h\tDATA = %h\n", PC, instruction);
+        jump_branch_enable = 1'b0;
         #100;
-
         $finish;
     end
 

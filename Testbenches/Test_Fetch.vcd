@@ -1,5 +1,5 @@
 $date
-	Mon Aug 14 12:19:47 2023
+	Mon Aug 14 15:54:12 2023
 $end
 $version
 	Icarus Verilog
@@ -8,8 +8,8 @@ $timescale
 	1s
 $end
 $scope module TB_Fetch $end
-$var wire 32 ! next_instruction [31:0] $end
-$var wire 32 " next_PC [31:0] $end
+$var wire 32 ! next_PC [31:0] $end
+$var wire 32 " latched_instruction [31:0] $end
 $var wire 1 # fetch_done $end
 $var parameter 32 $ RESET_ADDRESS $end
 $var reg 1 % CLK $end
@@ -27,74 +27,76 @@ $var wire 32 . address_generated [31:0] $end
 $var wire 1 ) enable $end
 $var wire 1 + jump_branch_enable $end
 $var wire 32 / next_PC [31:0] $end
-$var wire 32 0 instruction [31:0] $end
+$var wire 32 0 fetched_instruction [31:0] $end
 $var wire 1 # fetch_done $end
+$var reg 32 1 fetched_instruction_reg [31:0] $end
 $scope module instruction_memory $end
 $var wire 1 & CLK $end
-$var wire 32 1 address [31:0] $end
-$var wire 32 2 data [31:0] $end
+$var wire 32 2 address [31:0] $end
+$var wire 32 3 data [31:0] $end
 $var wire 1 ) enable $end
-$var wire 4 3 frame_mask [3:0] $end
-$var wire 1 4 memory_state $end
-$var parameter 4 5 B_0001 $end
-$var parameter 4 6 B_0010 $end
-$var parameter 4 7 B_0100 $end
-$var parameter 4 8 B_1000 $end
-$var parameter 4 9 FINISH $end
-$var parameter 4 : H_0011_1 $end
-$var parameter 4 ; H_0011_2 $end
-$var parameter 4 < H_1100_1 $end
-$var parameter 4 = H_1100_2 $end
-$var parameter 1 > READ $end
-$var parameter 4 ? STABLE $end
-$var parameter 1 @ WRITE $end
-$var parameter 4 A W_1111_1 $end
-$var parameter 4 B W_1111_2 $end
-$var parameter 4 C W_1111_3 $end
-$var parameter 4 D W_1111_4 $end
-$var reg 32 E data_in [31:0] $end
+$var wire 4 4 frame_mask [3:0] $end
+$var wire 1 5 memory_state $end
+$var parameter 4 6 B_0001 $end
+$var parameter 4 7 B_0010 $end
+$var parameter 4 8 B_0100 $end
+$var parameter 4 9 B_1000 $end
+$var parameter 4 : FINISH $end
+$var parameter 4 ; H_0011_1 $end
+$var parameter 4 < H_0011_2 $end
+$var parameter 4 = H_1100_1 $end
+$var parameter 4 > H_1100_2 $end
+$var parameter 1 ? READ $end
+$var parameter 4 @ STABLE $end
+$var parameter 1 A WRITE $end
+$var parameter 4 B W_1111_1 $end
+$var parameter 4 C W_1111_2 $end
+$var parameter 4 D W_1111_3 $end
+$var parameter 4 E W_1111_4 $end
+$var reg 32 F data_in [31:0] $end
 $var reg 1 # memory_done $end
-$var reg 4 F next_state [3:0] $end
-$var reg 4 G state [3:0] $end
+$var reg 4 G next_state [3:0] $end
+$var reg 4 H state [3:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 $comment Show the parameter values. $end
 $dumpall
-b1100 D
-b1011 C
-b1010 B
-b1001 A
-1@
-b0 ?
-0>
-b1000 =
-b111 <
-b110 ;
-b101 :
-b1101 9
-b100 8
-b11 7
-b10 6
-b1 5
+b1100 E
+b1011 D
+b1010 C
+b1001 B
+1A
+b0 @
+0?
+b1000 >
+b111 =
+b110 <
+b101 ;
+b1101 :
+b100 9
+b11 8
+b10 7
+b1 6
 b11111111111111111111111111111100 $
 $end
 #0
 $dumpvars
-b0 G
-b1001 F
-bz E
-04
-b1111 3
-bz 2
+b0 H
+b1001 G
+bz F
+05
+b1111 4
+bz 3
+bx 2
 bx 1
 bz 0
 bx /
 bx .
 bx -
 1,
-x+
+0+
 bx *
 0)
 bx (
@@ -103,7 +105,7 @@ bx '
 1%
 0#
 bx "
-bz !
+bx !
 $end
 #1
 0&
@@ -129,10 +131,12 @@ $end
 #11
 0&
 #12
-b1001 F
+b0 !
+b0 /
+b1001 G
 b11111111111111111111111111111100 '
 b11111111111111111111111111111100 -
-b11111111111111111111111111111100 1
+b11111111111111111111111111111100 2
 1&
 1%
 #13
@@ -164,629 +168,816 @@ b11111111111111111111111111111100 1
 #25
 0&
 #26
-bxzzzzzzzzzzzzzzzzzzzzzzzz !
-bxzzzzzzzzzzzzzzzzzzzzzzzz 0
-bxzzzzzzzzzzzzzzzzzzzzzzzz 2
-bxzzzzzzzzzzzzzzzzzzzzzzzz E
-b1010 F
-b1001 G
-b0 "
-b0 /
 1&
-0+
-1)
 0,
 #27
 0&
 #28
-bxzzzzzzzzzzzzzzzz !
-bxzzzzzzzzzzzzzzzz 0
-bxzzzzzzzzzzzzzzzz 2
-bxzzzzzzzzzzzzzzzz E
-b1011 F
-b1010 G
 1&
 #29
 0&
 #30
-bxzzzzzzzz !
-bxzzzzzzzz 0
-bxzzzzzzzz 2
-bxzzzzzzzz E
-b1100 F
-b1011 G
 1&
 0%
 #31
 0&
 #32
-bx !
-bx 0
-bx 2
-bx E
-b1101 F
-b1100 G
 1&
 #33
 0&
 #34
-1#
-b0 F
-b1101 G
 1&
 #35
 0&
 #36
-bz !
-bz 0
-bz 2
-bz E
-0#
-b100 "
+b0zzzzzzzzzzzzzzzzzzzzzzzz 0
+b0zzzzzzzzzzzzzzzzzzzzzzzz 3
+b0zzzzzzzzzzzzzzzzzzzzzzzz F
+b100 !
 b100 /
-b1001 F
-b0 G
+b1010 G
+b1001 H
 b0 '
 b0 -
-b0 1
+b0 2
 1&
 1%
+1)
 #37
 0&
 #38
-b0zzzzzzzzzzzzzzzzzzzzzzzz !
-b0zzzzzzzzzzzzzzzzzzzzzzzz 0
-b0zzzzzzzzzzzzzzzzzzzzzzzz 2
-b0zzzzzzzzzzzzzzzzzzzzzzzz E
-b1010 F
-b1001 G
+b0zzzzzzzzzzzzzzzz 0
+b0zzzzzzzzzzzzzzzz 3
+b0zzzzzzzzzzzzzzzz F
+b1011 G
+b1010 H
 1&
 #39
 0&
 #40
-b0zzzzzzzzzzzzzzzz !
-b0zzzzzzzzzzzzzzzz 0
-b0zzzzzzzzzzzzzzzz 2
-b0zzzzzzzzzzzzzzzz E
-b1011 F
-b1010 G
+b101zzzzzzzz 0
+b101zzzzzzzz 3
+b101zzzzzzzz F
+b1100 G
+b1011 H
 1&
 #41
 0&
 #42
-b101zzzzzzzz !
-b101zzzzzzzz 0
-b101zzzzzzzz 2
-b101zzzzzzzz E
-b1100 F
-b1011 G
+b10100110011 0
+b10100110011 3
+b10100110011 F
+b1101 G
+b1100 H
 1&
 0%
 #43
 0&
 #44
-b10100110011 !
-b10100110011 0
-b10100110011 2
-b10100110011 E
-b1101 F
-b1100 G
+b10100110011 "
+b10100110011 1
+1#
+b0 G
+b1101 H
 1&
 #45
 0&
 #46
-1#
-b0 F
-b1101 G
+bz 0
+bz 3
+bz F
+0#
+b1001 G
+b0 H
 1&
 #47
 0&
 #48
-bz !
-bz 0
-bz 2
-bz E
-0#
-b1000 "
+b0zzzzzzzzzzzzzzzzzzzzzzzz 0
+b0zzzzzzzzzzzzzzzzzzzzzzzz 3
+b0zzzzzzzzzzzzzzzzzzzzzzzz F
+b1000 !
 b1000 /
-b1001 F
-b0 G
+b1010 G
+b1001 H
 b100 '
 b100 -
-b100 1
+b100 2
 b10100110011 *
 1&
 1%
 #49
 0&
 #50
-b0zzzzzzzzzzzzzzzzzzzzzzzz !
-b0zzzzzzzzzzzzzzzzzzzzzzzz 0
-b0zzzzzzzzzzzzzzzzzzzzzzzz 2
-b0zzzzzzzzzzzzzzzzzzzzzzzz E
-b1010 F
-b1001 G
+b10000zzzzzzzzzzzzzzzz 0
+b10000zzzzzzzzzzzzzzzz 3
+b10000zzzzzzzzzzzzzzzz F
+b1011 G
+b1010 H
 1&
 #51
 0&
 #52
-b10000zzzzzzzzzzzzzzzz !
-b10000zzzzzzzzzzzzzzzz 0
-b10000zzzzzzzzzzzzzzzz 2
-b10000zzzzzzzzzzzzzzzz E
-b1011 F
-b1010 G
+b1000000000101zzzzzzzz 0
+b1000000000101zzzzzzzz 3
+b1000000000101zzzzzzzz F
+b1100 G
+b1011 H
 1&
 #53
 0&
 #54
-b1000000000101zzzzzzzz !
-b1000000000101zzzzzzzz 0
-b1000000000101zzzzzzzz 2
-b1000000000101zzzzzzzz E
-b1100 F
-b1011 G
+b100000000010110010011 0
+b100000000010110010011 3
+b100000000010110010011 F
+b1101 G
+b1100 H
 1&
 0%
 #55
 0&
 #56
-b100000000010110010011 !
-b100000000010110010011 0
-b100000000010110010011 2
-b100000000010110010011 E
-b1101 F
-b1100 G
+b100000000010110010011 "
+b100000000010110010011 1
+1#
+b0 G
+b1101 H
 1&
 #57
 0&
 #58
-1#
-b0 F
-b1101 G
+bz 0
+bz 3
+bz F
+0#
+b1001 G
+b0 H
 1&
 #59
 0&
 #60
-bz !
-bz 0
-bz 2
-bz E
-0#
-b1100 "
+b110zzzzzzzzzzzzzzzzzzzzzzzz 0
+b110zzzzzzzzzzzzzzzzzzzzzzzz 3
+b110zzzzzzzzzzzzzzzzzzzzzzzz F
+b1100 !
 b1100 /
-b1001 F
-b0 G
+b1010 G
+b1001 H
 b100000000010110010011 *
 b1000 '
 b1000 -
-b1000 1
+b1000 2
 1&
 1%
 #61
 0&
 #62
-b110zzzzzzzzzzzzzzzzzzzzzzzz !
-b110zzzzzzzzzzzzzzzzzzzzzzzz 0
-b110zzzzzzzzzzzzzzzzzzzzzzzz 2
-b110zzzzzzzzzzzzzzzzzzzzzzzz E
-b1010 F
-b1001 G
+b11000100000zzzzzzzzzzzzzzzz 0
+b11000100000zzzzzzzzzzzzzzzz 3
+b11000100000zzzzzzzzzzzzzzzz F
+b1011 G
+b1010 H
 1&
 #63
 0&
 #64
-b11000100000zzzzzzzzzzzzzzzz !
-b11000100000zzzzzzzzzzzzzzzz 0
-b11000100000zzzzzzzzzzzzzzzz 2
-b11000100000zzzzzzzzzzzzzzzz E
-b1011 F
-b1010 G
+b1100010000000000110zzzzzzzz 0
+b1100010000000000110zzzzzzzz 3
+b1100010000000000110zzzzzzzz F
+b1100 G
+b1011 H
 1&
 #65
 0&
 #66
-b1100010000000000110zzzzzzzz !
-b1100010000000000110zzzzzzzz 0
-b1100010000000000110zzzzzzzz 2
-b1100010000000000110zzzzzzzz E
-b1100 F
-b1011 G
+b110001000000000011000010011 0
+b110001000000000011000010011 3
+b110001000000000011000010011 F
+b1101 G
+b1100 H
 1&
 0%
 #67
 0&
 #68
-b110001000000000011000010011 !
-b110001000000000011000010011 0
-b110001000000000011000010011 2
-b110001000000000011000010011 E
-b1101 F
-b1100 G
+b110001000000000011000010011 "
+b110001000000000011000010011 1
+1#
+b0 G
+b1101 H
 1&
 #69
 0&
 #70
-1#
-b0 F
-b1101 G
+bz 0
+bz 3
+bz F
+0#
+b1001 G
+b0 H
 1&
 #71
 0&
 #72
-bz !
-bz 0
-bz 2
-bz E
-0#
-b10000 "
-b10000 /
-b1001 F
-b0 G
-b1100 '
-b1100 -
-b1100 1
+b0zzzzzzzzzzzzzzzzzzzzzzzz 0
+b0zzzzzzzzzzzzzzzzzzzzzzzz 3
+b0zzzzzzzzzzzzzzzzzzzzzzzz F
+b1010 G
+b1001 H
+b0 '
+b0 -
+b0 2
 b110001000000000011000010011 *
+b0 !
+b0 /
 1&
 1%
+1+
+b0 (
+b0 .
 #73
 0&
 #74
-b0zzzzzzzzzzzzzzzzzzzzzzzz !
-b0zzzzzzzzzzzzzzzzzzzzzzzz 0
-b0zzzzzzzzzzzzzzzzzzzzzzzz 2
-b0zzzzzzzzzzzzzzzzzzzzzzzz E
-b1010 F
-b1001 G
+b0zzzzzzzzzzzzzzzz 0
+b0zzzzzzzzzzzzzzzz 3
+b0zzzzzzzzzzzzzzzz F
+b1011 G
+b1010 H
 1&
 #75
 0&
 #76
-b0zzzzzzzzzzzzzzzz !
-b0zzzzzzzzzzzzzzzz 0
-b0zzzzzzzzzzzzzzzz 2
-b0zzzzzzzzzzzzzzzz E
-b1011 F
-b1010 G
+b101zzzzzzzz 0
+b101zzzzzzzz 3
+b101zzzzzzzz F
+b1100 G
+b1011 H
 1&
 #77
 0&
 #78
-b1zzzzzzzz !
-b1zzzzzzzz 0
-b1zzzzzzzz 2
-b1zzzzzzzz E
-b1100 F
-b1011 G
+b10100110011 0
+b10100110011 3
+b10100110011 F
+b1101 G
+b1100 H
 1&
 0%
 #79
 0&
 #80
-b101010011 !
-b101010011 0
-b101010011 2
-b101010011 E
-b1101 F
-b1100 G
+b10100110011 "
+b10100110011 1
+1#
+b0 G
+b1101 H
 1&
 #81
 0&
 #82
-1#
-b0 F
-b1101 G
+bz 0
+bz 3
+bz F
+0#
+b1001 G
+b0 H
 1&
 #83
 0&
 #84
-bz !
-bz 0
-bz 2
-bz E
-0#
-b10100 "
-b10100 /
-b1001 F
-b0 G
-b101010011 *
-b10000 '
-b10000 -
-b10000 1
+b0zzzzzzzzzzzzzzzzzzzzzzzz 0
+b0zzzzzzzzzzzzzzzzzzzzzzzz 3
+b0zzzzzzzzzzzzzzzzzzzzzzzz F
+b1010 G
+b1001 H
+b10100110011 *
+b100 '
+b100 -
+b100 2
+b1000 !
+b1000 /
 1&
 1%
+0+
 #85
 0&
 #86
-b0zzzzzzzzzzzzzzzzzzzzzzzz !
-b0zzzzzzzzzzzzzzzzzzzzzzzz 0
-b0zzzzzzzzzzzzzzzzzzzzzzzz 2
-b0zzzzzzzzzzzzzzzzzzzzzzzz E
-b1010 F
-b1001 G
+b10000zzzzzzzzzzzzzzzz 0
+b10000zzzzzzzzzzzzzzzz 3
+b10000zzzzzzzzzzzzzzzz F
+b1011 G
+b1010 H
 1&
 #87
 0&
 #88
-b101zzzzzzzzzzzzzzzz !
-b101zzzzzzzzzzzzzzzz 0
-b101zzzzzzzzzzzzzzzz 2
-b101zzzzzzzzzzzzzzzz E
-b1011 F
-b1010 G
+b1000000000101zzzzzzzz 0
+b1000000000101zzzzzzzz 3
+b1000000000101zzzzzzzz F
+b1100 G
+b1011 H
 1&
 #89
 0&
 #90
-b10101000000zzzzzzzz !
-b10101000000zzzzzzzz 0
-b10101000000zzzzzzzz 2
-b10101000000zzzzzzzz E
-b1100 F
-b1011 G
+b100000000010110010011 0
+b100000000010110010011 3
+b100000000010110010011 F
+b1101 G
+b1100 H
 1&
 0%
 #91
 0&
 #92
-b1010100000010000011 !
-b1010100000010000011 0
-b1010100000010000011 2
-b1010100000010000011 E
-b1101 F
-b1100 G
+b100000000010110010011 "
+b100000000010110010011 1
+1#
+b0 G
+b1101 H
 1&
 #93
 0&
 #94
-1#
-b0 F
-b1101 G
+bz 0
+bz 3
+bz F
+0#
+b1001 G
+b0 H
 1&
 #95
 0&
 #96
-bz !
-bz 0
-bz 2
-bz E
-0#
-b11000 "
-b11000 /
-b1001 F
-b0 G
-b10100 '
-b10100 -
-b10100 1
-b1010100000010000011 *
+b110zzzzzzzzzzzzzzzzzzzzzzzz 0
+b110zzzzzzzzzzzzzzzzzzzzzzzz 3
+b110zzzzzzzzzzzzzzzzzzzzzzzz F
+b1100 !
+b1100 /
+b1010 G
+b1001 H
+b1000 '
+b1000 -
+b1000 2
+b100000000010110010011 *
 1&
 1%
 #97
 0&
 #98
-b0zzzzzzzzzzzzzzzzzzzzzzzz !
-b0zzzzzzzzzzzzzzzzzzzzzzzz 0
-b0zzzzzzzzzzzzzzzzzzzzzzzz 2
-b0zzzzzzzzzzzzzzzzzzzzzzzz E
-b1010 F
-b1001 G
+b11000100000zzzzzzzzzzzzzzzz 0
+b11000100000zzzzzzzzzzzzzzzz 3
+b11000100000zzzzzzzzzzzzzzzz F
+b1011 G
+b1010 H
 1&
 #99
 0&
 #100
-b101zzzzzzzzzzzzzzzz !
-b101zzzzzzzzzzzzzzzz 0
-b101zzzzzzzzzzzzzzzz 2
-b101zzzzzzzzzzzzzzzz E
-b1011 F
-b1010 G
+b1100010000000000110zzzzzzzz 0
+b1100010000000000110zzzzzzzz 3
+b1100010000000000110zzzzzzzz F
+b1100 G
+b1011 H
 1&
 #101
 0&
 #102
-b10111000001zzzzzzzz !
-b10111000001zzzzzzzz 0
-b10111000001zzzzzzzz 2
-b10111000001zzzzzzzz E
-b1100 F
-b1011 G
+b110001000000000011000010011 0
+b110001000000000011000010011 3
+b110001000000000011000010011 F
+b1101 G
+b1100 H
 1&
 0%
 #103
 0&
 #104
-b1011100000100000011 !
-b1011100000100000011 0
-b1011100000100000011 2
-b1011100000100000011 E
-b1101 F
-b1100 G
+b110001000000000011000010011 "
+b110001000000000011000010011 1
+1#
+b0 G
+b1101 H
 1&
 #105
 0&
 #106
-1#
-b0 F
-b1101 G
+bz 0
+bz 3
+bz F
+0#
+b1001 G
+b0 H
 1&
 #107
 0&
 #108
-bz !
-bz 0
-bz 2
-bz E
-0#
-b11100 "
-b11100 /
-b1001 F
-b0 G
-b1011100000100000011 *
-b11000 '
-b11000 -
-b11000 1
+b0zzzzzzzzzzzzzzzzzzzzzzzz 0
+b0zzzzzzzzzzzzzzzzzzzzzzzz 3
+b0zzzzzzzzzzzzzzzzzzzzzzzz F
+b10000 !
+b10000 /
+b1010 G
+b1001 H
+b110001000000000011000010011 *
+b1100 '
+b1100 -
+b1100 2
 1&
 1%
 #109
 0&
 #110
-b0zzzzzzzzzzzzzzzzzzzzzzzz !
-b0zzzzzzzzzzzzzzzzzzzzzzzz 0
-b0zzzzzzzzzzzzzzzzzzzzzzzz 2
-b0zzzzzzzzzzzzzzzzzzzzzzzz E
-b1010 F
-b1001 G
+b0zzzzzzzzzzzzzzzz 0
+b0zzzzzzzzzzzzzzzz 3
+b0zzzzzzzzzzzzzzzz F
+b1011 G
+b1010 H
 1&
 #111
 0&
 #112
-b100101zzzzzzzzzzzzzzzz !
-b100101zzzzzzzzzzzzzzzz 0
-b100101zzzzzzzzzzzzzzzz 2
-b100101zzzzzzzzzzzzzzzz E
-b1011 F
-b1010 G
+b1zzzzzzzz 0
+b1zzzzzzzz 3
+b1zzzzzzzz F
+b1100 G
+b1011 H
 1&
 #113
 0&
 #114
-b10010110000101zzzzzzzz !
-b10010110000101zzzzzzzz 0
-b10010110000101zzzzzzzz 2
-b10010110000101zzzzzzzz E
-b1100 F
-b1011 G
+b101010011 0
+b101010011 3
+b101010011 F
+b1101 G
+b1100 H
 1&
 0%
 #115
 0&
 #116
-b1001011000010110010011 !
-b1001011000010110010011 0
-b1001011000010110010011 2
-b1001011000010110010011 E
-b1101 F
-b1100 G
+b101010011 "
+b101010011 1
+1#
+b0 G
+b1101 H
 1&
 #117
 0&
 #118
-1#
-b0 F
-b1101 G
+bz 0
+bz 3
+bz F
+0#
+b1001 G
+b0 H
 1&
 #119
 0&
 #120
-bz !
-bz 0
-bz 2
-bz E
-0#
-b100000 "
-b100000 /
-b1001 F
-b0 G
-b11100 '
-b11100 -
-b11100 1
-b1001011000010110010011 *
+b0zzzzzzzzzzzzzzzzzzzzzzzz 0
+b0zzzzzzzzzzzzzzzzzzzzzzzz 3
+b0zzzzzzzzzzzzzzzzzzzzzzzz F
+b10100 !
+b10100 /
+b1010 G
+b1001 H
+b10000 '
+b10000 -
+b10000 2
+b101010011 *
 1&
 1%
 #121
 0&
 #122
-b10zzzzzzzzzzzzzzzzzzzzzzzz !
-b10zzzzzzzzzzzzzzzzzzzzzzzz 0
-b10zzzzzzzzzzzzzzzzzzzzzzzz 2
-b10zzzzzzzzzzzzzzzzzzzzzzzz E
-b1010 F
-b1001 G
+b101zzzzzzzzzzzzzzzz 0
+b101zzzzzzzzzzzzzzzz 3
+b101zzzzzzzzzzzzzzzz F
+b1011 G
+b1010 H
 1&
 #123
 0&
 #124
-b1000010000zzzzzzzzzzzzzzzz !
-b1000010000zzzzzzzzzzzzzzzz 0
-b1000010000zzzzzzzzzzzzzzzz 2
-b1000010000zzzzzzzzzzzzzzzz E
-b1011 F
-b1010 G
+b10101000000zzzzzzzz 0
+b10101000000zzzzzzzz 3
+b10101000000zzzzzzzz F
+b1100 G
+b1011 H
 1&
 #125
 0&
 #126
-b100001000010000001zzzzzzzz !
-b100001000010000001zzzzzzzz 0
-b100001000010000001zzzzzzzz 2
-b100001000010000001zzzzzzzz E
-b1100 F
-b1011 G
+b1010100000010000011 0
+b1010100000010000011 3
+b1010100000010000011 F
+b1101 G
+b1100 H
 1&
 0%
 #127
 0&
 #128
-b10000100001000000110110011 !
-b10000100001000000110110011 0
-b10000100001000000110110011 2
-b10000100001000000110110011 E
-b1101 F
-b1100 G
+b1010100000010000011 "
+b1010100000010000011 1
+1#
+b0 G
+b1101 H
 1&
 #129
 0&
 #130
-1#
-b0 F
-b1101 G
+bz 0
+bz 3
+bz F
+0#
+b1001 G
+b0 H
 1&
 #131
 0&
 #132
-bz !
-bz 0
-bz 2
-bz E
-0#
-b100100 "
-b100100 /
-b1001 F
-b0 G
-b10000100001000000110110011 *
-b100000 '
-b100000 -
-b100000 1
+b0zzzzzzzzzzzzzzzzzzzzzzzz 0
+b0zzzzzzzzzzzzzzzzzzzzzzzz 3
+b0zzzzzzzzzzzzzzzzzzzzzzzz F
+b11000 !
+b11000 /
+b1010 G
+b1001 H
+b1010100000010000011 *
+b10100 '
+b10100 -
+b10100 2
 1&
 1%
 #133
 0&
 #134
-b10zzzzzzzzzzzzzzzzzzzzzzzz !
-b10zzzzzzzzzzzzzzzzzzzzzzzz 0
-b10zzzzzzzzzzzzzzzzzzzzzzzz 2
-b10zzzzzzzzzzzzzzzzzzzzzzzz E
-b1010 F
-b1001 G
+b101zzzzzzzzzzzzzzzz 0
+b101zzzzzzzzzzzzzzzz 3
+b101zzzzzzzzzzzzzzzz F
+b1011 G
+b1010 H
 1&
 #135
 0&
 #136
-b1000100001zzzzzzzzzzzzzzzz !
-b1000100001zzzzzzzzzzzzzzzz 0
-b1000100001zzzzzzzzzzzzzzzz 2
-b1000100001zzzzzzzzzzzzzzzz E
-b1011 F
-b1010 G
+b10111000001zzzzzzzz 0
+b10111000001zzzzzzzz 3
+b10111000001zzzzzzzz F
+b1100 G
+b1011 H
 1&
 #137
 0&
 #138
-b100010000100000010zzzzzzzz !
-b100010000100000010zzzzzzzz 0
-b100010000100000010zzzzzzzz 2
-b100010000100000010zzzzzzzz E
-b1100 F
-b1011 G
+b1011100000100000011 0
+b1011100000100000011 3
+b1011100000100000011 F
+b1101 G
+b1100 H
 1&
 0%
+#139
+0&
+#140
+b1011100000100000011 "
+b1011100000100000011 1
+1#
+b0 G
+b1101 H
+1&
+#141
+0&
+#142
+bz 0
+bz 3
+bz F
+0#
+b1001 G
+b0 H
+1&
+#143
+0&
+#144
+b0zzzzzzzzzzzzzzzzzzzzzzzz 0
+b0zzzzzzzzzzzzzzzzzzzzzzzz 3
+b0zzzzzzzzzzzzzzzzzzzzzzzz F
+b11100 !
+b11100 /
+b1010 G
+b1001 H
+b11000 '
+b11000 -
+b11000 2
+b1011100000100000011 *
+1&
+1%
+#145
+0&
+#146
+b100101zzzzzzzzzzzzzzzz 0
+b100101zzzzzzzzzzzzzzzz 3
+b100101zzzzzzzzzzzzzzzz F
+b1011 G
+b1010 H
+1&
+#147
+0&
+#148
+b10010110000101zzzzzzzz 0
+b10010110000101zzzzzzzz 3
+b10010110000101zzzzzzzz F
+b1100 G
+b1011 H
+1&
+#149
+0&
+#150
+b1001011000010110010011 0
+b1001011000010110010011 3
+b1001011000010110010011 F
+b1101 G
+b1100 H
+1&
+0%
+#151
+0&
+#152
+b1001011000010110010011 "
+b1001011000010110010011 1
+1#
+b0 G
+b1101 H
+1&
+#153
+0&
+#154
+bz 0
+bz 3
+bz F
+0#
+b1001 G
+b0 H
+1&
+#155
+0&
+#156
+b10zzzzzzzzzzzzzzzzzzzzzzzz 0
+b10zzzzzzzzzzzzzzzzzzzzzzzz 3
+b10zzzzzzzzzzzzzzzzzzzzzzzz F
+b100000 !
+b100000 /
+b1010 G
+b1001 H
+b1001011000010110010011 *
+b11100 '
+b11100 -
+b11100 2
+1&
+1%
+#157
+0&
+#158
+b1000010000zzzzzzzzzzzzzzzz 0
+b1000010000zzzzzzzzzzzzzzzz 3
+b1000010000zzzzzzzzzzzzzzzz F
+b1011 G
+b1010 H
+1&
+#159
+0&
+#160
+b100001000010000001zzzzzzzz 0
+b100001000010000001zzzzzzzz 3
+b100001000010000001zzzzzzzz F
+b1100 G
+b1011 H
+1&
+#161
+0&
+#162
+b10000100001000000110110011 0
+b10000100001000000110110011 3
+b10000100001000000110110011 F
+b1101 G
+b1100 H
+1&
+0%
+#163
+0&
+#164
+b10000100001000000110110011 "
+b10000100001000000110110011 1
+1#
+b0 G
+b1101 H
+1&
+#165
+0&
+#166
+bz 0
+bz 3
+bz F
+0#
+b1001 G
+b0 H
+1&
+#167
+0&
+#168
+b10zzzzzzzzzzzzzzzzzzzzzzzz 0
+b10zzzzzzzzzzzzzzzzzzzzzzzz 3
+b10zzzzzzzzzzzzzzzzzzzzzzzz F
+b100100 !
+b100100 /
+b1010 G
+b1001 H
+b100000 '
+b100000 -
+b100000 2
+b10000100001000000110110011 *
+1&
+1%
+#169
+0&
+#170
+b1000100001zzzzzzzzzzzzzzzz 0
+b1000100001zzzzzzzzzzzzzzzz 3
+b1000100001zzzzzzzzzzzzzzzz F
+b1011 G
+b1010 H
+1&
+#171
+0&
+#172
+b100010000100000010zzzzzzzz 0
+b100010000100000010zzzzzzzz 3
+b100010000100000010zzzzzzzz F
+b1100 G
+b1011 H
+1&
+#173
+0&
+#174
+b10001000010000001000110011 0
+b10001000010000001000110011 3
+b10001000010000001000110011 F
+b1101 G
+b1100 H
+1&
+0%
+#175
+0&
+#176
+b10001000010000001000110011 "
+b10001000010000001000110011 1
+1#
+b0 G
+b1101 H
+1&
+#177
+0&
+#178
+bz 0
+bz 3
+bz F
+0#
+b1001 G
+b0 H
+1&
+#179
+0&
+#180
+b0zzzzzzzzzzzzzzzzzzzzzzzz 0
+b0zzzzzzzzzzzzzzzzzzzzzzzz 3
+b0zzzzzzzzzzzzzzzzzzzzzzzz F
+b101000 !
+b101000 /
+b1010 G
+b1001 H
+b10001000010000001000110011 *
+b100100 '
+b100100 -
+b100100 2
+1&
+1%
+#181
+0&
+#182
+b1000001zzzzzzzzzzzzzzzz 0
+b1000001zzzzzzzzzzzzzzzz 3
+b1000001zzzzzzzzzzzzzzzz F
+b1011 G
+b1010 H
+1&
+#183
+0&
+#184
+b100000110000010zzzzzzzz 0
+b100000110000010zzzzzzzz 3
+b100000110000010zzzzzzzz F
+b1100 G
+b1011 H
+1&

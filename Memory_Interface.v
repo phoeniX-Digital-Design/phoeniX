@@ -44,106 +44,111 @@ module Memory_Interface
             state <= STABLE; 
     end
     
+    // task FINISH();
+    //     begin
+    //         memory_done <= 1'b1;
+    //         next_state <= STABLE;
+    //     end
+    // endtask
+
     always @(*)
     begin
         next_state = 'bx;
 
-        
-        
         case (state)
             STABLE : begin
 
                 memory_done <= 1'b0;
                 data_in <= 32'bz;
                 
-                if (frame_mask == 4'b0000)  next_state = STABLE;
+                if (frame_mask == 4'b0000)  next_state <= STABLE;
 
-                if (frame_mask == 4'b0001)  next_state = B_0001;
-                if (frame_mask == 4'b0010)  next_state = B_0010;
-                if (frame_mask == 4'b0100)  next_state = B_0100;
-                if (frame_mask == 4'b1000)  next_state = B_1000;
+                if (frame_mask == 4'b0001)  next_state <= B_0001;
+                if (frame_mask == 4'b0010)  next_state <= B_0010;
+                if (frame_mask == 4'b0100)  next_state <= B_0100;
+                if (frame_mask == 4'b1000)  next_state <= B_1000;
 
-                if (frame_mask == 4'b0011)  next_state = H_0011_1;
-                if (frame_mask == 4'b1100)  next_state = H_1100_1;
+                if (frame_mask == 4'b0011)  next_state <= H_0011_1;
+                if (frame_mask == 4'b1100)  next_state <= H_1100_1;
 
-                if (frame_mask == 4'b1111)  next_state = W_1111_1;
+                if (frame_mask == 4'b1111)  next_state <= W_1111_1;
             end
 
             B_0001 : begin
-                if (memory_state == READ)   data_in = Memory[address + 3];
+                if (memory_state == READ)   data_in <= Memory[address + 3];
                 if (memory_state == WRITE)  Memory[address + 3] <= data;
-                next_state = FINISH;
+                next_state <= FINISH;
             end
 
             B_0010 : begin
-                if (memory_state == READ)   data_in = Memory[address + 2];
+                if (memory_state == READ)   data_in <= Memory[address + 2];
                 if (memory_state == WRITE)  Memory[address + 2] <= data;
-                next_state = FINISH;
+                next_state <= FINISH;
             end
             
             B_0100 : begin
-                if (memory_state == READ)   data_in = Memory[address + 1];
+                if (memory_state == READ)   data_in <= Memory[address + 1];
                 if (memory_state == WRITE)  Memory[address + 1] <= data;
-                next_state = FINISH;
+                next_state <= FINISH;
             end
 
             B_1000 : begin
-                if (memory_state == READ)   data_in = Memory[address + 0];
+                if (memory_state == READ)   data_in <= Memory[address + 0];
                 if (memory_state == WRITE)  Memory[address + 0] <= data;
-                next_state = FINISH;
+                next_state <= FINISH;
             end
 
             H_0011_1 : begin
                 if (memory_state == READ)   data_in[15 : 8] <= Memory[address + 2];
                 if (memory_state == WRITE)  Memory[address + 2] <= data[15 : 8];
-                next_state = H_0011_2;
+                next_state <= H_0011_2;
             end
 
             H_0011_2 : begin
                 if (memory_state == READ)   data_in[7 : 0] <= Memory[address + 3];
                 if (memory_state == WRITE)  Memory[address + 3] <= data[7 : 0];
-                next_state = FINISH;
+                next_state <= FINISH;
             end
 
             H_1100_1 : begin
                 if (memory_state == READ)   data_in[15 : 8] <= Memory[address + 0];
                 if (memory_state == WRITE)  Memory[address + 0] <= data[15 : 8];
-                next_state = H_1100_2;
+                next_state <= H_1100_2;
             end
 
             H_1100_2 : begin
                 if (memory_state == READ)   data_in[7 : 0] <= Memory[address + 1];
                 if (memory_state == WRITE)  Memory[address + 1] <= data[7 : 0];
-                next_state = FINISH;
+                next_state <= FINISH;
             end
 
             W_1111_1 : begin
                 if (memory_state == READ)   data_in[31 : 24] <= Memory[address + 0];
                 if (memory_state == WRITE)  Memory[address + 0] <= data[31 : 24]; 
-                next_state = W_1111_2;
+                next_state <= W_1111_2;
             end
 
             W_1111_2 : begin
                 if (memory_state == READ)   data_in[23 : 16] <= Memory[address + 1];
                 if (memory_state == WRITE)  Memory[address + 1] <= data[23 : 16]; 
-                next_state = W_1111_3;
+                next_state <= W_1111_3;
             end
 
             W_1111_3 : begin
                 if (memory_state == READ)   data_in[15 : 8] <= Memory[address + 2];
                 if (memory_state == WRITE)  Memory[address + 2] <= data[15 : 8]; 
-                next_state = W_1111_4;
+                next_state <= W_1111_4;
             end
 
             W_1111_4 : begin
                 if (memory_state == READ)   data_in[7 : 0] <= Memory[address + 3];
                 if (memory_state == WRITE)  Memory[address + 3] <= data[7 : 0]; 
-                next_state = FINISH;
+                next_state <= FINISH;
             end
 
             FINISH : begin
-                memory_done = 1'b1;
-                next_state = STABLE;
+                memory_done <= 1'b1;
+                next_state <= STABLE;
             end
         endcase
     end
