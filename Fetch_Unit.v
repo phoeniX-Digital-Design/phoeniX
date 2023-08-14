@@ -1,28 +1,27 @@
-`include "Register.v"
 `include "Memory_Interface.v"
 
 module Fetch_Unit 
 (
-    input CLK,
-    input Reset,
+    	input CLK,
+	input enable,			// Memory Interface module enable pin (from Control Unit)
 
-	input branch_enable,
-	input [31 : 0] immediate,
+	input [31 : 0] address,		// Branch address generated in Address Generator
+	input branch_enable,		// Generated in Branch Unit module
+	input jump_enable,            // ******************************************************
+    	input Reset, 			// Set PC address to 32'FFFC
 
-	output [31 : 0] PC,
-	output [31 : 0] instruction
+	output [31 : 0] instruction,  // output "data" in Memory Interface module
+	output fetch_done			// output "memory_done" in Memory Interface module
 );
 
-	wire [31 : 0] branch_target;
+	wire [31 : 0] PC;
 	wire [31 : 0] next_PC;
-	wire [31 : 0] PC_register_input;
 
-	assign branch_target = PC + immediate;
-	assign next_PC = branch_enable ? branch_target : PC + 4;
-	assign PC_register_input = Reset ? 32'b0 - 4 : next_PC;
+    	assign next_PC = branch_enable ? address : PC + 4;
+	assign next_PC = jump_enable   ? address : PC + 4;
 
-	Register pc_register (CLK, enable, PC_register_input, PC);
+	assign PC = Reset ? 32'b0 - 4 : next_PC;
 
-    //   Memory_Interface instruction_memory (CLK, Reset, 1'b1, 1'b1, 1'b0, PC/4, 32'b0, instruction);
-      
+	Memory_Interface instruction_memory (CLK, enable, 1'b0, 4'b1111, PC/4, instruction, fetch_done);
+
 endmodule
