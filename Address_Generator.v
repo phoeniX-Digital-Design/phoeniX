@@ -13,9 +13,9 @@ module Address_Generator
     input  [31 : 0] immediate,
     input  [31 : 0] PC,
 
-    output [31 : 0] address
+    output [31 : 0] address_generated
 );
 
-    assign address = PC + immediate;
+    assign address_generated = PC + immediate;
     
 endmodule
