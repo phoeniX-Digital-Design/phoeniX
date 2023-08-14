@@ -1,5 +1,5 @@
-// `include "Memory_Interface.v"
-`include "..\\Memory_Interface.v"
+`include "Memory_Interface.v"
+// `include "..\\Memory_Interface.v"
 
 module Fetch_Unit 
 (
@@ -8,7 +8,7 @@ module Fetch_Unit
 
     input [31 : 0] PC,
 
-	input [31 : 0] address_generated,		                // Branch address generated in Address Generator
+	input [31 : 0] address,		                // Branch address generated in Address Generator
 	input jump_branch_enable,		                        // Generated in Branch Unit module
 
     output [31 : 0] next_PC,
@@ -27,7 +27,7 @@ module Fetch_Unit
         .memory_done(fetch_done)
     );
 
-    assign next_PC = jump_branch_enable ? address_generated : PC + 32'd4;
+    assign next_PC = jump_branch_enable ? address : PC + 32'd4;
 
     always @(posedge fetch_done) 
     begin
