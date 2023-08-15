@@ -139,8 +139,37 @@ module TB_LSU;
         address = 32'bz;
         opcode = 7'bz;
         funct3 = 3'bz;
+
+        // --> Store Byte (8 bits) to address 22
+        #12 
+        address = 32'd22;
+        store_data = 32'hAB;
+        opcode = 7'b0100011;
+        funct3 = 3'b000;
+        enable = 1'b1;
+
+        #12
+        enable = 1'b0;
+        address = 32'bz;
+        store_data = 32'bz;
+        opcode = 7'bz;
+        funct3 = 3'bz;
+
+        // --> Load Word (32 bits) from address 20
+        #12 
+        address = 32'd20;
         
-        #100;
+        opcode = 7'b0000011;
+        funct3 = 3'b010;
+        enable = 1'b1;
+
+        #12
+        enable = 1'b0;
+        address = 32'bz;
+        opcode = 7'bz;
+        funct3 = 3'bz;
+
+        #12;
         $finish;
     end
 endmodule
