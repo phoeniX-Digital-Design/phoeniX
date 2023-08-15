@@ -12,8 +12,10 @@ module Control_Unit
     input [6 : 0] funct7,               // inputs from Instruction Decoder
     input [2 : 0] instruction_type,     // inputs from Instruction Decoder
 
-    input forward_exe,                  // Forward data from execution satge
-    input forward_mem,                  // Forward data from memory satge
+    input forward_exe_mux1,             // Forward data from execution satge - mux 1
+    input forward_exe_mux2,             // Forward data from execution satge - mux 2
+    input forward_mem_mux1,             // Forward data from memory satge - mux 1
+    input forward_mem_mux2,             // Forward data from memory satge - mux 2
 
     input fetch_done,                   // Fetch operation end signal from Fetch Unit
 
@@ -61,24 +63,28 @@ module Control_Unit
         endcase
 
         // ALU multiplexers select pin evaluation
-        case ({forward_mem, forward_exe, opcode})
+        case ({forward_mem_mux2, forward_mem_mux1, forward_exe_mux2, forward_exe_mux1, opcode})
             // Multiplexer outputs without forwarding data
-            9'b0_0_0010011 : begin mux1_select = 2'b00; mux2_select = 3'b010; end // I-TYPE ALU operations
-            9'b0_0_0110011 : begin mux1_select = 2'b00; mux2_select = 3'b000; end // R-TYPE ALU operations
-            9'b0_0_1101111 : begin mux1_select = 2'b10; mux2_select = 3'b011; end // JAL  instruction
-            9'b0_0_1100111 : begin mux1_select = 2'b10; mux2_select = 3'b011; end // JALR instruction
-            /*
+            11'b0_0_0_0_0010011 : begin mux1_select = 2'b00; mux2_select = 3'b010; end // I-TYPE ALU operations
+            11'b0_0_0_0_0110011 : begin mux1_select = 2'b00; mux2_select = 3'b000; end // R-TYPE ALU operations
+            11'b0_0_0_0_1101111 : begin mux1_select = 2'b10; mux2_select = 3'b011; end // JAL  instruction
+            11'b0_0_0_0_1100111 : begin mux1_select = 2'b10; mux2_select = 3'b011; end // JALR instruction
+            
             // Multiplexer outputs with forwarding data from execution stage
-            9'b0_1_0010011 : begin mux1_select = 2'b00; mux2_select = 3'b010; end // I-TYPE ALU operations
-            9'b0_1_0110011 : begin mux1_select = 2'b00; mux2_select = 3'b000; end // R-TYPE ALU operations
-            9'b0_1_1101111 : begin mux1_select = 2'b00; mux2_select = 3'b000; end // JAL  instruction
-            9'b0_1_1100111 : begin mux1_select = 2'b00; mux2_select = 3'b000; end // JALR instruction
+            11'b0_0_0_1_0010011 : begin mux1_select = 2'b01; mux2_select = 3'b010; end // I-TYPE ALU operations
+            11'b0_0_0_1_0110011 : begin mux1_select = 2'b01; mux2_select = 3'b000; end // R-TYPE ALU operations
+            11'b0_0_1_0_0110011 : begin mux1_select = 2'b00; mux2_select = 3'b001; end // R-TYPE ALU operations
+            11'b0_0_1_1_0110011 : begin mux1_select = 2'b01; mux2_select = 3'b001; end // R-TYPE ALU operations
+            // JAL and JALR ???? *****************************************************
+
             // Multiplexer outputs with forwarding data from memory unit
-            9'b1_0_0010011 : begin mux1_select = 2'b00; mux2_select = 3'b010; end // I-TYPE ALU operations
-            9'b1_0_0110011 : begin mux1_select = 2'b00; mux2_select = 3'b000; end // R-TYPE ALU operations
-            9'b1_0_1101111 : begin mux1_select = 2'b00; mux2_select = 3'b000; end // JAL  instruction
-            9'b1_0_1100111 : begin mux1_select = 2'b00; mux2_select = 3'b000; end // JALR instruction
-        */
+            11'b0_1_0_0_0010011 : begin mux1_select = 2'b11; mux2_select = 3'b010; end // I-TYPE ALU operations
+            11'b0_1_0_0_0110011 : begin mux1_select = 2'b11; mux2_select = 3'b000; end // R-TYPE ALU operations
+            11'b1_0_0_0_0110011 : begin mux1_select = 2'b00; mux2_select = 3'b100; end // R-TYPE ALU operations
+            11'b1_1_0_0_0110011 : begin mux1_select = 2'b11; mux2_select = 3'b100; end // R-TYPE ALU operations
+            // JAL and JALR ???? *****************************************************
+
+            //Multiplexer outputs with forwarding data from both execution and memory units
 
         endcase
         
