@@ -10,7 +10,6 @@ module Bypass_Mux
 );
 
 always @(*) begin
-  
   case (forward_control)
     3'b000 : bypass_mux_output = bus_rs1;
     3'b001 : bypass_mux_output = forwarded_exe_data;
@@ -18,7 +17,6 @@ always @(*) begin
     3'b011 : bypass_mux_output = forwarded_store_data;
     default: bypass_mux_output = bus_rs1;
   endcase
-
 end
 
 endmodule
