@@ -18,17 +18,13 @@ module Arithmetic_Logic_Unit
     input [2 : 0] funct3,               // ALU Operation
     input [6 : 0] funct7,               // ALU Operation
     
-    input [1 : 0] mux1_select,          // Bypass Mux for operand_1
-    input [2 : 0] mux2_select,          // Bypass Mux for operand_2
+    input mux1_select,                  // Bypass Mux for operand_1
+    input [1 : 0] mux2_select,          // Bypass Mux for operand_2
 
     input [31 : 0] PC,                  // Program Counter Register
-    input [31 : 0] bus_rs1,             // Register Source 1
-    input [31 : 0] bus_rs2,             // Register Source 2
+    input [31 : 0] rs1,                 // Register Source 1
+    input [31 : 0] rs2,                 // Register Source 2
     input [31 : 0] immediate,           // Immediate Source
-    input [31 : 0] forward_exe_rs1,     // Forwarded Data 1 from execution stage
-    input [31 : 0] forward_exe_rs2,     // Forwarded Data 2 from execution stage
-    input [31 : 0] forward_mem_rs1,     // Forwarded Data 1 from memory stage
-    input [31 : 0] forward_mem_rs2,     // Forwarded Data 2 from memory stage
 
     output reg [31 : 0] alu_output      // ALU Result
 );
@@ -39,20 +35,16 @@ module Arithmetic_Logic_Unit
     // Bypassing (Data Forwarding) Multiplexer 1
     always @(*) begin
         case (mux1_select)
-            2'b00 : operand_1 = bus_rs1;
-            2'b01 : operand_1 = forward_exe_rs1;
-            2'b10 : operand_1 = PC;
-            2'b11 : operand_1 = forward_mem_rs1;
+            1'b0 : operand_1 = rs1;
+            1'b1 : operand_1 = PC;
         endcase
     end
     // Bypassing (Data Forwarding) Multiplexer 2
     always @(*) begin
         case (mux2_select)
-            3'b000 : operand_2 = bus_rs2;
-            3'b001 : operand_2 = forward_exe_rs2;
-            3'b010 : operand_2 = immediate;
-            3'b011 : operand_2 = 32'd4;
-            3'b100 : operand_2 = forward_mem_rs2;
+            2'b00 : operand_2 = rs2;
+            2'b01 : operand_2 = immediate;
+            2'b10 : operand_2 = 4;
         endcase
     end
 
