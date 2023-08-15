@@ -27,8 +27,8 @@ module Arithmetic_Logic_Unit
     input [31 : 0] immediate,           // Immediate Source
     input [31 : 0] forward_exe_rs1,     // Forwarded Data 1 from execution stage
     input [31 : 0] forward_exe_rs2,     // Forwarded Data 2 from execution stage
-    input [31 : 0] forward_wb_rs1,      // Forwarded Data 1 from writeback stage
-    input [31 : 0] forward_wb_rs2,      // Forwarded Data 2 from writeback stage
+    input [31 : 0] forward_mem_rs1,     // Forwarded Data 1 from memory stage
+    input [31 : 0] forward_mem_rs2,     // Forwarded Data 2 from memory stage
 
     output reg [31 : 0] alu_output      // ALU Result
 );
@@ -42,7 +42,7 @@ module Arithmetic_Logic_Unit
             2'b00 : operand_1 = bus_rs1;
             2'b01 : operand_1 = forward_exe_rs1;
             2'b10 : operand_1 = PC;
-            2'b11 : operand_1 = forward_wb_rs1;
+            2'b11 : operand_1 = forward_mem_rs1;
         endcase
     end
     // Bypassing (Data Forwarding) Multiplexer 2
@@ -52,7 +52,7 @@ module Arithmetic_Logic_Unit
             3'b001 : operand_2 = forward_exe_rs2;
             3'b010 : operand_2 = immediate;
             3'b011 : operand_2 = 32'd4;
-            3'b100 : operand_2 = forward_wb_rs2;
+            3'b100 : operand_2 = forward_mem_rs2;
         endcase
     end
 
