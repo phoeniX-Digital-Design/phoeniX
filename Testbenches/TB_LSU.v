@@ -81,5 +81,4 @@ module TB_LSU;
         #100;
         $finish;
     end
-
 endmodule

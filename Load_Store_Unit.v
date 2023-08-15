@@ -105,5 +105,4 @@ module Load_Store_Unit
             10'b010_0000011 : load_data <= data;                                // LW
         endcase    
     end
-
 endmodule
