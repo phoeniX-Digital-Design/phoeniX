@@ -5,6 +5,11 @@
 `define J_TYPE 4
 `define R_TYPE 6
 
+`define RS_BUS          3'b000
+`define FORWARD_EXE     3'b001
+`define FORWARD_MEM     3'b010
+`define FORWARD_STORE   3'b011
+
 module Control_Unit 
 (
     input [6 : 0] opcode,               // inputs from Instruction Decoder
@@ -21,8 +26,10 @@ module Control_Unit
 
     output reg address_type,            // select type for Address Generator module
 
-    output reg [2 : 0] mux1_select,     // ALU multiplexer select pin
-    output reg [3 : 0] mux2_select,     // ALU multiplexer select pin
+    output reg  mux1_select,            // ALU multiplexer select pin
+    output reg [1 : 0] mux2_select,     // ALU multiplexer select pin
+
+    output reg [2 : 0] forward_control, // Forwarding multiplexers control pins
 
     output reg fetch_enable,            // Fetch Unit enable pin
 
@@ -75,14 +82,12 @@ module Control_Unit
             11'b0_0_0_1_0110011 : begin mux1_select = 2'b01; mux2_select = 3'b000; end // R-TYPE ALU operations
             11'b0_0_1_0_0110011 : begin mux1_select = 2'b00; mux2_select = 3'b001; end // R-TYPE ALU operations
             11'b0_0_1_1_0110011 : begin mux1_select = 2'b01; mux2_select = 3'b001; end // R-TYPE ALU operations
-            // JAL and JALR ???? *****************************************************
 
             // Multiplexer outputs with forwarding data from memory unit
             11'b0_1_0_0_0010011 : begin mux1_select = 2'b11; mux2_select = 3'b010; end // I-TYPE ALU operations
             11'b0_1_0_0_0110011 : begin mux1_select = 2'b11; mux2_select = 3'b000; end // R-TYPE ALU operations
             11'b1_0_0_0_0110011 : begin mux1_select = 2'b00; mux2_select = 3'b100; end // R-TYPE ALU operations
             11'b1_1_0_0_0110011 : begin mux1_select = 2'b11; mux2_select = 3'b100; end // R-TYPE ALU operations
-            // JAL and JALR ???? *****************************************************
 
             //Multiplexer outputs with forwarding data from both execution and memory units
 
