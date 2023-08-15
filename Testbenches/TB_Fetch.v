@@ -53,7 +53,8 @@ module TB_Fetch;
     always #1 CLK_MEM = ~CLK_MEM;
     always #6 CLK = ~CLK;
 
-    initial begin
+    initial 
+    begin
 
         $dumpfile("Test_Fetch.vcd");
         $dumpvars(0, TB_Fetch);
