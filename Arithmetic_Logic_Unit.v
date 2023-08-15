@@ -3,7 +3,7 @@
     - This unit executes R-Type and I-Type instructions
     - Inputs bus_rs1, bus_rs2 comes from Register_File
     - Input immediate comes from Immediate_Generator
-    - Inputs forward_rs1, forward_rs2 comes from the execution-unit output (bypassed)
+    - Inputs forward_exe_rs1, forward_exe_rs2 comes from the execution-unit output (bypassed)
     - Input signals opcode, funct3, funct7, comes from Instruction_Decoder
     - Input signals mux1_select, mux2_select comes from Control_Unit
     - Supported Instructions :
@@ -19,14 +19,16 @@ module Arithmetic_Logic_Unit
     input [6 : 0] funct7,               // ALU Operation
     
     input [1 : 0] mux1_select,          // Bypass Mux for operand_1
-    input [1 : 0] mux2_select,          // Bypass Mux for operand_2
+    input [2 : 0] mux2_select,          // Bypass Mux for operand_2
 
     input [31 : 0] PC,                  // Program Counter Register
     input [31 : 0] bus_rs1,             // Register Source 1
     input [31 : 0] bus_rs2,             // Register Source 2
     input [31 : 0] immediate,           // Immediate Source
-    input [31 : 0] forward_rs1,         // Forwarded Data 1
-    input [31 : 0] forward_rs2,         // Forwarded Data 2
+    input [31 : 0] forward_exe_rs1,     // Forwarded Data 1 from execution stage
+    input [31 : 0] forward_exe_rs2,     // Forwarded Data 2 from execution stage
+    input [31 : 0] forward_wb_rs1,      // Forwarded Data 1 from writeback stage
+    input [31 : 0] forward_wb_rs2,      // Forwarded Data 2 from writeback stage
 
     output reg [31 : 0] alu_output      // ALU Result
 );
@@ -38,17 +40,19 @@ module Arithmetic_Logic_Unit
     always @(*) begin
         case (mux1_select)
             2'b00 : operand_1 = bus_rs1;
-            2'b01 : operand_1 = forward_rs1;
+            2'b01 : operand_1 = forward_exe_rs1;
             2'b10 : operand_1 = PC;
+            2'b11 : operand_1 = forward_wb_rs1;
         endcase
     end
     // Bypassing (Data Forwarding) Multiplexer 2
     always @(*) begin
         case (mux2_select)
-            2'b00 : operand_2 = bus_rs2;
-            2'b01 : operand_2 = forward_rs2;
-            2'b10 : operand_2 = immediate;
-            2'b11 : operand_2 = 32'd4;
+            3'b000 : operand_2 = bus_rs2;
+            3'b001 : operand_2 = forward_exe_rs2;
+            3'b010 : operand_2 = immediate;
+            3'b011 : operand_2 = 32'd4;
+            3'b100 : operand_2 = forward_wb_rs2;
         endcase
     end
 
