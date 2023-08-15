@@ -68,30 +68,6 @@ module Control_Unit
             `R_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b1; write_enable = 1'b1; end
             default : begin end // Exception raise 
         endcase
-
-        // ALU multiplexers select pin evaluation
-        case ({forward_mem_mux2, forward_mem_mux1, forward_exe_mux2, forward_exe_mux1, opcode})
-            // Multiplexer outputs without forwarding data
-            11'b0_0_0_0_0010011 : begin mux1_select = 2'b00; mux2_select = 3'b010; end // I-TYPE ALU operations
-            11'b0_0_0_0_0110011 : begin mux1_select = 2'b00; mux2_select = 3'b000; end // R-TYPE ALU operations
-            11'b0_0_0_0_1101111 : begin mux1_select = 2'b10; mux2_select = 3'b011; end // JAL  instruction
-            11'b0_0_0_0_1100111 : begin mux1_select = 2'b10; mux2_select = 3'b011; end // JALR instruction
-            
-            // Multiplexer outputs with forwarding data from execution stage
-            11'b0_0_0_1_0010011 : begin mux1_select = 2'b01; mux2_select = 3'b010; end // I-TYPE ALU operations
-            11'b0_0_0_1_0110011 : begin mux1_select = 2'b01; mux2_select = 3'b000; end // R-TYPE ALU operations
-            11'b0_0_1_0_0110011 : begin mux1_select = 2'b00; mux2_select = 3'b001; end // R-TYPE ALU operations
-            11'b0_0_1_1_0110011 : begin mux1_select = 2'b01; mux2_select = 3'b001; end // R-TYPE ALU operations
-
-            // Multiplexer outputs with forwarding data from memory unit
-            11'b0_1_0_0_0010011 : begin mux1_select = 2'b11; mux2_select = 3'b010; end // I-TYPE ALU operations
-            11'b0_1_0_0_0110011 : begin mux1_select = 2'b11; mux2_select = 3'b000; end // R-TYPE ALU operations
-            11'b1_0_0_0_0110011 : begin mux1_select = 2'b00; mux2_select = 3'b100; end // R-TYPE ALU operations
-            11'b1_1_0_0_0110011 : begin mux1_select = 2'b11; mux2_select = 3'b100; end // R-TYPE ALU operations
-
-            //Multiplexer outputs with forwarding data from both execution and memory units
-
-        endcase
         
     end
       
