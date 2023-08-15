@@ -12,6 +12,8 @@ module Control_Unit
     input [6 : 0] funct7,               // inputs from Instruction Decoder
     input [2 : 0] instruction_type,     // inputs from Instruction Decoder
 
+    input 
+
     input fetch_done,                   // Fetch operation end signal from Fetch Unit
 
     output reg address_type,            // select type for Address Generator module
@@ -57,10 +59,12 @@ module Control_Unit
             default : begin end // Exception raise 
         endcase
 
-
-
-
         // ALU multiplexers select pin evaluation
+        case ({forward, opcode})
+            7'b0010011 : begin mux1_select = 2'b00; mux2_select = 2'b10; end
+            7'b0010011 : begin mux1_select = 2'b00; mux2_select = 2'b10; end  
+            default: 
+        endcase
         
 
         
