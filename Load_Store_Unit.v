@@ -1,5 +1,5 @@
-//`include "Memory_Interface.v"
-`include "..\\Memory_Interface.v"
+`include "Memory_Interface.v"
+//`include "..\\Memory_Interface.v"
 
 module Load_Store_Unit
 (     
