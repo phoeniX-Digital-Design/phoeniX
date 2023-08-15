@@ -1,0 +1,636 @@
+$date
+	Tue Aug 15 16:00:03 2023
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	100ps
+$end
+$scope module TB_LSU $end
+$var wire 32 ! load_data [31:0] $end
+$var reg 1 " CLK $end
+$var reg 1 # CLK_MEM $end
+$var reg 32 $ address [31:0] $end
+$var reg 1 % enable $end
+$var reg 3 & funct3 [2:0] $end
+$var reg 7 ' opcode [6:0] $end
+$var reg 32 ( store_data [31:0] $end
+$scope module uut $end
+$var wire 1 # CLK $end
+$var wire 32 ) address [31:0] $end
+$var wire 32 * data [31:0] $end
+$var wire 1 % enable $end
+$var wire 3 + funct3 [2:0] $end
+$var wire 7 , opcode [6:0] $end
+$var wire 32 - store_data [31:0] $end
+$var wire 1 . memory_done $end
+$var reg 4 / frame_mask [3:0] $end
+$var reg 32 0 load_data [31:0] $end
+$var reg 1 1 memory_state $end
+$scope module data_memory $end
+$var wire 1 # CLK $end
+$var wire 32 2 address [31:0] $end
+$var wire 32 3 data [31:0] $end
+$var wire 1 % enable $end
+$var wire 4 4 frame_mask [3:0] $end
+$var wire 1 1 memory_state $end
+$var parameter 4 5 B_0001 $end
+$var parameter 4 6 B_0010 $end
+$var parameter 4 7 B_0100 $end
+$var parameter 4 8 B_1000 $end
+$var parameter 4 9 FINISH $end
+$var parameter 4 : H_0011_1 $end
+$var parameter 4 ; H_0011_2 $end
+$var parameter 4 < H_1100_1 $end
+$var parameter 4 = H_1100_2 $end
+$var parameter 1 > READ $end
+$var parameter 4 ? STABLE $end
+$var parameter 1 @ WRITE $end
+$var parameter 4 A W_1111_1 $end
+$var parameter 4 B W_1111_2 $end
+$var parameter 4 C W_1111_3 $end
+$var parameter 4 D W_1111_4 $end
+$var reg 32 E data_in [31:0] $end
+$var reg 1 . memory_done $end
+$var reg 4 F next_state [3:0] $end
+$var reg 4 G state [3:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b1100 D
+b1011 C
+b1010 B
+b1001 A
+1@
+b0 ?
+0>
+b1000 =
+b111 <
+b110 ;
+b101 :
+b1101 9
+b100 8
+b11 7
+b10 6
+b1 5
+$end
+#0
+$dumpvars
+b0 G
+b0 F
+bz E
+b0 4
+bz 3
+bx00 2
+01
+bx 0
+b0 /
+0.
+bz -
+bz ,
+bz +
+bz *
+bz )
+bz (
+bz '
+bz &
+0%
+bz $
+1#
+1"
+bx !
+$end
+#10
+0#
+#20
+1#
+#30
+0#
+#40
+1#
+#50
+0#
+#60
+1#
+0"
+#70
+0#
+#80
+1#
+#90
+0#
+#100
+1#
+#110
+0#
+#120
+b1001 F
+b10000 2
+01
+b1111 /
+b1111 4
+1#
+1"
+1%
+b10 &
+b10 +
+b11 '
+b11 ,
+b10000 $
+b10000 )
+#130
+0#
+#140
+b1010 F
+b0zzzzzzzzzzzzzzzzzzzzzzzz *
+b0zzzzzzzzzzzzzzzzzzzzzzzz 3
+b0zzzzzzzzzzzzzzzzzzzzzzzz E
+b1001 G
+1#
+#150
+0#
+#160
+b1011 F
+b101zzzzzzzzzzzzzzzz *
+b101zzzzzzzzzzzzzzzz 3
+b101zzzzzzzzzzzzzzzz E
+b1010 G
+1#
+#170
+0#
+#180
+b1100 F
+b10101000000zzzzzzzz *
+b10101000000zzzzzzzz 3
+b10101000000zzzzzzzz E
+b1011 G
+1#
+0"
+#190
+0#
+#200
+b1101 F
+b1010100000010000011 *
+b1010100000010000011 3
+b1010100000010000011 E
+b1100 G
+1#
+#210
+0#
+#220
+b1010100000010000011 !
+b1010100000010000011 0
+b0 F
+1.
+b1101 G
+1#
+#230
+0#
+#240
+bz *
+bz 3
+bz E
+0.
+b0 G
+bx00 2
+01
+b0 /
+b0 4
+1#
+1"
+bz &
+bz +
+bz '
+bz ,
+bz $
+bz )
+0%
+#250
+0#
+#260
+1#
+#270
+0#
+#280
+1#
+#290
+0#
+#300
+1#
+0"
+#310
+0#
+#320
+1#
+#330
+0#
+#340
+1#
+#350
+0#
+#360
+b1 F
+b10000 2
+01
+b1 /
+b1 4
+1#
+1"
+1%
+b100 &
+b100 +
+b11 '
+b11 ,
+b10011 $
+b10011 )
+#370
+0#
+#380
+b1101 F
+b10000011 *
+b10000011 3
+b10000011 E
+b1 G
+1#
+#390
+0#
+#400
+b10000011 !
+b10000011 0
+b0 F
+1.
+b1101 G
+1#
+#410
+0#
+#420
+b1 F
+bz *
+bz 3
+bz E
+0.
+b0 G
+1#
+0"
+#430
+0#
+#440
+b1101 F
+b10000011 *
+b10000011 3
+b10000011 E
+b1 G
+1#
+#450
+0#
+#460
+b0 F
+1.
+b1101 G
+1#
+#470
+0#
+#480
+bz *
+bz 3
+bz E
+0.
+b0 G
+bx00 2
+01
+b0 /
+b0 4
+1#
+1"
+bz &
+bz +
+bz '
+bz ,
+bz $
+bz )
+0%
+#490
+0#
+#500
+1#
+#510
+0#
+#520
+1#
+#530
+0#
+#540
+1#
+0"
+#550
+0#
+#560
+1#
+#570
+0#
+#580
+1#
+#590
+0#
+#600
+b1001 F
+b10000 2
+01
+b1111 /
+b1111 4
+1#
+1"
+1%
+b10 &
+b10 +
+b11 '
+b11 ,
+b10000 $
+b10000 )
+#610
+0#
+#620
+b1010 F
+b0zzzzzzzzzzzzzzzzzzzzzzzz *
+b0zzzzzzzzzzzzzzzzzzzzzzzz 3
+b0zzzzzzzzzzzzzzzzzzzzzzzz E
+b1001 G
+1#
+#630
+0#
+#640
+b1011 F
+b101zzzzzzzzzzzzzzzz *
+b101zzzzzzzzzzzzzzzz 3
+b101zzzzzzzzzzzzzzzz E
+b1010 G
+1#
+#650
+0#
+#660
+b1100 F
+b10101000000zzzzzzzz *
+b10101000000zzzzzzzz 3
+b10101000000zzzzzzzz E
+b1011 G
+1#
+0"
+#670
+0#
+#680
+b1101 F
+b1010100000010000011 *
+b1010100000010000011 3
+b1010100000010000011 E
+b1100 G
+1#
+#690
+0#
+#700
+b1010100000010000011 !
+b1010100000010000011 0
+b0 F
+1.
+b1101 G
+1#
+#710
+0#
+#720
+bz *
+bz 3
+bz E
+0.
+b0 G
+bx00 2
+01
+b0 /
+b0 4
+1#
+1"
+bz &
+bz +
+bz '
+bz ,
+bz $
+bz )
+0%
+#730
+0#
+#740
+1#
+#750
+0#
+#760
+1#
+#770
+0#
+#780
+1#
+0"
+#790
+0#
+#800
+1#
+#810
+0#
+#820
+1#
+#830
+0#
+#840
+1#
+1"
+#850
+0#
+#860
+1#
+#870
+0#
+#880
+1#
+#890
+0#
+#900
+1#
+0"
+#910
+0#
+#920
+1#
+#930
+0#
+#940
+1#
+#950
+0#
+#960
+1#
+1"
+#970
+0#
+#980
+1#
+#990
+0#
+#1000
+1#
+#1010
+0#
+#1020
+1#
+0"
+#1030
+0#
+#1040
+1#
+#1050
+0#
+#1060
+1#
+#1070
+0#
+#1080
+1#
+1"
+#1090
+0#
+#1100
+1#
+#1110
+0#
+#1120
+1#
+#1130
+0#
+#1140
+1#
+0"
+#1150
+0#
+#1160
+1#
+#1170
+0#
+#1180
+1#
+#1190
+0#
+#1200
+1#
+1"
+#1210
+0#
+#1220
+1#
+#1230
+0#
+#1240
+1#
+#1250
+0#
+#1260
+1#
+0"
+#1270
+0#
+#1280
+1#
+#1290
+0#
+#1300
+1#
+#1310
+0#
+#1320
+1#
+1"
+#1330
+0#
+#1340
+1#
+#1350
+0#
+#1360
+1#
+#1370
+0#
+#1380
+1#
+0"
+#1390
+0#
+#1400
+1#
+#1410
+0#
+#1420
+1#
+#1430
+0#
+#1440
+1#
+1"
+#1450
+0#
+#1460
+1#
+#1470
+0#
+#1480
+1#
+#1490
+0#
+#1500
+1#
+0"
+#1510
+0#
+#1520
+1#
+#1530
+0#
+#1540
+1#
+#1550
+0#
+#1560
+1#
+1"
+#1570
+0#
+#1580
+1#
+#1590
+0#
+#1600
+1#
+#1610
+0#
+#1620
+1#
+0"
+#1630
+0#
+#1640
+1#
+#1650
+0#
+#1660
+1#
+#1670
+0#
+#1680
+1#
+1"
+#1690
+0#
+#1700
+1#
+#1710
+0#
+#1720
+1#
