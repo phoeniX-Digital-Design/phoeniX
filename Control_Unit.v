@@ -46,6 +46,23 @@ module Control_Unit
             default: address_type = 1'bz;
         endcase
 
+        // Register File read/write enable signals evaluation
+        case (instruction_type)
+            `I_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b0; write_enable = 1'b1; end
+            `B_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b1; write_enable = 1'b0; end
+            `S_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b1; write_enable = 1'b0; end
+            `U_TYPE : begin read_enable_1 = 1'b0; read_enable_2 = 1'b0; write_enable = 1'b1; end
+            `J_TYPE : begin read_enable_1 = 1'b0; read_enable_2 = 1'b0; write_enable = 1'b1; end 
+            `R_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b1; write_enable = 1'b1; end
+            default : begin end // Exception raise 
+        endcase
+
+
+
+
+        // ALU multiplexers select pin evaluation
+        
+
         
     end
       
