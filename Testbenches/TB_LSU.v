@@ -33,7 +33,6 @@ module TB_LSU;
 
     initial 
     begin
-
         $dumpfile("Test_LSU.vcd");
         $dumpvars(0, TB_LSU);
 
@@ -111,6 +110,36 @@ module TB_LSU;
         address = 32'bz;
         opcode = 7'bz;
         funct3 = 3'bz;
+
+        // --> Store Half-Word (16 bits) to address 22
+        #12 
+        address = 32'd22;
+        store_data = 32'hBABA;
+        opcode = 7'b0100011;
+        funct3 = 3'b001;
+        enable = 1'b1;
+
+        #12
+        enable = 1'b0;
+        address = 32'bz;
+        store_data = 32'bz;
+        opcode = 7'bz;
+        funct3 = 3'bz;
+
+        // --> Load Word (32 bits) from address 20
+        #12 
+        address = 32'd20;
+        
+        opcode = 7'b0000011;
+        funct3 = 3'b010;
+        enable = 1'b1;
+
+        #12
+        enable = 1'b0;
+        address = 32'bz;
+        opcode = 7'bz;
+        funct3 = 3'bz;
+        
         #100;
         $finish;
     end
