@@ -12,7 +12,8 @@ module Control_Unit
     input [6 : 0] funct7,               // inputs from Instruction Decoder
     input [2 : 0] instruction_type,     // inputs from Instruction Decoder
 
-    input 
+    input forward_exe,                  // Forward data from execution satge
+    input forward_mem,                  // Forward data from memory satge
 
     input fetch_done,                   // Fetch operation end signal from Fetch Unit
 
