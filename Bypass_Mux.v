@@ -1,10 +1,11 @@
 module Bypass_Mux
 (
-  input [31 : 0] bus_rs,
-  input [31 : 0] forwarded_exe_data,
-  input [31 : 0] forwarded_mem_data,
-  input [31 : 0] forwarded_store_data,
-  input [2  : 0] forward_control,
+  input [31 : 0] bus_rs,                    // Data coming from Registers
+  input [31 : 0] forwarded_exe_data,        // Execution stage output
+  input [31 : 0] forwarded_mem_data,        // Memory stage output
+  input [31 : 0] forwarded_store_data,      // Forwarded address
+
+  input [2  : 0] forward_control,           // Select pin (from Control Unit)
 
   output reg [31 : 0] bypass_mux_output
 );
