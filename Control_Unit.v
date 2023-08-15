@@ -20,7 +20,7 @@ module Control_Unit
     output reg address_type,            // select type for Address Generator module
 
     output reg [2 : 0] mux1_select,     // ALU multiplexer select pin
-    output reg [2 : 0] mux2_select,     // ALU multiplexer select pin
+    output reg [3 : 0] mux2_select,     // ALU multiplexer select pin
 
     output reg fetch_enable,            // Fetch Unit enable pin
 
@@ -61,13 +61,26 @@ module Control_Unit
         endcase
 
         // ALU multiplexers select pin evaluation
-        case ({forward, opcode})
-            7'b0010011 : begin mux1_select = 2'b00; mux2_select = 2'b10; end
-            7'b0010011 : begin mux1_select = 2'b00; mux2_select = 2'b10; end  
-            default: 
-        endcase
-        
+        case ({forward_mem, forward_exe, opcode})
+            // Multiplexer outputs without forwarding data
+            9'b0_0_0010011 : begin mux1_select = 2'b00; mux2_select = 3'b010; end // I-TYPE ALU operations
+            9'b0_0_0110011 : begin mux1_select = 2'b00; mux2_select = 3'b000; end // R-TYPE ALU operations
+            9'b0_0_1101111 : begin mux1_select = 2'b10; mux2_select = 3'b011; end // JAL  instruction
+            9'b0_0_1100111 : begin mux1_select = 2'b10; mux2_select = 3'b011; end // JALR instruction
+            /*
+            // Multiplexer outputs with forwarding data from execution stage
+            9'b0_1_0010011 : begin mux1_select = 2'b00; mux2_select = 3'b010; end // I-TYPE ALU operations
+            9'b0_1_0110011 : begin mux1_select = 2'b00; mux2_select = 3'b000; end // R-TYPE ALU operations
+            9'b0_1_1101111 : begin mux1_select = 2'b00; mux2_select = 3'b000; end // JAL  instruction
+            9'b0_1_1100111 : begin mux1_select = 2'b00; mux2_select = 3'b000; end // JALR instruction
+            // Multiplexer outputs with forwarding data from memory unit
+            9'b1_0_0010011 : begin mux1_select = 2'b00; mux2_select = 3'b010; end // I-TYPE ALU operations
+            9'b1_0_0110011 : begin mux1_select = 2'b00; mux2_select = 3'b000; end // R-TYPE ALU operations
+            9'b1_0_1101111 : begin mux1_select = 2'b00; mux2_select = 3'b000; end // JAL  instruction
+            9'b1_0_1100111 : begin mux1_select = 2'b00; mux2_select = 3'b000; end // JALR instruction
+        */
 
+        endcase
         
     end
       
