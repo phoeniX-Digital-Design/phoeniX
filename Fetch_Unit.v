@@ -8,7 +8,7 @@ module Fetch_Unit
 
     input [31 : 0] PC,
 
-	input [31 : 0] address,		                            // Branch address generated in Address Generator
+	input [31 : 0] address,		                            // Branch or Jump address generated in Address Generator
 	input jump_branch_enable,		                        // Generated in Branch Unit module
 
     output [31 : 0] next_PC,
@@ -17,7 +17,8 @@ module Fetch_Unit
 );
     wire    [31 : 0] fetched_instruction;
 
-	Memory_Interface instruction_memory (
+	Memory_Interface instruction_memory 
+    (
         .CLK(CLK),
         .enable(enable), 
         .memory_state(instruction_memory.READ),
