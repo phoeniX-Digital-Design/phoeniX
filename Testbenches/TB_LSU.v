@@ -1,3 +1,4 @@
+`timescale 1ns/100ps
 `include "..\\Load_Store_Unit.v"
 
 module TB_LSU;
