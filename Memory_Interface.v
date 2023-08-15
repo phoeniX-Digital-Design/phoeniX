@@ -8,10 +8,10 @@ module Memory_Interface
   	input [31 : 0] address,
 
   	inout [31 : 0] data,
-    output reg memory_done
+    output reg  memory_done
 );
 
- 	reg [7 : 0] Memory [0 : 1023];
+ 	reg [7 : 0] Memory [0 : 255];
     reg [31 : 0] data_in;
 
     localparam  READ        = 1'b0,
@@ -43,21 +43,11 @@ module Memory_Interface
         else    
             state <= STABLE; 
     end
-    
-    // task FINISH();
-    //     begin
-    //         memory_done <= 1'b1;
-    //         next_state <= STABLE;
-    //     end
-    // endtask
 
     always @(*)
     begin
-        next_state = 'bx;
-
         case (state)
             STABLE : begin
-
                 memory_done <= 1'b0;
                 data_in <= 32'bz;
                 
@@ -154,38 +144,5 @@ module Memory_Interface
     end
 
     assign data = data_in;
-
-    /*
-	always @(*) begin
-
-	  if (enable) begin
-	    if (address <= 255) begin // Check if address is within memory range
-
-	      if (memory_state) begin         // Write operation
-
-	        case (frame_mask)
-	          // Store Byte 
-	          4'b0001 : memory[address + 3] = data;
-	          4'b0010 : memory[address + 2] = data;
-	          4'b0100 : memory[address + 1] = data;
-	          4'b1000 : memory[address + 0] = data;
-	          // Store Half-word 
-	          4'b0011 : begin
-	            memory[address + 2] = data;
-	          end
-	          4'b1100 : memory[address + 0] = data;
-	        endcase
-
-			
-	      end 
-	      else if (!memory_state) begin   // Read operation
-
-
-
-	      end
-	    end
-	  end
-	end
-    */
 
 endmodule
