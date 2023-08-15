@@ -1,4 +1,4 @@
-`timescale 1ns/100ps
+`timescale 1ns/1ns
 `include "..\\Load_Store_Unit.v"
 
 module TB_LSU;
@@ -40,11 +40,13 @@ module TB_LSU;
         $readmemh("..\\Instruction_Memory.txt", uut.data_memory.Memory);
 
         // Wait for a few clock cycles
+
+        // --> Load Word (32 bits) from address 16
         #12
         address = 32'd16;
         
-        opcode  = 7'b0000011;
-        funct3  = 3'b010;
+        opcode = 7'b0000011;
+        funct3 = 3'b010;
         enable = 1'b1;
 
         #12
@@ -52,12 +54,13 @@ module TB_LSU;
         address = 32'bz;
         opcode = 7'bz;
         funct3 = 3'bz;
-
+        
+        // --> Load Byte (8 bits) from address 19 zero extend the result to 32 bits
         #12
         address = 32'd19;
 
-        opcode  = 7'b0000011;
-        funct3  = 3'b100;
+        opcode = 7'b0000011;
+        funct3 = 3'b100;
         enable = 1'b1;
 
         #12
@@ -66,11 +69,12 @@ module TB_LSU;
         opcode = 7'bz;
         funct3 = 3'bz;
 
+        // --> Load Word (32 bits) from address 20
         #12 
-        address = 32'd16;
+        address = 32'd20;
         
-        opcode  = 7'b0000011;
-        funct3  = 3'b010;
+        opcode = 7'b0000011;
+        funct3 = 3'b010;
         enable = 1'b1;
 
         #12
@@ -79,6 +83,34 @@ module TB_LSU;
         opcode = 7'bz;
         funct3 = 3'bz;
 
+        // --> Store Word (32 bits) to address 20
+        #12 
+        address = 32'd20;
+        store_data = 32'hFEDCBA98;
+        opcode = 7'b0100011;
+        funct3 = 3'b010;
+        enable = 1'b1;
+
+        #12
+        enable = 1'b0;
+        address = 32'bz;
+        store_data = 32'bz;
+        opcode = 7'bz;
+        funct3 = 3'bz;
+
+        // --> Load Word (32 bits) from address 20
+        #12 
+        address = 32'd20;
+        
+        opcode = 7'b0000011;
+        funct3 = 3'b010;
+        enable = 1'b1;
+
+        #12
+        enable = 1'b0;
+        address = 32'bz;
+        opcode = 7'bz;
+        funct3 = 3'bz;
         #100;
         $finish;
     end
