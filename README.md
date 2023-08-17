@@ -19,15 +19,15 @@ This repository contains an open source CPU under the [GNU V3.0 license](https:/
 
 The repository contains a collection of Verilog modules that build up the PhoeniX RISC-V processor:
 
-| Module                        | Description                                                             |
-| ----------------------------- | ----------------------------------------------------------------------- |
-| `Register_File`               | 32 number of 32-bit general purpose reisters (2 read - 1 write) ports   |
-| `Aruthmetic_Logic_Unit`       | ALU with all `I_TYPE` and `R_TYPE` RISC-V instructions support          |
-| `Instruction_Decoder`         | Decoding instructions and seperating `opcode`, `funct` and `imm` fields |
-| `Immediate_Generator`         | Generating immediate values according to instructions types             |
-| `Memory_Interface`            |                                                                         |
-| `Fetch_Unit`                  | Instruction Fetch logic implemented using `Memory_Interface` module     |
-| `Load_Store_Unit`             | Load and Store operations implemented using `Memory_Interface` module   |
-| `Branch_Unit`                 | Condition check for all branch instructions of `RV32I` ISA support      |
-| `Address_Generator`           | Generates adderess for BRANCH, JUMP and LOAD/STORE instrcutions         |
-| `Control_Unit`                | Main control logic of Pheonix processor                                 |
+| Module                        | Description                                                                  |
+| ----------------------------- | ---------------------------------------------------------------------------- |
+| `Register_File`               | 32 number of 32-bit general purpose reisters (2 read & 1 write ports)        |
+| `Aruthmetic_Logic_Unit`       | ALU with all `I_TYPE` and `R_TYPE` RISC-V instructions support               |
+| `Instruction_Decoder`         | Decoding instructions and seperating `opcode`, `funct` and `imm` fields      |
+| `Immediate_Generator`         | Generating immediate values according to instructions types                  |
+| `Memory_Interface`            | Handle CPU interactions with exrenal memories in fetching and LSU operations |
+| `Fetch_Unit`                  | Instruction Fetch logic implemented using `Memory_Interface` module          | 
+| `Load_Store_Unit`             | Load and Store operations implemented using `Memory_Interface` module        |
+| `Branch_Unit`                 | Condition check for all branch instructions of `RV32I` ISA support           |
+| `Address_Generator`           | Generates adderess for BRANCH, JUMP and LOAD/STORE instrcutions              |
+| `Control_Unit`                | Main control logic of Pheonix processor                                      |
