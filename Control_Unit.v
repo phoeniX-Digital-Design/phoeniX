@@ -5,23 +5,19 @@
 `define J_TYPE 4
 `define R_TYPE 6
 
-`define RS_BUS          3'b000
-`define FORWARD_EXE     3'b001
-`define FORWARD_MEM     3'b010
-`define FORWARD_STORE   3'b011
-
 module Control_Unit 
 (
+    // Signals form insturcion decoder
     input [6 : 0] opcode,               // inputs from Instruction Decoder
     input [2 : 0] funct3,               // inputs from Instruction Decoder
     input [6 : 0] funct7,               // inputs from Instruction Decoder
     input [2 : 0] instruction_type,     // inputs from Instruction Decoder
-
+    // Signals from hazard detecction and forwarding unit
     input forward_exe_mux1,             // Forward data from execution satge - mux 1
     input forward_exe_mux2,             // Forward data from execution satge - mux 2
     input forward_mem_mux1,             // Forward data from memory satge - mux 1
     input forward_mem_mux2,             // Forward data from memory satge - mux 2
-
+    // Fetch operation ending acknowledge signal
     input fetch_done,                   // Fetch operation end signal from Fetch Unit
 
     output reg address_type,            // select type for Address Generator module
@@ -48,7 +44,7 @@ module Control_Unit
 
     always @(*) begin
 
-        // Address Type evaluation
+        // Address Type evaluation (for Address Generator module)
         case (opcode)
             7'b0100011: address_type = 1'b1;    //  Store  -> bus_rs1 + immediate
             7'b0000011: address_type = 1'b1;    //  Load   -> bus_rs1 + immediate
@@ -69,6 +65,18 @@ module Control_Unit
             default : begin end // Exception raise 
         endcase
         
+        // ALU multiplexers signals evaluation
+        case (opcode)
+            7'b0110011 : begin mux1_select = 1'b0; mux2_select = 2'b00; end // R-TYPE instructions
+            7'b0010011 : begin mux1_select = 1'b0; mux2_select = 2'b01; end // I-TYPE instructions
+            7'b1101111 : begin mux1_select = 1'b1; mux2_select = 2'b10; end // JAL    instructions
+            7'b1100111 : begin mux1_select = 1'b1; mux2_select = 2'b10; end // JALR   instructions
+        endcase
+
+        // -----------------------------------------
+        // DATA FORWARDING SIGNALS MUST BE GENERATED
+        // -----------------------------------------
+
     end
       
 endmodule
