@@ -7,12 +7,12 @@
 
 module Control_Unit 
 (
-    // Signals form insturcion decoder
+    // Signals form instruction decoder
     input [6 : 0] opcode,               // inputs from Instruction Decoder
     input [2 : 0] funct3,               // inputs from Instruction Decoder
     input [6 : 0] funct7,               // inputs from Instruction Decoder
     input [2 : 0] instruction_type,     // inputs from Instruction Decoder
-    // Signals from hazard detecction and forwarding unit
+    // Signals from hazard detection and forwarding unit
     input forward_exe_mux1,             // Forward data from execution satge - mux 1
     input forward_exe_mux2,             // Forward data from execution satge - mux 2
     input forward_mem_mux1,             // Forward data from memory satge - mux 1
