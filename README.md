@@ -22,7 +22,7 @@ The repository contains a collection of Verilog modules that build up the Phoeni
 | Module                        | Description                                                                  |
 | ----------------------------- | ---------------------------------------------------------------------------- |
 | `Register_File`               | 32 number of 32-bit general purpose reisters (2 read & 1 write ports)        |
-| `Aruthmetic_Logic_Unit`       | ALU with all `I_TYPE` and `R_TYPE` RISC-V instructions support               |
+| `Arithmetic_Logic_Unit`       | ALU with all `I_TYPE` and `R_TYPE` RISC-V instructions support               |
 | `Instruction_Decoder`         | Decoding instructions and seperating `opcode`, `funct` and `imm` fields      |
 | `Immediate_Generator`         | Generating immediate values according to instructions types                  |
 | `Memory_Interface`            | Handle CPU interactions with exrenal memories in fetching and LSU operations |
