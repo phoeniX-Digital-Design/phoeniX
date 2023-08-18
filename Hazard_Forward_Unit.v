@@ -1,3 +1,9 @@
+    /* --------------------------------------------------------------
+    |    THE FOLLOWING MODULE IS ONLY THE BASE OF HAZARD DETECTION  |
+    |    AND FORWARDING UNIT. THIS MODULE IS NOT COMPLETED YET      |
+    |    AND IT WILL BE UPDATED SOON                                |
+    -------------------------------------------------------------- */
+
 module Hazard_Forward_Unit 
 (
     input  [5:0] rs1,           // Register source 1
@@ -16,12 +22,6 @@ module Hazard_Forward_Unit
     output forward_mem_mux1,    // Forward data from memory satge - mux 1
     output forward_mem_mux2     // Forward data from memory satge - mux 2
 );
-
-    /* --------------------------------------------------------------
-    |    THE FOLLOWING MODULE IS ONLY THE BASE OF HAZARD DETECTION  |
-    |    AND FORWARDING UNIT. THIS MODULE IS NOT COMPLETED YET      |
-    |    AND IT WILL BE UPDATED SOON                                |
-    -------------------------------------------------------------- */
 
     wire data_hazard;       // Data hazard signal
     wire control_hazard;    // Data hazard signal
