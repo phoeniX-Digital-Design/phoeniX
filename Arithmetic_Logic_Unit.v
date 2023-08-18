@@ -1,6 +1,6 @@
 /*
     RV32IMF Core - Arithmetic Logic Unit
-    - This unit executes R-Type and I-Type instructions
+    - This unit executes R-Type, I-Type and J-Type instructions
     - Inputs bus_rs1, bus_rs2 comes from Register_File
     - Input immediate comes from Immediate_Generator
     - Inputs forward_exe_rs1, forward_exe_rs2 comes from the execution-unit output (bypassed)
@@ -8,10 +8,13 @@
     - Input signals mux1_select, mux2_select comes from Control_Unit
     - Supported Instructions :
 
-        I-TYPE : ADDI - SLTI - SLTIU     R-TYPE : ADD  - SUB  - SLL           
-                 XORI - ORI  - ANDI               SLT  - SLTU - XOR                         
-                 SLLI - SRLI - SRAI               SRL  - SRA  - OR  - AND                             
+        I-TYPE : ADDI - SLTI - SLTIU            R-TYPE : ADD  - SUB  - SLL           
+                 XORI - ORI  - ANDI                      SLT  - SLTU - XOR                         
+                 SLLI - SRLI - SRAI  - AUIPC             SRL  - SRA  - OR  - AND
+        
+        J-TYPE : JAL  - JALR                             
 */
+
 module Arithmetic_Logic_Unit 
 (
     input [6 : 0] opcode,               // ALU Operation
@@ -80,7 +83,9 @@ module Arithmetic_Logic_Unit
             
             // AUIPC Instruction
             17'bxxxxxxx_xxx_0010011 : alu_output = operand_1 + operand_2;                           // AUIPC
+
             default: alu_output = 32'bz; 
+            
         endcase
     end
     
