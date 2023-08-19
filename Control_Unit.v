@@ -18,8 +18,6 @@ module Control_Unit
     output reg  mux1_select,            // ALU multiplexer select pin
     output reg [1 : 0] mux2_select,     // ALU multiplexer select pin
 
-    output reg [2 : 0] forward_control, // Forwarding multiplexers control pins
-
     output reg fetch_enable,            // Fetch Unit enable pin
 
     output reg lsu_enable,              // Load Store Unit enable pin
@@ -73,7 +71,7 @@ module Control_Unit
             default    : lsu_enable = 1'b0;
         endcase
 
-        // Fetch done signal evaluation
+        // Fetch enable signal evaluation
         // ------------------------------------------------
         // This signal is generated according to exceptions
         // ------------------------------------------------
