@@ -43,7 +43,7 @@ module Control_Unit
             7'b1100111: address_type = 1'b0;    //  JALR   ->    PC   + immediate
             7'b1100011: address_type = 1'b0;    //  Brnach ->    PC   + immediate
             default: address_type = 1'bz;
-        endcase
+        endcase 
 
         // Register File read/write enable signals evaluation
         case (instruction_type)
