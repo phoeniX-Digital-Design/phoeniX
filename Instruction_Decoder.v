@@ -3,7 +3,7 @@
 `define S_TYPE 2
 `define U_TYPE 3
 `define J_TYPE 4
-`define R_TYPE 6
+`define R_TYPE 5
 
 module Instruction_Decoder 
 (
