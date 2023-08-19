@@ -1,5 +1,5 @@
 $date
-	Sat Aug 19 18:13:45 2023
+	Sat Aug 19 18:27:14 2023
 $end
 $version
 	Icarus Verilog
@@ -665,7 +665,6 @@ bz 7"
 09
 b0 9"
 1=
-1D
 b0 ?
 #73
 0=
@@ -720,7 +719,6 @@ bz 7"
 09
 b0 9"
 1=
-0D
 #85
 0=
 #86
@@ -1104,59 +1102,6 @@ b1001 9"
 #171
 0=
 #172
-b1011 8"
-bxzzzzzzzzzzzzzzzz !"
-bxzzzzzzzzzzzzzzzz $"
-bxzzzzzzzzzzzzzzzz 7"
-b1010 9"
-1=
-#173
-0=
-#174
-b1100 8"
-bxzzzzzzzz !"
-bxzzzzzzzz $"
-bxzzzzzzzz 7"
-b1011 9"
-1=
-#175
-0=
-#176
-b1101 8"
-bx !"
-bx $"
-bx 7"
-b1100 9"
-1=
-#177
-0=
-#178
-b0 8"
-19
-b1101 9"
-1=
-#179
-0=
-#180
-b1001 8"
-bz !"
-bz $"
-bz 7"
-09
-b0 9"
-1=
-#181
-0=
-#182
-b1010 8"
-bxzzzzzzzzzzzzzzzzzzzzzzzz !"
-bxzzzzzzzzzzzzzzzzzzzzzzzz $"
-bxzzzzzzzzzzzzzzzzzzzzzzzz 7"
-b1001 9"
-1=
-#183
-0=
-#184
 b1011 8"
 bxzzzzzzzzzzzzzzzz !"
 bxzzzzzzzzzzzzzzzz $"

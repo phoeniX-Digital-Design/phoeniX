@@ -218,9 +218,6 @@ module Core_Sequential;
         enable_fetch = 1'b1;
         #36
         address_reg = 32'h0;
-        jump_branch_enable = 1'b1;
-        #12
-        jump_branch_enable = 1'b0;
         #100;
 
         $finish;
