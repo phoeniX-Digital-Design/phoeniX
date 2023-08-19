@@ -42,6 +42,22 @@ module Core_Sequential;
         .fetch_done(fetch_done)
     );
 
+
+    // Instrution Register Behaviour
+    always @(posedge CLK)
+    begin
+        instruction <= fetched_instruction_reg;    
+    end
+
+    // PC Register Behaviour
+    always @(posedge CLK) 
+    begin
+        if (reset)
+            PC <= RESET_ADDRESS;
+        else
+            PC <= next_PC; 
+    end
+
     wire [2 : 0] instruction_type;
     wire [6 : 0] opcode;
     wire [2 : 0] funct3;
@@ -54,7 +70,7 @@ module Core_Sequential;
 
     Instruction_Decoder instruction_decoder
     (
-        .instruction(fetched_instruction_reg),
+        .instruction(instruction),
         .instruction_type(instruction_type),
         .opcode(opcode),
         .funct3(funct3),
@@ -70,7 +86,7 @@ module Core_Sequential;
 
     Immediate_Generator immediate_generator
     (
-        .instruction(fetched_instruction_reg),
+        .instruction(instruction),
         .instruction_type(instruction_type),
         .immediate(immediate)
     );
@@ -169,6 +185,13 @@ module Core_Sequential;
         .writeback_output(writeback_output)
     );
 
+    initial begin
 
+        $dumpfile("Core_Sequential.vcd");
+        $dumpvars(0, Core_Sequential);
+
+        $readmemh("..\\Instruction_Memory.txt", fetch_unit.instruction_memory.Memory);
+
+    end
 
 endmodule
