@@ -9,7 +9,6 @@ module Instruction_Decoder
 (
     input [31 : 0] instruction,
 
-    output branch_signal,
     output [2 : 0] instruction_type,
 
     output [6 : 0] opcode,
