@@ -29,8 +29,8 @@ module Control_Unit
     // output reg IR_enable,               // Instruction Register enbale pin
     // output reg PC_enable,               // Program Counter enbale pin
 
-    output reg writeback_output_select  // Writeback stage output select  between
-                                        // execution unit output and LSU output
+    output reg [1 : 0] writeback_output_select  // Writeback stage output select  between
+                                                // execution unit output and LSU output
 );
 
     always @(*) begin
