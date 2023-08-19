@@ -15,14 +15,11 @@ module Address_Generator
     input  [31 : 0] PC,
     input  [31 : 0] immediate,
 
-    output reg [31 : 0] address
+    output [31 : 0] address
 );
-    reg [31 : 0] data;
-    
-    always @(*) begin
-        assign data = address_type ? bus_rs1 : PC;
-        assign address = data + immediate;
-    end
-    
-    
+    wire [31 : 0] data;
+
+    assign data = address_type ? bus_rs1 : PC;
+    assign address = data + immediate;
+      
 endmodule

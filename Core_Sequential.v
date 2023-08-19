@@ -121,9 +121,9 @@ module Core_Sequential;
         .writeback_output_select(writeback_output_select)
     );
 
-    reg  [31 : 0] bus_rs1;
-    reg  [31 : 0] bus_rs2;
-    wire [31 : 0] address;
+    reg   [31 : 0] bus_rs1;
+    reg   [31 : 0] bus_rs2;
+    wire  [31 : 0] address = 32'bz;
 
     Address_Generator address_generator
     (
@@ -192,6 +192,12 @@ module Core_Sequential;
         .writeback_output(writeback_output)
     );
 
+    reg [31 : 0] address_reg;
+
+    always @(*) begin
+        assign address_reg = address;
+    end
+
     initial begin
 
         $dumpfile("Core_Sequential.vcd");
@@ -211,7 +217,7 @@ module Core_Sequential;
         #10;
         enable_fetch = 1'b1;
         #36
-        address = 32'h0;
+        address_reg = 32'h0;
         jump_branch_enable = 1'b1;
         #12
         jump_branch_enable = 1'b0;
