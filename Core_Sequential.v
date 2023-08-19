@@ -24,6 +24,7 @@ module Core_Sequential;
 
     reg  enable_fetch;
     reg  [31 : 0] PC_fetch;
+    reg  [31 : 0] address;
     reg  jump_branch_enable;
     wire [31 : 0] next_PC;
     reg  [31 : 0] fetched_instruction_reg;
@@ -34,6 +35,7 @@ module Core_Sequential;
         .CLK(CLK),
         .enable(enable_fetch),
         .PC(PC_fetch),
+        .address(address),
         .jump_branch_enable(jump_branch_enable),
         .next_PC(next_PC),
         .fetched_instruction_reg(fetched_instruction_reg),
@@ -99,5 +101,32 @@ module Core_Sequential;
         .write_index(write_index),
         .writeback_output_select(writeback_output_select)
     );
+
+    reg [31 : 0] bus_rs1;
+
+    Address_Generator address_generator
+    (
+        .address_type(address_type),
+        .bus_rs1(bus_rs1),
+        .PC(PC_fetch),
+        .immediate(immediate),
+        .address(address)
+    );
+    
+    reg  [31 : 0] write_data;
+    wire [31 : 0] read_data_1;
+    wire [31 : 0] read_data_2;
+
+    Register_File register_file
+    (
+        .CLK(CLK),
+        .read_enable_1(read_enable_1),
+        .read_enable_2(read_enable_2),
+        .write_enable(write_enable),
+        .write_data(write_data),
+        .read_data_1(read_data_1),
+        .read_data_2(read_data_2),
+    );
+
 
 endmodule
