@@ -23,7 +23,7 @@ module Core_Sequential;
     always #1 CLK = ~CLK;
 
     reg  enable_fetch;
-    reg  [31 : 0] PC_fetch;
+    reg  [31 : 0] PC;
     reg  [31 : 0] address;
     reg  jump_branch_enable;
     wire [31 : 0] next_PC;
@@ -34,7 +34,7 @@ module Core_Sequential;
     (
         .CLK(CLK),
         .enable(enable_fetch),
-        .PC(PC_fetch),
+        .PC(PC),
         .address(address),
         .jump_branch_enable(jump_branch_enable),
         .next_PC(next_PC),
@@ -103,12 +103,13 @@ module Core_Sequential;
     );
 
     reg [31 : 0] bus_rs1;
+    reg [31 : 0] bus_rs2;
 
     Address_Generator address_generator
     (
         .address_type(address_type),
         .bus_rs1(bus_rs1),
-        .PC(PC_fetch),
+        .PC(PC),
         .immediate(immediate),
         .address(address)
     );
@@ -128,5 +129,35 @@ module Core_Sequential;
         .read_data_2(read_data_2),
     );
 
+    wire [31 : 0] alu_output;
+
+    Arithmetic_Logic_Unit ALU
+    (
+        .opcode(opcode),
+        .funct3(funct3),
+        .funct7(funct7),
+        .mux1_select(mux1_select),
+        .mux2_select(mux2_select),
+        .PC(PC),
+        .rs1(bus_rs1),
+        .rs2(bus_rs2),
+        .immediate(immediate),
+        .alu_output(alu_output)
+    );
+
+    reg [31 : 0] load_data;
+
+    Load_Store_Unit LSU
+    (
+        .CLK(CLK),
+        .enable(lsu_enable),
+        .opcode(opcode),
+        .funct3(funct3),
+        .address(address),
+        .store_data(alu_output),
+        .load_data(load_data)
+    );
+
+    
 
 endmodule
