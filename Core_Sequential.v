@@ -64,5 +64,15 @@ module Core_Sequential;
         .write_index(write_index)
     );
 
+    reg [31 : 0] immediate;
+
+    Immediate_Generator immediate_generator
+    (
+        .instruction(fetched_instruction_reg),
+        .instruction_type(instruction_type),
+        .immediate(immediate)
+    );
+
+    
 
 endmodule
