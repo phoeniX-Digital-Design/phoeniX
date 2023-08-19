@@ -7,6 +7,7 @@
 
 module Control_Unit 
 (
+    input CLK,
     // Signals form instruction decoder
     input [6 : 0] opcode,               // inputs from Instruction Decoder
     input [2 : 0] funct3,               // inputs from Instruction Decoder
