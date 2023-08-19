@@ -3,23 +3,15 @@
 `define S_TYPE 2
 `define U_TYPE 3
 `define J_TYPE 4
-`define R_TYPE 6
+`define R_TYPE 5
 
 module Control_Unit 
 (
-    input CLK,
     // Signals form instruction decoder
     input [6 : 0] opcode,               // inputs from Instruction Decoder
     input [2 : 0] funct3,               // inputs from Instruction Decoder
     input [6 : 0] funct7,               // inputs from Instruction Decoder
     input [2 : 0] instruction_type,     // inputs from Instruction Decoder
-    // Signals from hazard detection and forwarding unit
-    input forward_exe_mux1,             // Forward data from execution satge - mux 1
-    input forward_exe_mux2,             // Forward data from execution satge - mux 2
-    input forward_mem_mux1,             // Forward data from memory satge - mux 1
-    input forward_mem_mux2,             // Forward data from memory satge - mux 2
-    // Fetch operation ending acknowledge signal
-    input fetch_done,                   // Fetch operation end signal from Fetch Unit
 
     output reg address_type,            // select type for Address Generator module
 
@@ -36,10 +28,10 @@ module Control_Unit
     output reg read_enable_2,           // Register File read port 2 enable
     output reg write_enable,            // Register File write port enable
 
-    output reg IR_enable,               // Instruction Register enbale pin
-    output reg PC_enable,               // Program Counter enbale pin
+    // output reg IR_enable,               // Instruction Register enbale pin
+    // output reg PC_enable,               // Program Counter enbale pin
 
-    output reg writeback_output_signal  // Writeback stage output select  between
+    output reg writeback_output_select  // Writeback stage output select  between
                                         // execution unit output and LSU output
 );
 
@@ -74,9 +66,29 @@ module Control_Unit
             7'b1100111 : begin mux1_select = 1'b1; mux2_select = 2'b10; end // JALR   instructions
         endcase
 
-        // -----------------------------------------
-        // DATA FORWARDING SIGNALS MUST BE GENERATED
-        // -----------------------------------------
+        // Load and Store signals evaluation
+        case (opcode)
+            7'b0000011 : lsu_enable = 1'b1;
+            7'b0100011 : lsu_enable = 1'b1;
+            default    : lsu_enable = 1'b0;
+        endcase
+
+        // Fetch done signal evaluation
+        // ------------------------------------------------
+        // This signal is generated according to exceptions
+        // ------------------------------------------------
+
+        // Writeback enable signal evaluation
+        case (opcode)
+            7'b0000011 : writeback_output_select = 2'b01;
+            7'b0010011 : writeback_output_select = 2'b10;
+            7'b0110011 : writeback_output_select = 2'b10;
+            7'b0110011 : writeback_output_select = 2'b10;
+            7'b1101111 : writeback_output_select = 2'b10;
+            7'b1100111 : writeback_output_select = 2'b10;
+            7'b0010111 : writeback_output_select = 2'b10;
+            7'b0110111 : writeback_output_select = 2'b00;
+        endcase
 
     end
       
