@@ -15,7 +15,7 @@ This repository contains an open source CPU under the [GNU V3.0 license](https:/
 - Contact us : arvin7807@gmail.com - farazghoreishy@gmail.com
 - Iran University of Science and Technology - August 2023
 
-## PheoniX core specifications
+## PhoeniX core specifications
 
 The repository contains a collection of Verilog modules that build up the PhoeniX RISC-V processor:
 
