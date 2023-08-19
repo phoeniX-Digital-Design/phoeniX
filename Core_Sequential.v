@@ -64,7 +64,7 @@ module Core_Sequential;
         .write_index(write_index)
     );
 
-    reg [31 : 0] immediate;
+    wire [31 : 0] immediate;
 
     Immediate_Generator immediate_generator
     (
@@ -73,6 +73,31 @@ module Core_Sequential;
         .immediate(immediate)
     );
 
-    
+    reg address_type;
+    reg mux1_select;
+    reg [1 : 0] mux2_select;
+    reg fetch_enable;
+    reg lsu_enable;
+    reg read_enable_1;
+    reg read_enable_2;
+    reg write_enable;
+    reg writeback_output_select;
+
+    Control_Unit control_unit
+    (
+        .opcode(opcode),
+        .funct3(funct3),
+        .funct7(funct7),
+        .instruction_type(instruction_type),
+        .address_type(address_type),
+        .mux1_select(mux1_select),
+        .mux2_select(mux2_select),
+        .fetch_enable(1'b1),
+        .lsu_enable(lsu_enable),
+        .read_enable_1(read_enable_1),
+        .read_enable_2(read_enable_2),
+        .write_index(write_index),
+        .writeback_output_select(writeback_output_select)
+    );
 
 endmodule
