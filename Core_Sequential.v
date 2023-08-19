@@ -158,6 +158,17 @@ module Core_Sequential;
         .load_data(load_data)
     );
 
-    
+    reg [31 : 0] writeback_output;
+
+    Writeback_Mux wb_mux
+    (
+        .writeback_output_select(writeback_output_select),
+        .immediate(immediate),
+        .load_data(load_data),
+        .execution_output(alu_output),
+        .writeback_output(writeback_output)
+    );
+
+
 
 endmodule
