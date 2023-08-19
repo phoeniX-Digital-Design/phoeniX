@@ -21,8 +21,6 @@ module Jump_Branch_Unit
 
     input [31 : 0] bus_rs1,
     input [31 : 0] bus_rs2,
-
-    input branch_signal,          // From Instruction_Decoder
       
     output jump_branch_enable     // Goes to Fetch_Unit
 );
@@ -34,7 +32,7 @@ module Jump_Branch_Unit
 
     always @(*) begin
 
-            if (branch_signal) begin                // B-TYPE Instructions
+            if (instruction_type == `B_TYPE) begin  // B-TYPE Instructions
 
                 casex ({funct7, funct3, opcode})
                 17'bxxxxxxx_000_1100011 : begin     // BEQ
