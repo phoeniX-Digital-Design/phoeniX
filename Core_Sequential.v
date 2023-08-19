@@ -40,5 +40,29 @@ module Core_Sequential;
         .fetch_done(fetch_done)
     );
 
+    wire [2 : 0] instruction_type;
+    wire [6 : 0] opcode;
+    wire [2 : 0] funct3;
+    wire [6 : 0] funct7;
+    wire funct3_valid;
+    wire funct7_valid;
+    wire [4 : 0] read_index_1;
+    wire [4 : 0] read_index_2;
+    wire [4 : 0] write_index;
+
+    Instruction_Decoder instruction_decoder
+    (
+        .instruction(fetched_instruction_reg),
+        .instruction_type(instruction_type),
+        .opcode(opcode),
+        .funct3(funct3),
+        .funct7(funct7),
+        .funct3_valid(funct3_valid),
+        .funct7_valid(funct7_valid),
+        .read_index_1(read_index_1),
+        .read_index_2(read_index_2),
+        .write_index(write_index)
+    );
+
 
 endmodule
