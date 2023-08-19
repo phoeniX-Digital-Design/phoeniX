@@ -1,5 +1,6 @@
 `timescale 1ns/1ns
 
+`include "Memory_Interface.v"
 `include "Fetch_Unit.v"
 
 `include "Instruction_Decoder.v"
@@ -22,12 +23,14 @@ module Core_Sequential;
     reg CLK = 1;
     always #1 CLK = ~CLK;
 
+    reg  reset = 1'b1; 
+
     reg  enable_fetch;
     reg  [31 : 0] PC;
-    reg  [31 : 0] address;
+
     reg  jump_branch_enable;
     wire [31 : 0] next_PC;
-    reg  [31 : 0] fetched_instruction_reg;
+    wire [31 : 0] fetched_instruction_reg;
     wire fetch_done;
 
     Fetch_Unit fetch_unit
@@ -42,7 +45,7 @@ module Core_Sequential;
         .fetch_done(fetch_done)
     );
 
-
+    reg [31 : 0] instruction;
     // Instrution Register Behaviour
     always @(posedge CLK)
     begin
@@ -53,7 +56,7 @@ module Core_Sequential;
     always @(posedge CLK) 
     begin
         if (reset)
-            PC <= RESET_ADDRESS;
+            PC <= 32'hFFFFFFFC;
         else
             PC <= next_PC; 
     end
@@ -91,15 +94,15 @@ module Core_Sequential;
         .immediate(immediate)
     );
 
-    reg address_type;
-    reg mux1_select;
-    reg [1 : 0] mux2_select;
-    reg fetch_enable;
-    reg lsu_enable;
-    reg read_enable_1;
-    reg read_enable_2;
-    reg write_enable;
-    reg writeback_output_select;
+    wire address_type;
+    wire mux1_select;
+    wire [1 : 0] mux2_select;
+    wire fetch_enable;
+    wire lsu_enable;
+    wire read_enable_1;
+    wire read_enable_2;
+    wire write_enable;
+    wire [1 : 0] writeback_output_select;
 
     Control_Unit control_unit
     (
@@ -110,16 +113,17 @@ module Core_Sequential;
         .address_type(address_type),
         .mux1_select(mux1_select),
         .mux2_select(mux2_select),
-        .fetch_enable(1'b1),
+        .fetch_enable(fetch_enable),
         .lsu_enable(lsu_enable),
         .read_enable_1(read_enable_1),
         .read_enable_2(read_enable_2),
-        .write_index(write_index),
+        .write_enable(write_enable),
         .writeback_output_select(writeback_output_select)
     );
 
-    reg [31 : 0] bus_rs1;
-    reg [31 : 0] bus_rs2;
+    reg  [31 : 0] bus_rs1;
+    reg  [31 : 0] bus_rs2;
+    wire [31 : 0] address;
 
     Address_Generator address_generator
     (
@@ -134,15 +138,18 @@ module Core_Sequential;
     wire [31 : 0] read_data_1;
     wire [31 : 0] read_data_2;
 
-    Register_File register_file
+    Register_File reg_file
     (
         .CLK(CLK),
         .read_enable_1(read_enable_1),
         .read_enable_2(read_enable_2),
         .write_enable(write_enable),
+        .read_index_1(read_index_1),
+        .read_index_2(read_index_2),
+        .write_index(write_index),
         .write_data(write_data),
         .read_data_1(read_data_1),
-        .read_data_2(read_data_2),
+        .read_data_2(read_data_2)
     );
 
     wire [31 : 0] alu_output;
@@ -161,7 +168,7 @@ module Core_Sequential;
         .alu_output(alu_output)
     );
 
-    reg [31 : 0] load_data;
+    wire [31 : 0] load_data;
 
     Load_Store_Unit LSU
     (
@@ -174,7 +181,7 @@ module Core_Sequential;
         .load_data(load_data)
     );
 
-    reg [31 : 0] writeback_output;
+    wire [31 : 0] writeback_output;
 
     Writeback_Mux wb_mux
     (
@@ -189,8 +196,28 @@ module Core_Sequential;
 
         $dumpfile("Core_Sequential.vcd");
         $dumpvars(0, Core_Sequential);
-
         $readmemh("..\\Instruction_Memory.txt", fetch_unit.instruction_memory.Memory);
+
+        reset = 1'b1;
+
+        // Reset for first time
+        #14
+        reset = 1'b0;
+        enable_fetch = 1'b1;
+
+        // Wait for a few clock cycles
+        #12;
+        reset  = 1'b0;
+        #10;
+        enable_fetch = 1'b1;
+        #36
+        address = 32'h0;
+        jump_branch_enable = 1'b1;
+        #12
+        jump_branch_enable = 1'b0;
+        #100;
+
+        $finish;
 
     end
 
