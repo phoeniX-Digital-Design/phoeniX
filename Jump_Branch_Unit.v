@@ -73,6 +73,8 @@ module Jump_Branch_Unit
 
             if (instruction_type == `J_TYPE)
                 jump_enable = 1'b1;
+            else
+                jump_enable = 1'b0;
       end  
 
       assign jump_branch_enable = jump_enable || branch_enable;
