@@ -51,8 +51,8 @@ module Instruction_Decoder
 
     assign funct7 = instruction[31 : 25];
     assign funct3 = instruction[14 : 12];
-    assign funct7_valid = instruction_type_r;
-    assign funct3_valid = instruction_type_r || instruction_type_i || instruction_type_b || instruction_type_s;
+    // assign funct7_valid = instruction_type_r;
+    // assign funct3_valid = instruction_type_r || instruction_type_i || instruction_type_b || instruction_type_s;
 
     assign read_index_1 = instruction[19 : 15];
     assign read_index_2 = instruction[24 : 20];
