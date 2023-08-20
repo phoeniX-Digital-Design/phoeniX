@@ -1,4 +1,8 @@
 module Register_File
+#(
+    parameter WIDTH = 32,
+    parameter DEPTH = 5
+)
 (
     input CLK,
 
@@ -6,24 +10,23 @@ module Register_File
     input wire read_enable_2,
     input wire write_enable,
     
-    input wire [4 : 0] read_index_1,
-    input wire [4 : 0] read_index_2,
-    input wire [4 : 0] write_index,
+    input wire [DEPTH - 1 : 0] read_index_1,
+    input wire [DEPTH - 1 : 0] read_index_2,
+    input wire [DEPTH - 1 : 0] write_index,
 
-    input wire [31 : 0] write_data,
+    input wire [WIDTH - 1 : 0] write_data,
 
-    output reg [31 : 0] read_data_1,
-    output reg [31 : 0] read_data_2
+    output reg [WIDTH - 1 : 0] read_data_1,
+    output reg [WIDTH - 1 : 0] read_data_2
 
 );
-
-	reg [31 : 0] Registers [0 : 31];      
+	reg [WIDTH - 1 : 0] Registers [0 : $pow(2, DEPTH) - 1];      
 
     integer i;    	
     initial
     begin
-        for (i = 0 ; i < 32 ; i = i + 1)
-            Registers[i] = 32'b0;
+        for (i = 0 ; i < $pow(2, DEPTH) - 1; i = i + 1)
+            Registers[i] = {WIDTH{1'b0}};
     end
 	
     always @(posedge CLK)
@@ -36,12 +39,11 @@ module Register_File
         if (read_enable_1 == 1'b1)
             read_data_1 <= Registers[read_index_1];
         else
-            read_data_1 <= 32'bz;
+            read_data_1 <= {WIDTH{1'bz}};
 
         if (read_enable_2 == 1'b1)
             read_data_2 <= Registers[read_index_2];
         else
-            read_data_2 <= 32'bz;
+            read_data_2 <= {WIDTH{1'bz}};
     end
-    
 endmodule
