@@ -5,7 +5,8 @@ module Register_File
 )
 (
     input CLK,
-
+    input reset,
+    
     input wire read_enable_1,
     input wire read_enable_2,
     input wire write_enable,
@@ -23,7 +24,7 @@ module Register_File
 	reg [WIDTH - 1 : 0] Registers [0 : $pow(2, DEPTH) - 1];      
 
     integer i;    	
-    initial
+    always @(posedge reset)
     begin
         for (i = 0; i < $pow(2, DEPTH) - 1; i = i + 1)
             Registers[i] = {WIDTH{1'b0}};
