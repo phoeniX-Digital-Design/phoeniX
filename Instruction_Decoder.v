@@ -19,7 +19,11 @@ module Instruction_Decoder
 
     output [4 : 0] read_index_1,
     output [4 : 0] read_index_2,
-    output [4 : 0] write_index
+    output [4 : 0] write_index,
+
+    output reg read_enable_1,
+    output reg read_enable_2,
+    output reg write_enable
 );
 
     assign opcode = instruction [6 : 0];
@@ -62,4 +66,17 @@ module Instruction_Decoder
     assign read_index_2 = instruction[24 : 20];
     assign write_index  = instruction[11 :  7];
 
+    always @(*) 
+    begin
+        // Register File read/write enable signals evaluation
+        case (instruction_type)
+            `I_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b0; write_enable = 1'b1; end
+            `B_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b1; write_enable = 1'b0; end
+            `S_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b1; write_enable = 1'b0; end
+            `U_TYPE : begin read_enable_1 = 1'b0; read_enable_2 = 1'b0; write_enable = 1'b1; end
+            `J_TYPE : begin read_enable_1 = 1'b0; read_enable_2 = 1'b0; write_enable = 1'b1; end 
+            `R_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b1; write_enable = 1'b1; end
+            default : begin end // Exception raise 
+        endcase    
+    end
 endmodule

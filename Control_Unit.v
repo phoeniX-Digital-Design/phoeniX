@@ -33,8 +33,8 @@ module Control_Unit
                                                 // execution unit output and LSU output
 );
 
-    always @(*) begin
-
+    always @(*) 
+    begin
         // Address Type evaluation (for Address Generator module)
         case (opcode)
             7'b0100011: address_type = 1'b1;    //  Store  -> bus_rs1 + immediate
