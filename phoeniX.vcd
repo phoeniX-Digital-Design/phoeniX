@@ -1,5 +1,5 @@
 $date
-	Sun Aug 20 13:43:23 2023
+	Sun Aug 20 13:56:35 2023
 $end
 $version
 	Icarus Verilog
@@ -34,12 +34,12 @@ $var wire 1 2 branch_signal $end
 $var wire 32 3 instruction [31:0] $end
 $var wire 1 4 instruction_type_i $end
 $var wire 1 5 instruction_type_r $end
-$var wire 5 6 write_index [4:0] $end
-$var wire 5 7 read_index_2 [4:0] $end
-$var wire 5 8 read_index_1 [4:0] $end
-$var wire 7 9 opcode [6:0] $end
-$var wire 1 : instruction_type_u $end
-$var wire 1 ; instruction_type_s $end
+$var wire 1 6 instruction_type_s $end
+$var wire 1 7 instruction_type_u $end
+$var wire 5 8 write_index [4:0] $end
+$var wire 5 9 read_index_2 [4:0] $end
+$var wire 5 : read_index_1 [4:0] $end
+$var wire 7 ; opcode [6:0] $end
 $var wire 1 < instruction_type_j $end
 $var wire 1 = instruction_type_b $end
 $var wire 3 > instruction_type [2:0] $end
@@ -138,12 +138,12 @@ bx ?
 bx >
 x=
 x<
-x;
-x:
+bx ;
+bx :
 bx 9
 bx 8
-bx 7
-bx 6
+x7
+x6
 x5
 x4
 bx 3
@@ -315,23 +315,23 @@ b101 >
 b101 a
 04
 15
+06
+07
 b110011 '
-b110011 9
+b110011 ;
 02
 0=
-0;
-0:
 0<
 b0 ,
 b0 ?
 b0 -
 b0 @
 b0 &
-b0 8
+b0 :
 b0 %
-b0 7
+b0 9
 b1010 $
-b1010 6
+b1010 8
 b1001 _
 b1000 (
 b1000 E
@@ -398,17 +398,19 @@ b1010 ^
 b110zzzzzzzzzzzzzzzzzzzzzzzz F
 b110zzzzzzzzzzzzzzzzzzzzzzzz J
 b110zzzzzzzzzzzzzzzzzzzzzzzz ]
-b0x )
-b0x >
-b0x a
-x4
+b1 +
+b1 b
+b0 )
+b0 >
+b0 a
+14
 05
 b10011 '
-b10011 9
+b10011 ;
 b1 %
-b1 7
+b1 9
 b1011 $
-b1011 6
+b1011 8
 b1001 _
 b100 /
 b100000000010110010011 1
@@ -478,9 +480,11 @@ b0zzzzzzzzzzzzzzzzzzzzzzzz ]
 b11 ,
 b11 ?
 b10 %
-b10 7
+b10 9
 b1100 $
-b1100 6
+b1100 8
+b1100010 +
+b1100010 b
 b1001 _
 b10000 (
 b10000 E
@@ -553,13 +557,15 @@ b101 a
 04
 15
 b1010011 '
-b1010011 9
+b1010011 ;
 b0 ,
 b0 ?
 b0 %
-b0 7
+b0 9
 b10 $
-b10 6
+b10 8
+bz +
+bz b
 b1001 _
 b1100 /
 b101010011 1
@@ -626,19 +632,21 @@ b1010 ^
 b0zzzzzzzzzzzzzzzzzzzzzzzz F
 b0zzzzzzzzzzzzzzzzzzzzzzzz J
 b0zzzzzzzzzzzzzzzzzzzzzzzz ]
-b0x )
-b0x >
-b0x a
-x4
+b0 +
+b0 b
+b0 )
+b0 >
+b0 a
+14
 05
 b11 '
-b11 9
+b11 ;
 b100 -
 b100 @
 b1010 &
-b1010 8
+b1010 :
 b1 $
-b1 6
+b1 8
 b1001 _
 b11000 (
 b11000 E
@@ -706,9 +714,9 @@ b0zzzzzzzzzzzzzzzzzzzzzzzz F
 b0zzzzzzzzzzzzzzzzzzzzzzzz J
 b0zzzzzzzzzzzzzzzzzzzzzzzz ]
 b1011 &
-b1011 8
+b1011 :
 b10 $
-b10 6
+b10 8
 b1001 _
 b10100 /
 b1011100000100000011 1
@@ -776,13 +784,15 @@ b10zzzzzzzzzzzzzzzzzzzzzzzz F
 b10zzzzzzzzzzzzzzzzzzzzzzzz J
 b10zzzzzzzzzzzzzzzzzzzzzzzz ]
 b10011 '
-b10011 9
+b10011 ;
 b0 -
 b0 @
 b10 %
-b10 7
+b10 9
 b1011 $
-b1011 6
+b1011 8
+b10 +
+b10 b
 b1001 _
 b100000 (
 b100000 E
@@ -855,15 +865,17 @@ b101 a
 04
 15
 b110011 '
-b110011 9
+b110011 ;
 b1 ,
 b1 ?
 b1 &
-b1 8
+b1 :
 b1 %
-b1 7
+b1 9
 b11 $
-b11 6
+b11 8
+bz +
+bz b
 b1001 _
 b11100 /
 b10000100001000000110110011 1
@@ -931,11 +943,11 @@ b0zzzzzzzzzzzzzzzzzzzzzzzz F
 b0zzzzzzzzzzzzzzzzzzzzzzzz J
 b0zzzzzzzzzzzzzzzzzzzzzzzz ]
 b10 &
-b10 8
+b10 :
 b10 %
-b10 7
+b10 9
 b100 $
-b100 6
+b100 8
 b1001 _
 b101000 (
 b101000 E
@@ -1005,11 +1017,11 @@ b11010000zzzzzzzzzzzzzzzzzzzzzzzz ]
 b0 ,
 b0 ?
 b11 &
-b11 8
+b11 :
 b100 %
-b100 7
+b100 9
 b101 $
-b101 6
+b101 8
 b1001 _
 b100100 /
 b10000011000001010110011 1
@@ -1077,13 +1089,13 @@ b1011000zzzzzzzzzzzzzzzzzzzzzzzz F
 b1011000zzzzzzzzzzzzzzzzzzzzzzzz J
 b1011000zzzzzzzzzzzzzzzzzzzzzzzz ]
 b1010011 '
-b1010011 9
+b1010011 ;
 b1101000 ,
 b1101000 ?
 b101 &
-b101 8
+b101 :
 b1 %
-b1 7
+b1 9
 b1001 _
 b110000 (
 b110000 E
@@ -1153,9 +1165,9 @@ b0zzzzzzzzzzzzzzzzzzzzzzzz ]
 b101100 ,
 b101100 ?
 b0 %
-b0 7
+b0 9
 b111 $
-b111 6
+b111 8
 b1001 _
 b101100 /
 b1011000000000101000001111010011 1
