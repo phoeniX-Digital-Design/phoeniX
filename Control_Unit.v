@@ -41,7 +41,7 @@ module Control_Unit
             7'b0000011: address_type = 1'b1;    //  Load   -> bus_rs1 + immediate
             7'b1101111: address_type = 1'b0;    //  JAL    ->    PC   + immediate
             7'b1100111: address_type = 1'b0;    //  JALR   ->    PC   + immediate
-            7'b1100011: address_type = 1'b0;    //  Brnach ->    PC   + immediate
+            7'b1100011: address_type = 1'b0;    //  Branch ->    PC   + immediate
             default: address_type = 1'bz;
         endcase 
 
