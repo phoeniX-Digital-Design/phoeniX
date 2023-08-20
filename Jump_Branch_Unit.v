@@ -19,8 +19,8 @@ module Jump_Branch_Unit
     input [6 : 0] funct7,
     input [2 : 0] instruction_type,
 
-    input [31 : 0] bus_rs1,
-    input [31 : 0] bus_rs2,
+    input [31 : 0] rs1,
+    input [31 : 0] rs2,
       
     output jump_branch_enable     // Goes to Fetch_Unit
 );
@@ -37,32 +37,32 @@ module Jump_Branch_Unit
                 casex ({funct7, funct3, opcode})
                 17'bxxxxxxx_000_1100011 : begin     // BEQ
                     branch_type = `BEQ;
-                    if ($signed(bus_rs1) == $signed(bus_rs2))
+                    if ($signed(rs1) == $signed(rs2))
                             branch_enable = 1'b1;
                 end
                 17'bxxxxxxx_001_1100011 : begin     // BNE
                     branch_type = `BNE;
-                    if ($signed(bus_rs1) != $signed(bus_rs2))
+                    if ($signed(rs1) != $signed(rs2))
                             branch_enable = 1'b1;
                 end
                 17'bxxxxxxx_100_1100011 : begin     // BLT
                     branch_type = `BLT;
-                    if ($signed(bus_rs1) < $signed(bus_rs2))
+                    if ($signed(rs1) < $signed(rs2))
                             branch_enable = 1'b1;
                 end
                 17'bxxxxxxx_101_1100011 : begin     // BGE
                     branch_type = `BGE;
-                    if ($signed(bus_rs1) >= $signed(bus_rs2))
+                    if ($signed(rs1) >= $signed(rs2))
                             branch_enable = 1'b1;
                 end
                 17'bxxxxxxx_110_1100011 : begin     // BLTU
                     branch_type = `BLTU;
-                    if (bus_rs1 < bus_rs2)
+                    if (rs1 < rs2)
                             branch_enable = 1'b1;
                 end
                 17'bxxxxxxx_111_1100011 : begin     // BGEU
                     branch_type = `BGEU;
-                    if (bus_rs1 >= bus_rs2)
+                    if (rs1 >= rs2)
                             branch_enable = 1'b1;
                 end
                 default:    branch_enable = 1'b0;
