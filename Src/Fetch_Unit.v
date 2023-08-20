@@ -1,4 +1,4 @@
-`include "Memory_Interface.v"
+// `include "Memory_Interface.v"
 // `include "..\\Memory_Interface.v"
 
 module Fetch_Unit 
