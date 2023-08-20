@@ -18,7 +18,7 @@ module TB_Fetch;
 
     wire [31 : 0] next_PC;   
     wire [31 : 0] latched_instruction;
-    wire fetch_done;
+    // wire fetch_done;
 
     Fetch_Unit uut 
     (
@@ -30,8 +30,7 @@ module TB_Fetch;
         jump_branch_enable,
             
         next_PC,
-        latched_instruction,
-        fetch_done
+        latched_instruction
     );
 
     // Instrution Register Behaviour
@@ -69,7 +68,7 @@ module TB_Fetch;
         // Wait for a few clock cycles
         #12;
         reset  = 1'b0;
-        #10;
+        // #10;
         enable = 1'b1;
         #36
         address_generated = 32'h0;

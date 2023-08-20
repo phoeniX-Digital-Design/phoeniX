@@ -1,5 +1,3 @@
-`timescale 1ns/1ns
-
 `include "Register.v"
 `include "Fetch_Unit.v"
 `include "Control_Unit.v"
@@ -12,13 +10,14 @@
 `include "Jump_Branch_Unit.v"
 `include "Address_Generator.v"
 
-`include "Load_Store_Unit.v"
+// `include "Load_Store_Unit.v"
 
 module phoeniX 
 #(
     parameter RESET_ADDRESS = 32'hFFFFFFFC
 ) (
     input CLK,
+    input CLK_MEM,
     input reset
 );
 
@@ -26,37 +25,49 @@ module phoeniX
     // Wire Declarations for Fetch Stage
     // ---------------------------------
     wire [31 : 0] instruction_fetch_wire;
-    wire [31 : 0] PC_fetch_wire = PC;
-    wire [31 : 0] next_PC;
+    wire [31 : 0] PC_fetch_wire;
+    wire [31 : 0] next_PC_wire;
+    
+    // --------------------------------
+    // Reg Declarations for Fetch Stage
+    // --------------------------------
+    reg [31 : 0] PC_fetch_reg;
 
     // ------------------------
     // Fetch Unit Instantiation
     // ------------------------
     Fetch_Unit fetch_unit
     (
-        .CLK(CLK),
-        .enable(1'b1),              // TBD : to be changed to fetch control state with control
-        .PC(PC),
-        .address(address),
-        .jump_branch_enable(jump_branch_enable),
-        .next_PC(next_PC),
+        .CLK(CLK_MEM),
+        .enable(!reset),              // TBD : to be changed to fetch control state with control
+        .PC(PC_fetch_reg),
+        .address(32'bz),
+        .jump_branch_enable(1'b0),
+        .next_PC(next_PC_wire),
         .fetched_instruction(instruction_fetch_wire)    
     );
 
     // ------------------------
     // Program Counter Register 
     // ------------------------
-    reg [31 : 0] PC;
-    Register program_counter 
-    (
-        .CLK(CLK),
-        .reset(reset),
-        .enable(1'b1),               // TBD : to be changed to fetch control state with control     
-        .RESET_ADDRESS(RESET_ADDRESS),
 
-        .register_input(next_PC),
-        .register_output(PC)
-    );
+    always @(posedge CLK)
+    begin
+        if (reset)
+            PC_fetch_reg <= RESET_ADDRESS;
+        else
+            PC_fetch_reg <= next_PC_wire; 
+    end
+    // Register program_counter 
+    // (
+    //     .CLK(CLK),
+    //     .reset(reset),
+    //     .enable(1'b1),               // TBD : to be changed to fetch control state with control     
+    //     .RESET_VALUE(RESET_ADDRESS),
+
+    //     .register_input(next_PC_reg),
+    //     .register_output(PC_fetch_wire)
+    // );
     
     // --------------------------------------
     // Register Declarations for Decode Stage
@@ -70,7 +81,7 @@ module phoeniX
     always @(posedge CLK) 
     begin
         instruction_decode_reg <= instruction_fetch_wire;
-        PC_decode_reg <= PC_fetch_wire;    
+        PC_decode_reg <= PC_fetch_reg;    
     end
 
     // ----------------------------------
@@ -84,7 +95,7 @@ module phoeniX
     wire [4 : 0] read_index_2_decode_wire;
     wire [4 : 0] write_index_decode_wire;
     wire [31 : 0] immediate_decode_wire;
-    
+
     // ---------------------------------
     // Instruction Decoder Instantiation
     // ---------------------------------

@@ -16,6 +16,7 @@ module Fetch_Unit
 	// output fetch_done			                            // output "memory_done" in Memory Interface module
 );
     wire    [31 : 0] fetched_instruction_wire;
+    wire fetch_done;
 
 	Memory_Interface instruction_memory 
     (
