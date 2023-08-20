@@ -11,7 +11,7 @@
 module Address_Generator
 (
     input  address_type,
-    input  [31 : 0] bus_rs1,
+    input  [31 : 0] rs1,            // to be connected to bus_rs1
     input  [31 : 0] PC,
     input  [31 : 0] immediate,
 
@@ -19,7 +19,7 @@ module Address_Generator
 );
     wire [31 : 0] value;
 
-    assign value = address_type ? bus_rs1 : PC;
+    assign value = address_type ? rs1 : PC;
     assign address = value + immediate;
     
 endmodule
