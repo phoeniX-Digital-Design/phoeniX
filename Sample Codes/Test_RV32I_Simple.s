@@ -6,5 +6,5 @@ LOOP:   addi x2, x0, 1
         addi x0, x0, 0
         add  x4, x2, x3
         lw   x5, 0(x4) 
-        beq x2, x3, LOOP # if x2 =x3t1 then target
+        beq x2, x3, LOOP 
         
