@@ -12,10 +12,10 @@ module Fetch_Unit
 	input jump_branch_enable,		                        // Generated in Branch Unit module
 
     output [31 : 0] next_PC,
-	output reg [31 : 0] fetched_instruction_reg,            // output "data" in Memory Interface module
-	output fetch_done			                            // output "memory_done" in Memory Interface module
+	output reg [31 : 0] fetched_instruction                // output "data" in Memory Interface module
+	// output fetch_done			                            // output "memory_done" in Memory Interface module
 );
-    wire    [31 : 0] fetched_instruction;
+    wire    [31 : 0] fetched_instruction_wire;
 
 	Memory_Interface instruction_memory 
     (
@@ -24,7 +24,7 @@ module Fetch_Unit
         .memory_state(instruction_memory.READ),
         .frame_mask(4'b1111),
         .address(PC), 
-        .data(fetched_instruction), 
+        .data(fetched_instruction_wire), 
         .memory_done(fetch_done)
     );
 
@@ -32,7 +32,7 @@ module Fetch_Unit
 
     always @(posedge fetch_done) 
     begin
-        fetched_instruction_reg <= fetched_instruction;
+        fetched_instruction <= fetched_instruction_wire;
     end
 
 endmodule
