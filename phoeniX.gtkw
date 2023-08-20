@@ -1,0 +1,170 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Sun Aug 20 16:16:29 2023
+[*]
+[dumpfile] "D:\GitHub\RV32-Core\phoeniX.vcd"
+[dumpfile_mtime] "Sun Aug 20 16:13:25 2023"
+[dumpfile_size] 139114
+[savefile] "D:\GitHub\RV32-Core\phoeniX.gtkw"
+[timestart] 0
+[size] 1920 1009
+[pos] -1 -1
+*-16.496948 174500 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] phoeniX_Testbench.
+[treeopen] phoeniX_Testbench.uut.
+[sst_width] 337
+[signals_width] 484
+[sst_expanded] 1
+[sst_vpaned_height] 203
+@28
+phoeniX_Testbench.uut.CLK
+phoeniX_Testbench.uut.CLK_MEM
+@200
+-
+@28
+phoeniX_Testbench.reset
+phoeniX_Testbench.uut.fetch_unit.enable
+@200
+-
+@23
+phoeniX_Testbench.uut.PC_fetch_reg[31:0]
+@22
+phoeniX_Testbench.uut.instruction_fetch_wire[31:0]
+@200
+-
+-FETCH -> DECODE
+-
+@28
+[color] 2
+phoeniX_Testbench.CLK
+@22
+[color] 2
+phoeniX_Testbench.uut.PC_decode_reg[31:0]
+[color] 2
+phoeniX_Testbench.uut.instruction_decode_reg[31:0]
+@28
+[color] 2
+phoeniX_Testbench.uut.opcode_decode_wire[6:0]
+[color] 2
+phoeniX_Testbench.uut.funct3_decode_wire[2:0]
+[color] 2
+phoeniX_Testbench.uut.funct7_decode_wire[6:0]
+@22
+[color] 2
+phoeniX_Testbench.uut.bus_rs1_decode_wire[31:0]
+[color] 2
+phoeniX_Testbench.uut.bus_rs2_decode_wire[31:0]
+[color] 2
+phoeniX_Testbench.uut.PC_decode_reg[31:0]
+@24
+[color] 2
+phoeniX_Testbench.uut.immediate_decode_wire[31:0]
+@c00028
+[color] 2
+phoeniX_Testbench.uut.instruction_type_decode_wire[2:0]
+@28
+(0)phoeniX_Testbench.uut.instruction_type_decode_wire[2:0]
+(1)phoeniX_Testbench.uut.instruction_type_decode_wire[2:0]
+(2)phoeniX_Testbench.uut.instruction_type_decode_wire[2:0]
+@1401200
+-group_end
+@24
+[color] 2
+phoeniX_Testbench.uut.read_index_1_decode_wire[4:0]
+[color] 2
+phoeniX_Testbench.uut.read_index_2_decode_wire[4:0]
+[color] 2
+phoeniX_Testbench.uut.read_enable_1_decode_wire
+[color] 2
+phoeniX_Testbench.uut.read_enable_2_decode_wire
+[color] 2
+phoeniX_Testbench.uut.write_index_decode_wire[4:0]
+[color] 2
+phoeniX_Testbench.uut.write_enable_decode_wire
+@22
+[color] 2
+phoeniX_Testbench.uut.RF_source_1[31:0]
+[color] 2
+phoeniX_Testbench.uut.RF_source_2[31:0]
+@200
+-
+-DECODE -> EXECUTE
+-
+@28
+[color] 6
+phoeniX_Testbench.CLK
+[color] 6
+phoeniX_Testbench.uut.opcode_execute_reg[6:0]
+[color] 6
+phoeniX_Testbench.uut.funct3_execute_reg[2:0]
+[color] 6
+phoeniX_Testbench.uut.funct7_execute_reg[6:0]
+@22
+[color] 6
+phoeniX_Testbench.uut.bus_rs1[31:0]
+[color] 6
+phoeniX_Testbench.uut.bus_rs2[31:0]
+[color] 6
+phoeniX_Testbench.uut.PC_execute_reg[31:0]
+@24
+[color] 6
+phoeniX_Testbench.uut.immediate_execute_reg[31:0]
+@28
+[color] 6
+phoeniX_Testbench.uut.instruction_type_execute_reg[2:0]
+@24
+[color] 6
+phoeniX_Testbench.uut.write_index_execute_reg[4:0]
+@28
+[color] 6
+phoeniX_Testbench.uut.write_enable_execute_reg
+@22
+[color] 6
+phoeniX_Testbench.uut.address_execute_wire[31:0]
+@24
+[color] 6
+phoeniX_Testbench.uut.alu_output_execute_wire[31:0]
+@28
+[color] 6
+phoeniX_Testbench.uut.jump_branch_enable_execute_wire
+@200
+-
+-EXECUTE -> MEMORY
+-
+@28
+[color] 1
+phoeniX_Testbench.CLK
+@22
+[color] 1
+phoeniX_Testbench.uut.PC_memory_reg[31:0]
+@28
+[color] 1
+phoeniX_Testbench.uut.opcode_memory_reg[6:0]
+[color] 1
+phoeniX_Testbench.uut.funct3_memory_reg[2:0]
+[color] 1
+phoeniX_Testbench.uut.funct7_memory_reg[6:0]
+@22
+[color] 1
+phoeniX_Testbench.uut.address_memory_reg[31:0]
+@28
+[color] 1
+phoeniX_Testbench.uut.jump_branch_enable_memory_reg
+@200
+-
+-MEMORY -> WRITEBACK
+-
+-
+-REGISTERS
+-
+@22
+[color] 4
+phoeniX_Testbench.x0[31:0]
+[color] 4
+phoeniX_Testbench.x1[31:0]
+phoeniX_Testbench.x2[31:0]
+phoeniX_Testbench.x3[31:0]
+phoeniX_Testbench.x4[31:0]
+phoeniX_Testbench.x5[31:0]
+[pattern_trace] 1
+[pattern_trace] 0
