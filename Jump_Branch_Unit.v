@@ -30,8 +30,8 @@ module Jump_Branch_Unit
     reg branch_enable;
     reg jump_enable;
 
-    always @(*) begin
-
+    always @(*) 
+    begin
             if (instruction_type == `B_TYPE) begin  // B-TYPE Instructions
 
                 casex ({funct7, funct3, opcode})
@@ -73,7 +73,6 @@ module Jump_Branch_Unit
 
             if (instruction_type == `J_TYPE)
                 jump_enable = 1'b1;
-
       end  
 
       assign jump_branch_enable = jump_enable || branch_enable;
