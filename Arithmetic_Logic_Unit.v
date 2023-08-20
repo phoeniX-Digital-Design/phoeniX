@@ -35,14 +35,14 @@ module Arithmetic_Logic_Unit
     reg [31 : 0] operand_1;
     reg [31 : 0] operand_2;
 
-    // Bypassing (Data Forwarding) Multiplexer 1
+    // ALU Multiplexer 1
     always @(*) begin
         case (mux1_select)
             1'b0 : operand_1 = rs1;
             1'b1 : operand_1 = PC;
         endcase
     end
-    // Bypassing (Data Forwarding) Multiplexer 2
+    // ALU Multiplexer 2
     always @(*) begin
         case (mux2_select)
             2'b00 : operand_2 = rs2;
