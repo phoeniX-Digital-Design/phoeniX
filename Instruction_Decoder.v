@@ -24,8 +24,10 @@ module Instruction_Decoder
 
     assign opcode = instruction [6 : 0];
 
-    assign instruction_type_i = instruction[6 : 2] == 5'b0000x ||
-                                instruction[6 : 2] == 5'b001x0 ||
+    assign instruction_type_i = instruction[6 : 2] == 5'b00000 ||
+                                instruction[6 : 2] == 5'b00001 ||
+                                instruction[6 : 2] == 5'b00100 ||
+                                instruction[6 : 2] == 5'b00110 ||
                                 instruction[6 : 2] == 5'b11001;
         
     assign instruction_type_b = instruction[6 : 2] == 5'b11000;
@@ -33,9 +35,11 @@ module Instruction_Decoder
     assign instruction_type_r = instruction[6 : 2] == 5'b01100 ||
                                 instruction[6 : 2] == 5'b10100;
 
-    assign instruction_type_s = instruction[6 : 2] == 5'b1000x;
+    assign instruction_type_s = instruction[6 : 2] == 5'b10000 ||
+                                instruction[6 : 2] == 5'b10001;
 
-    assign instruction_type_u = instruction[6 : 2] == 5'b0x101;
+    assign instruction_type_u = instruction[6 : 2] == 5'b00101 ||
+                                instruction[6 : 2] == 5'b01101;
 
     assign instruction_type_j = instruction[6 : 2] == 5'b11011;
 
