@@ -6,11 +6,11 @@ module Load_Store_Unit
     input CLK,
     input enable,
     
-    input  [6 : 0] opcode,          // Load/Store function
-    input  [2 : 0] funct3,          // Load/Store function
+    input  [6 : 0] opcode,                  // Load/Store function
+    input  [2 : 0] funct3,                  // Load/Store function
 
-    input       [31 : 0] address,        // Generated in Address Generator module
-    input       [31 : 0] store_data,     // Connected to Register Source 2
+    input       [31 : 0] address,           // Generated in Address Generator module
+    input       [31 : 0] store_data,        // Connected to Register Source 2
     output reg  [31 : 0] load_data
 );
 
