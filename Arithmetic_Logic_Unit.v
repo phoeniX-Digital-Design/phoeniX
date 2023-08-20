@@ -20,9 +20,6 @@ module Arithmetic_Logic_Unit
     input [6 : 0] opcode,               // ALU Operation
     input [2 : 0] funct3,               // ALU Operation
     input [6 : 0] funct7,               // ALU Operation
-    
-    input mux1_select,                  // Bypass Mux for operand_1
-    input [1 : 0] mux2_select,          // Bypass Mux for operand_2
 
     input [31 : 0] PC,                  // Program Counter Register
     input [31 : 0] rs1,                 // Register Source 1
@@ -34,16 +31,32 @@ module Arithmetic_Logic_Unit
 
     reg [31 : 0] operand_1;
     reg [31 : 0] operand_2;
+    
+    reg         mux1_select;
+    reg [1 : 0] mux2_select;
+
+    // ALU multiplexers signals evaluation
+    always @(*) 
+    begin
+        case (opcode)
+        7'b0110011 : begin mux1_select = 1'b0; mux2_select = 2'b00; end // R-TYPE instructions
+        7'b0010011 : begin mux1_select = 1'b0; mux2_select = 2'b01; end // I-TYPE instructions
+        7'b1101111 : begin mux1_select = 1'b1; mux2_select = 2'b10; end // JAL    instructions
+        7'b1100111 : begin mux1_select = 1'b1; mux2_select = 2'b10; end // JALR   instructions
+        endcase        
+    end
 
     // ALU Multiplexer 1
-    always @(*) begin
+    always @(*) 
+    begin
         case (mux1_select)
             1'b0 : operand_1 = rs1;
             1'b1 : operand_1 = PC;
         endcase
     end
     // ALU Multiplexer 2
-    always @(*) begin
+    always @(*) 
+    begin
         case (mux2_select)
             2'b00 : operand_2 = rs2;
             2'b01 : operand_2 = immediate;
@@ -88,5 +101,4 @@ module Arithmetic_Logic_Unit
             
         endcase
     end
-    
 endmodule
