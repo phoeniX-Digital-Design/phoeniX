@@ -8,14 +8,12 @@ module Writeback_Mux
     output reg [31 : 0] writeback_output
 );
 
-    always @(*) begin
-        
+    always @(*) 
+    begin    
         case (writeback_output_select)
             2'b00 : writeback_output = immediate; 
             2'b01 : writeback_output = load_data;
             2'b10 : writeback_output = execution_output;
         endcase
-
     end
-      
 endmodule
