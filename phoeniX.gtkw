@@ -1,21 +1,21 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Sun Aug 20 16:16:29 2023
+[*] Sun Aug 20 19:05:18 2023
 [*]
 [dumpfile] "D:\GitHub\RV32-Core\phoeniX.vcd"
-[dumpfile_mtime] "Sun Aug 20 16:13:25 2023"
-[dumpfile_size] 139114
+[dumpfile_mtime] "Sun Aug 20 18:59:25 2023"
+[dumpfile_size] 139443
 [savefile] "D:\GitHub\RV32-Core\phoeniX.gtkw"
-[timestart] 0
+[timestart] 69800
 [size] 1920 1009
 [pos] -1 -1
-*-16.496948 174500 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-14.496948 126000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] phoeniX_Testbench.
 [treeopen] phoeniX_Testbench.uut.
-[sst_width] 337
-[signals_width] 484
+[sst_width] 404
+[signals_width] 497
 [sst_expanded] 1
-[sst_vpaned_height] 203
+[sst_vpaned_height] 393
 @28
 phoeniX_Testbench.uut.CLK
 phoeniX_Testbench.uut.CLK_MEM
@@ -26,9 +26,8 @@ phoeniX_Testbench.reset
 phoeniX_Testbench.uut.fetch_unit.enable
 @200
 -
-@23
-phoeniX_Testbench.uut.PC_fetch_reg[31:0]
 @22
+phoeniX_Testbench.uut.PC_fetch_reg[31:0]
 phoeniX_Testbench.uut.instruction_fetch_wire[31:0]
 @200
 -
@@ -132,28 +131,45 @@ phoeniX_Testbench.uut.jump_branch_enable_execute_wire
 -EXECUTE -> MEMORY
 -
 @28
-[color] 1
+[color] 4
 phoeniX_Testbench.CLK
 @22
-[color] 1
+[color] 4
 phoeniX_Testbench.uut.PC_memory_reg[31:0]
 @28
-[color] 1
+[color] 4
 phoeniX_Testbench.uut.opcode_memory_reg[6:0]
-[color] 1
+[color] 4
 phoeniX_Testbench.uut.funct3_memory_reg[2:0]
-[color] 1
+[color] 4
 phoeniX_Testbench.uut.funct7_memory_reg[6:0]
 @22
-[color] 1
+[color] 4
 phoeniX_Testbench.uut.address_memory_reg[31:0]
 @28
-[color] 1
+[color] 4
 phoeniX_Testbench.uut.jump_branch_enable_memory_reg
+@24
+[color] 4
+phoeniX_Testbench.uut.write_enable_memory_reg
+[color] 4
+phoeniX_Testbench.uut.write_index_memory_reg[4:0]
 @200
 -
 -MEMORY -> WRITEBACK
 -
+@28
+[color] 3
+phoeniX_Testbench.uut.CLK
+@22
+[color] 3
+phoeniX_Testbench.uut.write_data_writeback_reg[31:0]
+@24
+[color] 3
+phoeniX_Testbench.uut.write_enable_writeback_reg
+[color] 3
+phoeniX_Testbench.uut.write_index_writeback_reg[4:0]
+@200
 -
 -REGISTERS
 -
@@ -166,5 +182,7 @@ phoeniX_Testbench.x2[31:0]
 phoeniX_Testbench.x3[31:0]
 phoeniX_Testbench.x4[31:0]
 phoeniX_Testbench.x5[31:0]
+phoeniX_Testbench.x6[31:0]
+phoeniX_Testbench.x7[31:0]
 [pattern_trace] 1
 [pattern_trace] 0

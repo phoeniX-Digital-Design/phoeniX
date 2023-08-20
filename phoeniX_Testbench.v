@@ -26,6 +26,8 @@ module phoeniX_Testbench;
     wire [31 : 0] x3 	= uut.register_file.Registers[3];
     wire [31 : 0] x4 	= uut.register_file.Registers[4];
     wire [31 : 0] x5 	= uut.register_file.Registers[5];
+    wire [31 : 0] x6 	= uut.register_file.Registers[6];
+    wire [31 : 0] x7 	= uut.register_file.Registers[7];
     wire [31 : 0] x10 	= uut.register_file.Registers[10];
     wire [31 : 0] x11 	= uut.register_file.Registers[11];
     wire [31 : 0] x12 	= uut.register_file.Registers[12];

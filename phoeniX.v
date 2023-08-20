@@ -274,15 +274,10 @@ module phoeniX
         jump_branch_enable_memory_reg <= jump_branch_enable_execute_wire;
     end
 
-    // ---------------------------------------------
-    // Wire Declaration for write back out of memory
-    // ---------------------------------------------
-    wire [31 : 0] write_data_memory_wire;
-
-    // --------------------------------------------------------------
-    // assigning write-back data to result or immediateo or load data
-    // --------------------------------------------------------------
-    assign write_data_memory_wire = result_memory_reg;
+    // ----------------------------------
+    // Wire Declarations for Memory Stage
+    // ----------------------------------
+    wire [31 : 0] load_data_memory_wire;
 
     // -------------------------------------
     // Reg Declarations for Write-Back Stage
@@ -298,7 +293,8 @@ module phoeniX
     reg [4 : 0] write_index_writeback_reg;
     reg write_enable_writeback_reg;
 
-    reg [31 : 0] write_data_writeback_reg;
+    reg [31 : 0] load_data_writeback_reg;
+    reg [31 : 0] result_writeback_reg;
 
     ////////////////////////////////////////
     //   MEMORY TO WRITEBACK TRANSITION   //
@@ -316,9 +312,28 @@ module phoeniX
         write_index_writeback_reg <= write_index_memory_reg;
         write_enable_writeback_reg <= write_enable_memory_reg; 
 
-        write_data_writeback_reg <= write_data_memory_wire;   
+        load_data_writeback_reg <= load_data_memory_wire;  
+        result_writeback_reg <= result_memory_reg; 
     end
     
+    // ---------------------------------------------------------------
+    // assigning write back data from immediate or load data or result
+    // ---------------------------------------------------------------
+    reg [31 : 0] write_data_writeback_reg;
+    always @(*) 
+    begin    
+        case (opcode_writeback_reg)
+            7'b0000011 : write_data_writeback_reg = load_data_writeback_reg;
+            7'b0010011 : write_data_writeback_reg = result_writeback_reg;
+            7'b0110011 : write_data_writeback_reg = result_writeback_reg;
+            7'b0110011 : write_data_writeback_reg = result_writeback_reg;
+            7'b1101111 : write_data_writeback_reg = result_writeback_reg;
+            7'b1100111 : write_data_writeback_reg = result_writeback_reg;
+            7'b0010111 : write_data_writeback_reg = result_writeback_reg;
+            7'b0110111 : write_data_writeback_reg = immediate_writeback_reg;
+        endcase
+    end
+
     ////////////////////////////////////////
     //    Register File Instantiation     //
     ////////////////////////////////////////
