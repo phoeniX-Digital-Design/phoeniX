@@ -36,7 +36,10 @@ module Register_File
         begin
             Registers[write_index] <= write_data;
         end
-
+    end
+    
+    always @(*) 
+    begin
         if (read_enable_1 == 1'b1)
             read_data_1 <= Registers[read_index_1];
         else
@@ -47,4 +50,5 @@ module Register_File
         else
             read_data_2 <= {WIDTH{1'bz}};
     end
+    
 endmodule
