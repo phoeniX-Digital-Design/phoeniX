@@ -14,8 +14,8 @@ module Instruction_Decoder
     output [6 : 0] opcode,
     output [2 : 0] funct3,
     output [6 : 0] funct7,
-    output funct3_valid,
-    output funct7_valid,
+    // output funct3_valid,
+    // output funct7_valid,
 
     output [4 : 0] read_index_1,
     output [4 : 0] read_index_2,
