@@ -1,15 +1,15 @@
-`include "Register.v"
-`include "Fetch_Unit.v"
+`include "Src\\Register.v"
+`include "Src\\Fetch_Unit.v"
+`include "Src\\Memory_Interface.v"
+`include "Src\\Instruction_Decoder.v"
+`include "Src\\Immediate_Generator.v"
+`include "Src\\Register_File.v"
 
-`include "Instruction_Decoder.v"
-`include "Immediate_Generator.v"
-`include "Register_File.v"
+`include "Src\\Arithmetic_Logic_Unit.v"
+`include "Src\\Jump_Branch_Unit.v"
+`include "Src\\Address_Generator.v"
 
-`include "Arithmetic_Logic_Unit.v"
-`include "Jump_Branch_Unit.v"
-`include "Address_Generator.v"
-
-// `include "Load_Store_Unit.v"
+`include "Src\\Load_Store_Unit.v"
 
 module phoeniX 
 #(
@@ -353,7 +353,7 @@ module phoeniX
 
         .read_index_1(read_index_1_decode_wire),
         .read_index_2(read_index_2_decode_wire),
-        .write_index(write_index_decode_wire),
+        .write_index(write_index_writeback_reg),
 
         .write_data(write_data_writeback_reg),
         .read_data_1(RF_source_1),
