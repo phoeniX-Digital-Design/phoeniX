@@ -1,7 +1,7 @@
-PhoeniX CORE
+phoeniX CORE
 ======================================
 
-**PhoeniX** RISC-V processor was designed in Verilog HDL based on I-M-F extensions of [RISC-V Instruction Set Architecture](http://riscv.org/) and can execute `RV32I`, `RV32M` and `RV32F` instructions. 
+**phoeniX** RISC-V processor was designed in Verilog HDL based on I-M-F extensions of [RISC-V Instruction Set Architecture](http://riscv.org/) and can execute `RV32I`, `RV32M` and `RV32F` instructions. 
 
 You can find a list of full RISC-V assembly instructions in the [ISA documents](https://msyksphinz-self.github.io/riscv-isadoc/html/).
 
@@ -15,9 +15,9 @@ This repository contains an open source CPU under the [GNU V3.0 license](https:/
 - Contact us : arvin7807@gmail.com - farazghoreishy@gmail.com
 - Iran University of Science and Technology - August 2023
 
-## PhoeniX core specifications
+## phoeniX core specifications
 
-The repository contains a collection of Verilog modules that build up the PhoeniX RISC-V processor:
+The repository contains a collection of Verilog modules that build up the phoeniX RISC-V processor:
 
 | Module                        | Description                                                                  |
 | ----------------------------- | ---------------------------------------------------------------------------- |
