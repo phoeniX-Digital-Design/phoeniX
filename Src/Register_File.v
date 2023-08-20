@@ -34,7 +34,6 @@ module Register_File
     begin
         if (write_enable == 1'b1 && write_index != 0)
         begin
-            $display("--> Write to Reg File: index = %d\t|\tdata = %d\t|\ttime = %d", write_index, write_data, $time);
             Registers[write_index] <= write_data;
         end
     end
