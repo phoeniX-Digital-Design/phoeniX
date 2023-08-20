@@ -17,21 +17,20 @@ module Address_Generator
 
     output [31 : 0] address
 );
-    reg  address_type;
+    reg  [31 : 0] value;
     always @(*) 
     begin
         // Address Type evaluation (for Address Generator module)
         case (opcode)
-            7'b0100011: address_type = 1'b1;    //  Store  -> bus_rs1 + immediate
-            7'b0000011: address_type = 1'b1;    //  Load   -> bus_rs1 + immediate
-            7'b1101111: address_type = 1'b0;    //  JAL    ->    PC   + immediate
-            7'b1100111: address_type = 1'b0;    //  JALR   ->    PC   + immediate
-            7'b1100011: address_type = 1'b0;    //  Branch ->    PC   + immediate
-            default: address_type = 1'bz;
+            7'b0100011: value = rs1;    //  Store  -> bus_rs1 + immediate
+            7'b0000011: value = rs1;    //  Load   -> bus_rs1 + immediate
+            7'b1101111: value = PC;     //  JAL    ->    PC   + immediate
+            7'b1100111: value = PC;     //  JALR   ->    PC   + immediate
+            7'b1100011: value = PC;     //  Branch ->    PC   + immediate
+            default: value = 1'bz;
         endcase 
     end
 
-    wire [31 : 0] value = address_type ? rs1 : PC;
     assign address = value + immediate;
     
 endmodule
