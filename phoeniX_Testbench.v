@@ -3,13 +3,18 @@
 
 module phoeniX_Testbench;
     integer data_memory_file;
+    parameter ADDRESS_WIDTH = 16;
 
     reg CLK = 1'b1;
     reg CLK_MEM = 1'b1;
 
     reg reset = 1'b1;
 
-    phoeniX uut
+    phoeniX 
+    #(
+        .ADDRESS_WIDTH(ADDRESS_WIDTH)
+    )
+    uut
     (
         .CLK(CLK),
         .CLK_MEM(CLK_MEM),

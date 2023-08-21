@@ -11,7 +11,8 @@
 
 module phoeniX 
 #(
-    parameter RESET_ADDRESS = 32'hFFFFFFFC
+    parameter RESET_ADDRESS = 32'hFFFFFFFC,
+    parameter ADDRESS_WIDTH = 8
 ) 
 (
     input CLK,
@@ -33,7 +34,11 @@ module phoeniX
     // ------------------------
     // Fetch Unit Instantiation
     // ------------------------
-    Fetch_Unit fetch_unit
+    Fetch_Unit
+    #(
+        .ADDRESS_WIDTH(ADDRESS_WIDTH)
+    ) 
+    fetch_unit
     (
         .CLK(CLK_MEM),
         .enable(!reset),              // TBD : to be changed to fetch control state with control
@@ -280,7 +285,11 @@ module phoeniX
     // -----------------------------
     // Load Store Unit Instantiation
     // -----------------------------
-    Load_Store_Unit load_store_unit
+    Load_Store_Unit
+    #(
+        .ADDRESS_WIDTH(ADDRESS_WIDTH)
+    ) 
+    load_store_unit
     (
         .CLK(CLK_MEM),
         .opcode(opcode_memory_reg),
