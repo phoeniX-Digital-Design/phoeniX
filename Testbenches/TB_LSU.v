@@ -1,12 +1,12 @@
 `timescale 1ns/1ns
-`include "..\\Load_Store_Unit.v"
+`include "..\\Src\\Load_Store_Unit.v"
 
 module TB_LSU;
 
     reg CLK     = 1'b1;
     reg CLK_MEM = 1'b1;
 
-    reg enable = 1'b0;
+    // reg enable = 1'b0;
 
     reg  [6 : 0] opcode = 7'bz;
     reg  [2 : 0] funct3 = 3'bz;
@@ -23,7 +23,7 @@ module TB_LSU;
     Load_Store_Unit uut 
     (
         CLK_MEM,
-        enable,
+        // enable,
         opcode,
         funct3,
         address,
@@ -36,7 +36,7 @@ module TB_LSU;
         $dumpfile("Test_LSU.vcd");
         $dumpvars(0, TB_LSU);
 
-        $readmemh("..\\Instruction_Memory.txt", uut.data_memory.Memory);
+        $readmemh("..\\Sample Codes\\Instruction_Memory.txt", uut.data_memory.Memory);
 
         // Wait for a few clock cycles
 
@@ -46,10 +46,10 @@ module TB_LSU;
         
         opcode = 7'b0000011;
         funct3 = 3'b010;
-        enable = 1'b1;
+        //enable = 1'b1;
 
         #12
-        enable = 1'b0;
+        //enable = 1'b0;
         address = 32'bz;
         opcode = 7'bz;
         funct3 = 3'bz;
@@ -60,10 +60,10 @@ module TB_LSU;
 
         opcode = 7'b0000011;
         funct3 = 3'b100;
-        enable = 1'b1;
+        //enable = 1'b1;
 
         #12
-        enable = 1'b0;
+        //enable = 1'b0;
         address = 32'bz;
         opcode = 7'bz;
         funct3 = 3'bz;
@@ -74,10 +74,10 @@ module TB_LSU;
         
         opcode = 7'b0000011;
         funct3 = 3'b010;
-        enable = 1'b1;
+        //enable = 1'b1;
 
         #12
-        enable = 1'b0;
+        //enable = 1'b0;
         address = 32'bz;
         opcode = 7'bz;
         funct3 = 3'bz;
@@ -88,10 +88,10 @@ module TB_LSU;
         store_data = 32'hFEDCBA98;
         opcode = 7'b0100011;
         funct3 = 3'b010;
-        enable = 1'b1;
+        //enable = 1'b1;
 
         #12
-        enable = 1'b0;
+        //enable = 1'b0;
         address = 32'bz;
         store_data = 32'bz;
         opcode = 7'bz;
@@ -103,10 +103,10 @@ module TB_LSU;
         
         opcode = 7'b0000011;
         funct3 = 3'b010;
-        enable = 1'b1;
+        //enable = 1'b1;
 
         #12
-        enable = 1'b0;
+        //enable = 1'b0;
         address = 32'bz;
         opcode = 7'bz;
         funct3 = 3'bz;
@@ -117,10 +117,10 @@ module TB_LSU;
         store_data = 32'hBABA;
         opcode = 7'b0100011;
         funct3 = 3'b001;
-        enable = 1'b1;
+        //enable = 1'b1;
 
         #12
-        enable = 1'b0;
+        //enable = 1'b0;
         address = 32'bz;
         store_data = 32'bz;
         opcode = 7'bz;
@@ -132,10 +132,10 @@ module TB_LSU;
         
         opcode = 7'b0000011;
         funct3 = 3'b010;
-        enable = 1'b1;
+        //enable = 1'b1;
 
         #12
-        enable = 1'b0;
+        //enable = 1'b0;
         address = 32'bz;
         opcode = 7'bz;
         funct3 = 3'bz;
@@ -146,10 +146,10 @@ module TB_LSU;
         store_data = 32'hAB;
         opcode = 7'b0100011;
         funct3 = 3'b000;
-        enable = 1'b1;
+        //enable = 1'b1;
 
         #12
-        enable = 1'b0;
+        //enable = 1'b0;
         address = 32'bz;
         store_data = 32'bz;
         opcode = 7'bz;
@@ -161,10 +161,10 @@ module TB_LSU;
         
         opcode = 7'b0000011;
         funct3 = 3'b010;
-        enable = 1'b1;
+        //enable = 1'b1;
 
         #12
-        enable = 1'b0;
+        //enable = 1'b0;
         address = 32'bz;
         opcode = 7'bz;
         funct3 = 3'bz;

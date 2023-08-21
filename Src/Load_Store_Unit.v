@@ -1,10 +1,9 @@
 // `include "Memory_Interface.v"
-// `include "..\\Memory_Interface.v"
+`include "..\\Src\\Memory_Interface.v"
 
 module Load_Store_Unit
 (     
     input CLK,
-    input enable,
     
     input  [6 : 0] opcode,                  // Load/Store function
     input  [2 : 0] funct3,                  // Load/Store function
@@ -20,7 +19,16 @@ module Load_Store_Unit
     wire   memory_done;
     wire   [31 : 0] data;
     
-
+    // Memory Interface enable signal generation
+    reg enable;
+    always @(*)
+    begin
+        case (opcode)
+            7'b0000011 : enable = 1'b1;
+            7'b0100011 : enable = 1'b1; 
+            default: enable = 1'b0;
+        endcase
+    end
     // Memory State and Frame Mask Generation
     always @(*) 
     begin

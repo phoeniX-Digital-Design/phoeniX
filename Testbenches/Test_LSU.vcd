@@ -1,5 +1,5 @@
 $date
-	Tue Aug 15 16:41:23 2023
+	Mon Aug 21 10:16:04 2023
 $end
 $version
 	Icarus Verilog
@@ -12,19 +12,18 @@ $var wire 32 ! load_data [31:0] $end
 $var reg 1 " CLK $end
 $var reg 1 # CLK_MEM $end
 $var reg 32 $ address [31:0] $end
-$var reg 1 % enable $end
-$var reg 3 & funct3 [2:0] $end
-$var reg 7 ' opcode [6:0] $end
-$var reg 32 ( store_data [31:0] $end
+$var reg 3 % funct3 [2:0] $end
+$var reg 7 & opcode [6:0] $end
+$var reg 32 ' store_data [31:0] $end
 $scope module uut $end
 $var wire 1 # CLK $end
-$var wire 32 ) address [31:0] $end
-$var wire 32 * data [31:0] $end
-$var wire 1 % enable $end
-$var wire 3 + funct3 [2:0] $end
-$var wire 7 , opcode [6:0] $end
-$var wire 32 - store_data [31:0] $end
-$var wire 1 . memory_done $end
+$var wire 32 ( address [31:0] $end
+$var wire 32 ) data [31:0] $end
+$var wire 3 * funct3 [2:0] $end
+$var wire 7 + opcode [6:0] $end
+$var wire 32 , store_data [31:0] $end
+$var wire 1 - memory_done $end
+$var reg 1 . enable $end
 $var reg 4 / frame_mask [3:0] $end
 $var reg 32 0 load_data [31:0] $end
 $var reg 1 1 memory_state $end
@@ -32,7 +31,7 @@ $scope module data_memory $end
 $var wire 1 # CLK $end
 $var wire 32 2 address [31:0] $end
 $var wire 32 3 data [31:0] $end
-$var wire 1 % enable $end
+$var wire 1 . enable $end
 $var wire 4 4 frame_mask [3:0] $end
 $var wire 1 1 memory_state $end
 $var parameter 4 5 B_0001 $end
@@ -52,7 +51,7 @@ $var parameter 4 B W_1111_2 $end
 $var parameter 4 C W_1111_3 $end
 $var parameter 4 D W_1111_4 $end
 $var reg 32 E data_in [31:0] $end
-$var reg 1 . memory_done $end
+$var reg 1 - memory_done $end
 $var reg 4 F next_state [3:0] $end
 $var reg 4 G state [3:0] $end
 $upscope $end
@@ -90,7 +89,7 @@ bx00 2
 bx 0
 b0 /
 0.
-bz -
+0-
 bz ,
 bz +
 bz *
@@ -98,7 +97,7 @@ bz )
 bz (
 bz '
 bz &
-0%
+bz %
 bz $
 1#
 1"
@@ -129,24 +128,24 @@ $end
 0#
 #12
 b1001 F
+1.
 b10000 2
 01
 b1111 /
 b1111 4
 1#
 1"
-1%
-b10 &
-b10 +
-b11 '
-b11 ,
+b10 %
+b10 *
+b11 &
+b11 +
 b10000 $
-b10000 )
+b10000 (
 #13
 0#
 #14
 b1010 F
-b0zzzzzzzzzzzzzzzzzzzzzzzz *
+b0zzzzzzzzzzzzzzzzzzzzzzzz )
 b0zzzzzzzzzzzzzzzzzzzzzzzz 3
 b0zzzzzzzzzzzzzzzzzzzzzzzz E
 b1001 G
@@ -155,7 +154,7 @@ b1001 G
 0#
 #16
 b1011 F
-b101zzzzzzzzzzzzzzzz *
+b101zzzzzzzzzzzzzzzz )
 b101zzzzzzzzzzzzzzzz 3
 b101zzzzzzzzzzzzzzzz E
 b1010 G
@@ -164,7 +163,7 @@ b1010 G
 0#
 #18
 b1100 F
-b10101000000zzzzzzzz *
+b10101000000zzzzzzzz )
 b10101000000zzzzzzzz 3
 b10101000000zzzzzzzz E
 b1011 G
@@ -174,7 +173,7 @@ b1011 G
 0#
 #20
 b1101 F
-b1010100000010000011 *
+b1010100000010000011 )
 b1010100000010000011 3
 b1010100000010000011 E
 b1100 G
@@ -185,30 +184,30 @@ b1100 G
 b1010100000010000011 !
 b1010100000010000011 0
 b0 F
-1.
+1-
 b1101 G
 1#
 #23
 0#
 #24
-bz *
+bz )
 bz 3
 bz E
-0.
+0-
 b0 G
+0.
 bx00 2
 01
 b0 /
 b0 4
 1#
 1"
+bz %
+bz *
 bz &
 bz +
-bz '
-bz ,
 bz $
-bz )
-0%
+bz (
 #25
 0#
 #26
@@ -234,24 +233,24 @@ bz )
 0#
 #36
 b1 F
+1.
 b10000 2
 01
 b1 /
 b1 4
 1#
 1"
-1%
-b100 &
-b100 +
-b11 '
-b11 ,
+b100 %
+b100 *
+b11 &
+b11 +
 b10011 $
-b10011 )
+b10011 (
 #37
 0#
 #38
 b1101 F
-b10000011 *
+b10000011 )
 b10000011 3
 b10000011 E
 b1 G
@@ -262,17 +261,17 @@ b1 G
 b10000011 !
 b10000011 0
 b0 F
-1.
+1-
 b1101 G
 1#
 #41
 0#
 #42
 b1 F
-bz *
+bz )
 bz 3
 bz E
-0.
+0-
 b0 G
 1#
 0"
@@ -280,7 +279,7 @@ b0 G
 0#
 #44
 b1101 F
-b10000011 *
+b10000011 )
 b10000011 3
 b10000011 E
 b1 G
@@ -289,30 +288,30 @@ b1 G
 0#
 #46
 b0 F
-1.
+1-
 b1101 G
 1#
 #47
 0#
 #48
-bz *
+bz )
 bz 3
 bz E
-0.
+0-
 b0 G
+0.
 bx00 2
 01
 b0 /
 b0 4
 1#
 1"
+bz %
+bz *
 bz &
 bz +
-bz '
-bz ,
 bz $
-bz )
-0%
+bz (
 #49
 0#
 #50
@@ -338,24 +337,24 @@ bz )
 0#
 #60
 b1001 F
+1.
 b10100 2
 01
 b1111 /
 b1111 4
 1#
 1"
-1%
-b10 &
-b10 +
-b11 '
-b11 ,
+b10 %
+b10 *
+b11 &
+b11 +
 b10100 $
-b10100 )
+b10100 (
 #61
 0#
 #62
 b1010 F
-b0zzzzzzzzzzzzzzzzzzzzzzzz *
+b0zzzzzzzzzzzzzzzzzzzzzzzz )
 b0zzzzzzzzzzzzzzzzzzzzzzzz 3
 b0zzzzzzzzzzzzzzzzzzzzzzzz E
 b1001 G
@@ -364,7 +363,7 @@ b1001 G
 0#
 #64
 b1011 F
-b101zzzzzzzzzzzzzzzz *
+b101zzzzzzzzzzzzzzzz )
 b101zzzzzzzzzzzzzzzz 3
 b101zzzzzzzzzzzzzzzz E
 b1010 G
@@ -373,7 +372,7 @@ b1010 G
 0#
 #66
 b1100 F
-b10111000001zzzzzzzz *
+b10111000001zzzzzzzz )
 b10111000001zzzzzzzz 3
 b10111000001zzzzzzzz E
 b1011 G
@@ -383,7 +382,7 @@ b1011 G
 0#
 #68
 b1101 F
-b1011100000100000011 *
+b1011100000100000011 )
 b1011100000100000011 3
 b1011100000100000011 E
 b1100 G
@@ -394,30 +393,30 @@ b1100 G
 b1011100000100000011 !
 b1011100000100000011 0
 b0 F
-1.
+1-
 b1101 G
 1#
 #71
 0#
 #72
-bz *
+bz )
 bz 3
 bz E
-0.
+0-
 b0 G
+0.
 bx00 2
 01
 b0 /
 b0 4
 1#
 1"
+bz %
+bz *
 bz &
 bz +
-bz '
-bz ,
 bz $
-bz )
-0%
+bz (
 #73
 0#
 #74
@@ -443,7 +442,8 @@ bz )
 0#
 #84
 b1001 F
-b11111110110111001011101010011000 *
+1.
+b11111110110111001011101010011000 )
 b11111110110111001011101010011000 3
 b10100 2
 11
@@ -451,15 +451,14 @@ b1111 /
 b1111 4
 1#
 1"
-1%
-b10 &
-b10 +
-b100011 '
-b100011 ,
-b11111110110111001011101010011000 (
-b11111110110111001011101010011000 -
+b10 %
+b10 *
+b100011 &
+b100011 +
+b11111110110111001011101010011000 '
+b11111110110111001011101010011000 ,
 b10100 $
-b10100 )
+b10100 (
 #85
 0#
 #86
@@ -489,15 +488,16 @@ b1100 G
 0#
 #94
 b0 F
-1.
+1-
 b1101 G
 1#
 #95
 0#
 #96
-0.
+0-
 b0 G
-bz *
+0.
+bz )
 bz 3
 bx00 2
 01
@@ -505,15 +505,14 @@ b0 /
 b0 4
 1#
 1"
+bz %
+bz *
 bz &
 bz +
 bz '
 bz ,
-bz (
-bz -
 bz $
-bz )
-0%
+bz (
 #97
 0#
 #98
@@ -539,24 +538,24 @@ bz )
 0#
 #108
 b1001 F
+1.
 b10100 2
 01
 b1111 /
 b1111 4
 1#
 1"
-1%
-b10 &
-b10 +
-b11 '
-b11 ,
+b10 %
+b10 *
+b11 &
+b11 +
 b10100 $
-b10100 )
+b10100 (
 #109
 0#
 #110
 b1010 F
-b11111110zzzzzzzzzzzzzzzzzzzzzzzz *
+b11111110zzzzzzzzzzzzzzzzzzzzzzzz )
 b11111110zzzzzzzzzzzzzzzzzzzzzzzz 3
 b11111110zzzzzzzzzzzzzzzzzzzzzzzz E
 b1001 G
@@ -565,7 +564,7 @@ b1001 G
 0#
 #112
 b1011 F
-b1111111011011100zzzzzzzzzzzzzzzz *
+b1111111011011100zzzzzzzzzzzzzzzz )
 b1111111011011100zzzzzzzzzzzzzzzz 3
 b1111111011011100zzzzzzzzzzzzzzzz E
 b1010 G
@@ -574,7 +573,7 @@ b1010 G
 0#
 #114
 b1100 F
-b111111101101110010111010zzzzzzzz *
+b111111101101110010111010zzzzzzzz )
 b111111101101110010111010zzzzzzzz 3
 b111111101101110010111010zzzzzzzz E
 b1011 G
@@ -584,7 +583,7 @@ b1011 G
 0#
 #116
 b1101 F
-b11111110110111001011101010011000 *
+b11111110110111001011101010011000 )
 b11111110110111001011101010011000 3
 b11111110110111001011101010011000 E
 b1100 G
@@ -595,30 +594,30 @@ b1100 G
 b11111110110111001011101010011000 !
 b11111110110111001011101010011000 0
 b0 F
-1.
+1-
 b1101 G
 1#
 #119
 0#
 #120
-bz *
+bz )
 bz 3
 bz E
-0.
+0-
 b0 G
+0.
 bx00 2
 01
 b0 /
 b0 4
 1#
 1"
+bz %
+bz *
 bz &
 bz +
-bz '
-bz ,
 bz $
-bz )
-0%
+bz (
 #121
 0#
 #122
@@ -644,7 +643,8 @@ bz )
 0#
 #132
 b101 F
-b1011101010111010 *
+1.
+b1011101010111010 )
 b1011101010111010 3
 b10100 2
 11
@@ -652,15 +652,14 @@ b11 /
 b11 4
 1#
 1"
-1%
-b1 &
-b1 +
-b100011 '
-b100011 ,
-b1011101010111010 (
-b1011101010111010 -
+b1 %
+b1 *
+b100011 &
+b100011 +
+b1011101010111010 '
+b1011101010111010 ,
 b10110 $
-b10110 )
+b10110 (
 #133
 0#
 #134
@@ -677,7 +676,7 @@ b110 G
 0#
 #138
 b0 F
-1.
+1-
 b1101 G
 1#
 0"
@@ -685,7 +684,7 @@ b1101 G
 0#
 #140
 b101 F
-0.
+0-
 b0 G
 1#
 #141
@@ -700,7 +699,8 @@ b101 G
 b0 F
 bz E
 b0 G
-bz *
+0.
+bz )
 bz 3
 bx00 2
 01
@@ -708,15 +708,14 @@ b0 /
 b0 4
 1#
 1"
+bz %
+bz *
 bz &
 bz +
 bz '
 bz ,
-bz (
-bz -
 bz $
-bz )
-0%
+bz (
 #145
 0#
 #146
@@ -742,24 +741,24 @@ bz )
 0#
 #156
 b1001 F
+1.
 b10100 2
 01
 b1111 /
 b1111 4
 1#
 1"
-1%
-b10 &
-b10 +
-b11 '
-b11 ,
+b10 %
+b10 *
+b11 &
+b11 +
 b10100 $
-b10100 )
+b10100 (
 #157
 0#
 #158
 b1010 F
-b11111110zzzzzzzzzzzzzzzzzzzzzzzz *
+b11111110zzzzzzzzzzzzzzzzzzzzzzzz )
 b11111110zzzzzzzzzzzzzzzzzzzzzzzz 3
 b11111110zzzzzzzzzzzzzzzzzzzzzzzz E
 b1001 G
@@ -768,7 +767,7 @@ b1001 G
 0#
 #160
 b1011 F
-b1111111011011100zzzzzzzzzzzzzzzz *
+b1111111011011100zzzzzzzzzzzzzzzz )
 b1111111011011100zzzzzzzzzzzzzzzz 3
 b1111111011011100zzzzzzzzzzzzzzzz E
 b1010 G
@@ -777,7 +776,7 @@ b1010 G
 0#
 #162
 b1100 F
-b111111101101110010111010zzzzzzzz *
+b111111101101110010111010zzzzzzzz )
 b111111101101110010111010zzzzzzzz 3
 b111111101101110010111010zzzzzzzz E
 b1011 G
@@ -787,7 +786,7 @@ b1011 G
 0#
 #164
 b1101 F
-b11111110110111001011101010111010 *
+b11111110110111001011101010111010 )
 b11111110110111001011101010111010 3
 b11111110110111001011101010111010 E
 b1100 G
@@ -798,30 +797,30 @@ b1100 G
 b11111110110111001011101010111010 !
 b11111110110111001011101010111010 0
 b0 F
-1.
+1-
 b1101 G
 1#
 #167
 0#
 #168
-bz *
+bz )
 bz 3
 bz E
-0.
+0-
 b0 G
+0.
 bx00 2
 01
 b0 /
 b0 4
 1#
 1"
+bz %
+bz *
 bz &
 bz +
-bz '
-bz ,
 bz $
-bz )
-0%
+bz (
 #169
 0#
 #170
@@ -847,7 +846,8 @@ bz )
 0#
 #180
 b10 F
-b10101011 *
+1.
+b10101011 )
 b10101011 3
 b10100 2
 11
@@ -855,15 +855,14 @@ b10 /
 b10 4
 1#
 1"
-1%
-b0 &
-b0 +
-b100011 '
-b100011 ,
-b10101011 (
-b10101011 -
+b0 %
+b0 *
+b100011 &
+b100011 +
+b10101011 '
+b10101011 ,
 b10110 $
-b10110 )
+b10110 (
 #181
 0#
 #182
@@ -874,14 +873,14 @@ b10 G
 0#
 #184
 b0 F
-1.
+1-
 b1101 G
 1#
 #185
 0#
 #186
 b10 F
-0.
+0-
 b0 G
 1#
 0"
@@ -895,15 +894,16 @@ b10 G
 0#
 #190
 b0 F
-1.
+1-
 b1101 G
 1#
 #191
 0#
 #192
-0.
+0-
 b0 G
-bz *
+0.
+bz )
 bz 3
 bx00 2
 01
@@ -911,15 +911,14 @@ b0 /
 b0 4
 1#
 1"
+bz %
+bz *
 bz &
 bz +
 bz '
 bz ,
-bz (
-bz -
 bz $
-bz )
-0%
+bz (
 #193
 0#
 #194
@@ -945,24 +944,24 @@ bz )
 0#
 #204
 b1001 F
+1.
 b10100 2
 01
 b1111 /
 b1111 4
 1#
 1"
-1%
-b10 &
-b10 +
-b11 '
-b11 ,
+b10 %
+b10 *
+b11 &
+b11 +
 b10100 $
-b10100 )
+b10100 (
 #205
 0#
 #206
 b1010 F
-b11111110zzzzzzzzzzzzzzzzzzzzzzzz *
+b11111110zzzzzzzzzzzzzzzzzzzzzzzz )
 b11111110zzzzzzzzzzzzzzzzzzzzzzzz 3
 b11111110zzzzzzzzzzzzzzzzzzzzzzzz E
 b1001 G
@@ -971,7 +970,7 @@ b1001 G
 0#
 #208
 b1011 F
-b1111111011011100zzzzzzzzzzzzzzzz *
+b1111111011011100zzzzzzzzzzzzzzzz )
 b1111111011011100zzzzzzzzzzzzzzzz 3
 b1111111011011100zzzzzzzzzzzzzzzz E
 b1010 G
@@ -980,7 +979,7 @@ b1010 G
 0#
 #210
 b1100 F
-b111111101101110010101011zzzzzzzz *
+b111111101101110010101011zzzzzzzz )
 b111111101101110010101011zzzzzzzz 3
 b111111101101110010101011zzzzzzzz E
 b1011 G
@@ -990,7 +989,7 @@ b1011 G
 0#
 #212
 b1101 F
-b11111110110111001010101110111010 *
+b11111110110111001010101110111010 )
 b11111110110111001010101110111010 3
 b11111110110111001010101110111010 E
 b1100 G
@@ -1001,30 +1000,30 @@ b1100 G
 b11111110110111001010101110111010 !
 b11111110110111001010101110111010 0
 b0 F
-1.
+1-
 b1101 G
 1#
 #215
 0#
 #216
-bz *
+bz )
 bz 3
 bz E
-0.
+0-
 b0 G
+0.
 bx00 2
 01
 b0 /
 b0 4
 1#
 1"
+bz %
+bz *
 bz &
 bz +
-bz '
-bz ,
 bz $
-bz )
-0%
+bz (
 #217
 0#
 #218
