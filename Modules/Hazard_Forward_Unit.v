@@ -16,17 +16,28 @@ module Hazard_Forward_Unit
     input [31 : 0] data_2,
     input [31 : 0] data_3,
     
+    output reg forward_enable,
     output reg [31 : 0] forward_data
 );
 
     always @(*) 
     begin
         if (source_index == destination_index_1)
+        begin
             forward_data <= data_1;
+            forward_enable <= 1'b1;
+        end
+            
         else if (source_index == destination_index_2)
+        begin
             forward_data <= data_2;
+            forward_enable <= 1'b1;
+        end
+            
         else if (source_index == destination_index_3)
+        begin
             forward_data <= data_3;
+            forward_enable <= 1'b1;
+        end
     end
-    
 endmodule
