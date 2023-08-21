@@ -39,8 +39,8 @@ module Instruction_Decoder
     assign instruction_type_r = instruction[6 : 2] == 5'b01100 ||
                                 instruction[6 : 2] == 5'b10100;
 
-    assign instruction_type_s = instruction[6 : 2] == 5'b10000 ||
-                                instruction[6 : 2] == 5'b10001;
+    assign instruction_type_s = instruction[6 : 2] == 5'b01000 ||
+                                instruction[6 : 2] == 5'b01001;
 
     assign instruction_type_u = instruction[6 : 2] == 5'b00101 ||
                                 instruction[6 : 2] == 5'b01101;
