@@ -4,22 +4,20 @@
 `include "Src\\Instruction_Decoder.v"
 `include "Src\\Immediate_Generator.v"
 `include "Src\\Register_File.v"
-
 `include "Src\\Arithmetic_Logic_Unit.v"
 `include "Src\\Jump_Branch_Unit.v"
 `include "Src\\Address_Generator.v"
-
 `include "Src\\Load_Store_Unit.v"
 
 module phoeniX 
 #(
     parameter RESET_ADDRESS = 32'hFFFFFFFC
-) (
+) 
+(
     input CLK,
     input CLK_MEM,
     input reset
 );
-
     // ---------------------------------
     // Wire Declarations for Fetch Stage
     // ---------------------------------
@@ -278,6 +276,19 @@ module phoeniX
     // Wire Declarations for Memory Stage
     // ----------------------------------
     wire [31 : 0] load_data_memory_wire;
+
+    // -----------------------------
+    // Load Store Unit Instantiation
+    // -----------------------------
+    Load_Store_Unit load_store_unit
+    (
+        .CLK(CLK_MEM),
+        .opcode(opcode_memory_reg),
+        .funct3(funct3_memory_reg),
+        .address(address_memory_reg),
+        .store_data(bus_rs2_memory_reg),
+        .load_data(load_data_memory_wire)
+    );
 
     // -------------------------------------
     // Reg Declarations for Write-Back Stage

@@ -1,31 +1,29 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Sun Aug 20 19:05:18 2023
+[*] Mon Aug 21 09:01:04 2023
 [*]
 [dumpfile] "D:\GitHub\RV32-Core\phoeniX.vcd"
-[dumpfile_mtime] "Sun Aug 20 18:59:25 2023"
-[dumpfile_size] 139443
+[dumpfile_mtime] "Mon Aug 21 08:59:44 2023"
+[dumpfile_size] 177472
 [savefile] "D:\GitHub\RV32-Core\phoeniX.gtkw"
-[timestart] 69800
+[timestart] 703
 [size] 1920 1009
 [pos] -1 -1
-*-14.496948 126000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-5.254938 726 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] phoeniX_Testbench.
 [treeopen] phoeniX_Testbench.uut.
-[sst_width] 404
+[sst_width] 240
 [signals_width] 497
 [sst_expanded] 1
 [sst_vpaned_height] 393
-@28
-phoeniX_Testbench.uut.CLK
-phoeniX_Testbench.uut.CLK_MEM
-@200
--
 @28
 phoeniX_Testbench.reset
 phoeniX_Testbench.uut.fetch_unit.enable
 @200
 -
+@28
+phoeniX_Testbench.CLK_MEM
+phoeniX_Testbench.CLK
 @22
 phoeniX_Testbench.uut.PC_fetch_reg[31:0]
 phoeniX_Testbench.uut.instruction_fetch_wire[31:0]
