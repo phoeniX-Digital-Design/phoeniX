@@ -5,7 +5,6 @@ input_name = input("Enter input file name:\n")
 print ('Output file is the transformed code to be used as the instruction memory of the core.')
 output_name = input("Enter output file name:\n")
 
-print(os.getcwd())
 input_file  = os.path.join(os.getcwd(), input_name)
 output_file = os.path.join(os.getcwd(), output_name)
 
