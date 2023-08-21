@@ -39,5 +39,10 @@ module Hazard_Forward_Unit
             forward_data <= data_3;
             forward_enable <= 1'b1;
         end
+        else
+        begin
+            forward_data <= 32'bz;
+            forward_enable <= 1'b0;
+        end
     end
 endmodule

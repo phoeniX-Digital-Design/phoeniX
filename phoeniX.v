@@ -124,6 +124,11 @@ module phoeniX
     wire [31 : 0] RF_source_1;
     wire [31 : 0] RF_source_2;
 
+    wire [31 : 0] FW_source_1;
+    wire [31 : 0] FW_source_2;
+    
+    wire FW_enable_1;
+    wire FW_enable_2;
     // -----------------------------------------------
     // Wire Declaration for inputs to source bus 1 & 2
     // ----------------------------------------------- 
@@ -133,8 +138,8 @@ module phoeniX
     // ----------------------------------------------------------------------------------------
     // assign inputs to source bus 1 & 2  --> TBD: to be selected between RF source and FW data
     // ----------------------------------------------------------------------------------------
-    assign bus_rs1_decode_wire = RF_source_1;
-    assign bus_rs2_decode_wire = RF_source_2;
+    assign bus_rs1_decode_wire = FW_enable_1 ? FW_source_1 : RF_source_1;
+    assign bus_rs2_decode_wire = FW_enable_2 ? FW_source_2 : RF_source_2;
     
     // ----------------------------------
     // Reg Declarations for Execute Stage
@@ -393,6 +398,25 @@ module phoeniX
 
         .data_1(result_execute_wire),
         .data_2(opcode_memory_reg == 7'b0100011 ? load_data_memory_wire : result_memory_reg),
-        .data_3(write_data_writeback_reg)
+        .data_3(write_data_writeback_reg),
+
+        .forward_enable(FW_enable_1),
+        .forward_data(FW_source_1)
+    );
+
+    Hazard_Forward_Unit hazard_forward_unit_source_2
+    (
+        .source_index(read_index_2_decode_wire),
+        
+        .destination_index_1(write_index_execute_reg),
+        .destination_index_2(write_index_memory_reg),
+        .destination_index_3(write_index_writeback_reg),
+
+        .data_1(result_execute_wire),
+        .data_2(opcode_memory_reg == 7'b0100011 ? load_data_memory_wire : result_memory_reg),
+        .data_3(write_data_writeback_reg),
+
+        .forward_enable(FW_enable_2),
+        .forward_data(FW_source_2)
     );
 endmodule
