@@ -67,8 +67,8 @@ module phoeniX_Testbench;
         reset = 1'b1;
         #12
         reset = 1'b0;
-        #5000
-
+        
+        #8100
         data_memory_file = $fopen("Sample Codes\\Test_RV32I_sum1to100_data.mem", "w");
         // $display("%d", uut.load_store_unit.data_memory.Memory.DEPTH);
         for (integer i = 0; i < 256; i = i + 1)
