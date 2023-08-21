@@ -15,7 +15,7 @@ This repository contains an open source CPU under the [GNU V3.0 license](https:/
 - Contact us : arvin7807@gmail.com - farazghoreishy@gmail.com
 - Iran University of Science and Technology - August 2023
 
-## phoeniX core specifications
+## phoeniX core structure
 
 The repository contains a collection of Verilog modules that build up the phoeniX RISC-V processor. These building block modules are included in `\Modules` directory in main branch of the repository:
 
@@ -36,3 +36,17 @@ Main phoeniX RISC-V core file is in the main branch of this repository:
 | Module                        | Description                                                                  |
 | ----------------------------- | ---------------------------------------------------------------------------- |
 | `phoeniX`                     | phoeniX 32 bit RISC-V core (RV32IMF) main Verilog module                     |
+
+## Sample codes
+
+There's a set of sample RISC-V assembly codes in the `\Sample_Codes` directory. These codes were written and simulated using [Venus Simulator](https://marketplace.visualstudio.com/items?itemName=hm.riscv-venus) using its Visual Studio Code extension. Venus can also create the HEX output file of the assembly code which will be needed to be given to the core, in the instruction memory.
+
+## Instruction Memory Generator
+
+There's a python script in this directory which is written to create a `.mem`,`.txt` or a `.hex` file as an instruction memory for the phoeniX core, from the output HEX file of the Venus Simulator. The script works with the following steps:
+
+1) Write, simulate and modify your assembly code in Venus simulator.
+2) In 'VENUS OPTIONS' select 'Assembly' and save the output file as a text file. (save the output in the python script directory)
+3) Enter the created text file name.
+4) Enter the output file (instruction memory) name.
+5) Output file created is the instruction memory and can be given to testbench. (output is also generated in the same directory)
