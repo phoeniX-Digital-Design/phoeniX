@@ -43,7 +43,7 @@ There's a set of sample RISC-V assembly codes in the `\Sample_Codes` directory. 
 
 ## Instruction Memory Generator
 
-There's a python script in this directory which is written to create a `.mem`,`.txt` or a `.hex` file as an instruction memory for the phoeniX core, from the output HEX file of the Venus Simulator. The script works with the following steps:
+There's a python script in this directory which is written to create a `.mem`, `.txt` or a `.hex` file as an instruction memory for the phoeniX core, from the output HEX file of the Venus Simulator. The script works with the following steps:
 
 1) Write, simulate and modify your assembly code in Venus simulator.
 2) In 'VENUS OPTIONS' select 'Assembly' and save the output file as a text file. (save the output in the python script directory)
