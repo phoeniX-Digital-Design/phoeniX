@@ -1,4 +1,7 @@
 module Memory_Interface 
+#(
+    parameter DEPTH = 256
+)
 (
   	input CLK,
   	input enable,
@@ -11,7 +14,7 @@ module Memory_Interface
     output reg  memory_done
 );
 
- 	reg [7 : 0] Memory [0 : 255];
+ 	reg [7 : 0] Memory [0 : DEPTH - 1];
     reg [31 : 0] data_in;
 
     localparam  READ        = 1'b0,
