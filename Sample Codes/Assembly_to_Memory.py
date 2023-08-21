@@ -1,5 +1,13 @@
-input_file  = "assembly.txt"
-output_file = "imem_code.txt"
+import os
+
+print ('Input file is the assembly code filed in Venus RISC-V simulator save in a text (.txt) format.')
+input_name = input("Enter input file name:\n")
+print ('Output file is the transformed code to be used as the instruction memory of the core.')
+output_name = input("Enter output file name:\n")
+
+print(os.getcwd())
+input_file  = os.path.join(os.getcwd(), input_name)
+output_file = os.path.join(os.getcwd(), output_name)
 
 # Read the contents of the file
 with open(input_file, "r") as file:
