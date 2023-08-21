@@ -1,24 +1,30 @@
 // `include "Memory_Interface.v"
 // `include "..\\Memory_Interface.v"
 
-module Fetch_Unit 
+module Fetch_Unit
+#(
+    parameter ADDRESS_WIDTH = 8
+)
 (
     input CLK,
-	input enable,			                                // Memory Interface module enable pin (from Control Unit)
+	input enable,                                       // Memory Interface module enable pin (from Control Unit)
 
     input [31 : 0] PC,
 
-	input [31 : 0] address,		                            // Branch or Jump address generated in Address Generator
-	input jump_branch_enable,		                        // Generated in Branch Unit module
+	input [31 : 0] address,                             // Branch or Jump address generated in Address Generator
+	input jump_branch_enable,                           // Generated in Branch Unit module
 
     output [31 : 0] next_PC,
-	output reg [31 : 0] fetched_instruction                // output "data" in Memory Interface module
-	// output fetch_done			                            // output "memory_done" in Memory Interface module
+	output reg [31 : 0] fetched_instruction             // output "data" in Memory Interface module
 );
     wire    [31 : 0] fetched_instruction_wire;
     wire fetch_done;
 
-	Memory_Interface instruction_memory 
+	Memory_Interface 
+    #(
+        .DEPTH(2 ** ADDRESS_WIDTH)
+    )
+    instruction_memory 
     (
         .CLK(CLK),
         .enable(enable), 

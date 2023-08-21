@@ -2,6 +2,9 @@
 // `include "..\\Src\\Memory_Interface.v"
 
 module Load_Store_Unit
+#(
+    parameter ADDRESS_WIDTH = 8
+)
 (     
     input CLK,
     
@@ -91,7 +94,11 @@ module Load_Store_Unit
     assign data = opcode == 7'b0100011 ? store_data : 32'bz;
 
     // Instantiating Memory Interface for Data Memory
-    Memory_Interface data_memory 
+    Memory_Interface 
+    #(
+        .DEPTH(2 ** ADDRESS_WIDTH)
+    )
+    data_memory 
     (
         .CLK(CLK),
         .enable(enable), 
