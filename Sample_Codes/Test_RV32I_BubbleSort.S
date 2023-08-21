@@ -1,6 +1,5 @@
 main:
-    lui     sp,     15
-	addi    sp,     sp,     -4
+	addi    sp,     sp,     1020
     #create stack
 	addi	sp,     sp,     -48
 	
