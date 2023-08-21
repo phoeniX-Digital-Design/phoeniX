@@ -2,7 +2,7 @@ import os
 text = """
 RISC-V code to phoeniX instruction memory
 1) Write, simulate and modify your assembly code in Venus simulator.
-2) In 'VENUS OPTIONS' select 'Assembly' and save the ouutput file as a text file.
+2) In 'VENUS OPTIONS' select 'Assembly' and save the output file as a text file.
 3) Enter the created text file name.
 4) Enter the output file (instruction memory) name.
 5) Output file created is the instruction memory and can be given to testbench."""
