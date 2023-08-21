@@ -1,4 +1,3 @@
-`include "Modules\\Register.v"
 `include "Modules\\Fetch_Unit.v"
 `include "Modules\\Memory_Interface.v"
 `include "Modules\\Instruction_Decoder.v"
@@ -8,6 +7,7 @@
 `include "Modules\\Jump_Branch_Unit.v"
 `include "Modules\\Address_Generator.v"
 `include "Modules\\Load_Store_Unit.v"
+`include "Modules\\Hazard_Forward_Unit.v"
 
 module phoeniX 
 #(
@@ -360,14 +360,30 @@ module phoeniX
 
         .read_enable_1(read_enable_1_decode_wire),
         .read_enable_2(read_enable_2_decode_wire),
-        .write_enable(write_enable_writeback_reg),
+        .write_enable(opcode_execute_reg == 7'b0110111 ? write_enable_execute_reg : write_enable_writeback_reg),
 
         .read_index_1(read_index_1_decode_wire),
         .read_index_2(read_index_2_decode_wire),
-        .write_index(write_index_writeback_reg),
+        .write_index(opcode_execute_reg == 7'b0110111 ? write_index_execute_reg : write_index_writeback_reg),
 
-        .write_data(write_data_writeback_reg),
+        .write_data(opcode_execute_reg == 7'b0110111 ? immediate_execute_reg : write_data_writeback_reg),
         .read_data_1(RF_source_1),
         .read_data_2(RF_source_2)
+    );
+
+    ////////////////////////////////////////
+    //     Hazard Detection Units         //
+    ////////////////////////////////////////
+    Hazard_Forward_Unit hazard_forward_unit_source_1
+    (
+        .source_index(read_index_1_decode_wire),
+        
+        .destination_index_1(write_index_execute_reg),
+        .destination_index_2(write_index_memory_reg),
+        .destination_index_3(write_index_writeback_reg),
+
+        .data_1(result_execute_wire),
+        .data_2(opcode_memory_reg == 7'b0100011 ? load_data_memory_wire : result_memory_reg),
+        .data_3(write_data_writeback_reg)
     );
 endmodule

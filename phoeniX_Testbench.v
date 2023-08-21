@@ -60,7 +60,7 @@ module phoeniX_Testbench;
         $dumpfile("phoeniX.vcd");
         $dumpvars(0, phoeniX_Testbench);
 
-        $readmemh("Sample Codes\\Test_RV32I_sum1to100.mem", uut.fetch_unit.instruction_memory.Memory);
+        $readmemh("Sample_Codes\\Test_RV32I_Simple.mem", uut.fetch_unit.instruction_memory.Memory);
 
         // Reset
         #24
@@ -69,7 +69,7 @@ module phoeniX_Testbench;
         reset = 1'b0;
         
         #8100
-        data_memory_file = $fopen("Sample Codes\\Test_RV32I_sum1to100_data.mem", "w");
+        data_memory_file = $fopen("Sample_Codes\\Test_RV32I_Simple_data.mem", "w");
         // $display("%d", uut.load_store_unit.data_memory.Memory.DEPTH);
         for (integer i = 0; i < 256; i = i + 1)
         begin
