@@ -17,7 +17,7 @@ This repository contains an open source CPU under the [GNU V3.0 license](https:/
 
 ## phoeniX core specifications
 
-The repository contains a collection of Verilog modules that build up the phoeniX RISC-V processor:
+The repository contains a collection of Verilog modules that build up the phoeniX RISC-V processor. These building block modules are included in `\Modules` directory in main branch of the repository:
 
 | Module                        | Description                                                                  |
 | ----------------------------- | ---------------------------------------------------------------------------- |
@@ -30,4 +30,6 @@ The repository contains a collection of Verilog modules that build up the phoeni
 | `Load_Store_Unit`             | Load and Store operations implemented using `Memory_Interface` module        |
 | `Branch_Unit`                 | Condition check for all branch instructions of `RV32I` ISA support           |
 | `Address_Generator`           | Generates adderess for BRANCH, JUMP and LOAD/STORE instrcutions              |
-| `Control_Unit`                | Main control logic of Pheonix processor                                      |
+| `Hazard_Forward_Unit`         | Hazard detection and data forwarding logic in pipelined processor            |
+| ------------------------------------------------------------------------------------------------------------ |
+| `phoeniX`                     | Main 32 bit RISC-V core (in `main` branch)                                   |
