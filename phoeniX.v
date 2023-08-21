@@ -1,13 +1,13 @@
-`include "Src\\Register.v"
-`include "Src\\Fetch_Unit.v"
-`include "Src\\Memory_Interface.v"
-`include "Src\\Instruction_Decoder.v"
-`include "Src\\Immediate_Generator.v"
-`include "Src\\Register_File.v"
-`include "Src\\Arithmetic_Logic_Unit.v"
-`include "Src\\Jump_Branch_Unit.v"
-`include "Src\\Address_Generator.v"
-`include "Src\\Load_Store_Unit.v"
+`include "Modules\\Register.v"
+`include "Modules\\Fetch_Unit.v"
+`include "Modules\\Memory_Interface.v"
+`include "Modules\\Instruction_Decoder.v"
+`include "Modules\\Immediate_Generator.v"
+`include "Modules\\Register_File.v"
+`include "Modules\\Arithmetic_Logic_Unit.v"
+`include "Modules\\Jump_Branch_Unit.v"
+`include "Modules\\Address_Generator.v"
+`include "Modules\\Load_Store_Unit.v"
 
 module phoeniX 
 #(
