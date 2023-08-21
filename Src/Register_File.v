@@ -26,7 +26,7 @@ module Register_File
     integer i;    	
     always @(posedge reset)
     begin
-        for (i = 0; i < $pow(2, DEPTH) - 1; i = i + 1)
+        for (i = 0; i < $pow(2, DEPTH); i = i + 1)
             Registers[i] = {WIDTH{1'b0}};
     end
 	
