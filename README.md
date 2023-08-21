@@ -31,5 +31,8 @@ The repository contains a collection of Verilog modules that build up the phoeni
 | `Branch_Unit`                 | Condition check for all branch instructions of `RV32I` ISA support           |
 | `Address_Generator`           | Generates adderess for BRANCH, JUMP and LOAD/STORE instrcutions              |
 | `Hazard_Forward_Unit`         | Hazard detection and data forwarding logic in pipelined processor            |
-| ------------------------------------------------------------------------------------------------------------ |
-| `phoeniX`                     | Main 32 bit RISC-V core (in `main` branch)                                   |
+
+Main phoeniX RISC-V core file is in the main branch of this repository:
+| Module                        | Description                                                                  |
+| ----------------------------- | ---------------------------------------------------------------------------- |
+| `phoeniX`                     | phoeniX 32 bit RISC-V core (RV32IMF) main Verilog module                     |
