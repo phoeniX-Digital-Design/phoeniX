@@ -1,20 +1,20 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Tue Aug 22 08:40:59 2023
+[*] Tue Aug 22 20:17:36 2023
 [*]
 [dumpfile] "D:\GitHub\RV32-Core\phoeniX.vcd"
-[dumpfile_mtime] "Tue Aug 22 08:33:00 2023"
-[dumpfile_size] 58355
+[dumpfile_mtime] "Tue Aug 22 17:15:43 2023"
+[dumpfile_size] 535950
 [savefile] "D:\GitHub\RV32-Core\phoeniX.gtkw"
-[timestart] 131
+[timestart] 126
 [size] 1920 1009
 [pos] -1 -1
-*-3.490754 174 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-5.490754 234 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] phoeniX_Testbench.
 [treeopen] phoeniX_Testbench.uut.
 [treeopen] phoeniX_Testbench.uut.fetch_unit.
 [treeopen] phoeniX_Testbench.uut.load_store_unit.
-[sst_width] 211
+[sst_width] 370
 [signals_width] 502
 [sst_expanded] 1
 [sst_vpaned_height] 257
@@ -105,6 +105,12 @@ phoeniX_Testbench.uut.FW_enable_2
 phoeniX_Testbench.uut.bus_rs1_decode_wire[31:0]
 [color] 2
 phoeniX_Testbench.uut.bus_rs2_decode_wire[31:0]
+@200
+-
+@22
+phoeniX_Testbench.uut.write_index_execute_reg[4:0]
+phoeniX_Testbench.uut.write_index_memory_reg[4:0]
+phoeniX_Testbench.uut.write_index_writeback_reg[4:0]
 @200
 -
 -DECODE -> EXECUTE
@@ -207,7 +213,7 @@ phoeniX_Testbench.uut.load_store_unit.address[31:0]
 phoeniX_Testbench.uut.load_store_unit.store_data[31:0]
 [color] 4
 phoeniX_Testbench.uut.load_store_unit.enable
-@25
+@24
 phoeniX_Testbench.uut.load_store_unit.data_memory.state[3:0]
 phoeniX_Testbench.uut.load_store_unit.data_memory.next_state[3:0]
 @200
