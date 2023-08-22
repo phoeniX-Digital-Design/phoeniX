@@ -7,7 +7,6 @@ module Writeback_Mux
 
     output reg [31 : 0] writeback_output
 );
-
     always @(*) 
     begin    
         case (writeback_output_select)

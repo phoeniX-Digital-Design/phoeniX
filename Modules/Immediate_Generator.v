@@ -1,8 +1,9 @@
-`define I_TYPE 0
-`define B_TYPE 1
+`define R_TYPE 0
+`define I_TYPE 1
 `define S_TYPE 2
-`define U_TYPE 3
-`define J_TYPE 4
+`define B_TYPE 3
+`define U_TYPE 4
+`define J_TYPE 5
 
 module Immediate_Generator 
 (
