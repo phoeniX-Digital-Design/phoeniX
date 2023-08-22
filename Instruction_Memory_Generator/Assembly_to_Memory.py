@@ -37,3 +37,18 @@ print(final_hex_code)
 # Write the modified contents back to the output file
 with open(output_file, "w") as file:
     file.writelines(final_hex_code)
+
+testbench_file = "phoeniX_Testbench.v"
+
+with open(testbench_file, 'r') as file:
+    lines = file.readlines()
+
+with open(testbench_file, 'w') as file:
+    for line in lines:
+        if line.startswith("        $readmemh"):
+            print("Line found!")
+            # Modify the input file name
+            modified_line = line.replace(line,'\t\t$readmemh("Sample_Codes'+ "\\\\" + output_name +'"' + ', uut.fetch_unit.instruction_memory.Memory);\n' )
+            file.write(modified_line)
+        else:
+            file.write(line)
