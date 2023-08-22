@@ -48,5 +48,6 @@ There's a python script in this directory which is written to create a `.mem`, `
 1) Write, simulate and modify your assembly code in Venus simulator.
 2) In 'VENUS OPTIONS' select 'Assembly' and save the output file as a text file. (save the output in the python script directory)
 3) Enter the created text file name.
-4) Enter the output file (instruction memory) name.
-5) Output file created is the instruction memory and can be given to testbench. (output is also generated in the same directory)
+4) Enter the instruction memory file name.
+5) Enter the data memory file name. (output is also generated in the same directory)
+6) Output files are created and are given to testbench.
