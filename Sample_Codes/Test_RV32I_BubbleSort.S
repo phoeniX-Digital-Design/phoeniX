@@ -21,10 +21,12 @@ main:
 # 	#init i to memory
 # 	sw	    zero,   -20(s0)
 # 	j	    .L2
+
 # .L6:
 # 	#init j to memory
 # 	sw	    zero,   -24(s0)
 # 	j	    .L3
+
 # .L5:
 # 	#load arr[ j ] to a4
 # 	lw	    a5,     -24(s0)
@@ -96,6 +98,7 @@ main:
 # 	lw	    a5,     -20(s0)
 # 	addi	a5,     a5,     1
 # 	sw	    a5,     -20(s0)
+
 # .L2:
 # 	#check i < 4
 # 	lw	    a4,     -20(s0)
