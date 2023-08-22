@@ -65,7 +65,8 @@ module phoeniX_Testbench;
         $dumpfile("phoeniX.vcd");
         $dumpvars(0, phoeniX_Testbench);
 
-		$readmemh("Sample_Codes\\imem.mem", uut.fetch_unit.instruction_memory.Memory);
+		$readmemh("Sample_Codes\\imem_full_instructions.mem", uut.fetch_unit.instruction_memory.Memory);
+        
         // Reset
         #24
         reset = 1'b1;

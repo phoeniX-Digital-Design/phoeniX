@@ -45,7 +45,7 @@ with open(testbench_file, 'r') as file:
 
 with open(testbench_file, 'w') as file:
     for line in lines:
-        if line.startswith("        $readmemh"):
+        if line.startswith("\t\t$readmemh("):
             print("Line found!")
             # Modify the input file name
             modified_line = line.replace(line,'\t\t$readmemh("Sample_Codes'+ "\\\\" + output_name +'"' + ', uut.fetch_unit.instruction_memory.Memory);\n' )
