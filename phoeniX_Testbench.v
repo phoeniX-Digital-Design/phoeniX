@@ -65,7 +65,7 @@ module phoeniX_Testbench;
         $dumpfile("phoeniX.vcd");
         $dumpvars(0, phoeniX_Testbench);
 
-        $readmemh("Sample_Codes\\Test_RV32I_BubbleSort.mem", uut.fetch_unit.instruction_memory.Memory);
+        $readmemh("Sample_Codes\\Test_RV32I_sum1to100.mem", uut.fetch_unit.instruction_memory.Memory);
 
         // Reset
         #24
@@ -73,12 +73,17 @@ module phoeniX_Testbench;
         #12
         reset = 1'b0;
         
-        #240
-        data_memory_file = $fopen("Sample_Codes\\Test_RV32I_BubbleSort.mem", "w");
-        // $display("%d", uut.load_store_unit.data_memory.Memory.DEPTH);
-        for (integer i = 0; i < 2 ** ADDRESS_WIDTH; i = i + 1)
+        #8000
+        data_memory_file = $fopen("Sample_Codes\\Test_RV32I_sum1to100_data.mem", "w");
+
+        for (integer i = 0; i < 2 ** ADDRESS_WIDTH; i = i + 4)
         begin
-            $fdisplay(data_memory_file, "%h", uut.load_store_unit.data_memory.Memory[i]);
+            $fdisplay(  data_memory_file, "%h\t%h\t%h\t%h\t%h",
+                        i, 
+                        uut.load_store_unit.data_memory.Memory[i],
+                        uut.load_store_unit.data_memory.Memory[i + 1],
+                        uut.load_store_unit.data_memory.Memory[i + 2],
+                        uut.load_store_unit.data_memory.Memory[i + 3]);
         end
         $finish;
     end
