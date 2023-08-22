@@ -1,6 +1,6 @@
 import os
 text = """
-RISC-V assembly code to phoeniX instruction memory
+RISC-V assembly code to phoeniX core input
 1) Write, simulate and modify your assembly code in Venus simulator.
 2) In 'VENUS OPTIONS' select 'Assembly' and save the output file as a text file (.txt).
 3) Enter the created text file name.
