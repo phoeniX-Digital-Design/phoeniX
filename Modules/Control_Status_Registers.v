@@ -1,5 +1,6 @@
 module Control_Status_Register 
 (
+    input  CLK,
 
     input  [6 : 0] opcode,
     input  [2 : 0] funct3,
@@ -13,7 +14,7 @@ module Control_Status_Register
 
 reg [31 : 0] CSR_reg;
 
-always @(*) begin
+always @(posedge CLK) begin
 
     CSR_reg <= CSR;
 
