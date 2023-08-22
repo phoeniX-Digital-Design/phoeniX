@@ -9,6 +9,7 @@ RISC-V code to phoeniX instruction memory
 6) Output files are created and are given to testbench."""
 print(text)
 
+# Name files (input from user)
 input_name = input("Enter input file name:\n")
 output_name = input("Enter instruction memory file name:\n")
 data_mem_name = input("Enter data memory file name:\n")
@@ -45,14 +46,16 @@ testbench_file = "phoeniX_Testbench.v"
 with open(testbench_file, 'r') as file:
     lines = file.readlines()
 
+# Edit source files of testbench names
 with open(testbench_file, 'w') as file:
     for line in lines:
+        # Change instruction memory source file
         if line.startswith("\t\t$readmemh("):
             print("Line found!")
             # Modify the input file name
             modified_line = line.replace(line,'\t\t$readmemh("Sample_Codes'+ "\\\\" + output_name +'"' + ', uut.fetch_unit.instruction_memory.Memory);\n' )
             file.write(modified_line)
-
+        # Change data memory source file
         elif line.startswith("\t\tdata_memory_file = $fopen("):
             print("Line found!")
             # Modify the input file name
