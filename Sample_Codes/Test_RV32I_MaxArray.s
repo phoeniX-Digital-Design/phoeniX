@@ -1,23 +1,33 @@
-.text
-_boot:
-    jal x0, find_max
+main:
+    #init stack pointer
+	addi    sp,     zero,     512
+    #create stack
+	addi	sp,     sp,     -48
+	
+	addi	s0,     sp,     48
 
-    find_max:
-        lw   x8, 1000(x0)           # maxElement = mem[1000]
-        add  x9, x0, x0             # i
+    #init arr[] to memory
+    li	    a5,     10
+    sw	    a5,     -48(s0)
+    li	    a5,     324
+    sw	    a5,     -44(s0)
+    li	    a5,     45
+    sw	    a5,     -40(s0)
+    li	    a5,     90
+    sw	    a5,     -36(s0)
+    li	    a5,     216
+    sw	    a5,     -32(s0)
 
-        loop:
-            addi x9, x9, 4          # i += 4
-            slti x6, x9, 40         # check if 10 elements are traversed (40 = 4 * 10)
-            beq  x6, x0, end_loop   # if 10 elements are traversed, jump to EndLoop
-            lw   x18, 1000(x9)      # element = mem[i]
-            slt  x6, x8, x18        # check if element is greater than maxElement
-            beq  x6, x0, loop       # if element is not greater than maxElement, jump to Loop
-            add  x8, x18, x0        # maxElement = element
-            jal  x0, loop            # jump to Loop
+    addi    s1,     s0,     0
+    addi    s2,     s0,     20
+    mv      t1,     zero
 
-        end_loop:
-            sw x8, 2000(x0)         # mem[2000] = maxElement
-            jal x0,end              # return
-
-    end:
+swap:
+    mv      t0,     t1
+load:
+    lw      t1,     -48(s1)
+    addi    s1,     s1,     4
+    bgt     t1,     t0,     swap    # if t1 > t0 then swap
+    blt     s1,     s2,     load    # if s0 <= s1 then load
+    sw      t0,     -28(s0)
+    
