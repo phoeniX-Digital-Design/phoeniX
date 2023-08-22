@@ -74,7 +74,7 @@ module phoeniX_Testbench;
         reset = 1'b0;
         
         #8000
-        data_memory_file = $fopen("Sample_Codes\\Test_RV32I_max_array_data.mem", "w");
+		data_memory_file = $fopen("Sample_Codes\\dmem_sum1to100.mem", "w");
 
         for (integer i = 0; i < 2 ** ADDRESS_WIDTH; i = i + 4)
         begin

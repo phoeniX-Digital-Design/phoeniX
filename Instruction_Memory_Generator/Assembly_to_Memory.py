@@ -2,16 +2,17 @@ import os
 text = """
 RISC-V code to phoeniX instruction memory
 1) Write, simulate and modify your assembly code in Venus simulator.
-2) In 'VENUS OPTIONS' select 'Assembly' and save the output file as a text file.
+2) In 'VENUS OPTIONS' select 'Assembly' and save the output file as a text file (.txt).
 3) Enter the created text file name.
-4) Enter the output file (instruction memory) name.
-5) Output file created is the instruction memory and can be given to testbench."""
+4) Enter the instruction memory file name.
+5) Enter the data memory file name.
+6) Output files are created and are given to testbench."""
 print(text)
 
-print('Input file is the assembly code filed in Venus RISC-V simulator save in a text (.txt) format.')
+# Name files (input from user)
 input_name = input("Enter input file name:\n")
-print('Output file is the transformed code to be used as the instruction memory of the core.')
-output_name = input("Enter output file name:\n")
+output_name = input("Enter instruction memory file name:\n")
+data_mem_name = input("Enter data memory file name:\n")
 
 input_file  = os.path.join(os.getcwd(), input_name)
 output_file = os.path.join(os.getcwd(), output_name)
@@ -38,17 +39,27 @@ print(final_hex_code)
 with open(output_file, "w") as file:
     file.writelines(final_hex_code)
 
+
+# Open and edit testbench file
 testbench_file = "phoeniX_Testbench.v"
 
 with open(testbench_file, 'r') as file:
     lines = file.readlines()
 
+# Edit source files of testbench names
 with open(testbench_file, 'w') as file:
     for line in lines:
+        # Change instruction memory source file
         if line.startswith("\t\t$readmemh("):
             print("Line found!")
             # Modify the input file name
             modified_line = line.replace(line,'\t\t$readmemh("Sample_Codes'+ "\\\\" + output_name +'"' + ', uut.fetch_unit.instruction_memory.Memory);\n' )
+            file.write(modified_line)
+        # Change data memory source file
+        elif line.startswith("\t\tdata_memory_file = $fopen("):
+            print("Line found!")
+            # Modify the input file name
+            modified_line = line.replace(line,'\t\tdata_memory_file = $fopen("Sample_Codes' + "\\\\" + data_mem_name + '"' + ', "w");\n')
             file.write(modified_line)
         else:
             file.write(line)
