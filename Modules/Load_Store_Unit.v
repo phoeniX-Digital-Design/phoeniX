@@ -36,7 +36,7 @@ module Load_Store_Unit
     always @(*) 
     begin
         {memory_state, frame_mask} = {1'bx, 4'bx};
-
+        $display("%b\t%b\t\t%d", opcode, funct3, address[ADDRESS_WIDTH - 1 : 0]);
         case ({funct3, opcode})
             // Load Instructions
             
@@ -104,7 +104,7 @@ module Load_Store_Unit
         .enable(enable), 
         .memory_state(memory_state),
         .frame_mask(frame_mask),
-        .address(address & 32'hFFFFFFFC), 
+        .address(address & 32'hFFFF_FFFC), 
         .data(data), 
         .memory_done(memory_done)
     );
