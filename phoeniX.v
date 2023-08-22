@@ -145,6 +145,7 @@ module phoeniX
     // Reg Declarations for Execute Stage
     // ----------------------------------
     reg [31 : 0] PC_execute_reg;
+    reg [31 : 0] instruction_execute_reg;
 
     reg [6 : 0] opcode_execute_reg;
     reg [2 : 0] funct3_execute_reg;
@@ -164,6 +165,7 @@ module phoeniX
     always @(posedge CLK) 
     begin
         PC_execute_reg <= PC_decode_reg;
+        instruction_execute_reg <= instruction_decode_reg;
 
         opcode_execute_reg <= opcode_decode_wire;
         funct3_execute_reg <= funct3_decode_wire;
@@ -241,6 +243,7 @@ module phoeniX
     // Reg Declarations for Memory Stage
     // --------------------------------
     reg [31 : 0] PC_memory_reg;
+    reg [31 : 0] instruction_memory_reg;
 
     reg [6 : 0] opcode_memory_reg;
     reg [2 : 0] funct3_memory_reg;
@@ -263,6 +266,7 @@ module phoeniX
     always @(posedge CLK) 
     begin
         PC_memory_reg <= PC_execute_reg;
+        instruction_memory_reg <= instruction_execute_reg;
 
         opcode_memory_reg <= opcode_execute_reg;
         funct3_memory_reg <= funct3_execute_reg;
@@ -308,6 +312,7 @@ module phoeniX
     // Reg Declarations for Write-Back Stage
     // -------------------------------------
     reg [31 : 0] PC_writeback_reg;
+    reg [31 : 0] instruction_writeback_reg;
 
     reg [6 : 0] opcode_writeback_reg;
     reg [2 : 0] funct3_writeback_reg;
@@ -327,7 +332,8 @@ module phoeniX
     always @(posedge CLK) 
     begin
         PC_writeback_reg <= PC_memory_reg;
-
+        instruction_writeback_reg <= instruction_memory_reg;
+        
         opcode_writeback_reg <= opcode_memory_reg;
         funct3_writeback_reg <= funct3_memory_reg;
         funct7_writeback_reg <= funct7_memory_reg;
