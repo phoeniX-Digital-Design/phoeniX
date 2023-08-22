@@ -1,5 +1,3 @@
-.global _boot
-
 .text
 _boot:
     jal x0,FindMax
