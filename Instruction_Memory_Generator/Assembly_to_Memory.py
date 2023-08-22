@@ -1,6 +1,6 @@
 import os
 text = """
-RISC-V code to phoeniX instruction memory
+RISC-V assembly code to phoeniX instruction memory
 1) Write, simulate and modify your assembly code in Venus simulator.
 2) In 'VENUS OPTIONS' select 'Assembly' and save the output file as a text file (.txt).
 3) Enter the created text file name.
@@ -63,3 +63,7 @@ with open(testbench_file, 'w') as file:
             file.write(modified_line)
         else:
             file.write(line)
+
+os.system('cmd /c "iverilog -o phoeniX.vvp phoeniX_Testbench.v"') 
+os.system('cmd /c "vvp phoeniX.vvp"') 
+os.system('cmd /c "gtkwave phoeniX.vcd"') 
