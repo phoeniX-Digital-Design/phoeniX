@@ -403,8 +403,12 @@ module phoeniX
         .destination_index_3(write_index_writeback_reg),
 
         .data_1(result_execute_wire),
-        .data_2(opcode_memory_reg == 7'b0100011 ? load_data_memory_wire : result_memory_reg),
+        .data_2(opcode_memory_reg == 7'b0000011 ? load_data_memory_wire : result_memory_reg),
         .data_3(write_data_writeback_reg),
+
+        .enable_1(write_enable_execute_reg),
+        .enable_2(write_enable_memory_reg),
+        .enable_3(write_enable_writeback_reg),
 
         .forward_enable(FW_enable_1),
         .forward_data(FW_source_1)
@@ -419,8 +423,12 @@ module phoeniX
         .destination_index_3(write_index_writeback_reg),
 
         .data_1(result_execute_wire),
-        .data_2(opcode_memory_reg == 7'b0100011 ? load_data_memory_wire : result_memory_reg),
+        .data_2(opcode_memory_reg == 7'b0000011 ? load_data_memory_wire : result_memory_reg),
         .data_3(write_data_writeback_reg),
+
+        .enable_1(write_enable_execute_reg),
+        .enable_2(write_enable_memory_reg),
+        .enable_3(write_enable_writeback_reg),
 
         .forward_enable(FW_enable_2),
         .forward_data(FW_source_2)
