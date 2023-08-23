@@ -64,3 +64,5 @@ with open(output_file, 'w') as file:
     file.write('python3 hex8tohex32.py firmware.hex > firmware32.hex\n')
     file.write('python3 phoeniX_firmware.py\n')
     file.write('rm -f start.tmp firmware.tmp')
+
+os.system('sh pheoniX_code_executant.sh ') 
