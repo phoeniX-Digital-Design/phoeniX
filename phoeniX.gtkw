@@ -1,21 +1,20 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Tue Aug 22 20:17:36 2023
+[*] Wed Aug 23 11:17:17 2023
 [*]
 [dumpfile] "D:\GitHub\RV32-Core\phoeniX.vcd"
-[dumpfile_mtime] "Tue Aug 22 17:15:43 2023"
-[dumpfile_size] 535950
+[dumpfile_mtime] "Wed Aug 23 11:15:22 2023"
+[dumpfile_size] 537367
 [savefile] "D:\GitHub\RV32-Core\phoeniX.gtkw"
-[timestart] 126
+[timestart] 50
 [size] 1920 1009
 [pos] -1 -1
-*-5.490754 234 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-4.490754 90 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] phoeniX_Testbench.
-[treeopen] phoeniX_Testbench.uut.
 [treeopen] phoeniX_Testbench.uut.fetch_unit.
 [treeopen] phoeniX_Testbench.uut.load_store_unit.
 [sst_width] 370
-[signals_width] 502
+[signals_width] 580
 [sst_expanded] 1
 [sst_vpaned_height] 257
 @28
@@ -296,8 +295,5 @@ phoeniX_Testbench.x30_t5[31:0]
 phoeniX_Testbench.x31_t6[31:0]
 @200
 -
-@420
-phoeniX_Testbench.uut.load_store_unit.data_memory.DEPTH
-phoeniX_Testbench.uut.fetch_unit.instruction_memory.DEPTH
 [pattern_trace] 1
 [pattern_trace] 0
