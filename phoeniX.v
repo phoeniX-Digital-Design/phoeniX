@@ -44,8 +44,8 @@ module phoeniX
         .CLK(CLK_MEM),
         .enable(!reset),              // TBD : to be changed to fetch control state with control
         .PC(PC_fetch_reg),
-        .address(address_memory_reg),
-        .jump_branch_enable(jump_branch_enable_memory_reg),
+        .address(address_execute_wire),
+        .jump_branch_enable(jump_branch_enable_execute_wire),
         .next_PC(next_PC_wire),
         .fetched_instruction(instruction_fetch_wire)    
     );
