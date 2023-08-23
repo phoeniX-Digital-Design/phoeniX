@@ -77,7 +77,11 @@ module Instruction_Decoder
             `U_TYPE : begin read_enable_1 = 1'b0; read_enable_2 = 1'b0; write_enable = 1'b1; end
             `J_TYPE : begin read_enable_1 = 1'b0; read_enable_2 = 1'b0; write_enable = 1'b1; end 
             `R_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b1; write_enable = 1'b1; end
-            default : begin end // Exception raise 
+            default : begin end // Raise Exception
         endcase    
+
+        // Disable Write Signal when destination is x0
+        if (write_index == 5'b00000)
+            write_enable <= 1'b0;
     end
 endmodule
