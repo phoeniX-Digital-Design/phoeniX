@@ -58,7 +58,7 @@ module Arithmetic_Logic_Unit
             1'b1 : operand_1 = PC;
         endcase
     end
-    
+
     // ALU Multiplexer 2
     always @(*) 
     begin
@@ -73,34 +73,34 @@ module Arithmetic_Logic_Unit
     begin
         casex ({funct7, funct3, opcode})
             // I-TYPE Intructions
-            {7'bx_xxx_xxx, 3'b000, `OP_IMM} : alu_output = operand_1 + operand_2;                           // ADDI
-            {7'b0_000_000, 3'b001, `OP_IMM} : alu_output = operand_1 << operand_2 [4 : 0];                  // SLLI
-            {7'bx_xxx_xxx, 3'b010, `OP_IMM} : alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0; // SLTI
-            {7'bx_xxx_xxx, 3'b011, `OP_IMM} : alu_output = operand_1 < operand_2 ? 1 : 0;                   // SLTIU
-            {7'bx_xxx_xxx, 3'b100, `OP_IMM} : alu_output = operand_1 ^ operand_2;                           // XORI
-            {7'b0_000_000, 3'b101, `OP_IMM} : alu_output = operand_1 >> operand_2 [4 : 0];                  // SRLI
-            {7'b0_100_000, 3'b101, `OP_IMM} : alu_output = operand_1 >> $signed(operand_2 [4 : 0]);         // SRAI
-            {7'bx_xxx_xxx, 3'b110, `OP_IMM} : alu_output = operand_1 | operand_2;                           // ORI
-            {7'bx_xxx_xxx, 3'b111, `OP_IMM} : alu_output = operand_1 & operand_2;                           // ANDI
+            {7'bx_xxx_xxx, 3'b000, `OP_IMM} : alu_output = operand_1 + operand_2;                               // ADDI
+            {7'b0_000_000, 3'b001, `OP_IMM} : alu_output = operand_1 << operand_2 [4 : 0];                      // SLLI
+            {7'bx_xxx_xxx, 3'b010, `OP_IMM} : alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;     // SLTI
+            {7'bx_xxx_xxx, 3'b011, `OP_IMM} : alu_output = operand_1 < operand_2 ? 1 : 0;                       // SLTIU
+            {7'bx_xxx_xxx, 3'b100, `OP_IMM} : alu_output = operand_1 ^ operand_2;                               // XORI
+            {7'b0_000_000, 3'b101, `OP_IMM} : alu_output = operand_1 >> operand_2 [4 : 0];                      // SRLI
+            {7'b0_100_000, 3'b101, `OP_IMM} : alu_output = operand_1 >> $signed(operand_2 [4 : 0]);             // SRAI
+            {7'bx_xxx_xxx, 3'b110, `OP_IMM} : alu_output = operand_1 | operand_2;                               // ORI
+            {7'bx_xxx_xxx, 3'b111, `OP_IMM} : alu_output = operand_1 & operand_2;                               // ANDI
             
             // R-TYPE Instructions
-            {7'b0_000_000, 3'b000, `OP}     : alu_output = operand_1 + operand_2;                           // ADD
-            {7'b0_100_000, 3'b000, `OP}     : alu_output = operand_1 - operand_2;                           // SUB
-            {7'b0_000_000, 3'b001, `OP}     : alu_output = operand_1 << operand_2;                          // SLL
-            {7'b0_000_000, 3'b010, `OP}     : alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0; // SLT
-            {7'b0_000_000, 3'b011, `OP}     : alu_output = operand_1 < operand_2 ? 1 : 0;                   // SLTU
-            {7'b0_000_000, 3'b100, `OP}     : alu_output = operand_1 ^ operand_2;                           // XOR
-            {7'b0_000_000, 3'b101, `OP}     : alu_output = operand_1 >> operand_2;                          // SRL
-            {7'b0_100_000, 3'b101, `OP}     : alu_output = operand_1 >> $signed(operand_2);                 // SRA
-            {7'b0_000_000, 3'b110, `OP}     : alu_output = operand_1 | operand_2;                           // OR
-            {7'b0_000_000, 3'b111, `OP}     : alu_output = operand_1 & operand_2;                           // AND
+            {7'b0_000_000, 3'b000, `OP}     : alu_output = operand_1 + operand_2;                               // ADD
+            {7'b0_100_000, 3'b000, `OP}     : alu_output = operand_1 - operand_2;                               // SUB
+            {7'b0_000_000, 3'b001, `OP}     : alu_output = operand_1 << operand_2;                              // SLL
+            {7'b0_000_000, 3'b010, `OP}     : alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;     // SLT
+            {7'b0_000_000, 3'b011, `OP}     : alu_output = operand_1 < operand_2 ? 1 : 0;                       // SLTU
+            {7'b0_000_000, 3'b100, `OP}     : alu_output = operand_1 ^ operand_2;                               // XOR
+            {7'b0_000_000, 3'b101, `OP}     : alu_output = operand_1 >> operand_2;                              // SRL
+            {7'b0_100_000, 3'b101, `OP}     : alu_output = operand_1 >> $signed(operand_2);                     // SRA
+            {7'b0_000_000, 3'b110, `OP}     : alu_output = operand_1 | operand_2;                               // OR
+            {7'b0_000_000, 3'b111, `OP}     : alu_output = operand_1 & operand_2;                               // AND
 
             // JAL and JALR Instructions
-            {7'bx_xxx_xxx, 3'bxxx, `JAL}    : alu_output = operand_1 + operand_2;                           // JAL
-            {7'bx_xxx_xxx, 3'b000, `JALR}   : alu_output = operand_1 + operand_2;                           // JALR
+            {7'bx_xxx_xxx, 3'bxxx, `JAL}    : alu_output = operand_1 + operand_2;                               // JAL
+            {7'bx_xxx_xxx, 3'b000, `JALR}   : alu_output = operand_1 + operand_2;                               // JALR
             
             // AUIPC Instruction
-            {7'bx_xxx_xxx, 3'bxxx, `AUIPC}  : alu_output = operand_1 + operand_2;                           // AUIPC
+            {7'bx_xxx_xxx, 3'bxxx, `AUIPC}  : alu_output = operand_1 + operand_2;                               // AUIPC
 
             default: alu_output = 32'bz; 
         endcase
