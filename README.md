@@ -39,15 +39,8 @@ Main phoeniX RISC-V core file is in the main branch of this repository:
 
 ## Sample codes
 
-There's a set of sample RISC-V assembly codes in the `\Sample_Codes` directory. These codes were written and simulated using [Venus Simulator](https://marketplace.visualstudio.com/items?itemName=hm.riscv-venus) using its Visual Studio Code extension. Venus can also create the HEX output file of the assembly code which will be needed to be given to the core, in the instruction memory.
+There's a set of sample RISC-V assembly codes in the `\Sample_Codes` directory. These codes were written and simulated using [Venus Simulator](https://marketplace.visualstudio.com/items?itemName=hm.riscv-venus) using its Visual Studio Code extension. Venus can also create the HEX output file of the assembly code which will be needed to be given to the core, in the instruction memory. There are also some C codes included in [C codes](https://github.com/ArvinDelavari/PHOENIX-CORE/tree/main/Sample_Codes/C%20codes) directory. These codes are executed by [RISC-V compiler toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain) in Linux. In the end, outputs are turned into HEX format named `firmware.hex`, `firmware32.hex` and `phoeniX_firmware.hex` in order to be given to the CPU for simulations.
 
-## Instruction Memory Generator
+## phoeniX Code Executant
 
-There's a python script in this directory which is written to create a `.mem`, `.txt` or a `.hex` file as an instruction memory for the phoeniX core, from the output HEX file of the Venus Simulator. The script works with the following steps:
-
-1) Write, simulate and modify your assembly code in Venus simulator.
-2) In 'VENUS OPTIONS' select 'Assembly' and save the output file as a text file. (save the output in the python script directory)
-3) Enter the created text file name.
-4) Enter the instruction memory file name.
-5) Enter the data memory file name. (output is also generated in the same directory)
-6) Output files are created and are given to testbench.
+In the directory [phoeniX_Code_Executant](https://github.com/ArvinDelavari/PHOENIX-CORE/tree/main/phoeniX_Code_Executant) there are two subdirectories included for automation of simulation process on phoeniX core. One is designed for both Linux and Windows systems using [Venus Simulator](https://marketplace.visualstudio.com/items?itemName=hm.riscv-venus) on VS-Code and the other is only for Linux systems using [RISC-V compiler toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain). Both of these two systems are implemented using a Python script which you can execute and check out output of the simulations on the phoeniX core by following some simple steps. Further descriptions are included in the directory.
