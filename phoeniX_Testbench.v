@@ -76,14 +76,14 @@ module phoeniX_Testbench;
         #8000
         data_memory_file = $fopen("Sample_Codes\\Test_RV32I_MaxArray_data.mem", "w");
 
-        for (integer i = 0; i < 2 ** ADDRESS_WIDTH; i = i + 4)
+        for (integer addr = 0; addr < 2 ** ADDRESS_WIDTH; addr = addr + 4)
         begin
             $fdisplay(  data_memory_file, "%h\t%h\t%h\t%h\t%h",
-                        i, 
-                        uut.load_store_unit.data_memory.Memory[i],
-                        uut.load_store_unit.data_memory.Memory[i + 1],
-                        uut.load_store_unit.data_memory.Memory[i + 2],
-                        uut.load_store_unit.data_memory.Memory[i + 3]);
+                        addr, 
+                        uut.load_store_unit.data_memory.Memory[addr],
+                        uut.load_store_unit.data_memory.Memory[addr + 1],
+                        uut.load_store_unit.data_memory.Memory[addr + 2],
+                        uut.load_store_unit.data_memory.Memory[addr + 3]);
         end
         $finish;
     end
