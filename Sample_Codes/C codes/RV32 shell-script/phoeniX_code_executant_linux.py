@@ -19,12 +19,21 @@ print(text)
 input_file_numbers = int(input("Enter number of input files:\n"))
 input_name = [""] * (input_file_numbers + 1)
 
+name_input = [""] * (input_file_numbers + 1)
+type_input = [""] * (input_file_numbers + 1)
+
 for i in range (1, input_file_numbers + 1):
     input_name[i] = input("Enter input file name (without .c):\n")
 
 print("List of input files:\n")
 for i in range (1, input_file_numbers + 1):
     print(input_name[i]+'\n')
+
+    split_type = input_name[i].split(".")
+    name_input[i] = split_type[0]
+    type_input[i] = split_type[1]
+    print("name: ", name_input[i])
+    print("type: ", type_input[i])
 
 # Define input executable file (shell script)
 input_file   = os.path.join(os.getcwd(), "rv32im.sh")
@@ -36,13 +45,13 @@ with open(input_file, "r") as file:
 
 with open(output_file, 'w') as file:
     for i in range(1, input_file_numbers + 1):
-        file.write('riscv64-unknown-elf-gcc -c -mabi=ilp32 -march=rv32im -o ' + input_name[i] + '.o ' + input_name[i] + '.c\n')
+        file.write('riscv64-unknown-elf-gcc -c -mabi=ilp32 -march=rv32im -o ' + name_input[i] + '.o ' + name_input[i] +'.'+ type_input[i] +'\n')
         
     file.write('riscv64-unknown-elf-gcc -c -mabi=ilp32 -march=rv32im -o syscalls.o syscalls.c\n\n')
         
     file.write('riscv64-unknown-elf-gcc -mabi=ilp32 -march=rv32im -Wl,--gc-sections -o firmware.elf ')
     for i in range(1, input_file_numbers + 1):
-        file.write(input_name[i] + '.o ')
+        file.write(name_input[i] + '.o ')
     file.write('syscalls.o -T riscv.ld -lstdc++\n\n')
 
     file.write('riscv64-unknown-elf-gcc -mabi=ilp32 -march=rv32im -nostdlib -o start.elf start.S -T start.ld -lstdc++\n')
