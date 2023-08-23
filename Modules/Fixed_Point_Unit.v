@@ -1,7 +1,7 @@
 /*
     RV32IMF Core - Fixed Point Unit
     - This unit executes 'F' estension instructions
-    - Inputs bus_rs1, bus_rs2 comes from Register_File (Fixed Point Register File)
+    - Inputs rs1, rs2 comes from Register_File (Fixed Point Register File)
     - Input immediate comes from Immediate_Generator
     - Inputs forward_rs1, forward_rs2 comes from the execution-unit output (bypassed)
     - Input signals opcode, funct3, funct7, comes from Instruction_Decoder
@@ -10,6 +10,38 @@
 
         F-TYPE : TBD                        
 */
+
+`ifndef OPCODES
+    `define LOAD        7'b00_000_11
+    `define LOAD_FP     7'b00_001_11
+    `define custom_0    7'b00_010_11
+    `define MISC_MEM    7'b00_011_11
+    `define OP_IMM      7'b00_100_11
+    `define AUIPC       7'b00_101_11
+    `define OP_IMM_32   7'b00_110_11
+
+    `define STORE       7'b01_000_11
+    `define STORE_FP    7'b01_001_11
+    `define custom_1    7'b01_010_11
+    `define AMO         7'b01_011_11
+    `define OP          7'b01_100_11
+    `define LUI         7'b01_101_11
+    `define OP_32       7'b01_110_11
+
+    `define MADD        7'b10_000_11
+    `define MSUB        7'b10_001_11
+    `define NMSUB       7'b10_010_11
+    `define NMADD       7'b10_011_11
+    `define OP_FP       7'b10_100_11
+    `define custom_2    7'b10_110_11
+
+    `define BRANCH      7'b11_000_11
+    `define JALR        7'b11_001_11
+    `define JAL         7'b11_011_11
+    `define SYSTEM      7'b11_100_11
+    `define custom_3    7'b11_110_11
+`endif
+
 module Fixed_Point_Unit #(parameter FLEN = 10)
 (
     input [6 : 0] opcode,               // FPU Operation
@@ -22,10 +54,8 @@ module Fixed_Point_Unit #(parameter FLEN = 10)
     input         mux1_select,          // Bypass Mux for operand_1
     input         mux2_select,          // Bypass Mux for operand_2
 
-    input [31 : 0] bus_rs1,             // Register Source 1
-    input [31 : 0] bus_rs2,             // Register Source 2
-    input [31 : 0] forward_rs1,         // Forwarded Data 1
-    input [31 : 0] forward_rs2,         // Forwarded Data 2
+    input [31 : 0] rs1,                 // Register Source 1
+    input [31 : 0] rs2,                 // Register Source 2
 
     output reg [31 : 0] fpu_output      // FPU Result
 );
@@ -33,44 +63,34 @@ module Fixed_Point_Unit #(parameter FLEN = 10)
     reg [31 : 0] operand_1;
     reg [31 : 0] operand_2;
 
-    // Bypassing (Data Forwarding) Multiplexer 1
-    always @(*) begin
-        case (mux1_select)
-            1'b0: operand_1 = bus_rs1;
-            1'b1: operand_1 = forward_rs1;
-        endcase
-    end
-    // Bypassing (Data Forwarding) Multiplexer 2
-    always @(*) begin
-        case (mux2_select)
-            2'b0: operand_2 = bus_rs2;
-            2'b1: operand_2 = forward_rs2;
-        endcase
-    end
-
+    // Bypassing multiplexer for FPU will be added in the core
+    // There are no immediate values or PC in FPU instructions
+    // Source registers are assigned to operands of FPU directly
     always @(*)
     begin
+        operand_1 <= rs1;
+        operand_2 <= rs2;
         casex ({funct7, funct3, opcode})
-            // F-TYPE Intructions
-            17'b0000000_xxx_1010011 : fpu_output = operand_1 + operand_2;             // FADD.S
-            17'b0000100_xxx_1010011 : fpu_output = operand_1 - operand_2;             // FSUB.S
-            17'b1101000_xxx_1010011 : begin
+            // funct3 can be eliminated from the case (need to be checked later)
+            // F-Extension Intructions
+            {7'b0000000, 3'bxxx, `OP_FP} : fpu_output = operand_1 + operand_2;      // FADD.S
+            {7'b0000100, 3'bxxx, `OP_FP} : fpu_output = operand_1 - operand_2;      // FSUB.S
+            {7'b1101000, 3'bxxx, `OP_FP} : begin
                 if (read_index_2 == 5'b00000)
-                    fpu_output = $signed(operand_1) << FLEN;                          // FCVT.S.W
+                    fpu_output = $signed(operand_1) << FLEN;                        // FCVT.S.W
             end
-            17'b1101000_xxx_1010011 : begin 
+            {7'b1101000_, 3'bxxx, `OP_FP} : begin 
                 if (read_index_2 == 5'b00001) 
-                    fpu_output = operand_1 << FLEN;                                   // FCVT.S.WU
+                    fpu_output = operand_1 << FLEN;                                 // FCVT.S.WU
             end
-            17'b1100000_xxx_1010011 : begin
+            {7'b1100000, 3'bxxx, `OP_FP} : begin
                 if (read_index_2 == 5'b00000)
-                    fpu_output = $signed(operand_1 >> FLEN);                          // FCVT.W.S
+                    fpu_output = $signed(operand_1 >> FLEN);                        // FCVT.W.S
             end
-            17'b1100000_xxx_1010011 : begin 
+            {7'b1100000, 3'bxxx, `OP_FP} : begin 
                 if (read_index_2 == 5'b00001) 
-                    fpu_output = operand_1 >> FLEN;                                   // FCVT.WU.S
+                    fpu_output = operand_1 >> FLEN;                                 // FCVT.WU.S
             end    
-
             default: fpu_output = 32'bz; 
         endcase
     end
