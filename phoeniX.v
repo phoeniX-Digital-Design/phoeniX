@@ -10,6 +10,7 @@
 `include "Modules\\Hazard_Forward_Unit.v"
 `include "Modules\\Defines.v"
 
+`define NOP 32'h0000_0013
 module phoeniX 
 #(
     parameter RESET_ADDRESS = 32'hFFFFFFFC,
@@ -72,8 +73,12 @@ module phoeniX
     ////////////////////////////////////////
     always @(posedge CLK) 
     begin
-        instruction_decode_reg <= instruction_fetch_wire;
-        PC_decode_reg <= PC_fetch_reg;    
+        PC_decode_reg <= PC_fetch_reg;
+
+        if (jump_branch_enable_execute_wire)
+            instruction_decode_reg <= `NOP;
+        else
+            instruction_decode_reg <= instruction_fetch_wire;
     end
 
     // ----------------------------------
@@ -167,7 +172,11 @@ module phoeniX
     always @(posedge CLK) 
     begin
         PC_execute_reg <= PC_decode_reg;
-        instruction_execute_reg <= instruction_decode_reg;
+
+        if (jump_branch_enable_execute_wire)
+            instruction_execute_reg <= `NOP;
+        else
+            instruction_execute_reg <= instruction_decode_reg;
 
         opcode_execute_reg <= opcode_decode_wire;
         funct3_execute_reg <= funct3_decode_wire;
@@ -432,4 +441,5 @@ module phoeniX
         .forward_enable(FW_enable_2),
         .forward_data(FW_source_2)
     );
+
 endmodule

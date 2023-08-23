@@ -1,21 +1,21 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Wed Aug 23 11:17:17 2023
+[*] Wed Aug 23 19:01:34 2023
 [*]
 [dumpfile] "D:\GitHub\RV32-Core\phoeniX.vcd"
-[dumpfile_mtime] "Wed Aug 23 11:15:22 2023"
-[dumpfile_size] 537367
+[dumpfile_mtime] "Wed Aug 23 17:05:34 2023"
+[dumpfile_size] 650940
 [savefile] "D:\GitHub\RV32-Core\phoeniX.gtkw"
-[timestart] 50
+[timestart] 286
 [size] 1920 1009
 [pos] -1 -1
-*-4.490754 90 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-5.490754 408 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] phoeniX_Testbench.
 [treeopen] phoeniX_Testbench.uut.fetch_unit.
 [treeopen] phoeniX_Testbench.uut.load_store_unit.
-[sst_width] 370
-[signals_width] 580
-[sst_expanded] 1
+[sst_width] 43
+[signals_width] 605
+[sst_expanded] 0
 [sst_vpaned_height] 257
 @28
 phoeniX_Testbench.reset
@@ -25,8 +25,9 @@ phoeniX_Testbench.uut.fetch_unit.enable
 @28
 phoeniX_Testbench.CLK_MEM
 phoeniX_Testbench.CLK
-@22
+@23
 phoeniX_Testbench.uut.PC_fetch_reg[31:0]
+@22
 phoeniX_Testbench.uut.instruction_fetch_wire[31:0]
 @200
 -
@@ -106,10 +107,16 @@ phoeniX_Testbench.uut.bus_rs1_decode_wire[31:0]
 phoeniX_Testbench.uut.bus_rs2_decode_wire[31:0]
 @200
 -
-@22
+@24
 phoeniX_Testbench.uut.write_index_execute_reg[4:0]
 phoeniX_Testbench.uut.write_index_memory_reg[4:0]
 phoeniX_Testbench.uut.write_index_writeback_reg[4:0]
+@200
+-
+@28
+phoeniX_Testbench.uut.write_enable_execute_reg
+phoeniX_Testbench.uut.write_enable_memory_reg
+phoeniX_Testbench.uut.write_enable_writeback_reg
 @200
 -
 -DECODE -> EXECUTE
@@ -153,9 +160,10 @@ phoeniX_Testbench.uut.write_index_execute_reg[4:0]
 phoeniX_Testbench.uut.write_enable_execute_reg
 @200
 -
-@420
+@22
 [color] 7
 phoeniX_Testbench.uut.address_execute_wire[31:0]
+@420
 [color] 7
 phoeniX_Testbench.uut.alu_output_execute_wire[31:0]
 [color] 7
@@ -205,9 +213,10 @@ phoeniX_Testbench.uut.write_enable_memory_reg
 phoeniX_Testbench.uut.write_index_memory_reg[4:0]
 @200
 -
-@420
+@22
 [color] 4
 phoeniX_Testbench.uut.load_store_unit.address[31:0]
+@420
 [color] 4
 phoeniX_Testbench.uut.load_store_unit.store_data[31:0]
 [color] 4
