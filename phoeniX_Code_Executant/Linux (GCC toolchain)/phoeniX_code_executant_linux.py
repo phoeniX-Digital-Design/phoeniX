@@ -28,7 +28,7 @@ name_input = [""] * (input_file_numbers + 1)
 type_input = [""] * (input_file_numbers + 1)
 
 for i in range (1, input_file_numbers + 1):
-    input_name[i] = input("Enter input file name (without .c):\n")
+    input_name[i] = input("Enter input file name (with suffix .c or .s):\n")
 
 print("List of input files:\n")
 for i in range (1, input_file_numbers + 1):
@@ -40,15 +40,12 @@ for i in range (1, input_file_numbers + 1):
     print("name: ", name_input[i])
     print("type: ", type_input[i])
 
-# Define input executable file (shell script)
-input_file   = os.path.join(os.getcwd(), "rv32im.sh")
+# Define output executable file (shell script)
 output_file  = os.path.join(os.getcwd(), "pheoniX_code_executant.sh")
 
-# Read the contents of the input file (assembly text file)
-with open(input_file, "r") as file:
-    lines = file.readlines()
-
+# Generating shell script file:
 with open(output_file, 'w') as file:
+
     for i in range(1, input_file_numbers + 1):
         file.write('riscv64-unknown-elf-gcc -c -mabi=ilp32 -march=rv32im -o ' + name_input[i] + '.o ' + name_input[i] +'.'+ type_input[i] +'\n')
         
@@ -68,6 +65,13 @@ with open(output_file, 'w') as file:
     file.write('cat start.tmp firmware.tmp > firmware.hex\n')
     file.write('python3 hex8tohex32.py firmware.hex > firmware32.hex\n')
     file.write('python3 phoeniX_firmware.py\n')
-    file.write('rm -f start.tmp firmware.tmp')
+    file.write('rm -f start.tmp firmware.tmp\n\n')
 
+    file.write('iverilog -o phoeniX.vvp phoeniX_Testbench.v phoeniX.v\n')
+    file.write('chmod -x phoeniX.vvp\n')
+    file.write('vvp -N phoeniX.vvp\n')
+    file.write('gtkwave phoeniX.vcd')
+# End of shell script generation
+
+# OS task to execute created shell script file
 os.system('sh pheoniX_code_executant.sh ') 
