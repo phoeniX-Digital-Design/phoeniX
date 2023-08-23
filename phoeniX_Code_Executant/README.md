@@ -13,7 +13,7 @@ There is a Python script included in this directory which is executable both in 
 3) Enter the created text file name.
 4) Enter the instruction memory file name.
 5) Enter the data memory file name.
-6) Output files are created and are given to testbench."""
+6) Output files are created and are given to testbench.
 
 After the following steps, HEX file generated is automatically given to testbench and the created VVP file will be executed. In the end, GTKWave is automatically opened including waveforms of the phoeniX core as the unit under test executing the given program.
 
