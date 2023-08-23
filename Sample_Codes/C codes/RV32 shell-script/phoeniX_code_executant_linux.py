@@ -43,6 +43,15 @@ with open(output_file, 'w') as file:
     file.write('riscv64-unknown-elf-gcc -mabi=ilp32 -march=rv32im -Wl,--gc-sections -o firmware.elf ')
     for i in range(1, input_file_numbers + 1):
         file.write(input_name[i] + '.o ')
-    file.write('syscalls.o -T riscv.ld -lstdc++\n')
+    file.write('syscalls.o -T riscv.ld -lstdc++\n\n')
 
+    file.write('riscv64-unknown-elf-gcc -mabi=ilp32 -march=rv32im -nostdlib -o start.elf start.S -T start.ld -lstdc++\n')
+    file.write('chmod -x start.elf\n\n')
+
+    file.write('riscv64-unknown-elf-objcopy -O verilog start.elf start.tmp\n')
+    file.write('riscv64-unknown-elf-objcopy -O verilog firmware.elf firmware.tmp\n\n')
     
+    file.write('cat start.tmp firmware.tmp > firmware.hex\n')
+    file.write('python3 hex8tohex32.py firmware.hex > firmware32.hex\n')
+    file.write('python3 phoeniX_firmware.py\n')
+    file.write('rm -f start.tmp firmware.tmp')
