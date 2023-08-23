@@ -1,3 +1,10 @@
+# ----------------------------------------------------------------
+# |                      phoeniX CORE                            |
+# | ------------------------------------------------------------ |
+# | Custom-built RISC-V assembly code executant for phoeniX core |
+# |          By : Arvin Delavari - Faraz Ghoreishy               |
+# |   Iran University of Science and Technology - August 2023    |
+# ----------------------------------------------------------------
 import os
 text = """
 phoeniX core RISC-V assembly code executant
@@ -13,7 +20,7 @@ To execute this program, please follow these steps:
 6) Output files are created and are given to testbench."""
 print(text)
 
-# Name files (input from user)
+# File names (input from user)
 input_name = input("Enter input file name:\n")
 output_name = input("Enter instruction memory file name:\n")
 data_mem_name = input("Enter data memory file name:\n")
@@ -21,17 +28,17 @@ data_mem_name = input("Enter data memory file name:\n")
 input_file  = os.path.join(os.getcwd(), input_name)
 output_file = os.path.join(os.getcwd(), output_name)
 
-# Read the contents of the file
+# Read the contents of the input file (assembly text file)
 with open(input_file, "r") as file:
     lines = file.readlines()
 
-# Remove the first and third columns from each line
+# Remove the first and third columns from each line (PC and Code)
 modified_lines = [line.split()[1] +'\n' for line in lines]
 
 # Remove the "0x" prefix from each line
 modified_lines = [line[2:] for line in modified_lines]
 
-# Split each line into separate lines with two digits
+# Split each line into separate lines with two digits (32 bits = 4 x 8-bits)
 split_lines = [line[i : i + 2] + '\n' for line in modified_lines for i in range(0, len(line), 2)]
 print(split_lines)
 
@@ -39,7 +46,7 @@ print(split_lines)
 final_hex_code = [elem for elem in split_lines if elem != '\n\n']
 print(final_hex_code)
 
-# Write the modified contents back to the output file
+# Write the modified contents to the output file
 with open(output_file, "w") as file:
     file.writelines(final_hex_code)
 
@@ -68,6 +75,11 @@ with open(testbench_file, 'w') as file:
         else:
             file.write(line)
 
+# OS : cmd commands to execute Verilog simulations:
+# 1 - Create VVP file form testbench
+# 2 - Execute VVP file and create VCD file
+# 3 - Open VCD file in GTKWave
+# Output wavforms will be automatically opened in GTKWave
 os.system('cmd /c "iverilog -o phoeniX.vvp phoeniX_Testbench.v"') 
 os.system('cmd /c "vvp phoeniX.vvp"') 
 os.system('cmd /c "gtkwave phoeniX.vcd"') 
