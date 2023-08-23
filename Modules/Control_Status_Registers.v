@@ -1,4 +1,4 @@
-`ifndef OPCODES
+`ifndef CSR_OPCODE
     `define CSR_OP   7'b11_100_11
 `endif
 
