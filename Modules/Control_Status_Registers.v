@@ -1,3 +1,8 @@
+`ifndef OPCODES
+    `define CSR_OP   7'b11_100_11
+`endif
+
+
 module Control_Status_Register 
 (
     input  CLK,
@@ -19,12 +24,12 @@ always @(posedge CLK) begin
     CSR_reg <= CSR;
 
     case ({funct3, opcode})
-        10'b001_1110011 : begin rd <= CSR_reg; CSR_reg <= rs1;  end                             // CSRRW
-        10'b010_1110011 : begin rd <= CSR_reg; CSR_reg <= CSR_reg | rs1; end                    // CSRRS
-        10'b011_1110011 : begin rd <= CSR_reg; CSR_reg <= CSR_reg & ~rs1; end                   // CSRRC
-        10'b101_1110011 : begin rd <= CSR_reg; CSR_reg <= immediate [4 : 0]; end                // CSRRWI
-        10'b110_1110011 : begin rd <= CSR_reg; CSR_reg <= CSR_reg | immediate [4 : 0]; end      // CSRRSI
-        10'b111_1110011 : begin rd <= CSR_reg; CSR_reg <= CSR_reg & ~immediate [4 : 0]; end     // CSRRSI
+        {3'b001, `CSR_OP} : begin rd <= CSR_reg; CSR_reg <= rs1;  end                             // CSRRW
+        {3'b010, `CSR_OP} : begin rd <= CSR_reg; CSR_reg <= CSR_reg | rs1; end                    // CSRRS
+        {3'b011, `CSR_OP} : begin rd <= CSR_reg; CSR_reg <= CSR_reg & ~rs1; end                   // CSRRC
+        {3'b101, `CSR_OP} : begin rd <= CSR_reg; CSR_reg <= immediate [4 : 0]; end                // CSRRWI
+        {3'b110, `CSR_OP} : begin rd <= CSR_reg; CSR_reg <= CSR_reg | immediate [4 : 0]; end      // CSRRSI
+        {3'b111, `CSR_OP} : begin rd <= CSR_reg; CSR_reg <= CSR_reg & ~immediate [4 : 0]; end     // CSRRSI
     endcase
 end
     
