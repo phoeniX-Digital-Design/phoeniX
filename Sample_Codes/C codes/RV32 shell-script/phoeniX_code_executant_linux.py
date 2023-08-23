@@ -26,3 +26,9 @@ print("List of input files:\n")
 for i in range (1, input_file_numbers + 1):
     print(input_name[i]+'\n')
 
+# Define input executable file (shell script)
+input_file  = os.path.join(os.getcwd(), "rv32im.sh")
+
+# Read the contents of the input file (assembly text file)
+with open(input_file, "r") as file:
+    lines = file.readlines()
