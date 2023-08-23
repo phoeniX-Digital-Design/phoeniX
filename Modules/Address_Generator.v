@@ -19,7 +19,7 @@ module Address_Generator
     input [31 : 0] PC,
     input [31 : 0] immediate,
 
-    output [31 : 0] address
+    output reg [31 : 0] address
 );
     reg  [31 : 0] value;
     
@@ -34,7 +34,7 @@ module Address_Generator
             `BRANCH  : value = PC;     //  Branch ->    PC   + immediate
             default  : value = 1'bz;
         endcase 
+        
+        address = value + immediate;
     end
-
-    assign address = value + immediate;
 endmodule
