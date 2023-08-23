@@ -9,7 +9,7 @@
 */
 
 `ifndef OPCODES
-    `include "Opcodes.v"
+    `include "Modules\\Opcodes.v"
 `endif 
 
 module Address_Generator
@@ -22,19 +22,19 @@ module Address_Generator
     output [31 : 0] address
 );
     reg  [31 : 0] value;
+    
     always @(*) 
     begin
         // Address Type evaluation (for Address Generator module)
         case (opcode)
-            STORE   : value = rs1;    //  Store  -> bus_rs1 + immediate
-            LOAD    : value = rs1;    //  Load   -> bus_rs1 + immediate
-            JAL     : value = PC;     //  JAL    ->    PC   + immediate
-            JALR    : value = PC;     //  JALR   ->    PC   + immediate
-            BRANCH  : value = PC;     //  Branch ->    PC   + immediate
-            default: value = 1'bz;
+            `STORE   : value = rs1;    //  Store  -> bus_rs1 + immediate
+            `LOAD    : value = rs1;    //  Load   -> bus_rs1 + immediate
+            `JAL     : value = PC;     //  JAL    ->    PC   + immediate
+            `JALR    : value = PC;     //  JALR   ->    PC   + immediate
+            `BRANCH  : value = PC;     //  Branch ->    PC   + immediate
+            default  : value = 1'bz;
         endcase 
     end
 
     assign address = value + immediate;
-    
 endmodule

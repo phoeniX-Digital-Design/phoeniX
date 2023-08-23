@@ -1,5 +1,14 @@
 // `include "Memory_Interface.v"
 // `include "..\\Src\\Memory_Interface.v"
+`ifndef OPCODES
+    `include "Modules\\Opcodes.v"
+`endif
+
+`define BYTE                3'b000
+`define HALFWORD            3'b001
+`define WORD                3'b010
+`define BYTE_UNSIGNED       3'b100
+`define HALFWORD_UNSIGNED   3'b101
 
 module Load_Store_Unit
 #(
@@ -22,26 +31,27 @@ module Load_Store_Unit
     wire   memory_done;
     wire   [31 : 0] data;
     
-    // Memory Interface enable signal generation
+    // Memory Interface Enable Signal Generation
     reg enable;
     always @(*)
     begin
         case (opcode)
-            7'b0000011 : enable = 1'b1;
-            7'b0100011 : enable = 1'b1; 
-            default: enable = 1'b0;
+            `LOAD   : enable = 1'b1;
+            `STORE  : enable = 1'b1; 
+            default : enable = 1'b0;
         endcase
     end
+
     // Memory State and Frame Mask Generation
     always @(*) 
     begin
         {memory_state, frame_mask} = {1'bx, 4'bx};
-        $display("%b\t%b\t\t%d", opcode, funct3, address[ADDRESS_WIDTH - 1 : 0]);
-        case ({funct3, opcode})
+
+        case ({opcode, funct3})
             // Load Instructions
             
             // LB and LBU
-            10'b000_0000011, 10'b100_0000011: {memory_state, frame_mask} = 
+            {`LOAD, `BYTE}, {`LOAD, `BYTE_UNSIGNED}: {memory_state, frame_mask} = 
             {   data_memory.READ, 
             {                   
                 ~address[1] & ~address[0], 
@@ -52,7 +62,7 @@ module Load_Store_Unit
             };
 
             // LH and LHU
-            10'b001_0000011, 10'b101_0000011 : {memory_state, frame_mask} = 
+            {`LOAD, `HALFWORD}, {`LOAD, `HALFWORD_UNSIGNED} : {memory_state, frame_mask} = 
             {   data_memory.READ,
             {                   
                 {2{~address[1]}}, {2{address[1]}}
@@ -60,12 +70,12 @@ module Load_Store_Unit
             };
 
             // LW
-            10'b010_0000011 : {memory_state, frame_mask} = {data_memory.READ, 4'b1111}; 
+            {`LOAD, `WORD} : {memory_state, frame_mask} = {data_memory.READ, 4'b1111}; 
             
             // Store Instructions
 
             // SB
-            10'b000_0100011 : {memory_state, frame_mask} = 
+            {`STORE, `BYTE} : {memory_state, frame_mask} = 
             {   data_memory.WRITE, 
             {                   
                 ~address[1] & ~address[0], 
@@ -76,7 +86,7 @@ module Load_Store_Unit
             }; 
 
             // SH
-            10'b001_0100011 : {memory_state, frame_mask} = 
+            {`STORE, `HALFWORD} : {memory_state, frame_mask} = 
             {   data_memory.WRITE,
             {                   
                 {2{~address[1]}}, {2{address[1]}}
@@ -84,14 +94,14 @@ module Load_Store_Unit
             }; 
 
             // SW
-            10'b010_0100011 : {memory_state, frame_mask} = {data_memory.WRITE, 4'b1111};
+            {`STORE, `WORD} : {memory_state, frame_mask} = {data_memory.WRITE, 4'b1111};
 
             default : {memory_state, frame_mask} = {1'b0, 4'b0};
         endcase    
     end
 
     // Data Management in case of Store Instruction
-    assign data = opcode == 7'b0100011 ? store_data : 32'bz;
+    assign data = opcode == `STORE ? store_data : 32'bz;
 
     // Instantiating Memory Interface for Data Memory
     Memory_Interface 
@@ -112,12 +122,13 @@ module Load_Store_Unit
     // Latch condition when Loading
     always @(posedge memory_done)
     begin
-        casex ({funct3, opcode})
-            10'b000_0000011 : load_data <= { {24{data[7]}}, data[7 : 0]};       // LB
-            10'b001_0000011 : load_data <= { {16{data[15]}}, data[15 : 0]};     // LH
-            10'b100_0000011 : load_data <= { 24'b0, data[7 : 0]};               // LBU
-            10'b101_0000011 : load_data <= { 16'b0, data[15 : 0]};              // LHU
-            10'b010_0000011 : load_data <= data;                                // LW
+        if (opcode == `LOAD)
+        casex ({funct3})
+            `BYTE               : load_data <= { {24{data[7]}}, data[7 : 0]};       // LB
+            `HALFWORD           : load_data <= { {16{data[15]}}, data[15 : 0]};     // LH
+            `BYTE_UNSIGNED      : load_data <= { 24'b0, data[7 : 0]};               // LBU
+            `HALFWORD_UNSIGNED  : load_data <= { 16'b0, data[15 : 0]};              // LHU
+            `WORD               : load_data <= data;                                // LW
         endcase    
     end
 endmodule

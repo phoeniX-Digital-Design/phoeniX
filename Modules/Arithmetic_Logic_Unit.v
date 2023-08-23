@@ -15,6 +15,10 @@
         J-TYPE : JAL  - JALR                             
 */
 
+`ifndef OPCODES
+    `include "Modules\\Opcodes.v"
+`endif
+
 module Arithmetic_Logic_Unit 
 (
     input [6 : 0] opcode,               // ALU Operation
@@ -39,10 +43,10 @@ module Arithmetic_Logic_Unit
     always @(*) 
     begin
         case (opcode)
-        7'b0110011 : begin mux1_select = 1'b0; mux2_select = 2'b00; end // R-TYPE instructions
-        7'b0010011 : begin mux1_select = 1'b0; mux2_select = 2'b01; end // I-TYPE instructions
-        7'b1101111 : begin mux1_select = 1'b1; mux2_select = 2'b10; end // JAL    instructions
-        7'b1100111 : begin mux1_select = 1'b1; mux2_select = 2'b10; end // JALR   instructions
+        `OP     : begin mux1_select = 1'b0; mux2_select = 2'b00; end // R-TYPE instructions
+        `OP_IMM : begin mux1_select = 1'b0; mux2_select = 2'b01; end // I-TYPE instructions
+        `JALR   : begin mux1_select = 1'b1; mux2_select = 2'b10; end // JALR   instructions
+        `JAL    : begin mux1_select = 1'b1; mux2_select = 2'b10; end // JAL    instructions
         endcase        
     end
 
@@ -54,6 +58,7 @@ module Arithmetic_Logic_Unit
             1'b1 : operand_1 = PC;
         endcase
     end
+    
     // ALU Multiplexer 2
     always @(*) 
     begin
@@ -68,37 +73,36 @@ module Arithmetic_Logic_Unit
     begin
         casex ({funct7, funct3, opcode})
             // I-TYPE Intructions
-            17'bxxxxxxx_000_0010011 : alu_output = operand_1 + operand_2;                           // ADDI
-            17'bxxxxxxx_010_0010011 : alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0; // SLTI
-            17'bxxxxxxx_011_0010011 : alu_output = operand_1 < operand_2 ? 1 : 0;                   // SLTIU
-            17'bxxxxxxx_100_0010011 : alu_output = operand_1 ^ operand_2;                           // XORI
-            17'bxxxxxxx_110_0010011 : alu_output = operand_1 | operand_2;                           // ORI
-            17'bxxxxxxx_111_0010011 : alu_output = operand_1 & operand_2;                           // ANDI
-            17'b0000000_001_0010011 : alu_output = operand_1 << operand_2 [4 : 0];                  // SLLI
-            17'b0000000_101_0010011 : alu_output = operand_1 >> operand_2 [4 : 0];                  // SRLI
-            17'b0100000_101_0010011 : alu_output = operand_1 >> $signed(operand_2 [4 : 0]);         // SRAI
-
+            {7'bx_xxx_xxx, 3'b000, `OP_IMM} : alu_output = operand_1 + operand_2;                           // ADDI
+            {7'b0_000_000, 3'b001, `OP_IMM} : alu_output = operand_1 << operand_2 [4 : 0];                  // SLLI
+            {7'bx_xxx_xxx, 3'b010, `OP_IMM} : alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0; // SLTI
+            {7'bx_xxx_xxx, 3'b011, `OP_IMM} : alu_output = operand_1 < operand_2 ? 1 : 0;                   // SLTIU
+            {7'bx_xxx_xxx, 3'b100, `OP_IMM} : alu_output = operand_1 ^ operand_2;                           // XORI
+            {7'b0_000_000, 3'b101, `OP_IMM} : alu_output = operand_1 >> operand_2 [4 : 0];                  // SRLI
+            {7'b0_100_000, 3'b101, `OP_IMM} : alu_output = operand_1 >> $signed(operand_2 [4 : 0]);         // SRAI
+            {7'bx_xxx_xxx, 3'b110, `OP_IMM} : alu_output = operand_1 | operand_2;                           // ORI
+            {7'bx_xxx_xxx, 3'b111, `OP_IMM} : alu_output = operand_1 & operand_2;                           // ANDI
+            
             // R-TYPE Instructions
-            17'b0000000_000_0110011 : alu_output = operand_1 + operand_2;                           // ADD
-            17'b0100000_000_0110011 : alu_output = operand_1 - operand_2;                           // SUB
-            17'b0000000_001_0110011 : alu_output = operand_1 << operand_2;                          // SLL
-            17'b0000000_010_0110011 : alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0; // SLT
-            17'b0000000_011_0110011 : alu_output = operand_1 < operand_2 ? 1 : 0;                   // SLTU
-            17'b0000000_100_0110011 : alu_output = operand_1 ^ operand_2;                           // XOR
-            17'b0000000_101_0110011 : alu_output = operand_1 >> operand_2;                          // SRL
-            17'b0100000_101_0110011 : alu_output = operand_1 >> $signed(operand_2);                 // SRA
-            17'b0000000_110_0110011 : alu_output = operand_1 | operand_2;                           // OR
-            17'b0000000_111_0110011 : alu_output = operand_1 & operand_2;                           // AND
+            {7'b0_000_000, 3'b000, `OP}     : alu_output = operand_1 + operand_2;                           // ADD
+            {7'b0_100_000, 3'b000, `OP}     : alu_output = operand_1 - operand_2;                           // SUB
+            {7'b0_000_000, 3'b001, `OP}     : alu_output = operand_1 << operand_2;                          // SLL
+            {7'b0_000_000, 3'b010, `OP}     : alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0; // SLT
+            {7'b0_000_000, 3'b011, `OP}     : alu_output = operand_1 < operand_2 ? 1 : 0;                   // SLTU
+            {7'b0_000_000, 3'b100, `OP}     : alu_output = operand_1 ^ operand_2;                           // XOR
+            {7'b0_000_000, 3'b101, `OP}     : alu_output = operand_1 >> operand_2;                          // SRL
+            {7'b0_100_000, 3'b101, `OP}     : alu_output = operand_1 >> $signed(operand_2);                 // SRA
+            {7'b0_000_000, 3'b110, `OP}     : alu_output = operand_1 | operand_2;                           // OR
+            {7'b0_000_000, 3'b111, `OP}     : alu_output = operand_1 & operand_2;                           // AND
 
             // JAL and JALR Instructions
-            17'bxxxxxxx_xxx_1101111 : alu_output = operand_1 + operand_2;                           // JAL
-            17'bxxxxxxx_000_1100111 : alu_output = operand_1 + operand_2;                           // JALR
+            {7'bx_xxx_xxx, 3'bxxx, `JAL}    : alu_output = operand_1 + operand_2;                           // JAL
+            {7'bx_xxx_xxx, 3'b000, `JALR}   : alu_output = operand_1 + operand_2;                           // JALR
             
             // AUIPC Instruction
-            17'bxxxxxxx_xxx_0010011 : alu_output = operand_1 + operand_2;                           // AUIPC
+            {7'bx_xxx_xxx, 3'bxxx, `AUIPC}  : alu_output = operand_1 + operand_2;                           // AUIPC
 
             default: alu_output = 32'bz; 
-            
         endcase
     end
 endmodule

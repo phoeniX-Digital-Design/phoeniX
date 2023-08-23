@@ -8,6 +8,7 @@
 `include "Modules\\Address_Generator.v"
 `include "Modules\\Load_Store_Unit.v"
 `include "Modules\\Hazard_Forward_Unit.v"
+`include "Modules\\Opcodes.v"
 
 module phoeniX 
 #(
@@ -129,6 +130,7 @@ module phoeniX
     
     wire FW_enable_1;
     wire FW_enable_2;
+
     // -----------------------------------------------
     // Wire Declaration for inputs to source bus 1 & 2
     // ----------------------------------------------- 
@@ -220,9 +222,7 @@ module phoeniX
     // ------------------------------
     Jump_Branch_Unit jump_branch_unit
     (
-        .opcode(opcode_execute_reg),
         .funct3(funct3_execute_reg),
-        .funct7(funct7_execute_reg),
         .instruction_type(instruction_type_execute_reg),
         .rs1(bus_rs1),
         .rs2(bus_rs2),
@@ -354,14 +354,13 @@ module phoeniX
     always @(*) 
     begin    
         case (opcode_writeback_reg)
-            7'b0000011 : write_data_writeback_reg = load_data_writeback_reg;
-            7'b0010011 : write_data_writeback_reg = result_writeback_reg;
-            7'b0110011 : write_data_writeback_reg = result_writeback_reg;
-            7'b0110011 : write_data_writeback_reg = result_writeback_reg;
-            7'b1101111 : write_data_writeback_reg = result_writeback_reg;
-            7'b1100111 : write_data_writeback_reg = result_writeback_reg;
-            7'b0010111 : write_data_writeback_reg = result_writeback_reg;
-            7'b0110111 : write_data_writeback_reg = immediate_writeback_reg;
+            `OP_IMM : write_data_writeback_reg = result_writeback_reg;
+            `OP     : write_data_writeback_reg = result_writeback_reg;
+            `JAL    : write_data_writeback_reg = result_writeback_reg;
+            `JALR   : write_data_writeback_reg = result_writeback_reg;
+            `AUIPC  : write_data_writeback_reg = result_writeback_reg;
+            `LOAD   : write_data_writeback_reg = load_data_writeback_reg;
+            `LUI    : write_data_writeback_reg = immediate_writeback_reg;
         endcase
     end
 
@@ -380,13 +379,13 @@ module phoeniX
 
         .read_enable_1(read_enable_1_decode_wire),
         .read_enable_2(read_enable_2_decode_wire),
-        .write_enable(opcode_execute_reg == 7'b0110111 ? write_enable_execute_reg : write_enable_writeback_reg),
+        .write_enable(opcode_execute_reg == `LUI ? write_enable_execute_reg : write_enable_writeback_reg),
 
         .read_index_1(read_index_1_decode_wire),
         .read_index_2(read_index_2_decode_wire),
-        .write_index(opcode_execute_reg == 7'b0110111 ? write_index_execute_reg : write_index_writeback_reg),
+        .write_index(opcode_execute_reg == `LUI ? write_index_execute_reg : write_index_writeback_reg),
 
-        .write_data(opcode_execute_reg == 7'b0110111 ? immediate_execute_reg : write_data_writeback_reg),
+        .write_data(opcode_execute_reg == `LUI ? immediate_execute_reg : write_data_writeback_reg),
         .read_data_1(RF_source_1),
         .read_data_2(RF_source_2)
     );
@@ -403,7 +402,7 @@ module phoeniX
         .destination_index_3(write_index_writeback_reg),
 
         .data_1(result_execute_wire),
-        .data_2(opcode_memory_reg == 7'b0000011 ? load_data_memory_wire : result_memory_reg),
+        .data_2(opcode_memory_reg == `LOAD ? load_data_memory_wire : result_memory_reg),
         .data_3(write_data_writeback_reg),
 
         .enable_1(write_enable_execute_reg),
@@ -423,7 +422,7 @@ module phoeniX
         .destination_index_3(write_index_writeback_reg),
 
         .data_1(result_execute_wire),
-        .data_2(opcode_memory_reg == 7'b0000011 ? load_data_memory_wire : result_memory_reg),
+        .data_2(opcode_memory_reg == `LOAD ? load_data_memory_wire : result_memory_reg),
         .data_3(write_data_writeback_reg),
 
         .enable_1(write_enable_execute_reg),
