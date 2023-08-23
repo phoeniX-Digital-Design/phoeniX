@@ -12,4 +12,5 @@ riscv64-unknown-elf-objcopy -O verilog firmware.elf firmware.tmp
 
 cat start.tmp firmware.tmp > firmware.hex
 python3 hex8tohex32.py firmware.hex > firmware32.hex
+python3 phoeniX_firmware.py
 rm -f start.tmp firmware.tmp
