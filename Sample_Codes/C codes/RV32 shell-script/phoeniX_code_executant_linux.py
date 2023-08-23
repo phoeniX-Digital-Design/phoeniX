@@ -20,15 +20,29 @@ input_file_numbers = int(input("Enter number of input files:\n"))
 input_name = [""] * (input_file_numbers + 1)
 
 for i in range (1, input_file_numbers + 1):
-    input_name[i] = input("Enter input file name:\n")
+    input_name[i] = input("Enter input file name (without .c):\n")
 
 print("List of input files:\n")
 for i in range (1, input_file_numbers + 1):
     print(input_name[i]+'\n')
 
 # Define input executable file (shell script)
-input_file  = os.path.join(os.getcwd(), "rv32im.sh")
+input_file   = os.path.join(os.getcwd(), "rv32im.sh")
+output_file  = os.path.join(os.getcwd(), "pheoniX_code_executant.sh")
 
 # Read the contents of the input file (assembly text file)
 with open(input_file, "r") as file:
     lines = file.readlines()
+
+with open(output_file, 'w') as file:
+    for i in range(1, input_file_numbers + 1):
+        file.write('riscv64-unknown-elf-gcc -c -mabi=ilp32 -march=rv32im -o ' + input_name[i] + '.o ' + input_name[i] + '.c\n')
+        
+    file.write('riscv64-unknown-elf-gcc -c -mabi=ilp32 -march=rv32im -o syscalls.o syscalls.c\n\n')
+        
+    file.write('riscv64-unknown-elf-gcc -mabi=ilp32 -march=rv32im -Wl,--gc-sections -o firmware.elf ')
+    for i in range(1, input_file_numbers + 1):
+        file.write(input_name[i] + '.o ')
+    file.write('syscalls.o -T riscv.ld -lstdc++\n')
+
+    
