@@ -8,6 +8,10 @@
     So no determination (Mux) will be needed here.(I-J-B immediate)
 */
 
+`ifndef OPCODES
+    `include "Opcodes.v"
+`endif 
+
 module Address_Generator
 (
     input [6 : 0] opcode, 
@@ -22,11 +26,11 @@ module Address_Generator
     begin
         // Address Type evaluation (for Address Generator module)
         case (opcode)
-            7'b0100011: value = rs1;    //  Store  -> bus_rs1 + immediate
-            7'b0000011: value = rs1;    //  Load   -> bus_rs1 + immediate
-            7'b1101111: value = PC;     //  JAL    ->    PC   + immediate
-            7'b1100111: value = PC;     //  JALR   ->    PC   + immediate
-            7'b1100011: value = PC;     //  Branch ->    PC   + immediate
+            STORE   : value = rs1;    //  Store  -> bus_rs1 + immediate
+            LOAD    : value = rs1;    //  Load   -> bus_rs1 + immediate
+            JAL     : value = PC;     //  JAL    ->    PC   + immediate
+            JALR    : value = PC;     //  JALR   ->    PC   + immediate
+            BRANCH  : value = PC;     //  Branch ->    PC   + immediate
             default: value = 1'bz;
         endcase 
     end
