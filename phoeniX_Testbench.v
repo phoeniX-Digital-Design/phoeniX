@@ -3,7 +3,7 @@
 
 module phoeniX_Testbench;
     integer data_memory_file;
-    parameter ADDRESS_WIDTH = 10;
+    parameter ADDRESS_WIDTH = 12;
 
     reg CLK = 1'b1;
     reg CLK_MEM = 1'b1;
@@ -65,7 +65,7 @@ module phoeniX_Testbench;
         $dumpfile("phoeniX.vcd");
         $dumpvars(0, phoeniX_Testbench);
 
-        $readmemh("Sample_Codes\\Test_RV32I_MaxArray.mem", uut.fetch_unit.instruction_memory.Memory);
+        $readmemh("Sample_Codes\\Test_RV32I_BubbleSort.mem", uut.fetch_unit.instruction_memory.Memory);
 
         // Reset
         #24
@@ -73,8 +73,8 @@ module phoeniX_Testbench;
         #12
         reset = 1'b0;
         
-        #8000
-        data_memory_file = $fopen("Sample_Codes\\Test_RV32I_MaxArray_data.mem", "w");
+        #10000
+        data_memory_file = $fopen("Sample_Codes\\Test_RV32I_BubbleSort_data.mem", "w");
 
         for (integer addr = 0; addr < 2 ** ADDRESS_WIDTH; addr = addr + 4)
         begin

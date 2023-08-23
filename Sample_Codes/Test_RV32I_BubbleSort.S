@@ -1,4 +1,5 @@
 main:
+    li    sp, 0xffc
 	#create stack
 	addi	sp,sp,-48
 	#save s0
