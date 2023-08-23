@@ -1,5 +1,4 @@
 `define OPCODES
-    
     `define LOAD        7'b00_000_11
     `define LOAD_FP     7'b00_001_11
     `define custom_0    7'b00_010_11
@@ -28,3 +27,11 @@
     `define JAL         7'b11_011_11
     `define SYSTEM      7'b11_100_11
     `define custom_3    7'b11_110_11
+
+`define INSTRUCTION_TYPES
+    `define R_TYPE 0
+    `define I_TYPE 1
+    `define S_TYPE 2
+    `define B_TYPE 3
+    `define U_TYPE 4
+    `define J_TYPE 5

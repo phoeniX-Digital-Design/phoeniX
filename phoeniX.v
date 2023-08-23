@@ -8,7 +8,7 @@
 `include "Modules\\Address_Generator.v"
 `include "Modules\\Load_Store_Unit.v"
 `include "Modules\\Hazard_Forward_Unit.v"
-`include "Modules\\Opcodes.v"
+`include "Modules\\Defines.v"
 
 module phoeniX 
 #(
