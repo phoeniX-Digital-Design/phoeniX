@@ -1015,7 +1015,7 @@
 00000fd8	00	00	00	02
 00000fdc	00	00	00	04
 00000fe0	xx	xx	xx	xx
-00000fe4	00	00	00	44
+00000fe4	00	00	00	00
 00000fe8	xx	xx	xx	xx
 00000fec	xx	xx	xx	xx
 00000ff0	xx	xx	xx	xx
