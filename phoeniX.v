@@ -10,7 +10,11 @@
 `include "Modules\\Hazard_Forward_Unit.v"
 `include "Modules\\Defines.v"
 
-`define NOP 32'h0000_0013
+`define NOP         32'h0000_0013
+`define NOP_OPCODE  `OP_IMM
+`define NOP_funct7  7'bz
+`define NOP_funct3  3'b000
+
 module phoeniX 
 #(
     parameter RESET_ADDRESS = 32'hFFFFFFFC,
@@ -77,7 +81,7 @@ module phoeniX
     begin
         PC_decode_reg <= PC_fetch_reg;
 
-        if (jump_branch_enable_execute_wire)
+        if (jump_branch_enable_execute_wire || stall)
             instruction_decode_reg <= `NOP;
         else
             instruction_decode_reg <= instruction_fetch_wire;
@@ -179,17 +183,20 @@ module phoeniX
         begin
             instruction_execute_reg <= `NOP;
             write_enable_execute_reg <= 1'b0;  
+
+            opcode_execute_reg <= `NOP_OPCODE;
+            funct3_execute_reg <= `NOP_funct3;
+            funct7_execute_reg <= `NOP_funct7;
         end
-            
         else
         begin
             instruction_execute_reg <= instruction_decode_reg;
             write_enable_execute_reg <= write_enable_decode_wire;
+            
+            opcode_execute_reg <= opcode_decode_wire;
+            funct3_execute_reg <= funct3_decode_wire;
+            funct7_execute_reg <= funct7_decode_wire;
         end
-    
-        opcode_execute_reg <= opcode_decode_wire;
-        funct3_execute_reg <= funct3_decode_wire;
-        funct7_execute_reg <= funct7_decode_wire;
 
         immediate_execute_reg <= immediate_decode_wire; 
         instruction_type_execute_reg <= instruction_type_decode_wire;
