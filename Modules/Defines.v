@@ -35,3 +35,18 @@
     `define B_TYPE 3
     `define U_TYPE 4
     `define J_TYPE 5
+
+`define EXCEPTIONS 
+    `define INSTRUCTION_ADDRESS_MISALLIGNED 4'b0000
+    `define INSTRUCTION_ACCESS_FAULT        4'b0001
+    `define ILLEGAL_INSTRUCTION             4'b0010
+    `define BREAKPOINT                      4'b0011
+    `define LOAD_ADDRESS_MISALLIGNED        4'b0100
+    `define LOAD_ACCESS_FAULT               4'b0101
+    `define STORE_AMO_ADDRESS_MISALLIGNED   4'b0110
+    `define STORE_AMO_ACCESS_FAULT          4'b0111
+    `define ECALL_FROM_U_MODE               4'b1000
+    `define ECALL_FROM_M_MODE               4'b1001
+    `define INSTRUCTION_PAGE_FAULT          4'b1010
+    `define LOAD_PAGE_FAULT                 4'b1011
+    `define STORE_AMO_PAGE_FAULT            4'b1100
