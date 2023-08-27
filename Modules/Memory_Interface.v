@@ -14,7 +14,7 @@ module Memory_Interface
     output reg  memory_done
 );
 
- 	reg [7 : 0] Memory [0 : DEPTH - 1]; // *** Memory must be eliminated
+ 	reg [7 : 0] Memory [0 : 4 * 1024 * 1024 - 1]; // *** Memory must be eliminated
     // Memory must be replaced with data bus
     reg [31 : 0] data_in;
     reg [7  : 0] data_bus; // *** consider if it is need or not
