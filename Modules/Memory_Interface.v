@@ -1,6 +1,6 @@
 module Memory_Interface 
 #(
-    parameter DEPTH = 256
+    parameter DEPTH = 256 // *** parameter must be eliminated
 )
 (
   	input CLK,
@@ -14,10 +14,10 @@ module Memory_Interface
     output reg  memory_done
 );
 
- 	reg [7 : 0] Memory [0 : DEPTH - 1];
+ 	reg [7 : 0] Memory [0 : DEPTH - 1]; // *** Memory must be eliminated
     // Memory must be replace with data bus
     reg [31 : 0] data_in;
-    reg [7  : 0] data_bus; //?
+    reg [7  : 0] data_bus; // *** consider if it is need or not
 
     localparam  READ        = 1'b0,
                 WRITE       = 1'b1;
