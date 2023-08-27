@@ -7,7 +7,7 @@ You can find a list of full RISC-V assembly instructions in the [ISA documents](
 
 The core can be implemented as a softcore CPU on Xilinx 7 series FPGA boards using logic synthesis. This allows for flexible integration of the core's functionality within the FPGA fabric. The Xilinx 7 series FPGA boards provide a versatile platform for hosting the softcore CPU implementation, offering configurable features and adaptability.
 
-The core has undergone a complete design flow, including synthesis, routing, and post layout process, to become an Integrated Circuit using open-source tools and the [QFlow](http://opencircuitdesign.com/qflow/) & [Siliconcompiler](https://github.com/siliconcompiler/siliconcompiler) projects. The ASIC implementation was specifically carried out utilizing the `NANGate45nm` Process Design Kit (PDK).
+The core has undergone a complete design flow, including synthesis, routing, and post layout process, to become an Integrated Circuit using open-source tools and the [QFlow](http://opencircuitdesign.com/qflow/) & [Siliconcompiler](https://github.com/siliconcompiler/siliconcompiler) projects. The ASIC implementation was specifically carried out utilizing the `osu018 (TSMC 180nm)` Process Design Kit (PDK).
 
 This repository contains an open source CPU under the [GNU V3.0 license](https://en.wikipedia.org/wiki/GNU_General_Public_License) and is free to use.
 
