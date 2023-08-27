@@ -6,13 +6,14 @@ module phoeniX_Testbench;
 
     parameter ADDRESS_WIDTH = 12;
     parameter MEMORY_SIZE = 4 * 1024 * 1024;
+    reg [7 : 0] inst_mem [0 : MEMORY_SIZE - 1];
 
     reg CLK = 1'b1;
     reg CLK_MEM = 1'b1;
 
     reg reset = 1'b1;
 
-    reg [7 : 0] Memory [0 : MEMORY_SIZE - 1];
+    
 
     phoeniX 
     #(
@@ -69,7 +70,8 @@ module phoeniX_Testbench;
         $dumpfile("phoeniX.vcd");
         $dumpvars(0, phoeniX_Testbench);
 
-        $readmemh("Sample_Codes\\C codes\\fibonacci\\phoeniX_firmware.hex", Memory);
+        $readmemh("Sample_Codes\\C codes\\fibonacci\\phoeniX_firmware.hex", uut.fetch_unit.instruction_memory.Memory);
+        // "uut.fetch_unit.instruction_memory.Memory memory" replaced with "inst_mem.Memory"
 
         // Reset
         #24
