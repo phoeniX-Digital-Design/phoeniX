@@ -15,7 +15,7 @@ module Memory_Interface
 );
 
  	reg [7 : 0] Memory [0 : DEPTH - 1]; // *** Memory must be eliminated
-    // Memory must be replace with data bus
+    // Memory must be replaced with data bus
     reg [31 : 0] data_in;
     reg [7  : 0] data_bus; // *** consider if it is need or not
 
