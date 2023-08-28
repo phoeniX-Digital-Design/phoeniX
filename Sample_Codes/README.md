@@ -1,5 +1,5 @@
 Sample Codes for phoeniX core
-======================================
+====================================== 
 
 In this directory, there are two subdirectories including sample codes in RISC-V assembly and C.
 
