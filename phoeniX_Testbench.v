@@ -3,6 +3,7 @@
 
 module phoeniX_Testbench;
     integer data_memory_file;
+    integer addr;
 
     parameter ADDRESS_WIDTH = 22;
 
@@ -76,7 +77,7 @@ module phoeniX_Testbench;
         #10000
         data_memory_file = $fopen("Sample_Codes/ASM codes/Test_RV32I_Fibonacci_data.mem", "w");
 
-        for (integer addr = 0; addr < 2 ** ADDRESS_WIDTH; addr = addr + 4)
+        for (addr = 0; addr < 2 ** ADDRESS_WIDTH; addr = addr + 4)
         begin
             $fdisplay(  data_memory_file, "%h\t%h\t%h\t%h\t%h",
                         addr, 
