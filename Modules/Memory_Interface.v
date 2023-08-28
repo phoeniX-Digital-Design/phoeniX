@@ -1,7 +1,4 @@
 module Memory_Interface 
-#(
-    parameter DEPTH = 256
-)
 (
   	input CLK,
   	input enable,
