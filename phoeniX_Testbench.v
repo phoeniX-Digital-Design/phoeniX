@@ -4,9 +4,7 @@
 module phoeniX_Testbench;
     integer data_memory_file;
 
-    parameter ADDRESS_WIDTH = 12;
-    parameter MEMORY_SIZE = 4 * 1024 * 1024;
-    reg [7 : 0] inst_mem [0 : MEMORY_SIZE - 1];
+    parameter ADDRESS_WIDTH = 22;
 
     reg CLK = 1'b1;
     reg CLK_MEM = 1'b1;
@@ -70,7 +68,7 @@ module phoeniX_Testbench;
         $dumpfile("phoeniX.vcd");
         $dumpvars(0, phoeniX_Testbench);
 
-        $readmemh("Sample_Codes\\Ccodes\\fibonacci\\phoeniX_firmware.hex", uut.fetch_unit.instruction_memory.Memory);
+        $readmemh("Sample_Codes\\ASM codes\\Test_RV32I_Fibonacci.mem", uut.fetch_unit.instruction_memory.Memory);
         // "uut.fetch_unit.instruction_memory.Memory memory" replaced with "inst_mem.Memory"
 
         // Reset
@@ -80,7 +78,7 @@ module phoeniX_Testbench;
         reset = 1'b0;
         
         #10000
-        data_memory_file = $fopen("Sample_Codes\\C codes\\fibonacci\\data_mem.mem", "w");
+        data_memory_file = $fopen("Sample_Codes\\ASM codes\\Test_RV32I_Fibonacci_data.mem", "w");
 
         for (integer addr = 0; addr < 2 ** ADDRESS_WIDTH; addr = addr + 4)
         begin
