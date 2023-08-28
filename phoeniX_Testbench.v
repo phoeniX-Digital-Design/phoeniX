@@ -70,7 +70,7 @@ module phoeniX_Testbench;
         $dumpfile("phoeniX.vcd");
         $dumpvars(0, phoeniX_Testbench);
 
-        $readmemh("Sample_Codes\\C codes\\fibonacci\\phoeniX_firmware.hex", uut.fetch_unit.instruction_memory.Memory);
+        $readmemh("Sample_Codes\\Ccodes\\fibonacci\\phoeniX_firmware.hex", uut.fetch_unit.instruction_memory.Memory);
         // "uut.fetch_unit.instruction_memory.Memory memory" replaced with "inst_mem.Memory"
 
         // Reset
