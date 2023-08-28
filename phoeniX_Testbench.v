@@ -13,11 +13,7 @@ module phoeniX_Testbench;
 
     
 
-    phoeniX 
-    #(
-        .ADDRESS_WIDTH(ADDRESS_WIDTH) // Address width must be changed
-    )
-    uut
+    phoeniX uut
     (
         .CLK(CLK),
         .CLK_MEM(CLK_MEM),
