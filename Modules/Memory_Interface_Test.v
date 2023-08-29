@@ -2,8 +2,10 @@ module Memory_Interface_Test
 (
     input [31 : 0] address,
     input [31 : 0] write_data,
+    
     input write_enable,
     input read_enable,
+
     output reg [31 : 0] read_data
 );
 
