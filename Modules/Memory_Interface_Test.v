@@ -12,7 +12,7 @@ module Memory_Interface_Test
     output reg [31 : 0] read_data
 );
 
-    // 1KB chache memory inside the interface module
+    // 1KB cache memory inside the interface module
     reg [31 : 0] cache_memory [0 : 2 ** ADDRESS_WIDTH - 1]; 
 
     always @(posedge read_enable) begin
