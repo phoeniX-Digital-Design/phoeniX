@@ -57,7 +57,7 @@ module Address_Generator
             `STORE   : value = rs1;    //  Store  -> bus_rs1 + immediate
             `LOAD    : value = rs1;    //  Load   -> bus_rs1 + immediate
             `JAL     : value = PC;     //  JAL    ->    PC   + immediate
-            `JALR    : value = PC;     //  JALR   ->    PC   + immediate
+            `JALR    : value = rs1;    //  JALR   -> bus_rs1 + immediate
             `BRANCH  : value = PC;     //  Branch ->    PC   + immediate
             default  : value = 1'bz;
         endcase 
