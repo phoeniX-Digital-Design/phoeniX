@@ -1,5 +1,5 @@
 $date
-	Mon Aug 21 10:16:04 2023
+	Tue Aug 29 11:01:21 2023
 $end
 $version
 	Icarus Verilog
@@ -145,27 +145,27 @@ b10000 (
 0#
 #14
 b1010 F
-b0zzzzzzzzzzzzzzzzzzzzzzzz )
-b0zzzzzzzzzzzzzzzzzzzzzzzz 3
-b0zzzzzzzzzzzzzzzzzzzzzzzz E
+bxzzzzzzzzzzzzzzzzzzzzzzzz )
+bxzzzzzzzzzzzzzzzzzzzzzzzz 3
+bxzzzzzzzzzzzzzzzzzzzzzzzz E
 b1001 G
 1#
 #15
 0#
 #16
 b1011 F
-b101zzzzzzzzzzzzzzzz )
-b101zzzzzzzzzzzzzzzz 3
-b101zzzzzzzzzzzzzzzz E
+bxzzzzzzzzzzzzzzzz )
+bxzzzzzzzzzzzzzzzz 3
+bxzzzzzzzzzzzzzzzz E
 b1010 G
 1#
 #17
 0#
 #18
 b1100 F
-b10101000000zzzzzzzz )
-b10101000000zzzzzzzz 3
-b10101000000zzzzzzzz E
+bxzzzzzzzz )
+bxzzzzzzzz 3
+bxzzzzzzzz E
 b1011 G
 1#
 0"
@@ -173,16 +173,14 @@ b1011 G
 0#
 #20
 b1101 F
-b1010100000010000011 )
-b1010100000010000011 3
-b1010100000010000011 E
+bx )
+bx 3
+bx E
 b1100 G
 1#
 #21
 0#
 #22
-b1010100000010000011 !
-b1010100000010000011 0
 b0 F
 1-
 b1101 G
@@ -250,16 +248,16 @@ b10011 (
 0#
 #38
 b1101 F
-b10000011 )
-b10000011 3
-b10000011 E
+b0xxxxxxxx )
+b0xxxxxxxx 3
+b0xxxxxxxx E
 b1 G
 1#
 #39
 0#
 #40
-b10000011 !
-b10000011 0
+b0xxxxxxxx !
+b0xxxxxxxx 0
 b0 F
 1-
 b1101 G
@@ -279,9 +277,9 @@ b0 G
 0#
 #44
 b1101 F
-b10000011 )
-b10000011 3
-b10000011 E
+b0xxxxxxxx )
+b0xxxxxxxx 3
+b0xxxxxxxx E
 b1 G
 1#
 #45
@@ -354,27 +352,27 @@ b10100 (
 0#
 #62
 b1010 F
-b0zzzzzzzzzzzzzzzzzzzzzzzz )
-b0zzzzzzzzzzzzzzzzzzzzzzzz 3
-b0zzzzzzzzzzzzzzzzzzzzzzzz E
+bxzzzzzzzzzzzzzzzzzzzzzzzz )
+bxzzzzzzzzzzzzzzzzzzzzzzzz 3
+bxzzzzzzzzzzzzzzzzzzzzzzzz E
 b1001 G
 1#
 #63
 0#
 #64
 b1011 F
-b101zzzzzzzzzzzzzzzz )
-b101zzzzzzzzzzzzzzzz 3
-b101zzzzzzzzzzzzzzzz E
+bxzzzzzzzzzzzzzzzz )
+bxzzzzzzzzzzzzzzzz 3
+bxzzzzzzzzzzzzzzzz E
 b1010 G
 1#
 #65
 0#
 #66
 b1100 F
-b10111000001zzzzzzzz )
-b10111000001zzzzzzzz 3
-b10111000001zzzzzzzz E
+bxzzzzzzzz )
+bxzzzzzzzz 3
+bxzzzzzzzz E
 b1011 G
 1#
 0"
@@ -382,16 +380,16 @@ b1011 G
 0#
 #68
 b1101 F
-b1011100000100000011 )
-b1011100000100000011 3
-b1011100000100000011 E
+bx )
+bx 3
+bx E
 b1100 G
 1#
 #69
 0#
 #70
-b1011100000100000011 !
-b1011100000100000011 0
+bx !
+bx 0
 b0 F
 1-
 b1101 G

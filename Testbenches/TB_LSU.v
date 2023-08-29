@@ -1,5 +1,5 @@
 `timescale 1ns/1ns
-`include "..\\Src\\Load_Store_Unit.v"
+`include "..\\Modules\\Load_Store_Unit.v"
 
 module TB_LSU;
 

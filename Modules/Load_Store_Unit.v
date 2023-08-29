@@ -1,5 +1,6 @@
 // `include "Memory_Interface.v"
-// `include "..\\Src\\Memory_Interface.v"
+// `include "..\\Modules\\Memory_Interface.v"
+
 `ifndef OPCODES
     `define LOAD        7'b00_000_11
     `define LOAD_FP     7'b00_001_11
