@@ -50,3 +50,7 @@
     `define INSTRUCTION_PAGE_FAULT          4'b1010
     `define LOAD_PAGE_FAULT                 4'b1011
     `define STORE_AMO_PAGE_FAULT            4'b1100
+
+`define SYSTEM_INSTRUCTIONS
+    `define ECALL   12'b000000000000
+    `define EBREAK  12'b000000000001

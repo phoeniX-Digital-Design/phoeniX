@@ -47,6 +47,7 @@ module Instruction_Decoder
     output [6 : 0] opcode,
     output [2 : 0] funct3,
     output [6 : 0] funct7,
+    output [11 : 0] funct12,
 
     output [4 : 0] read_index_1,
     output [4 : 0] read_index_2,
@@ -88,6 +89,7 @@ module Instruction_Decoder
 
     assign funct7 = instruction[31 : 25];
     assign funct3 = instruction[14 : 12];
+    assign funct12 = instruction[31 : 20];
     
     assign read_index_1 = instruction[19 : 15];
     assign read_index_2 = instruction[24 : 20];
