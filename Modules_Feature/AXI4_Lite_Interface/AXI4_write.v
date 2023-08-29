@@ -1,10 +1,10 @@
-module AXI4_write
+module AXI4_write #(parameter ADDRESS_WIDTH = 2)
 (
 	input axi_clk,
 	input resetn,   //axi is reset low
 
 	// write address channel
-	input [1 : 0] write_addr,
+	input [ADDRESS_WIDTH -  1 : 0] write_addr,
 	input write_addr_valid,
 	output reg write_addr_ready,
 
@@ -14,13 +14,13 @@ module AXI4_write
 	output reg write_data_ready,
 
 	// write response channel	
-	output [1 : 0] write_resp,
+	output [ADDRESS_WIDTH - 1 : 0] write_resp,
 	input write_resp_ready,
 	output reg write_resp_valid,
 	
-	output [31 : 0] data_out,   //data output to external logic
-	output [1 : 0] addr_out,    // address output to external logic
-	output data_valid		    // signal indicating output data and address are valid
+	output [31 : 0] data_out,                   //data output to external logic
+	output [ADDRESS_WIDTH - 1 : 0] addr_out,    // address output to external logic
+	output data_valid		                    // signal indicating output data and address are valid
 );
 
 	reg addr_done;
@@ -28,14 +28,14 @@ module AXI4_write
 
 	// flip flops for latching data
 	reg [31 : 0] data_latch;
-	reg [1 : 0]  addr_latch;
+	reg [ADDRESS_WIDTH - 1 : 0]  addr_latch;
 
 	assign data_out = data_latch;
 	assign addr_out = addr_latch;
 
 	assign data_valid = data_done & addr_done;
 
-	assign write_resp = 2'd0; // always indicate OKAY status for writes
+	assign write_resp = {ADDRESS_WIDTH{1'b0}}; // always indicate OKAY status for writes
 
 	// write address handshake
 	always @(posedge axi_clk)
@@ -79,7 +79,7 @@ module AXI4_write
 		if(resetn == 0) // reset values
 		begin
 			data_latch <= 32'd0;
-			addr_latch <= 2'd0;
+			addr_latch <= {ADDRESS_WIDTH{1'b0}};
 		end
 		else
 		begin
@@ -95,7 +95,7 @@ module AXI4_write
 	always @(posedge axi_clk)
 	begin	
 		if(resetn == 0 | (write_resp_valid & write_resp_ready))
-			write_resp_valid<=0;
+			write_resp_valid <= 0;
 		else if(~write_resp_valid & (data_done & addr_done))
 			write_resp_valid <= 1;	
 	end
