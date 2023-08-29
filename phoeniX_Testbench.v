@@ -59,32 +59,37 @@ module phoeniX_Testbench;
     wire [31 : 0] x29_t4 	= uut.register_file.Registers[29];
     wire [31 : 0] x30_t5 	= uut.register_file.Registers[30];
     wire [31 : 0] x31_t6 	= uut.register_file.Registers[31];
-
+    
     initial
     begin
         $dumpfile("phoeniX.vcd");
         $dumpvars(0, phoeniX_Testbench);
 
         $readmemh("Sample_Codes\\ASM Codes\\Test_RV32I_Fibonacci.mem", uut.fetch_unit.instruction_memory.Memory);
-
-        // Reset
-        #24
-        reset = 1'b1;
-        #12
-        reset = 1'b0;
         
-        #10000
-        data_memory_file = $fopen("Sample_Codes\\ASM Codes\\Test_RV32I_Fibonacci_data.mem", "w");
+        // Reset
+        repeat (5) @(posedge CLK);
+		reset <= 1'b0;
+    end
 
-        for (integer addr = 0; addr < 2 ** ADDRESS_WIDTH; addr = addr + 4)
+    always @(posedge CLK) 
+    begin
+        if (uut.opcode_decode_wire == `SYSTEM && uut.funct12_decode_wire == `EBREAK) 
         begin
-            $fdisplay(  data_memory_file, "%h\t%h\t%h\t%h\t%h",
-                        addr, 
-                        uut.load_store_unit.data_memory.Memory[addr],
-                        uut.load_store_unit.data_memory.Memory[addr + 1],
-                        uut.load_store_unit.data_memory.Memory[addr + 2],
-                        uut.load_store_unit.data_memory.Memory[addr + 3]);
+            $display("WE ARE HEREEEEE!!");
+            reset <= 1'b1;
+            data_memory_file = $fopen("Sample_Codes\\ASM Codes\\Test_RV32I_Fibonacci_data.mem", "w");
+
+            for (integer addr = 0; addr < 2 ** ADDRESS_WIDTH; addr = addr + 4)
+            begin
+                $fdisplay(  data_memory_file, "%h\t%h\t%h\t%h\t%h",
+                            addr, 
+                            uut.load_store_unit.data_memory.Memory[addr],
+                            uut.load_store_unit.data_memory.Memory[addr + 1],
+                            uut.load_store_unit.data_memory.Memory[addr + 2],
+                            uut.load_store_unit.data_memory.Memory[addr + 3]);
+            end
+            $finish;
         end
-        $finish;
     end
 endmodule

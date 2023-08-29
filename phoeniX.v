@@ -91,9 +91,12 @@ module phoeniX
     // Wire Declarations for Decode Stage
     // ----------------------------------
     wire [2 : 0] instruction_type_decode_wire;
+    
     wire [6 : 0] opcode_decode_wire;
     wire [2 : 0] funct3_decode_wire;
     wire [6 : 0] funct7_decode_wire;
+    wire [11 : 0] funct12_decode_wire;
+
     wire [4 : 0] read_index_1_decode_wire;
     wire [4 : 0] read_index_2_decode_wire;
     wire [4 : 0] write_index_decode_wire;
@@ -112,6 +115,7 @@ module phoeniX
         .opcode(opcode_decode_wire),
         .funct3(funct3_decode_wire),
         .funct7(funct7_decode_wire),
+        .funct12(funct12_decode_wire),
         .read_index_1(read_index_1_decode_wire),
         .read_index_2(read_index_2_decode_wire),
         .write_index(write_index_decode_wire),
