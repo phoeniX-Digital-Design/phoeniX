@@ -246,6 +246,7 @@ module phoeniX
     // ------------------------------
     Jump_Branch_Unit jump_branch_unit
     (
+        .opcode(opcode_execute_reg),
         .funct3(funct3_execute_reg),
         .instruction_type(instruction_type_execute_reg),
         .rs1(bus_rs1),
