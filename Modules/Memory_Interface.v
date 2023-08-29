@@ -11,7 +11,7 @@ module Memory_Interface
     output reg  memory_done
 );
 
- 	reg [7 : 0] Memory [0 : 4 * 1024 * 1024 - 1]; 
+ 	reg [7 : 0] Memory [0 : 1024 - 1]; 
     
     reg [31 : 0] data_in;
 

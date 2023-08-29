@@ -8,6 +8,7 @@
 	.globl	main
 	# .type	main, @function
 main:
+    li    sp, 0xffc
 	addi	sp,sp,-48
 	sw	s0,44(sp)
 	addi	s0,sp,48
