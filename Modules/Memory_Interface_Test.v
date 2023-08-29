@@ -12,16 +12,17 @@ module Memory_Interface_Test
     output reg [31 : 0] read_data
 );
 
-  reg [31 : 0] cache_memory [0 : 2 ** ADDRESS_WIDTH - 1]; // 1KB chache memory inside the interface module
+    // 1KB chache memory inside the interface module
+    reg [31 : 0] cache_memory [0 : 2 ** ADDRESS_WIDTH - 1]; 
 
-  always @(posedge read_enable) begin
-    if (read_enable)
-      read_data <= cache_memory[address];
-  end
+    always @(posedge read_enable) begin
+        if (read_enable)
+        read_data <= cache_memory[address];
+    end
 
-  always @(posedge write_enable) begin
-    if (write_enable)
-      cache_memory[address] <= write_data;
-   end
+    always @(posedge write_enable) begin
+        if (write_enable)
+        cache_memory[address] <= write_data;
+    end
 
 endmodule
