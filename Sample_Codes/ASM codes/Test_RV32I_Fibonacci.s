@@ -39,6 +39,6 @@ main:
 	mv	a0,a5
 	lw	s0,44(sp)
 	addi	sp,sp,48
-	jr	ra
+	ebreak
 	# .size	main, .-main
 	# .ident	"GCC: (SiFive GCC 8.3.0-2019.08.0) 8.3.0"
