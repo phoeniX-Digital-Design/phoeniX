@@ -1,4 +1,4 @@
-`include "..\\Fetch_Unit.v"
+`include "..\\Modules\\Fetch_Unit.v"
 
 module Fetch_Testbench;
 
@@ -23,7 +23,10 @@ module Fetch_Testbench;
     // Memory Interface Signals //
     //////////////////////////////
     wire enable_Imem;
-    wire 
+    wire memory_state_Imem;
+    wire address_Imem;
+    wire [3 : 0] frame_mask_Imem;
+
     Fetch_Unit uut 
     (
         .enable(enable),
@@ -37,8 +40,8 @@ module Fetch_Testbench;
 
         .memory_interface_enable(enable_Imem),
         .memory_interface_memory_state(memory_state_Imem),
-        .memory_interface_frame_mask(frame_mask_Imem),
         .memory_interface_address(address_Imem),
+        .memory_interface_frame_mask(frame_mask_Imem),
         
         .memory_interface_data(data_in_Imem),
         .memory_interface_memory_done(memory_done_Imem)
@@ -67,9 +70,9 @@ module Fetch_Testbench;
     begin
 
         $dumpfile("Fetch_Testbench.vcd");
-        $dumpvars(0, TB_Fetch);
+        $dumpvars(0, Fetch_Testbench);
 
-        $readmemh("..\\Instruction_Memory.txt", uut.instruction_memory.Memory);
+        $readmemh("instruction.mem", Memory);
 
         // Reset
         #14

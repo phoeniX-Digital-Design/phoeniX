@@ -1,0 +1,925 @@
+$date
+	Tue Aug 29 17:56:26 2023
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module Fetch_Testbench $end
+$var wire 32 ! data [31:0] $end
+$var wire 32 " next_PC [31:0] $end
+$var wire 1 # memory_state_Imem $end
+$var wire 32 $ latched_instruction [31:0] $end
+$var wire 4 % frame_mask_Imem [3:0] $end
+$var wire 1 & enable_Imem $end
+$var wire 1 ' address_Imem $end
+$var parameter 4 ( B_0001 $end
+$var parameter 4 ) B_0010 $end
+$var parameter 4 * B_0100 $end
+$var parameter 4 + B_1000 $end
+$var parameter 4 , FINISH $end
+$var parameter 4 - H_0011_1 $end
+$var parameter 4 . H_0011_2 $end
+$var parameter 4 / H_1100_1 $end
+$var parameter 4 0 H_1100_2 $end
+$var parameter 1 1 READ $end
+$var parameter 32 2 RESET_ADDRESS $end
+$var parameter 4 3 STABLE $end
+$var parameter 1 4 WRITE $end
+$var parameter 4 5 W_1111_1 $end
+$var parameter 4 6 W_1111_2 $end
+$var parameter 4 7 W_1111_3 $end
+$var parameter 4 8 W_1111_4 $end
+$var reg 1 9 CLK $end
+$var reg 1 : CLK_MEM $end
+$var reg 32 ; PC [31:0] $end
+$var reg 32 < address [31:0] $end
+$var reg 32 = data_in_Imem [31:0] $end
+$var reg 1 > enable $end
+$var reg 32 ? instruction [31:0] $end
+$var reg 1 @ jump_branch_enable $end
+$var reg 1 A memory_done_Imem $end
+$var reg 4 B next_state_Imem [3:0] $end
+$var reg 1 C reset $end
+$var reg 4 D state_Imem [3:0] $end
+$scope module uut $end
+$var wire 32 E PC [31:0] $end
+$var wire 32 F address [31:0] $end
+$var wire 1 > enable $end
+$var wire 1 @ jump_branch_enable $end
+$var wire 32 G memory_interface_data [31:0] $end
+$var wire 1 A memory_interface_memory_done $end
+$var wire 32 H next_PC [31:0] $end
+$var parameter 1 I READ $end
+$var parameter 1 J WRITE $end
+$var reg 32 K fetched_instruction [31:0] $end
+$var reg 1 ' memory_interface_address $end
+$var reg 1 & memory_interface_enable $end
+$var reg 4 L memory_interface_frame_mask [3:0] $end
+$var reg 1 # memory_interface_memory_state $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+1J
+0I
+b1100 8
+b1011 7
+b1010 6
+b1001 5
+14
+b0 3
+b11111111111111111111111111111100 2
+01
+b1000 0
+b111 /
+b110 .
+b101 -
+b1101 ,
+b100 +
+b11 *
+b10 )
+b1 (
+$end
+#0
+$dumpvars
+b1111 L
+bx K
+bx H
+bx G
+bx F
+bx E
+bx D
+1C
+bx B
+xA
+0@
+bx ?
+0>
+bx =
+bx <
+bx ;
+1:
+19
+x'
+0&
+b1111 %
+bx $
+0#
+bx "
+bx !
+$end
+#1
+0:
+#2
+b1001 B
+bz !
+bz =
+bz G
+0A
+b0 D
+1:
+#3
+0:
+#4
+1:
+#5
+0:
+#6
+1:
+09
+#7
+0:
+#8
+1:
+#9
+0:
+#10
+1:
+#11
+0:
+#12
+0'
+b0 "
+b0 H
+b11111111111111111111111111111100 ;
+b11111111111111111111111111111100 E
+1:
+19
+#13
+0:
+#14
+1:
+#15
+0:
+#16
+1:
+#17
+0:
+#18
+1:
+09
+#19
+0:
+#20
+1:
+#21
+0:
+#22
+1:
+#23
+0:
+#24
+1:
+19
+#25
+0:
+#26
+b1010 B
+b0zzzzzzzzzzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzzzzzzzzzz G
+b1001 D
+1&
+1:
+1>
+0C
+#27
+0:
+#28
+b1011 B
+b0zzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzz G
+b1010 D
+1:
+#29
+0:
+#30
+b1100 B
+b10001zzzzzzzz !
+b10001zzzzzzzz =
+b10001zzzzzzzz G
+b1011 D
+1:
+09
+#31
+0:
+#32
+b1101 B
+b1000100110111 !
+b1000100110111 =
+b1000100110111 G
+b1100 D
+1:
+#33
+0:
+#34
+b1000100110111 $
+b1000100110111 K
+b0 B
+1A
+b1101 D
+1:
+#35
+0:
+#36
+b1001 B
+bz !
+bz =
+bz G
+0A
+b100 "
+b100 H
+b0 D
+b1000100110111 ?
+b0 ;
+b0 E
+1:
+19
+#37
+0:
+#38
+b1010 B
+b0zzzzzzzzzzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzzzzzzzzzz G
+b1001 D
+1:
+#39
+0:
+#40
+b1011 B
+b0zzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzz G
+b1010 D
+1:
+#41
+0:
+#42
+b1100 B
+b10001zzzzzzzz !
+b10001zzzzzzzz =
+b10001zzzzzzzz G
+b1011 D
+1:
+09
+#43
+0:
+#44
+b1101 B
+b1000100110111 !
+b1000100110111 =
+b1000100110111 G
+b1100 D
+1:
+#45
+0:
+#46
+b0 B
+1A
+b1101 D
+1:
+#47
+0:
+#48
+b1001 B
+bz !
+bz =
+bz G
+0A
+b1000 "
+b1000 H
+b0 D
+b100 ;
+b100 E
+1:
+19
+#49
+0:
+#50
+b1010 B
+b0zzzzzzzzzzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzzzzzzzzzz G
+b1001 D
+1:
+#51
+0:
+#52
+b1011 B
+b0zzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzz G
+b1010 D
+1:
+#53
+0:
+#54
+b1100 B
+b10001zzzzzzzz !
+b10001zzzzzzzz =
+b10001zzzzzzzz G
+b1011 D
+1:
+09
+#55
+0:
+#56
+b1101 B
+b1000100110111 !
+b1000100110111 =
+b1000100110111 G
+b1100 D
+1:
+#57
+0:
+#58
+b0 B
+1A
+b1101 D
+1:
+#59
+0:
+#60
+b1001 B
+bz !
+bz =
+bz G
+0A
+b1100 "
+b1100 H
+b0 D
+b1000 ;
+b1000 E
+1:
+19
+#61
+0:
+#62
+b1010 B
+b0zzzzzzzzzzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzzzzzzzzzz G
+b1001 D
+b0 "
+b0 H
+1:
+1@
+b0 <
+b0 F
+#63
+0:
+#64
+b1011 B
+b0zzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzz G
+b1010 D
+1:
+#65
+0:
+#66
+b1100 B
+b10001zzzzzzzz !
+b10001zzzzzzzz =
+b10001zzzzzzzz G
+b1011 D
+1:
+09
+#67
+0:
+#68
+b1101 B
+b1000100110111 !
+b1000100110111 =
+b1000100110111 G
+b1100 D
+1:
+#69
+0:
+#70
+b0 B
+1A
+b1101 D
+1:
+#71
+0:
+#72
+b1001 B
+bz !
+bz =
+bz G
+0A
+b0 D
+b0 ;
+b0 E
+1:
+19
+#73
+0:
+#74
+b1010 B
+b0zzzzzzzzzzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzzzzzzzzzz G
+b1001 D
+b100 "
+b100 H
+1:
+0@
+#75
+0:
+#76
+b1011 B
+b0zzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzz G
+b1010 D
+1:
+#77
+0:
+#78
+b1100 B
+b10001zzzzzzzz !
+b10001zzzzzzzz =
+b10001zzzzzzzz G
+b1011 D
+1:
+09
+#79
+0:
+#80
+b1101 B
+b1000100110111 !
+b1000100110111 =
+b1000100110111 G
+b1100 D
+1:
+#81
+0:
+#82
+b0 B
+1A
+b1101 D
+1:
+#83
+0:
+#84
+b1001 B
+bz !
+bz =
+bz G
+0A
+b1000 "
+b1000 H
+b0 D
+b100 ;
+b100 E
+1:
+19
+#85
+0:
+#86
+b1010 B
+b0zzzzzzzzzzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzzzzzzzzzz G
+b1001 D
+1:
+#87
+0:
+#88
+b1011 B
+b0zzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzz G
+b1010 D
+1:
+#89
+0:
+#90
+b1100 B
+b10001zzzzzzzz !
+b10001zzzzzzzz =
+b10001zzzzzzzz G
+b1011 D
+1:
+09
+#91
+0:
+#92
+b1101 B
+b1000100110111 !
+b1000100110111 =
+b1000100110111 G
+b1100 D
+1:
+#93
+0:
+#94
+b0 B
+1A
+b1101 D
+1:
+#95
+0:
+#96
+b1001 B
+bz !
+bz =
+bz G
+0A
+b1100 "
+b1100 H
+b0 D
+b1000 ;
+b1000 E
+1:
+19
+#97
+0:
+#98
+b1010 B
+b0zzzzzzzzzzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzzzzzzzzzz G
+b1001 D
+1:
+#99
+0:
+#100
+b1011 B
+b0zzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzz G
+b1010 D
+1:
+#101
+0:
+#102
+b1100 B
+b10001zzzzzzzz !
+b10001zzzzzzzz =
+b10001zzzzzzzz G
+b1011 D
+1:
+09
+#103
+0:
+#104
+b1101 B
+b1000100110111 !
+b1000100110111 =
+b1000100110111 G
+b1100 D
+1:
+#105
+0:
+#106
+b0 B
+1A
+b1101 D
+1:
+#107
+0:
+#108
+b1001 B
+bz !
+bz =
+bz G
+0A
+b10000 "
+b10000 H
+b0 D
+b1100 ;
+b1100 E
+1:
+19
+#109
+0:
+#110
+b1010 B
+b0zzzzzzzzzzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzzzzzzzzzz G
+b1001 D
+1:
+#111
+0:
+#112
+b1011 B
+b0zzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzz G
+b1010 D
+1:
+#113
+0:
+#114
+b1100 B
+b10001zzzzzzzz !
+b10001zzzzzzzz =
+b10001zzzzzzzz G
+b1011 D
+1:
+09
+#115
+0:
+#116
+b1101 B
+b1000100110111 !
+b1000100110111 =
+b1000100110111 G
+b1100 D
+1:
+#117
+0:
+#118
+b0 B
+1A
+b1101 D
+1:
+#119
+0:
+#120
+b1001 B
+bz !
+bz =
+bz G
+0A
+b10100 "
+b10100 H
+b0 D
+b10000 ;
+b10000 E
+1:
+19
+#121
+0:
+#122
+b1010 B
+b0zzzzzzzzzzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzzzzzzzzzz G
+b1001 D
+1:
+#123
+0:
+#124
+b1011 B
+b0zzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzz G
+b1010 D
+1:
+#125
+0:
+#126
+b1100 B
+b10001zzzzzzzz !
+b10001zzzzzzzz =
+b10001zzzzzzzz G
+b1011 D
+1:
+09
+#127
+0:
+#128
+b1101 B
+b1000100110111 !
+b1000100110111 =
+b1000100110111 G
+b1100 D
+1:
+#129
+0:
+#130
+b0 B
+1A
+b1101 D
+1:
+#131
+0:
+#132
+b1001 B
+bz !
+bz =
+bz G
+0A
+b11000 "
+b11000 H
+b0 D
+b10100 ;
+b10100 E
+1:
+19
+#133
+0:
+#134
+b1010 B
+b0zzzzzzzzzzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzzzzzzzzzz G
+b1001 D
+1:
+#135
+0:
+#136
+b1011 B
+b0zzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzz G
+b1010 D
+1:
+#137
+0:
+#138
+b1100 B
+b10001zzzzzzzz !
+b10001zzzzzzzz =
+b10001zzzzzzzz G
+b1011 D
+1:
+09
+#139
+0:
+#140
+b1101 B
+b1000100110111 !
+b1000100110111 =
+b1000100110111 G
+b1100 D
+1:
+#141
+0:
+#142
+b0 B
+1A
+b1101 D
+1:
+#143
+0:
+#144
+b1001 B
+bz !
+bz =
+bz G
+0A
+b11100 "
+b11100 H
+b0 D
+b11000 ;
+b11000 E
+1:
+19
+#145
+0:
+#146
+b1010 B
+b0zzzzzzzzzzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzzzzzzzzzz G
+b1001 D
+1:
+#147
+0:
+#148
+b1011 B
+b0zzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzz G
+b1010 D
+1:
+#149
+0:
+#150
+b1100 B
+b10001zzzzzzzz !
+b10001zzzzzzzz =
+b10001zzzzzzzz G
+b1011 D
+1:
+09
+#151
+0:
+#152
+b1101 B
+b1000100110111 !
+b1000100110111 =
+b1000100110111 G
+b1100 D
+1:
+#153
+0:
+#154
+b0 B
+1A
+b1101 D
+1:
+#155
+0:
+#156
+b1001 B
+bz !
+bz =
+bz G
+0A
+b100000 "
+b100000 H
+b0 D
+b11100 ;
+b11100 E
+1:
+19
+#157
+0:
+#158
+b1010 B
+b0zzzzzzzzzzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzzzzzzzzzz G
+b1001 D
+1:
+#159
+0:
+#160
+b1011 B
+b0zzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzz G
+b1010 D
+1:
+#161
+0:
+#162
+b1100 B
+b10001zzzzzzzz !
+b10001zzzzzzzz =
+b10001zzzzzzzz G
+b1011 D
+1:
+09
+#163
+0:
+#164
+b1101 B
+b1000100110111 !
+b1000100110111 =
+b1000100110111 G
+b1100 D
+1:
+#165
+0:
+#166
+b0 B
+1A
+b1101 D
+1:
+#167
+0:
+#168
+b1001 B
+bz !
+bz =
+bz G
+0A
+b100100 "
+b100100 H
+b0 D
+b100000 ;
+b100000 E
+1:
+19
+#169
+0:
+#170
+b1010 B
+b0zzzzzzzzzzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzzzzzzzzzz G
+b1001 D
+1:
+#171
+0:
+#172
+b1011 B
+b0zzzzzzzzzzzzzzzz !
+b0zzzzzzzzzzzzzzzz =
+b0zzzzzzzzzzzzzzzz G
+b1010 D
+1:
+#173
+0:
+#174
+b1100 B
+b10001zzzzzzzz !
+b10001zzzzzzzz =
+b10001zzzzzzzz G
+b1011 D
+1:
+09
