@@ -1,6 +1,5 @@
 module Fetch_Unit
 (
-    input CLK,
 	input enable,                                       // Memory Interface module enable pin (from Control Unit)
 
     input [31 : 0] PC,
