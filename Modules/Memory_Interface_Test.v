@@ -1,15 +1,18 @@
-module Memory_Interface_Test 
+module Memory_Interface_Test
+#(
+    parameter ADDRESS_WIDTH = 8
+)
 (
     input [31 : 0] address,
     input [31 : 0] write_data,
-    
+
     input write_enable,
     input read_enable,
 
     output reg [31 : 0] read_data
 );
 
-  reg [31 : 0] cache_memory [0 : 255]; // 1KB chache memory inside the interface module
+  reg [31 : 0] cache_memory [0 : 2 ** ADDRESS_WIDTH - 1]; // 1KB chache memory inside the interface module
 
   always @(posedge read_enable) begin
     if (read_enable)
