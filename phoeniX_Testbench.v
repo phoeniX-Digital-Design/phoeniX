@@ -3,18 +3,18 @@
 
 module phoeniX_Testbench;
     integer data_memory_file;
-    integer addr;
-
-    parameter ADDRESS_WIDTH = 22;
+    parameter ADDRESS_WIDTH = 12;
 
     reg CLK = 1'b1;
     reg CLK_MEM = 1'b1;
 
     reg reset = 1'b1;
 
-    
-
-    phoeniX uut
+    phoeniX 
+    #(
+        .ADDRESS_WIDTH(ADDRESS_WIDTH)
+    )
+    uut
     (
         .CLK(CLK),
         .CLK_MEM(CLK_MEM),
@@ -65,8 +65,7 @@ module phoeniX_Testbench;
         $dumpfile("phoeniX.vcd");
         $dumpvars(0, phoeniX_Testbench);
 
-        $readmemh("Sample_Codes/ASM codes/Test_RV32I_BubbleSort.mem", uut.fetch_unit.instruction_memory.Memory);
-        // "uut.fetch_unit.instruction_memory.Memory memory" replaced with "inst_mem.Memory"
+        $readmemh("Sample_Codes\\ASM Codes\\Test_RV32I_Fibonacci.mem", uut.fetch_unit.instruction_memory.Memory);
 
         // Reset
         #24
@@ -75,9 +74,9 @@ module phoeniX_Testbench;
         reset = 1'b0;
         
         #10000
-        data_memory_file = $fopen("Sample_Codes/ASM codes/Test_RV32I_BubbleSort_data.mem", "w");
+        data_memory_file = $fopen("Sample_Codes\\ASM Codes\\Test_RV32I_Fibonacci_data.mem", "w");
 
-        for (addr = 0; addr < 2 ** 12; addr = addr + 4)
+        for (integer addr = 0; addr < 2 ** ADDRESS_WIDTH; addr = addr + 4)
         begin
             $fdisplay(  data_memory_file, "%h\t%h\t%h\t%h\t%h",
                         addr, 

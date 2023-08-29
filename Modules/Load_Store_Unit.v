@@ -1,6 +1,5 @@
 // `include "Memory_Interface.v"
-// `include "..\\Modules\\Memory_Interface.v"
-
+// `include "..\\Src\\Memory_Interface.v"
 `ifndef OPCODES
     `define LOAD        7'b00_000_11
     `define LOAD_FP     7'b00_001_11
@@ -39,6 +38,9 @@
 `define HALFWORD_UNSIGNED   3'b101
 
 module Load_Store_Unit
+#(
+    parameter ADDRESS_WIDTH = 8
+)
 (     
     input CLK,
     
@@ -129,7 +131,11 @@ module Load_Store_Unit
     assign data = opcode == `STORE ? store_data : 32'bz;
 
     // Instantiating Memory Interface for Data Memory
-    Memory_Interface data_memory 
+    Memory_Interface 
+    #(
+        .ADDRESS_WIDTH(ADDRESS_WIDTH)
+    )
+    data_memory 
     (
         .CLK(CLK),
         .enable(enable), 

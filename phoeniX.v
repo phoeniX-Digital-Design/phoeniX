@@ -1,14 +1,14 @@
-`include "Modules/Fetch_Unit.v"
-`include "Modules/Memory_Interface.v"
-`include "Modules/Instruction_Decoder.v"
-`include "Modules/Immediate_Generator.v"
-`include "Modules/Register_File.v"
-`include "Modules/Arithmetic_Logic_Unit.v"
-`include "Modules/Jump_Branch_Unit.v"
-`include "Modules/Address_Generator.v"
-`include "Modules/Load_Store_Unit.v"
-`include "Modules/Hazard_Forward_Unit.v"
-`include "Modules/Defines.v"
+`include "Modules\\Fetch_Unit.v"
+`include "Modules\\Memory_Interface.v"
+`include "Modules\\Instruction_Decoder.v"
+`include "Modules\\Immediate_Generator.v"
+`include "Modules\\Register_File.v"
+`include "Modules\\Arithmetic_Logic_Unit.v"
+`include "Modules\\Jump_Branch_Unit.v"
+`include "Modules\\Address_Generator.v"
+`include "Modules\\Load_Store_Unit.v"
+`include "Modules\\Hazard_Forward_Unit.v"
+`include "Modules\\Defines.v"
 
 `define NOP         32'h0000_0013
 `define NOP_OPCODE  `OP_IMM
@@ -17,7 +17,8 @@
 
 module phoeniX 
 #(
-    parameter RESET_ADDRESS = 32'hFFFFFFFC
+    parameter RESET_ADDRESS = 32'hFFFFFFFC,
+    parameter ADDRESS_WIDTH = 8
 ) 
 (
     input CLK,
@@ -39,7 +40,11 @@ module phoeniX
     // ------------------------
     // Fetch Unit Instantiation
     // ------------------------
-    Fetch_Unit fetch_unit
+    Fetch_Unit
+    #(
+        .ADDRESS_WIDTH(ADDRESS_WIDTH)
+    ) 
+    fetch_unit
     (
         .CLK(CLK_MEM),
         .enable(!reset),              // TBD : to be changed to fetch control state with control
@@ -313,7 +318,11 @@ module phoeniX
     // -----------------------------
     // Load Store Unit Instantiation
     // -----------------------------
-    Load_Store_Unit load_store_unit
+    Load_Store_Unit
+    #(
+        .ADDRESS_WIDTH(ADDRESS_WIDTH)
+    ) 
+    load_store_unit
     (
         .CLK(CLK_MEM),
         .opcode(opcode_memory_reg),

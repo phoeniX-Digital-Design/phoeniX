@@ -2,6 +2,9 @@
 // `include "..\\Memory_Interface.v"
 
 module Fetch_Unit
+#(
+    parameter ADDRESS_WIDTH = 8
+)
 (
     input CLK,
 	input enable,                                       // Memory Interface module enable pin (from Control Unit)
@@ -17,7 +20,11 @@ module Fetch_Unit
     wire    [31 : 0] fetched_instruction_wire;
     wire fetch_done;
 
-	Memory_Interface instruction_memory 
+	Memory_Interface 
+    #(
+        .ADDRESS_WIDTH(ADDRESS_WIDTH)
+    )
+    instruction_memory 
     (
         .CLK(CLK),
         .enable(enable), 
