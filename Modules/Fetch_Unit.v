@@ -14,32 +14,37 @@ module Fetch_Unit
 	input [31 : 0] address,                             // Branch or Jump address generated in Address Generator
 	input jump_branch_enable,                           // Generated in Branch Unit module
 
-    output [31 : 0] next_PC,
-	output reg [31 : 0] fetched_instruction             // output "data" in Memory Interface module
-);
-    wire    [31 : 0] fetched_instruction_wire;
-    wire fetch_done;
+    output [31 : 0] next_PC,                            // next instruction PC output
+	output reg [31 : 0] fetched_instruction,            // output "data" in Memory Interface module
+    
+    //////////////////////////////
+    // Memory Interface Signals //
+    //////////////////////////////
 
-	Memory_Interface 
-    #(
-        .ADDRESS_WIDTH(ADDRESS_WIDTH)
-    )
-    instruction_memory 
-    (
-        .CLK(CLK),
-        .enable(enable), 
-        .memory_state(instruction_memory.READ),
-        .frame_mask(4'b1111),
-        .address(PC), 
-        .data(fetched_instruction_wire), 
-        .memory_done(fetch_done)
-    );
+    output  reg  memory_interface_enable,
+    output  reg  memory_interface_memory_state,
+    output  reg  memory_interface_frame_mask,
+    output  reg  memory_interface_address,
+    input   memory_interface_data,
+    input   memory_interface_memory_done
+
+);
+    localparam  READ        = 1'b0,
+                WRITE       = 1'b1;
+
+    always @(*) 
+    begin
+        memory_interface_enable = enable;
+        memory_interface_memory_state = READ;
+        memory_interface_frame_mask = 4'b1111;
+        memory_interface_address = PC;  
+    end
 
     assign next_PC = jump_branch_enable ? address : PC + 32'd4;
 
-    always @(posedge fetch_done) 
+    always @(posedge memory_interface_memory_done) 
     begin
-        fetched_instruction <= fetched_instruction_wire;
+        fetched_instruction <= memory_interface_data;
     end
 
 endmodule
