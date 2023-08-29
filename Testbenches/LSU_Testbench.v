@@ -1,7 +1,7 @@
 `timescale 1ns/1ns
 `include "..\\Modules\\Load_Store_Unit.v"
 
-module TB_LSU;
+module LSU_Testbench;
 
     reg CLK     = 1'b1;
     reg CLK_MEM = 1'b1;
@@ -33,7 +33,7 @@ module TB_LSU;
 
     initial 
     begin
-        $dumpfile("Test_LSU.vcd");
+        $dumpfile("LSU_Testbench.vcd");
         $dumpvars(0, TB_LSU);
 
         $readmemh("..\\Sample Codes\\Instruction_Memory.txt", uut.data_memory.Memory);

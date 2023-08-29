@@ -1,6 +1,6 @@
 `include "..\\Memory_Interface.v"
 
-module TB_Mem;
+module Memory_Testbench;
 
     reg CLK = 1'b0;
     reg reset;
@@ -38,7 +38,7 @@ module TB_Mem;
 
     initial begin
 
-        $dumpfile("Test_Mem.vcd");
+        $dumpfile("Memory_Testbench.vcd");
         $dumpvars(0, TB_Mem);
 
         $readmemh("..\\Instruction_Memory.txt", uut.Memory);
