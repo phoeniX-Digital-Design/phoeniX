@@ -31,7 +31,6 @@ reg [ADDRESS_WIDTH - 1  : 0] read_address;
 reg [31 : 0] rdata_in;
 reg read_enable;
 
-
 AXI4_read #(.ADDRESS_WIDTH(ADDRESS_WIDTH)) uut
 (
     .axi_clk(axi_clk),
@@ -55,6 +54,35 @@ AXI4_read #(.ADDRESS_WIDTH(ADDRESS_WIDTH)) uut
 );
 
 
-
+integer i;
+// read logic for a test memory
+always @(posedge axi_clk)
+begin
+	if(resetn == 0)
+	begin
+		for(i = 0 ; i < 4 ; i = i + 1)
+			memory[i] <= 0;
+	end
+	else if(read_enable)
+		rdata_in <= memory[read_address];
+end
     
+initial begin
+    $dumpfile("AXI4_read.vcd");
+    $dumpvars(0, AXI4_read_Testbench);
+
+    // Initialize signals
+    write_addr = 2'b0;
+    write_addr_valid = 0;
+    write_data = 0;
+    write_data_valid = 0;
+    write_resp_ready = 0;
+    // Deassert reset
+    #10 resetn = 1'b1;
+    // Wait for a few clock cycles
+    #20;
+    
+end
+
+
 endmodule
