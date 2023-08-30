@@ -1,5 +1,5 @@
 $date
-	Tue Aug 29 18:06:10 2023
+	Wed Aug 30 13:58:34 2023
 $end
 $version
 	Icarus Verilog
@@ -8,1090 +8,616 @@ $timescale
 	1s
 $end
 $scope module Fetch_Testbench $end
-$var wire 32 ! data [31:0] $end
-$var wire 32 " next_PC [31:0] $end
-$var wire 1 # memory_state_Imem $end
-$var wire 32 $ latched_instruction [31:0] $end
-$var wire 4 % frame_mask_Imem [3:0] $end
-$var wire 1 & enable_Imem $end
-$var wire 32 ' address_Imem [31:0] $end
-$var parameter 4 ( B_0001 $end
-$var parameter 4 ) B_0010 $end
-$var parameter 4 * B_0100 $end
-$var parameter 4 + B_1000 $end
-$var parameter 4 , FINISH $end
-$var parameter 4 - H_0011_1 $end
-$var parameter 4 . H_0011_2 $end
-$var parameter 4 / H_1100_1 $end
-$var parameter 4 0 H_1100_2 $end
-$var parameter 1 1 READ $end
-$var parameter 32 2 RESET_ADDRESS $end
-$var parameter 4 3 STABLE $end
-$var parameter 1 4 WRITE $end
-$var parameter 4 5 W_1111_1 $end
-$var parameter 4 6 W_1111_2 $end
-$var parameter 4 7 W_1111_3 $end
-$var parameter 4 8 W_1111_4 $end
-$var reg 1 9 CLK $end
-$var reg 1 : CLK_MEM $end
-$var reg 32 ; PC [31:0] $end
-$var reg 32 < address [31:0] $end
-$var reg 32 = data_in_Imem [31:0] $end
-$var reg 1 > enable $end
-$var reg 32 ? instruction [31:0] $end
-$var reg 1 @ jump_branch_enable $end
-$var reg 1 A memory_done_Imem $end
-$var reg 4 B next_state_Imem [3:0] $end
-$var reg 1 C reset $end
-$var reg 4 D state_Imem [3:0] $end
+$var wire 32 ! next_PC [31:0] $end
+$var wire 1 " memory_state_Imem $end
+$var wire 4 # frame_mask_Imem [3:0] $end
+$var wire 1 $ enable_Imem $end
+$var wire 32 % address_Imem [31:0] $end
+$var parameter 1 & READ $end
+$var parameter 32 ' RESET_ADDRESS $end
+$var parameter 1 ( WRITE $end
+$var reg 1 ) CLK $end
+$var reg 1 * CLK_MEM $end
+$var reg 32 + PC [31:0] $end
+$var reg 32 , address [31:0] $end
+$var reg 32 - data_in_Imem [31:0] $end
+$var reg 1 . enable $end
+$var reg 32 / instruction [31:0] $end
+$var reg 1 0 jump_branch_enable $end
+$var reg 1 1 reset $end
 $scope module uut $end
-$var wire 32 E PC [31:0] $end
-$var wire 32 F address [31:0] $end
-$var wire 1 > enable $end
-$var wire 1 @ jump_branch_enable $end
-$var wire 32 G memory_interface_data [31:0] $end
-$var wire 1 A memory_interface_memory_done $end
-$var wire 32 H next_PC [31:0] $end
-$var parameter 1 I READ $end
-$var parameter 1 J WRITE $end
-$var reg 32 K fetched_instruction [31:0] $end
-$var reg 32 L memory_interface_address [31:0] $end
-$var reg 1 & memory_interface_enable $end
-$var reg 4 M memory_interface_frame_mask [3:0] $end
-$var reg 1 # memory_interface_memory_state $end
+$var wire 32 2 PC [31:0] $end
+$var wire 32 3 address [31:0] $end
+$var wire 1 . enable $end
+$var wire 1 0 jump_branch_enable $end
+$var wire 32 4 next_PC [31:0] $end
+$var parameter 1 5 READ $end
+$var parameter 1 6 WRITE $end
+$var reg 32 7 memory_interface_address [31:0] $end
+$var reg 1 $ memory_interface_enable $end
+$var reg 4 8 memory_interface_frame_mask [3:0] $end
+$var reg 1 " memory_interface_memory_state $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 $comment Show the parameter values. $end
 $dumpall
-1J
-0I
-b1100 8
-b1011 7
-b1010 6
-b1001 5
-14
-b0 3
-b11111111111111111111111111111100 2
-01
-b1000 0
-b111 /
-b110 .
-b101 -
-b1101 ,
-b100 +
-b11 *
-b10 )
-b1 (
+16
+05
+1(
+b11111111111111111111111111111100 '
+0&
 $end
 #0
 $dumpvars
-b1111 M
-bx L
-bx K
-bx H
-bx G
-bx F
-bx E
-bx D
-1C
-bx B
-xA
-0@
-bx ?
-0>
-bx =
-bx <
-bx ;
-1:
-19
-bx '
-0&
-b1111 %
-bx $
-0#
-bx "
+b1111 8
+bx 7
+bx 4
+bx 3
+bx 2
+11
+00
+bx /
+0.
+bz -
+bx ,
+bx +
+1*
+1)
+bx %
+0$
+b1111 #
+0"
 bx !
 $end
 #1
-0:
+0*
 #2
-b1001 B
-bz !
-bz =
-bz G
-0A
-b0 D
-1:
+1*
 #3
-0:
+0*
 #4
-1:
+1*
 #5
-0:
+0*
 #6
-1:
-09
+1*
+0)
 #7
-0:
+0*
 #8
-1:
+1*
 #9
-0:
+0*
 #10
-1:
+1*
 #11
-0:
+0*
 #12
-b11111111111111111111111111111100 '
-b11111111111111111111111111111100 L
-b0 "
-b0 H
-b11111111111111111111111111111100 ;
-b11111111111111111111111111111100 E
-1:
-19
+b11111111111111111111111111111100 %
+b11111111111111111111111111111100 7
+b0 !
+b0 4
+bz /
+b11111111111111111111111111111100 +
+b11111111111111111111111111111100 2
+1*
+1)
 #13
-0:
+0*
 #14
-1:
+1*
 #15
-0:
+0*
 #16
-1:
+1*
 #17
-0:
+0*
 #18
-1:
-09
+1*
+0)
 #19
-0:
+0*
 #20
-1:
+1*
 #21
-0:
+0*
 #22
-1:
+1*
 #23
-0:
+0*
 #24
-1:
-19
+1*
+1)
 #25
-0:
+0*
 #26
-b1010 B
-bxzzzzzzzzzzzzzzzzzzzzzzzz !
-bxzzzzzzzzzzzzzzzzzzzzzzzz =
-bxzzzzzzzzzzzzzzzzzzzzzzzz G
-b1001 D
-1&
-1:
-1>
-0C
+bx -
+1$
+1*
+1.
+01
 #27
-0:
+0*
 #28
-b1011 B
-bxzzzzzzzzzzzzzzzz !
-bxzzzzzzzzzzzzzzzz =
-bxzzzzzzzzzzzzzzzz G
-b1010 D
-1:
+1*
 #29
-0:
+0*
 #30
-b1100 B
-bxzzzzzzzz !
-bxzzzzzzzz =
-bxzzzzzzzz G
-b1011 D
-1:
-09
+1*
+0)
 #31
-0:
+0*
 #32
-b1101 B
-bx !
-bx =
-bx G
-b1100 D
-1:
+1*
 #33
-0:
+0*
 #34
-b0 B
-1A
-b1101 D
-1:
+1*
 #35
-0:
+0*
 #36
-b1001 B
-bz !
-bz =
-bz G
-0A
-b0 '
-b0 L
-b100 "
-b100 H
-b0 D
-b0 ;
-b0 E
-1:
-19
+b11111101000000010000000100010011 -
+b0 %
+b0 7
+b100 !
+b100 4
+bx /
+b0 +
+b0 2
+1*
+1)
 #37
-0:
+0*
 #38
-b1010 B
-b0zzzzzzzzzzzzzzzzzzzzzzzz !
-b0zzzzzzzzzzzzzzzzzzzzzzzz =
-b0zzzzzzzzzzzzzzzzzzzzzzzz G
-b1001 D
-1:
+1*
 #39
-0:
+0*
 #40
-b1011 B
-b0zzzzzzzzzzzzzzzz !
-b0zzzzzzzzzzzzzzzz =
-b0zzzzzzzzzzzzzzzz G
-b1010 D
-1:
+1*
 #41
-0:
+0*
 #42
-b1100 B
-b10001zzzzzzzz !
-b10001zzzzzzzz =
-b10001zzzzzzzz G
-b1011 D
-1:
-09
+1*
+0)
 #43
-0:
+0*
 #44
-b1101 B
-b1000100110111 !
-b1000100110111 =
-b1000100110111 G
-b1100 D
-1:
+1*
 #45
-0:
+0*
 #46
-b1000100110111 $
-b1000100110111 K
-b0 B
-1A
-b1101 D
-1:
+1*
 #47
-0:
+0*
 #48
-b1001 B
-bz !
-bz =
-bz G
-0A
-b100 '
-b100 L
-b1000 "
-b1000 H
-b0 D
-b100 ;
-b100 E
-b1000100110111 ?
-1:
-19
+b10100000010010011000100011 -
+b100 %
+b100 7
+b1000 !
+b1000 4
+b100 +
+b100 2
+b11111101000000010000000100010011 /
+1*
+1)
 #49
-0:
+0*
 #50
-b1010 B
-b11111111zzzzzzzzzzzzzzzzzzzzzzzz !
-b11111111zzzzzzzzzzzzzzzzzzzzzzzz =
-b11111111zzzzzzzzzzzzzzzzzzzzzzzz G
-b1001 D
-1:
+1*
 #51
-0:
+0*
 #52
-b1011 B
-b1111111111000001zzzzzzzzzzzzzzzz !
-b1111111111000001zzzzzzzzzzzzzzzz =
-b1111111111000001zzzzzzzzzzzzzzzz G
-b1010 D
-1:
+1*
 #53
-0:
+0*
 #54
-b1100 B
-b111111111100000100000001zzzzzzzz !
-b111111111100000100000001zzzzzzzz =
-b111111111100000100000001zzzzzzzz G
-b1011 D
-1:
-09
+1*
+0)
 #55
-0:
+0*
 #56
-b1101 B
-b11111111110000010000000100010011 !
-b11111111110000010000000100010011 =
-b11111111110000010000000100010011 G
-b1100 D
-1:
+1*
 #57
-0:
+0*
 #58
-b11111111110000010000000100010011 $
-b11111111110000010000000100010011 K
-b0 B
-1A
-b1101 D
-1:
+1*
 #59
-0:
+0*
 #60
-b1001 B
-bz !
-bz =
-bz G
-0A
-b1000 '
-b1000 L
-b1100 "
-b1100 H
-b0 D
-b11111111110000010000000100010011 ?
-b1000 ;
-b1000 E
-1:
-19
+b11000000010000010000010011 -
+b1000 %
+b1000 7
+b1100 !
+b1100 4
+b10100000010010011000100011 /
+b1000 +
+b1000 2
+1*
+1)
 #61
-0:
+0*
 #62
-b1010 B
-b11111101zzzzzzzzzzzzzzzzzzzzzzzz !
-b11111101zzzzzzzzzzzzzzzzzzzzzzzz =
-b11111101zzzzzzzzzzzzzzzzzzzzzzzz G
-b1001 D
-1:
+1*
 #63
-0:
+0*
 #64
-b1011 B
-b1111110100000001zzzzzzzzzzzzzzzz !
-b1111110100000001zzzzzzzzzzzzzzzz =
-b1111110100000001zzzzzzzzzzzzzzzz G
-b1010 D
-1:
+1*
 #65
-0:
+0*
 #66
-b1100 B
-b111111010000000100000001zzzzzzzz !
-b111111010000000100000001zzzzzzzz =
-b111111010000000100000001zzzzzzzz G
-b1011 D
-1:
-09
+1*
+0)
 #67
-0:
+0*
 #68
-b1101 B
-b11111101000000010000000100010011 !
-b11111101000000010000000100010011 =
-b11111101000000010000000100010011 G
-b1100 D
-1:
+1*
 #69
-0:
+0*
 #70
-b11111101000000010000000100010011 $
-b11111101000000010000000100010011 K
-b0 B
-1A
-b1101 D
-1:
+1*
 #71
-0:
+0*
 #72
-b1001 B
-bz !
-bz =
-bz G
-0A
-b1100 '
-b1100 L
-b10000 "
-b10000 H
-b0 D
-b1100 ;
-b1100 E
-b11111101000000010000000100010011 ?
-1:
-19
+b11111110000001000010011000100011 -
+b1100 %
+b1100 7
+b10000 !
+b10000 4
+b1100 +
+b1100 2
+b11000000010000010000010011 /
+1*
+1)
 #73
-0:
+0*
 #74
-b1010 B
-b10zzzzzzzzzzzzzzzzzzzzzzzz !
-b10zzzzzzzzzzzzzzzzzzzzzzzz =
-b10zzzzzzzzzzzzzzzzzzzzzzzz G
-b1001 D
-1:
+1*
 #75
-0:
+0*
 #76
-b1011 B
-b1010000001zzzzzzzzzzzzzzzz !
-b1010000001zzzzzzzzzzzzzzzz =
-b1010000001zzzzzzzzzzzzzzzz G
-b1010 D
-1:
+1*
 #77
-0:
+0*
 #78
-b1100 B
-b101000000100100110zzzzzzzz !
-b101000000100100110zzzzzzzz =
-b101000000100100110zzzzzzzz G
-b1011 D
-1:
-09
+1*
+0)
 #79
-0:
+0*
 #80
-b1101 B
-b10100000010010011000100011 !
-b10100000010010011000100011 =
-b10100000010010011000100011 G
-b1100 D
-1:
+1*
 #81
-0:
+0*
 #82
-b10100000010010011000100011 $
-b10100000010010011000100011 K
-b0 B
-1A
-b1101 D
-1:
+1*
 #83
-0:
+0*
 #84
-b1001 B
-bz !
-bz =
-bz G
-0A
-b0 '
-b0 L
-b0 D
-b10100000010010011000100011 ?
-b0 ;
-b0 E
-b0 "
-b0 H
-1:
-19
-1@
-b0 <
-b0 F
+b11111101000000010000000100010011 -
+b0 %
+b0 7
+b11111110000001000010011000100011 /
+b0 +
+b0 2
+b0 !
+b0 4
+1*
+1)
+10
+b0 ,
+b0 3
 #85
-0:
+0*
 #86
-b1010 B
-b0zzzzzzzzzzzzzzzzzzzzzzzz !
-b0zzzzzzzzzzzzzzzzzzzzzzzz =
-b0zzzzzzzzzzzzzzzzzzzzzzzz G
-b1001 D
-1:
+1*
 #87
-0:
+0*
 #88
-b1011 B
-b0zzzzzzzzzzzzzzzz !
-b0zzzzzzzzzzzzzzzz =
-b0zzzzzzzzzzzzzzzz G
-b1010 D
-1:
+1*
 #89
-0:
+0*
 #90
-b1100 B
-b10001zzzzzzzz !
-b10001zzzzzzzz =
-b10001zzzzzzzz G
-b1011 D
-1:
-09
+1*
+0)
 #91
-0:
+0*
 #92
-b1101 B
-b1000100110111 !
-b1000100110111 =
-b1000100110111 G
-b1100 D
-1:
+1*
 #93
-0:
+0*
 #94
-b1000100110111 $
-b1000100110111 K
-b0 B
-1A
-b1101 D
-1:
+1*
 #95
-0:
+0*
 #96
-b1001 B
-bz !
-bz =
-bz G
-0A
-b100 '
-b100 L
-b0 D
-b100 ;
-b100 E
-b1000100110111 ?
-b1000 "
-b1000 H
-1:
-19
-0@
+b10100000010010011000100011 -
+b100 %
+b100 7
+b100 +
+b100 2
+b11111101000000010000000100010011 /
+b1000 !
+b1000 4
+1*
+1)
+00
 #97
-0:
+0*
 #98
-b1010 B
-b11111111zzzzzzzzzzzzzzzzzzzzzzzz !
-b11111111zzzzzzzzzzzzzzzzzzzzzzzz =
-b11111111zzzzzzzzzzzzzzzzzzzzzzzz G
-b1001 D
-1:
+1*
 #99
-0:
+0*
 #100
-b1011 B
-b1111111111000001zzzzzzzzzzzzzzzz !
-b1111111111000001zzzzzzzzzzzzzzzz =
-b1111111111000001zzzzzzzzzzzzzzzz G
-b1010 D
-1:
+1*
 #101
-0:
+0*
 #102
-b1100 B
-b111111111100000100000001zzzzzzzz !
-b111111111100000100000001zzzzzzzz =
-b111111111100000100000001zzzzzzzz G
-b1011 D
-1:
-09
+1*
+0)
 #103
-0:
+0*
 #104
-b1101 B
-b11111111110000010000000100010011 !
-b11111111110000010000000100010011 =
-b11111111110000010000000100010011 G
-b1100 D
-1:
+1*
 #105
-0:
+0*
 #106
-b11111111110000010000000100010011 $
-b11111111110000010000000100010011 K
-b0 B
-1A
-b1101 D
-1:
+1*
 #107
-0:
+0*
 #108
-b1001 B
-bz !
-bz =
-bz G
-0A
-b1000 '
-b1000 L
-b1100 "
-b1100 H
-b0 D
-b11111111110000010000000100010011 ?
-b1000 ;
-b1000 E
-1:
-19
+b11000000010000010000010011 -
+b1000 %
+b1000 7
+b1100 !
+b1100 4
+b10100000010010011000100011 /
+b1000 +
+b1000 2
+1*
+1)
 #109
-0:
+0*
 #110
-b1010 B
-b11111101zzzzzzzzzzzzzzzzzzzzzzzz !
-b11111101zzzzzzzzzzzzzzzzzzzzzzzz =
-b11111101zzzzzzzzzzzzzzzzzzzzzzzz G
-b1001 D
-1:
+1*
 #111
-0:
+0*
 #112
-b1011 B
-b1111110100000001zzzzzzzzzzzzzzzz !
-b1111110100000001zzzzzzzzzzzzzzzz =
-b1111110100000001zzzzzzzzzzzzzzzz G
-b1010 D
-1:
+1*
 #113
-0:
+0*
 #114
-b1100 B
-b111111010000000100000001zzzzzzzz !
-b111111010000000100000001zzzzzzzz =
-b111111010000000100000001zzzzzzzz G
-b1011 D
-1:
-09
+1*
+0)
 #115
-0:
+0*
 #116
-b1101 B
-b11111101000000010000000100010011 !
-b11111101000000010000000100010011 =
-b11111101000000010000000100010011 G
-b1100 D
-1:
+1*
 #117
-0:
+0*
 #118
-b11111101000000010000000100010011 $
-b11111101000000010000000100010011 K
-b0 B
-1A
-b1101 D
-1:
+1*
 #119
-0:
+0*
 #120
-b1001 B
-bz !
-bz =
-bz G
-0A
-b1100 '
-b1100 L
-b10000 "
-b10000 H
-b0 D
-b1100 ;
-b1100 E
-b11111101000000010000000100010011 ?
-1:
-19
+b11111110000001000010011000100011 -
+b1100 %
+b1100 7
+b10000 !
+b10000 4
+b1100 +
+b1100 2
+b11000000010000010000010011 /
+1*
+1)
 #121
-0:
+0*
 #122
-b1010 B
-b10zzzzzzzzzzzzzzzzzzzzzzzz !
-b10zzzzzzzzzzzzzzzzzzzzzzzz =
-b10zzzzzzzzzzzzzzzzzzzzzzzz G
-b1001 D
-1:
+1*
 #123
-0:
+0*
 #124
-b1011 B
-b1010000001zzzzzzzzzzzzzzzz !
-b1010000001zzzzzzzzzzzzzzzz =
-b1010000001zzzzzzzzzzzzzzzz G
-b1010 D
-1:
+1*
 #125
-0:
+0*
 #126
-b1100 B
-b101000000100100110zzzzzzzz !
-b101000000100100110zzzzzzzz =
-b101000000100100110zzzzzzzz G
-b1011 D
-1:
-09
+1*
+0)
 #127
-0:
+0*
 #128
-b1101 B
-b10100000010010011000100011 !
-b10100000010010011000100011 =
-b10100000010010011000100011 G
-b1100 D
-1:
+1*
 #129
-0:
+0*
 #130
-b10100000010010011000100011 $
-b10100000010010011000100011 K
-b0 B
-1A
-b1101 D
-1:
+1*
 #131
-0:
+0*
 #132
-b1001 B
-bz !
-bz =
-bz G
-0A
-b10000 '
-b10000 L
-b10100 "
-b10100 H
-b0 D
-b10100000010010011000100011 ?
-b10000 ;
-b10000 E
-1:
-19
+b100000000011110010011 -
+b10000 %
+b10000 7
+b10100 !
+b10100 4
+b11111110000001000010011000100011 /
+b10000 +
+b10000 2
+1*
+1)
 #133
-0:
+0*
 #134
-b1010 B
-b11zzzzzzzzzzzzzzzzzzzzzzzz !
-b11zzzzzzzzzzzzzzzzzzzzzzzz =
-b11zzzzzzzzzzzzzzzzzzzzzzzz G
-b1001 D
-1:
+1*
 #135
-0:
+0*
 #136
-b1011 B
-b1100000001zzzzzzzzzzzzzzzz !
-b1100000001zzzzzzzzzzzzzzzz =
-b1100000001zzzzzzzzzzzzzzzz G
-b1010 D
-1:
+1*
 #137
-0:
+0*
 #138
-b1100 B
-b110000000100000100zzzzzzzz !
-b110000000100000100zzzzzzzz =
-b110000000100000100zzzzzzzz G
-b1011 D
-1:
-09
+1*
+0)
 #139
-0:
+0*
 #140
-b1101 B
-b11000000010000010000010011 !
-b11000000010000010000010011 =
-b11000000010000010000010011 G
-b1100 D
-1:
+1*
 #141
-0:
+0*
 #142
-b11000000010000010000010011 $
-b11000000010000010000010011 K
-b0 B
-1A
-b1101 D
-1:
+1*
 #143
-0:
+0*
 #144
-b1001 B
-bz !
-bz =
-bz G
-0A
-b10100 '
-b10100 L
-b11000 "
-b11000 H
-b0 D
-b10100 ;
-b10100 E
-b11000000010000010000010011 ?
-1:
-19
+b11111110111101000010010000100011 -
+b10100 %
+b10100 7
+b11000 !
+b11000 4
+b10100 +
+b10100 2
+b100000000011110010011 /
+1*
+1)
 #145
-0:
+0*
 #146
-b1010 B
-b11111110zzzzzzzzzzzzzzzzzzzzzzzz !
-b11111110zzzzzzzzzzzzzzzzzzzzzzzz =
-b11111110zzzzzzzzzzzzzzzzzzzzzzzz G
-b1001 D
-1:
+1*
 #147
-0:
+0*
 #148
-b1011 B
-b1111111000000100zzzzzzzzzzzzzzzz !
-b1111111000000100zzzzzzzzzzzzzzzz =
-b1111111000000100zzzzzzzzzzzzzzzz G
-b1010 D
-1:
+1*
 #149
-0:
+0*
 #150
-b1100 B
-b111111100000010000100110zzzzzzzz !
-b111111100000010000100110zzzzzzzz =
-b111111100000010000100110zzzzzzzz G
-b1011 D
-1:
-09
+1*
+0)
 #151
-0:
+0*
 #152
-b1101 B
-b11111110000001000010011000100011 !
-b11111110000001000010011000100011 =
-b11111110000001000010011000100011 G
-b1100 D
-1:
+1*
 #153
-0:
+0*
 #154
-b11111110000001000010011000100011 $
-b11111110000001000010011000100011 K
-b0 B
-1A
-b1101 D
-1:
+1*
 #155
-0:
+0*
 #156
-b1001 B
-bz !
-bz =
-bz G
-0A
-b11000 '
-b11000 L
-b11100 "
-b11100 H
-b0 D
-b11111110000001000010011000100011 ?
-b11000 ;
-b11000 E
-1:
-19
+b101000000000011110010011 -
+b11000 %
+b11000 7
+b11100 !
+b11100 4
+b11111110111101000010010000100011 /
+b11000 +
+b11000 2
+1*
+1)
 #157
-0:
+0*
 #158
-b1010 B
-b0zzzzzzzzzzzzzzzzzzzzzzzz !
-b0zzzzzzzzzzzzzzzzzzzzzzzz =
-b0zzzzzzzzzzzzzzzzzzzzzzzz G
-b1001 D
-1:
+1*
 #159
-0:
+0*
 #160
-b1011 B
-b10000zzzzzzzzzzzzzzzz !
-b10000zzzzzzzzzzzzzzzz =
-b10000zzzzzzzzzzzzzzzz G
-b1010 D
-1:
+1*
 #161
-0:
+0*
 #162
-b1100 B
-b1000000000111zzzzzzzz !
-b1000000000111zzzzzzzz =
-b1000000000111zzzzzzzz G
-b1011 D
-1:
-09
+1*
+0)
 #163
-0:
+0*
 #164
-b1101 B
-b100000000011110010011 !
-b100000000011110010011 =
-b100000000011110010011 G
-b1100 D
-1:
+1*
 #165
-0:
+0*
 #166
-b100000000011110010011 $
-b100000000011110010011 K
-b0 B
-1A
-b1101 D
-1:
+1*
 #167
-0:
+0*
 #168
-b1001 B
-bz !
-bz =
-bz G
-0A
-b11100 '
-b11100 L
-b100000 "
-b100000 H
-b0 D
-b11100 ;
-b11100 E
-b100000000011110010011 ?
-1:
-19
+b11111110111101000010000000100011 -
+b11100 %
+b11100 7
+b100000 !
+b100000 4
+b11100 +
+b11100 2
+b101000000000011110010011 /
+1*
+1)
 #169
-0:
+0*
 #170
-b1010 B
-b11111110zzzzzzzzzzzzzzzzzzzzzzzz !
-b11111110zzzzzzzzzzzzzzzzzzzzzzzz =
-b11111110zzzzzzzzzzzzzzzzzzzzzzzz G
-b1001 D
-1:
+1*
 #171
-0:
+0*
 #172
-b1011 B
-b1111111011110100zzzzzzzzzzzzzzzz !
-b1111111011110100zzzzzzzzzzzzzzzz =
-b1111111011110100zzzzzzzzzzzzzzzz G
-b1010 D
-1:
+1*
 #173
-0:
+0*
 #174
-b1100 B
-b111111101111010000100100zzzzzzzz !
-b111111101111010000100100zzzzzzzz =
-b111111101111010000100100zzzzzzzz G
-b1011 D
-1:
-09
+1*
+0)
 #175
-0:
+0*
 #176
-b1101 B
-b11111110111101000010010000100011 !
-b11111110111101000010010000100011 =
-b11111110111101000010010000100011 G
-b1100 D
-1:
+1*
 #177
-0:
+0*
 #178
-b11111110111101000010010000100011 $
-b11111110111101000010010000100011 K
-b0 B
-1A
-b1101 D
-1:
+1*
 #179
-0:
+0*
 #180
-b1001 B
-bz !
-bz =
-bz G
-0A
-b100000 '
-b100000 L
-b100100 "
-b100100 H
-b0 D
-b11111110111101000010010000100011 ?
-b100000 ;
-b100000 E
-1:
-19
+b11111110000001000010001000100011 -
+b100000 %
+b100000 7
+b100100 !
+b100100 4
+b11111110111101000010000000100011 /
+b100000 +
+b100000 2
+1*
+1)
 #181
-0:
+0*
 #182
-b1010 B
-b0zzzzzzzzzzzzzzzzzzzzzzzz !
-b0zzzzzzzzzzzzzzzzzzzzzzzz =
-b0zzzzzzzzzzzzzzzzzzzzzzzz G
-b1001 D
-1:
+1*
 #183
-0:
+0*
 #184
-b1011 B
-b10100000zzzzzzzzzzzzzzzz !
-b10100000zzzzzzzzzzzzzzzz =
-b10100000zzzzzzzzzzzzzzzz G
-b1010 D
-1:
+1*
 #185
-0:
+0*
 #186
-b1100 B
-b1010000000000111zzzzzzzz !
-b1010000000000111zzzzzzzz =
-b1010000000000111zzzzzzzz G
-b1011 D
-1:
-09
+1*
+0)
 #187
-0:
+0*
 #188
-b1101 B
-b101000000000011110010011 !
-b101000000000011110010011 =
-b101000000000011110010011 G
-b1100 D
-1:
+1*
 #189
-0:
+0*
 #190
-b101000000000011110010011 $
-b101000000000011110010011 K
-b0 B
-1A
-b1101 D
-1:
+1*
 #191
-0:
+0*
 #192
-b1001 B
-bz !
-bz =
-bz G
-0A
-b100100 '
-b100100 L
-b101000 "
-b101000 H
-b0 D
-b100100 ;
-b100100 E
-b101000000000011110010011 ?
-1:
-19
+b11000000000000000001101111 -
+b100100 %
+b100100 7
+b101000 !
+b101000 4
+b100100 +
+b100100 2
+b11111110000001000010001000100011 /
+1*
+1)
 #193
-0:
+0*
 #194
-b1010 B
-b11111110zzzzzzzzzzzzzzzzzzzzzzzz !
-b11111110zzzzzzzzzzzzzzzzzzzzzzzz =
-b11111110zzzzzzzzzzzzzzzzzzzzzzzz G
-b1001 D
-1:
+1*
 #195
-0:
+0*
 #196
-b1011 B
-b1111111011110100zzzzzzzzzzzzzzzz !
-b1111111011110100zzzzzzzzzzzzzzzz =
-b1111111011110100zzzzzzzzzzzzzzzz G
-b1010 D
-1:
+1*
