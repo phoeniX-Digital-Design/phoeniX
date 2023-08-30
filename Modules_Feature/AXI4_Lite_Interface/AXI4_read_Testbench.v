@@ -26,11 +26,11 @@ wire read_resp_valid;
 
 // four test registers
 reg  [31 : 0] memory [2**ADDRESS_WIDTH : 0];
-always @(*) begin
-    assign memory[0] = 32'hF;
-    assign memory[1] = 32'hA;
-end
 
+// always @(posedge axi_clk or negedge axi_clk) begin
+//     memory[0] = 32'hF;
+//     memory[1] = 32'hA;    
+// end
 
 reg [ADDRESS_WIDTH - 1  : 0] read_address;
 reg [31 : 0] rdata_in;
@@ -58,14 +58,12 @@ AXI4_read #(.ADDRESS_WIDTH(ADDRESS_WIDTH)) uut
     .data_valid(read_enable)
 );
 
-
-integer i;
 // read logic for a test memory
 always @(posedge axi_clk)
 begin
 	if(resetn == 0)
 	begin
-		for(i = 0 ; i < 4 ; i = i + 1)
+		for(integer i = 0 ; i < 4 ; i = i + 1)
 			memory[i] <= 0;
 	end
 	else if(read_enable)
@@ -77,6 +75,8 @@ initial begin
     $dumpvars(0, AXI4_read_Testbench);
 
     // Initialize signals
+    memory[0] = 32'hA5A5A5A5;
+    memory[1] = 32'hF;
     read_addr = 2'b0;
     read_addr_valid = 0;
     read_resp_ready = 0;
@@ -87,6 +87,7 @@ initial begin
 
     // Here, we will read data from memory[0]
     // Set read address
+    read_enable = 1'b1;
     read_addr = 2'b00;
     // Assert read address and data valid
     read_addr_valid = 1'b1;
@@ -115,6 +116,7 @@ initial begin
     read_addr = 2'b01;
 
     // Assert read address and data valid
+    read_enable = 1'b1;
     read_addr_valid = 1'b1;
 
     // Wait for read address and data to be accepted
@@ -136,12 +138,9 @@ initial begin
         $display("Read response not received");
     end
 
+    // End simulation
     #10;
     $finish;
-
-
-    
 end
-
 
 endmodule

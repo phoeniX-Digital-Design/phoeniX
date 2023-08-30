@@ -14,7 +14,7 @@ module AXI4_read #(parameter ADDRESS_WIDTH = 2)
     input read_data_ready,
 
     // read response channel
-    output [1 : 0] read_resp,
+    output [ADDRESS_WIDTH - 1 : 0] read_resp,
     input read_resp_ready,
     output reg read_resp_valid,
 
