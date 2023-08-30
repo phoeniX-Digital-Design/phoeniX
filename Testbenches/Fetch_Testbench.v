@@ -92,8 +92,8 @@ module Fetch_Testbench;
     // Signals for Instruction Memory Interface
     reg [31 : 0] data_in_Imem;
 
-    localparam  READ        = 1'b0,
-                WRITE       = 1'b1;
+    localparam  READ    = 1'b0;
+    localparam  WRITE   = 1'b1;
 
     // Memeory Interface Behaviour
     always @(*) 
@@ -111,5 +111,4 @@ module Fetch_Testbench;
             end
         end    
     end
-
 endmodule

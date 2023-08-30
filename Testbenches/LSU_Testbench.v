@@ -1,42 +1,56 @@
 `timescale 1ns/1ns
-`include "..\\Modules\\Load_Store_Unit.v"
+`include "..\Modules\Load_Store_Unit.v"
 
 module LSU_Testbench;
-
     reg CLK     = 1'b1;
     reg CLK_MEM = 1'b1;
 
-    // reg enable = 1'b0;
+    // Clock generation
+    always #1 CLK_MEM = ~CLK_MEM;
+    always #6 CLK = ~CLK;
 
     reg  [6 : 0] opcode = 7'bz;
     reg  [2 : 0] funct3 = 3'bz;
 
     reg  [31 : 0] address = 32'bz;
     reg  [31 : 0] store_data = 32'bz; 
-        
-    wire [31 : 0] load_data; // variable is declared as "output reg" in the main module
+    wire [31 : 0] load_data;
 
-    // Clock generation
-    always #1 CLK_MEM = ~CLK_MEM;
-    always #6 CLK = ~CLK;
-    
+    //////////////////////////////
+    // Memory Interface Signals //
+    //////////////////////////////
+    wire enable_Dmem;
+    wire memory_state_Dmem;
+    wire    [31 : 0] address_Dmem;
+    wire    [3 : 0] frame_mask_Dmem;
+
+    wire    [31 : 0] data_Dmem;
+    reg     [31 : 0] data_Dmem_reg;
+    assign data_Dmem = data_Dmem_reg;
+
     Load_Store_Unit uut 
     (
-        CLK_MEM,
-        // enable,
-        opcode,
-        funct3,
-        address,
-        store_data,
-        load_data
+        .opcode(opcode),
+        .funct3(funct3),
+
+        .address(address),
+        .store_data(store_data),
+        .load_data(load_data),
+
+        .memory_interface_enable(enable_Dmem),
+        .memory_interface_memory_state(memory_state_Dmem),
+        .memory_interface_address(address_Dmem),
+        .memory_interface_frame_mask(frame_mask_Dmem),
+
+        .memory_interface_data(data_Dmem)
     );
 
     initial 
     begin
         $dumpfile("LSU_Testbench.vcd");
-        $dumpvars(0, TB_LSU);
+        $dumpvars(0, LSU_Testbench);
 
-        $readmemh("..\\Sample Codes\\Instruction_Memory.txt", uut.data_memory.Memory);
+        $readmemh("firmware.hex", Memory);
 
         // Wait for a few clock cycles
 
@@ -46,10 +60,10 @@ module LSU_Testbench;
         
         opcode = 7'b0000011;
         funct3 = 3'b010;
-        //enable = 1'b1;
+        
 
         #12
-        //enable = 1'b0;
+        
         address = 32'bz;
         opcode = 7'bz;
         funct3 = 3'bz;
@@ -60,10 +74,10 @@ module LSU_Testbench;
 
         opcode = 7'b0000011;
         funct3 = 3'b100;
-        //enable = 1'b1;
+        
 
         #12
-        //enable = 1'b0;
+        
         address = 32'bz;
         opcode = 7'bz;
         funct3 = 3'bz;
@@ -74,10 +88,10 @@ module LSU_Testbench;
         
         opcode = 7'b0000011;
         funct3 = 3'b010;
-        //enable = 1'b1;
+        
 
         #12
-        //enable = 1'b0;
+        
         address = 32'bz;
         opcode = 7'bz;
         funct3 = 3'bz;
@@ -88,10 +102,10 @@ module LSU_Testbench;
         store_data = 32'hFEDCBA98;
         opcode = 7'b0100011;
         funct3 = 3'b010;
-        //enable = 1'b1;
+        
 
         #12
-        //enable = 1'b0;
+        
         address = 32'bz;
         store_data = 32'bz;
         opcode = 7'bz;
@@ -103,10 +117,10 @@ module LSU_Testbench;
         
         opcode = 7'b0000011;
         funct3 = 3'b010;
-        //enable = 1'b1;
+        
 
         #12
-        //enable = 1'b0;
+        
         address = 32'bz;
         opcode = 7'bz;
         funct3 = 3'bz;
@@ -117,10 +131,10 @@ module LSU_Testbench;
         store_data = 32'hBABA;
         opcode = 7'b0100011;
         funct3 = 3'b001;
-        //enable = 1'b1;
+        
 
         #12
-        //enable = 1'b0;
+        
         address = 32'bz;
         store_data = 32'bz;
         opcode = 7'bz;
@@ -132,10 +146,10 @@ module LSU_Testbench;
         
         opcode = 7'b0000011;
         funct3 = 3'b010;
-        //enable = 1'b1;
+        
 
         #12
-        //enable = 1'b0;
+        
         address = 32'bz;
         opcode = 7'bz;
         funct3 = 3'bz;
@@ -146,10 +160,10 @@ module LSU_Testbench;
         store_data = 32'hAB;
         opcode = 7'b0100011;
         funct3 = 3'b000;
-        //enable = 1'b1;
+        
 
         #12
-        //enable = 1'b0;
+        
         address = 32'bz;
         store_data = 32'bz;
         opcode = 7'bz;
@@ -161,15 +175,44 @@ module LSU_Testbench;
         
         opcode = 7'b0000011;
         funct3 = 3'b010;
-        //enable = 1'b1;
+        
 
         #12
-        //enable = 1'b0;
+        
         address = 32'bz;
         opcode = 7'bz;
         funct3 = 3'bz;
 
         #12;
         $finish;
+    end
+
+    // Memory 
+    reg [31 : 0] Memory [0 : 16 * 1024 - 1];
+
+    localparam  READ    = 1'b0;
+    localparam  WRITE   = 1'b1;
+    
+    // Memeory Interface Behaviour
+    always @(*) 
+    begin
+        if (!enable_Dmem)   data_in_Dmem <= 32'bz;
+        else
+        begin
+            if (memory_state_Dmem == READ)
+            begin
+                if (frame_mask_Dmem[0]) data_Dmem_reg[ 7 :  0] <= Memory[address_Dmem >> 2][ 7 :  0];
+                if (frame_mask_Dmem[1]) data_Dmem_reg[15 :  8] <= Memory[address_Dmem >> 2][15 :  8];
+                if (frame_mask_Dmem[2]) data_Dmem_reg[23 : 16] <= Memory[address_Dmem >> 2][23 : 16];
+                if (frame_mask_Dmem[3]) data_Dmem_reg[31 : 24] <= Memory[address_Dmem >> 2][31 : 24];
+            end
+            if (memory_state_Dmem == WRITE) 
+            begin
+                if (frame_mask_Dmem[0]) Memory[address_Dmem >> 2][ 7 :  0] <= data_Dmem[ 7 :  0];
+                if (frame_mask_Dmem[1]) Memory[address_Dmem >> 2][15 :  8] <= data_Dmem[15 :  8];
+                if (frame_mask_Dmem[2]) Memory[address_Dmem >> 2][23 : 16] <= data_Dmem[23 : 16];
+                if (frame_mask_Dmem[3]) Memory[address_Dmem >> 2][31 : 24] <= data_Dmem[31 : 24];
+            end 
+        end    
     end
 endmodule
