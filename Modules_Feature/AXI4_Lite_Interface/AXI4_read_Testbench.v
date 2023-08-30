@@ -79,8 +79,6 @@ initial begin
     // Initialize signals
     read_addr = 2'b0;
     read_addr_valid = 0;
-    read_data = 0;
-    read_data_valid = 0;
     read_resp_ready = 0;
     // Deassert reset
     #10 resetn = 1'b1;
@@ -92,12 +90,10 @@ initial begin
     read_addr = 2'b00;
     // Assert read address and data valid
     read_addr_valid = 1'b1;
-    read_data_valid = 1'b1;
 
     // Wait for read address and data to be accepted
     repeat (10) @(posedge axi_clk);
     read_addr_valid = 1'b0;
-    read_data_valid = 1'b0;
 
     // Wait for read response to be valid
     repeat (10) @(posedge axi_clk);
@@ -120,12 +116,10 @@ initial begin
 
     // Assert read address and data valid
     read_addr_valid = 1'b1;
-    read_data_valid = 1'b1;
 
     // Wait for read address and data to be accepted
     repeat (10) @(posedge axi_clk);
     read_addr_valid = 1'b0;
-    read_data_valid = 1'b0;
 
     // Wait for read response to be valid
     repeat (10) @(posedge axi_clk);
@@ -133,13 +127,13 @@ initial begin
     // Check read response
     if (read_resp_valid) begin
         case (read_resp)
-            2'b00: $display("read transaction from memory[0] successful");
-            2'b01: $display("read transaction from memory[1] successful");
-            default: $display("read transaction failed");
+            2'b00: $display("Read transaction from memory[0] successful");
+            2'b01: $display("Read transaction from memory[1] successful");
+            default: $display("Read transaction failed");
         endcase
     end
     else begin
-        $display("read response not received");
+        $display("Read response not received");
     end
 
     #10;
