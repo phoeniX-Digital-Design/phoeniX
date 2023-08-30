@@ -18,7 +18,7 @@ module AXI4_write #(parameter ADDRESS_WIDTH = 2)
 	input write_resp_ready,
 	output reg write_resp_valid,
 	
-	output [31 : 0] data_out,                   //data output to external logic
+	output [31 : 0] data_out,                   // data output to external logic
 	output [ADDRESS_WIDTH - 1 : 0] addr_out,    // address output to external logic
 	output data_valid		                    // signal indicating output data and address are valid
 );
