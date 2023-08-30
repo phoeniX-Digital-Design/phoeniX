@@ -15,7 +15,7 @@ module AXI4_write #(parameter ADDRESS_WIDTH = 2)
 
 	// write response channel	
 	output [ADDRESS_WIDTH - 1 : 0] write_resp,
-	input write_resp_ready,
+	input  write_resp_ready,
 	output reg write_resp_valid,
 	
 	output [31 : 0] data_out,                   // data output to external logic
