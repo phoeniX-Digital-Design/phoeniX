@@ -196,23 +196,25 @@ module LSU_Testbench;
     // Memeory Interface Behaviour
     always @(*) 
     begin
-        if (!enable_Dmem)   data_in_Dmem <= 32'bz;
+        if (!enable_Dmem)   data_Dmem_reg <= 32'bz;
         else
         begin
-            if (memory_state_Dmem == READ)
-            begin
-                if (frame_mask_Dmem[0]) data_Dmem_reg[ 7 :  0] <= Memory[address_Dmem >> 2][ 7 :  0];
-                if (frame_mask_Dmem[1]) data_Dmem_reg[15 :  8] <= Memory[address_Dmem >> 2][15 :  8];
-                if (frame_mask_Dmem[2]) data_Dmem_reg[23 : 16] <= Memory[address_Dmem >> 2][23 : 16];
-                if (frame_mask_Dmem[3]) data_Dmem_reg[31 : 24] <= Memory[address_Dmem >> 2][31 : 24];
-            end
+            // if (memory_state_Dmem == READ)
+            // begin
+            //     if (frame_mask_Dmem[3]) data_Dmem_reg[ 7 :  0] <= Memory[address_Dmem >> 2][ 7 :  0];
+            //     if (frame_mask_Dmem[2]) data_Dmem_reg[15 :  8] <= Memory[address_Dmem >> 2][15 :  8];
+            //     if (frame_mask_Dmem[1]) data_Dmem_reg[23 : 16] <= Memory[address_Dmem >> 2][23 : 16];
+            //     if (frame_mask_Dmem[0]) data_Dmem_reg[31 : 24] <= Memory[address_Dmem >> 2][31 : 24];
+            // end
             if (memory_state_Dmem == WRITE) 
             begin
-                if (frame_mask_Dmem[0]) Memory[address_Dmem >> 2][ 7 :  0] <= data_Dmem[ 7 :  0];
-                if (frame_mask_Dmem[1]) Memory[address_Dmem >> 2][15 :  8] <= data_Dmem[15 :  8];
-                if (frame_mask_Dmem[2]) Memory[address_Dmem >> 2][23 : 16] <= data_Dmem[23 : 16];
-                if (frame_mask_Dmem[3]) Memory[address_Dmem >> 2][31 : 24] <= data_Dmem[31 : 24];
+                if (frame_mask_Dmem[3]) Memory[address_Dmem >> 2][ 7 :  0] <= data_Dmem[ 7 :  0];
+                if (frame_mask_Dmem[2]) Memory[address_Dmem >> 2][15 :  8] <= data_Dmem[15 :  8];
+                if (frame_mask_Dmem[1]) Memory[address_Dmem >> 2][23 : 16] <= data_Dmem[23 : 16];
+                if (frame_mask_Dmem[0]) Memory[address_Dmem >> 2][31 : 24] <= data_Dmem[31 : 24];
             end 
+            if (memory_state_Dmem == READ)
+                data_Dmem_reg <= Memory[address_Dmem >> 2];
         end    
     end
 endmodule
