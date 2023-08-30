@@ -26,6 +26,11 @@ wire read_resp_valid;
 
 // four test registers
 reg  [31 : 0] memory [2**ADDRESS_WIDTH : 0];
+always @(*) begin
+    assign memory[0] = 32'hF;
+    assign memory[1] = 32'hA;
+end
+
 
 reg [ADDRESS_WIDTH - 1  : 0] read_address;
 reg [31 : 0] rdata_in;
@@ -72,15 +77,75 @@ initial begin
     $dumpvars(0, AXI4_read_Testbench);
 
     // Initialize signals
-    write_addr = 2'b0;
-    write_addr_valid = 0;
-    write_data = 0;
-    write_data_valid = 0;
-    write_resp_ready = 0;
+    read_addr = 2'b0;
+    read_addr_valid = 0;
+    read_data = 0;
+    read_data_valid = 0;
+    read_resp_ready = 0;
     // Deassert reset
     #10 resetn = 1'b1;
     // Wait for a few clock cycles
     #20;
+
+    // Here, we will read data from memory[0]
+    // Set read address
+    read_addr = 2'b00;
+    // Assert read address and data valid
+    read_addr_valid = 1'b1;
+    read_data_valid = 1'b1;
+
+    // Wait for read address and data to be accepted
+    repeat (10) @(posedge axi_clk);
+    read_addr_valid = 1'b0;
+    read_data_valid = 1'b0;
+
+    // Wait for read response to be valid
+    repeat (10) @(posedge axi_clk);
+
+    // Check read response
+    if (read_resp_valid) begin
+        case (read_resp)
+            2'b00: $display("Read transaction from memory[0] successful");
+            2'b01: $display("Read transaction from memory[1] successful");
+            default: $display("Read transaction failed");
+        endcase
+    end
+    else begin
+        $display("Read response not received");
+    end
+
+    // Repeat for another read transaction
+    // Set read address and data
+    read_addr = 2'b01;
+
+    // Assert read address and data valid
+    read_addr_valid = 1'b1;
+    read_data_valid = 1'b1;
+
+    // Wait for read address and data to be accepted
+    repeat (10) @(posedge axi_clk);
+    read_addr_valid = 1'b0;
+    read_data_valid = 1'b0;
+
+    // Wait for read response to be valid
+    repeat (10) @(posedge axi_clk);
+
+    // Check read response
+    if (read_resp_valid) begin
+        case (read_resp)
+            2'b00: $display("read transaction from memory[0] successful");
+            2'b01: $display("read transaction from memory[1] successful");
+            default: $display("read transaction failed");
+        endcase
+    end
+    else begin
+        $display("read response not received");
+    end
+
+    #10;
+    $finish;
+
+
     
 end
 
