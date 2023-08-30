@@ -16,8 +16,8 @@ module Fetch_Unit
 
     output  reg  memory_interface_enable,
     output  reg  memory_interface_memory_state,
-    output  reg  memory_interface_address,
-    output  reg  [3 : 0] memory_interface_frame_mask,
+    output  reg  [31 : 0]   memory_interface_address,
+    output  reg  [3 : 0]    memory_interface_frame_mask,
 
     input   [31 : 0] memory_interface_data,
     input   memory_interface_memory_done

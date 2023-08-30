@@ -24,7 +24,7 @@ module Fetch_Testbench;
     //////////////////////////////
     wire enable_Imem;
     wire memory_state_Imem;
-    wire address_Imem;
+    wire [31 : 0] address_Imem;
     wire [3 : 0] frame_mask_Imem;
 
     Fetch_Unit uut 
@@ -82,9 +82,8 @@ module Fetch_Testbench;
         // Wait for a few clock cycles
         #12;
         reset  = 1'b0;
-        // #10;
         enable = 1'b1;
-        #36
+        #58
         address = 32'h0;
         jump_branch_enable = 1'b1;
         #12
@@ -94,7 +93,7 @@ module Fetch_Testbench;
     end
     
     // Memory Behaviour and interface FSM
-    reg [7 : 0] Memory [0 : 1023];
+    reg [7 : 0] Memory [0 : 16 * 1024 - 1];
 
     // Signals for Memory Interface
     reg [31 : 0] data_in_Imem;
