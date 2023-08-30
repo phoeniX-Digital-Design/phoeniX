@@ -10,25 +10,30 @@ module AXI4_read #(parameter ADDRESS_WIDTH = 2)
 
     // read data channel
     output reg [31 : 0] read_data,
-    output reg read_data_valid,
-    input read_data_ready,
+    input  read_data_valid,
+    output reg read_data_ready,
 
     // read response channel
     output [ADDRESS_WIDTH - 1 : 0] read_resp,
     input read_resp_ready,
     output reg read_resp_valid,
 
-    input [31 : 0] data_in,                     // data input from external logic
-    input [ADDRESS_WIDTH - 1 : 0] addr_in,      // address input from external logic
-    input data_valid                            // signal indicating input data and address are valid
+    input  [31 : 0] data_in,                     // data input from external logic
+    output [ADDRESS_WIDTH - 1 : 0] addr_in,      // address input from external logic
+    output data_valid                            // signal indicating input data and address are valid
 );
 
     reg addr_done;
     reg data_done;
 
+    assign data_valid = data_done & addr_done;
+
     // flip flops for latching data
     reg [31 : 0] data_latch;
     reg [ADDRESS_WIDTH - 1 : 0] addr_latch;
+
+    // assign data_in = data_latch;
+	assign addr_in = addr_latch;
 
     always @(*) begin
         assign read_data = data_latch;
@@ -48,9 +53,9 @@ module AXI4_read #(parameter ADDRESS_WIDTH = 2)
     always @(posedge axi_clk)
     begin
         if (~resetn | (read_data_valid & read_data_ready))
-            read_data_valid <= 0;
+            read_data_ready <= 0;
         else if (~read_data_valid & read_data_ready)
-            read_data_valid <= 1;
+            read_data_ready <= 1;
     end
 
     // keep track of which handshakes completed

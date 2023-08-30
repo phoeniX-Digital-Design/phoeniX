@@ -16,12 +16,12 @@ wire read_addr_ready;
 
 // read data channel
 wire [31 : 0] read_data;
-wire read_data_valid;
-reg  read_data_ready;
+reg  read_data_valid;
+wire read_data_ready;
 
 // read response channel	
 wire [ADDRESS_WIDTH - 1 : 0] read_resp;
-reg read_resp_ready;
+reg  read_resp_ready;
 wire read_resp_valid;
 
 // four test registers
@@ -32,9 +32,9 @@ reg  [31 : 0] memory [2**ADDRESS_WIDTH : 0];
 //     memory[1] = 32'hA;    
 // end
 
-reg [ADDRESS_WIDTH - 1  : 0] read_address;
-reg [31 : 0] rdata_in;
-reg read_enable;
+wire [ADDRESS_WIDTH - 1  : 0] read_address;
+reg  [31 : 0] rdata_in;
+wire read_enable;
 
 AXI4_read #(.ADDRESS_WIDTH(ADDRESS_WIDTH)) uut
 (
@@ -80,6 +80,7 @@ initial begin
     read_addr = 2'b0;
     read_addr_valid = 0;
     read_resp_ready = 0;
+    read_data_valid = 0;
     // Deassert reset
     #10 resetn = 1'b1;
     // Wait for a few clock cycles
@@ -87,14 +88,15 @@ initial begin
 
     // Here, we will read data from memory[0]
     // Set read address
-    read_enable = 1'b1;
     read_addr = 2'b00;
     // Assert read address and data valid
     read_addr_valid = 1'b1;
+    read_data_valid = 1'b1;
 
     // Wait for read address and data to be accepted
     repeat (10) @(posedge axi_clk);
     read_addr_valid = 1'b0;
+    read_data_valid = 1'b0;
 
     // Wait for read response to be valid
     repeat (10) @(posedge axi_clk);
@@ -116,12 +118,13 @@ initial begin
     read_addr = 2'b01;
 
     // Assert read address and data valid
-    read_enable = 1'b1;
     read_addr_valid = 1'b1;
+    read_data_valid = 1'b1;
 
     // Wait for read address and data to be accepted
     repeat (10) @(posedge axi_clk);
     read_addr_valid = 1'b0;
+    read_data_valid = 1'b0;
 
     // Wait for read response to be valid
     repeat (10) @(posedge axi_clk);
