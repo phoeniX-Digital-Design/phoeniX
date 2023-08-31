@@ -1,11 +1,10 @@
 # Makefile
-
 SOURCE = code.c
 OBJECT = code.o
 
 # RISC-V toolchain directives
 TOOLCHAIN_PREFIX = riscv64-unknown-elf-
-CFLAGS = -c -mabi=ilp32 -march=rv32i
+CFLAGS = -mabi=ilp32 -march=rv32i
 
 CORE_NAME    = phoeniX
 VERILOG_CORE = phoeniX.v
@@ -23,3 +22,7 @@ firmware32.hex: firmware.hex
 
 firmware.hex: firmware.elf
 	$(TOOLCHAIN_PREFIX)objcopy -O verilog $< $@
+
+firmware.elf: $(OBJECT)
+	$(TOOLCHAIN_PREFIX)gcc $(CFLAGS) -Wl,--gc-sections -o $@ $< -T riscv.ld -lstdc++
+	chmod -x $@
