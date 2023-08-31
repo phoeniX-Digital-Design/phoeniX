@@ -139,6 +139,7 @@ module phoeniX_Testbench;
     begin
         if (uut.opcode_writeback_reg == `SYSTEM && uut.funct12_writeback_reg == `EBREAK) 
         begin
+            repeat (5) @(posedge CLK);
             reset <= 1'b1;
             $display("--> SIMULATION FINISHED");
             $dumpoff;
