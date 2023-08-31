@@ -9,15 +9,14 @@ CFLAGS = -c -mabi=ilp32 -march=rv32i
 
 VERILOG_TB = phoeniX_Testbench.v
 VERILOG_CORE = phoeniX.v
-
-HEX_FILE = firmware.hex
+CORE_NAME = phoeniX
 
 test: phoeniX.vvp firmware.hex
 	  vvp -N phoeniX.vvp
 
 phoeniX.vvp: $(VERILOG_TB) $(VERILOG_CORE)
-	iverilog -o phoeniX.vvp $(VERILOG_TB) $(VERILOG_CORE)
-	chmod -x phoeniX.vvp
+	iverilog -o $(CORE_NAME).vvp $(VERILOG_TB) $(VERILOG_CORE)
+	chmod -x $(CORE_NAME).vvp
 
 firmware.hex: firmware.elf
 	$(TOOLCHAIN_PREFIX)objcopy -O verilog $< $@
