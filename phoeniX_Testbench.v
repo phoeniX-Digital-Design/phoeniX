@@ -91,7 +91,7 @@ module phoeniX_Testbench;
         $dumpfile("phoeniX.vcd");
         $dumpvars(0, phoeniX_Testbench);
 
-        $readmemh("Sample_Codes\\ASM Codes\\Test_RV32I_Fibonacci.mem", Memory);
+        $readmemh("Testbenches\\firmware.hex", Memory);
         
         // Reset
         repeat (5) @(posedge CLK);
