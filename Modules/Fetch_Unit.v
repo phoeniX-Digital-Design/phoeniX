@@ -14,7 +14,7 @@ module Fetch_Unit
     //////////////////////////////
 
     output  reg  memory_interface_enable,
-    output  reg  memory_interface_memory_state,
+    output  reg  memory_interface_state,
     output  reg  [31 : 0]   memory_interface_address,
     output  reg  [3 : 0]    memory_interface_frame_mask
 );
@@ -24,7 +24,7 @@ module Fetch_Unit
     always @(*) 
     begin
         memory_interface_enable = enable;
-        memory_interface_memory_state = READ;
+        memory_interface_state = READ;
         memory_interface_frame_mask = 4'b1111;
         memory_interface_address = PC;  
     end

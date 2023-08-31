@@ -49,7 +49,7 @@ module Load_Store_Unit
     //////////////////////////////
 
     output  reg  memory_interface_enable,
-    output  reg  memory_interface_memory_state,
+    output  reg  memory_interface_state,
     output  reg  [31 : 0]   memory_interface_address,
     output  reg  [3 : 0]    memory_interface_frame_mask,
 
@@ -71,13 +71,13 @@ module Load_Store_Unit
     // Memory State and Frame Mask Generation
     always @(*) 
     begin
-        {memory_interface_memory_state, memory_interface_frame_mask} = {1'bx, 4'bx};
+        {memory_interface_state, memory_interface_frame_mask} = {1'bx, 4'bx};
 
         case ({opcode, funct3})
             // Load Instructions
             
             // LB and LBU
-            {`LOAD, `BYTE}, {`LOAD, `BYTE_UNSIGNED}: {memory_interface_memory_state, memory_interface_frame_mask} = 
+            {`LOAD, `BYTE}, {`LOAD, `BYTE_UNSIGNED}: {memory_interface_state, memory_interface_frame_mask} = 
             {   READ, 
             {                   
                 ~address[1] & ~address[0], 
@@ -88,7 +88,7 @@ module Load_Store_Unit
             };
 
             // LH and LHU
-            {`LOAD, `HALFWORD}, {`LOAD, `HALFWORD_UNSIGNED} : {memory_interface_memory_state, memory_interface_frame_mask} = 
+            {`LOAD, `HALFWORD}, {`LOAD, `HALFWORD_UNSIGNED} : {memory_interface_state, memory_interface_frame_mask} = 
             {   READ,
             {                   
                 {2{~address[1]}}, {2{address[1]}}
@@ -96,12 +96,12 @@ module Load_Store_Unit
             };
 
             // LW
-            {`LOAD, `WORD} : {memory_interface_memory_state, memory_interface_frame_mask} = {READ, 4'b1111}; 
+            {`LOAD, `WORD} : {memory_interface_state, memory_interface_frame_mask} = {READ, 4'b1111}; 
             
             // Store Instructions
 
             // SB
-            {`STORE, `BYTE} : {memory_interface_memory_state, memory_interface_frame_mask} = 
+            {`STORE, `BYTE} : {memory_interface_state, memory_interface_frame_mask} = 
             {   WRITE, 
             {                   
                 ~address[1] & ~address[0], 
@@ -112,7 +112,7 @@ module Load_Store_Unit
             }; 
 
             // SH
-            {`STORE, `HALFWORD} : {memory_interface_memory_state, memory_interface_frame_mask} = 
+            {`STORE, `HALFWORD} : {memory_interface_state, memory_interface_frame_mask} = 
             {   WRITE,
             {                   
                 {2{~address[1]}}, {2{address[1]}}
@@ -120,9 +120,9 @@ module Load_Store_Unit
             }; 
 
             // SW
-            {`STORE, `WORD} : {memory_interface_memory_state, memory_interface_frame_mask} = {WRITE, 4'b1111};
+            {`STORE, `WORD} : {memory_interface_state, memory_interface_frame_mask} = {WRITE, 4'b1111};
 
-            default : {memory_interface_memory_state, memory_interface_frame_mask} = {1'b0, 4'b0};
+            default : {memory_interface_state, memory_interface_frame_mask} = {1'b0, 4'b0};
         endcase    
     end
 
