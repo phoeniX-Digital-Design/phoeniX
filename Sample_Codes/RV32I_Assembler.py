@@ -106,8 +106,8 @@ def assembler(input_file):
         instruction = tokens[0] # Store instructions as a list
         args = tokens[1:]       # Store arguments as a list
         arguments = re.findall(r'\b\w+\b|-?\d+|\w+', args[0].replace('(', ' ').replace(')', ' '))
-        print(instruction)
-        print(arguments)
+        result = [instruction] + arguments  # Combine instruction and arguments into a single list
+        print(result)
 
     return hex_instructions
 
