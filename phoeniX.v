@@ -12,7 +12,8 @@
 
 `define NOP         32'h0000_0013
 `define NOP_OPCODE  `OP_IMM
-`define NOP_funct7  7'bz
+`define NOP_funct12 12'h000
+`define NOP_funct7  7'b000_0000
 `define NOP_funct3  3'b000
 
 module phoeniX 
@@ -178,9 +179,10 @@ module phoeniX
     reg [31 : 0] PC_execute_reg;
     reg [31 : 0] instruction_execute_reg;
 
-    reg [6 : 0] opcode_execute_reg;
-    reg [2 : 0] funct3_execute_reg;
-    reg [6 : 0] funct7_execute_reg;
+    reg [ 6 : 0] opcode_execute_reg;
+    reg [ 2 : 0] funct3_execute_reg;
+    reg [ 6 : 0] funct7_execute_reg;
+    reg [11 : 0] funct12_execute_reg;
 
     reg [31 : 0] immediate_execute_reg;
     reg [ 2 : 0] instruction_type_execute_reg;
@@ -205,6 +207,8 @@ module phoeniX
             opcode_execute_reg <= `NOP_OPCODE;
             funct3_execute_reg <= `NOP_funct3;
             funct7_execute_reg <= `NOP_funct7;
+            funct12_execute_reg <= `NOP_funct12;
+
         end
         else
         begin
@@ -214,6 +218,7 @@ module phoeniX
             opcode_execute_reg <= opcode_decode_wire;
             funct3_execute_reg <= funct3_decode_wire;
             funct7_execute_reg <= funct7_decode_wire;
+            funct12_execute_reg <= funct12_decode_wire;
         end
 
         immediate_execute_reg <= immediate_decode_wire; 
@@ -288,9 +293,10 @@ module phoeniX
     reg [31 : 0] PC_memory_reg;
     reg [31 : 0] instruction_memory_reg;
 
-    reg [6 : 0] opcode_memory_reg;
-    reg [2 : 0] funct3_memory_reg;
-    reg [6 : 0] funct7_memory_reg;
+    reg [ 6 : 0] opcode_memory_reg;
+    reg [ 2 : 0] funct3_memory_reg;
+    reg [ 6 : 0] funct7_memory_reg;
+    reg [11 : 0] funct12_memory_reg;
 
     reg [31 : 0] immediate_memory_reg;
     reg [ 2 : 0] instruction_type_memory_reg;
@@ -314,6 +320,7 @@ module phoeniX
         opcode_memory_reg <= opcode_execute_reg;
         funct3_memory_reg <= funct3_execute_reg;
         funct7_memory_reg <= funct7_execute_reg;
+        funct12_memory_reg <= funct12_execute_reg;
         
         immediate_memory_reg <= immediate_execute_reg;
         instruction_type_memory_reg <= instruction_type_execute_reg;

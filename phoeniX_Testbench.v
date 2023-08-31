@@ -137,7 +137,7 @@ module phoeniX_Testbench;
 
     always @(posedge CLK) 
     begin
-        if (uut.opcode_decode_wire == `SYSTEM && uut.funct12_decode_wire == `EBREAK) 
+        if (uut.opcode_memory_reg == `SYSTEM && uut.funct12_memory_reg == `EBREAK) 
         begin
             reset <= 1'b1;
             $display("--> SIMULATION FINISHED");
