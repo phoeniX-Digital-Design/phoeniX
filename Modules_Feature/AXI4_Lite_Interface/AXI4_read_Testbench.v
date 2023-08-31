@@ -27,7 +27,7 @@ wire read_resp_valid;
 // four test registers
 reg  [31 : 0] memory [2**ADDRESS_WIDTH : 0];
 wire [ADDRESS_WIDTH - 1  : 0] read_address;
-wire [31 : 0] rdata_in;
+wire [31 : 0] rdata_out;
 wire read_enable;
 
 AXI4_read #(.ADDRESS_WIDTH(ADDRESS_WIDTH)) uut 
@@ -47,12 +47,12 @@ AXI4_read #(.ADDRESS_WIDTH(ADDRESS_WIDTH)) uut
     .read_resp_ready(read_resp_ready),
     .read_resp_valid(read_resp_valid),
 
-    .data_out(rdata_in),
+    .data_out(rdata_out),
     .addr_out(read_address),
     .data_valid(read_enable)
 );
 
-reg [31 : 0]intermediate_wire;
+reg [31 : 0] intermediate_wire = 0;
 integer i;
 // read logic for a test memory
 always @(posedge axi_clk)
@@ -65,7 +65,9 @@ begin
 	else if(read_enable)
 		intermediate_wire <= memory[read_address];
 end
-assign rdata_in = intermediate_wire;
+
+//assign rdata_out = intermediate_wire;
+assign read_data = intermediate_wire;
 
 initial begin
     $dumpfile("AXI4_read.vcd");
@@ -101,8 +103,8 @@ initial begin
     // Check read response
     if (read_resp_valid) begin
         case (read_resp)
-            2'b00: $display("Reead transaction to memory[0] successful");
-            2'b01: $display("Read transaction to memory[1] successful");
+            2'b00: $display("Read transaction from memory[0] successful");
+            2'b01: $display("Read transaction from memory[1] successful");
             default: $display("Read transaction failed");
         endcase
     end
@@ -129,8 +131,8 @@ initial begin
     // Check read response
     if (read_resp_valid) begin
         case (read_resp)
-            2'b00: $display("Read transaction to memory[0] successful");
-            2'b01: $display("Read transaction to memory[1] successful");
+            2'b00: $display("Read transaction from memory[0] successful");
+            2'b01: $display("Read transaction from memory[1] successful");
             default: $display("Read transaction failed");
         endcase
     end
