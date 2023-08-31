@@ -22,14 +22,14 @@ phoeniX.vvp: $(VERILOG_TB) $(VERILOG_CORE)
 	chmod -x $(CORE_NAME).vvp
 
 firmware32.hex: firmware.hex
-	python3 hex8tohex32.py $@ > $<
+	python3 hex8tohex32.py $< > $@
 
 firmware.hex: firmware.elf
-	$(TOOLCHAIN_PREFIX)objcopy -O verilog $@ $<
+	$(TOOLCHAIN_PREFIX)objcopy -O verilog $< $@
 
 firmware.elf: $(OBJECT)
-	$(TOOLCHAIN_PREFIX)gcc $(CFLAGS) -Wl,--gc-sections -o $@ $< -T riscv.ld -lstdc++
+	$(TOOLCHAIN_PREFIX)gcc $(CFLAGS) -Wl,--gc-sections -o $< $@ -T riscv.ld -lstdc++
 	chmod -x $@
 
 $(OBJECT): $(SOURCE)
-	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $< $@  
+	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $@ $<  
