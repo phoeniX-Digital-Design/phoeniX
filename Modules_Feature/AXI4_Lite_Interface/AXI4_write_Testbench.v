@@ -10,18 +10,18 @@ reg resetn = 1'b0;
 always #5 axi_clk = ~axi_clk;
 
 // write address channel
-reg [ADDRESS_WIDTH - 1 : 0] write_addr;
-reg write_addr_valid;
+reg  [ADDRESS_WIDTH - 1 : 0] write_addr;
+reg  write_addr_valid;
 wire write_addr_ready;
 
 // write data channel
-reg [31 : 0] write_data;
-reg write_data_valid;
+reg  [31 : 0] write_data;
+reg  write_data_valid;
 wire write_data_ready;
 
 // write response channel	
 wire [ADDRESS_WIDTH - 1 : 0] write_resp;
-reg write_resp_ready;
+reg  write_resp_ready;
 wire write_resp_valid;
 
 // four test registers
