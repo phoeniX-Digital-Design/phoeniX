@@ -19,7 +19,6 @@ module Register_File
 
     output reg [WIDTH - 1 : 0] read_data_1,
     output reg [WIDTH - 1 : 0] read_data_2
-
 );
 	reg [WIDTH - 1 : 0] Registers [0 : $pow(2, DEPTH) - 1];      
 
