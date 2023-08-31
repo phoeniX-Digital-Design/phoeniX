@@ -50,5 +50,4 @@ module Register_File
         else
             read_data_2 <= {WIDTH{1'bz}};
     end
-    
 endmodule
