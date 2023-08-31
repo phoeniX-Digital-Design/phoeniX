@@ -4,13 +4,13 @@ module AXI4_write #(parameter ADDRESS_WIDTH = 2)
 	input resetn,   //axi is reset low
 
 	// write address channel
-	input [ADDRESS_WIDTH -  1 : 0] write_addr,
-	input write_addr_valid,
+	input  [ADDRESS_WIDTH -  1 : 0] write_addr,
+	input  write_addr_valid,
 	output reg write_addr_ready,
 
 	// write data channel
-	input [31 : 0] write_data,
-	input write_data_valid,
+	input  [31 : 0] write_data,
+	input  write_data_valid,
 	output reg write_data_ready,
 
 	// write response channel	

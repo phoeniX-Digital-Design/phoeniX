@@ -15,7 +15,7 @@ reg  read_addr_valid;
 wire read_addr_ready;
 
 // read data channel
-wire  [31 : 0] read_data;
+reg  [31 : 0] read_data;
 reg  read_data_valid;
 wire read_data_ready;
 
@@ -62,12 +62,12 @@ begin
 		for(i = 0 ; i < 4 ; i = i + 1)
 			memory[i] <= 0;
 	end
-	else if(read_enable)
-		intermediate_wire <= memory[read_address];
+	else if(read_enable && read_data_valid && read_addr_valid)
+		read_data <= memory[read_address];
 end
 
 //assign rdata_out = intermediate_wire;
-assign read_data = intermediate_wire;
+//assign read_data = intermediate_wire;
 
 initial begin
     $dumpfile("AXI4_read.vcd");
