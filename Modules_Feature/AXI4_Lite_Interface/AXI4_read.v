@@ -18,8 +18,8 @@ module AXI4_read #(parameter ADDRESS_WIDTH = 2)
     input read_resp_ready,
     output reg read_resp_valid,
 
-    input  [31 : 0] data_in,                     // data input from external logic
-    output [ADDRESS_WIDTH - 1 : 0] addr_in,      // address input from external logic
+    output  [31 : 0] data_out,                   // data outout from external logic
+    output [ADDRESS_WIDTH - 1 : 0] addr_out,     // address input from external logic
     output data_valid                            // signal indicating input data and address are valid
 );
 
@@ -32,12 +32,10 @@ module AXI4_read #(parameter ADDRESS_WIDTH = 2)
     reg [31 : 0] data_latch;
     reg [ADDRESS_WIDTH - 1 : 0] addr_latch;
 
-    // assign data_in = data_latch;
-	assign addr_in = addr_latch;
+    assign data_out = data_latch;
+	assign addr_out = addr_latch;
 
-    always @(*) begin
-        assign read_data = data_latch;
-    end
+    
     assign read_resp = {2'b0}; // always indicate OKAY status for reads
 
     // read address handshake
@@ -54,7 +52,7 @@ module AXI4_read #(parameter ADDRESS_WIDTH = 2)
     begin
         if (~resetn | (read_data_valid & read_data_ready))
             read_data_ready <= 0;
-        else if (~read_data_valid & read_data_ready)
+        else if (read_data_valid & ~read_data_ready)
             read_data_ready <= 1;
     end
 
@@ -87,7 +85,7 @@ module AXI4_read #(parameter ADDRESS_WIDTH = 2)
         else
         begin
             if (read_data_valid & read_data_ready) // look for data handshake
-                data_latch <= data_in;
+                data_latch <= read_data;
             
             if (read_addr_valid & read_addr_ready) // look for address handshake
                 addr_latch <= read_addr;
