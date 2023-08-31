@@ -4,23 +4,23 @@ module AXI4_read #(parameter ADDRESS_WIDTH = 2)
     input resetn,    // AXI is reset low
 
     // read address channel
-    input [ADDRESS_WIDTH - 1 : 0] read_addr,
-    input read_addr_valid,
+    input  [ADDRESS_WIDTH - 1 : 0] read_addr,
+    input  read_addr_valid,
     output reg read_addr_ready,
 
     // read data channel
-    input [31 : 0] read_data,
+    input  [31 : 0] read_data,
     input  read_data_valid,
     output reg read_data_ready,
 
     // read response channel
     output [ADDRESS_WIDTH - 1 : 0] read_resp,
-    input read_resp_ready,
+    input  read_resp_ready,
     output reg read_resp_valid,
 
-    output  [31 : 0] data_out,                   // data outout from external logic
-    output [ADDRESS_WIDTH - 1 : 0] addr_out,     // address input from external logic
-    output data_valid                            // signal indicating input data and address are valid
+    output  [31 : 0] data_out,                    // data outout from external logic
+    output  [ADDRESS_WIDTH - 1 : 0] addr_out,     // address input from external logic
+    output  data_valid                            // signal indicating input data and address are valid
 );
 
     reg addr_done;
