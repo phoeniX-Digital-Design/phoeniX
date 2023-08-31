@@ -321,7 +321,7 @@ module phoeniX
         funct3_memory_reg <= funct3_execute_reg;
         funct7_memory_reg <= funct7_execute_reg;
         funct12_memory_reg <= funct12_execute_reg;
-        
+
         immediate_memory_reg <= immediate_execute_reg;
         instruction_type_memory_reg <= instruction_type_execute_reg;
         write_index_memory_reg <= write_index_execute_reg;
@@ -365,9 +365,10 @@ module phoeniX
     reg [31 : 0] PC_writeback_reg;
     reg [31 : 0] instruction_writeback_reg;
 
-    reg [6 : 0] opcode_writeback_reg;
-    reg [2 : 0] funct3_writeback_reg;
-    reg [6 : 0] funct7_writeback_reg;
+    reg [ 6 : 0] opcode_writeback_reg;
+    reg [ 2 : 0] funct3_writeback_reg;
+    reg [ 6 : 0] funct7_writeback_reg;
+    reg [11 : 0] funct12_writeback_reg;
 
     reg [31 : 0] immediate_writeback_reg;
     reg [ 2 : 0] instruction_type_writeback_reg;
@@ -388,7 +389,8 @@ module phoeniX
         opcode_writeback_reg <= opcode_memory_reg;
         funct3_writeback_reg <= funct3_memory_reg;
         funct7_writeback_reg <= funct7_memory_reg;
-
+        funct12_writeback_reg <= funct12_memory_reg;
+        
         immediate_writeback_reg <= immediate_memory_reg;
         instruction_type_writeback_reg <= instruction_type_memory_reg;
         write_index_writeback_reg <= write_index_memory_reg;
