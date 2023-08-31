@@ -91,7 +91,7 @@ module phoeniX_Testbench;
         $dumpfile("phoeniX.vcd");
         $dumpvars(0, phoeniX_Testbench);
 
-        $readmemh("Testbenches\\firmware.hex", Memory);
+        $readmemh("sum1to10.mem", Memory);
         
         // Reset
         repeat (5) @(posedge CLK);
