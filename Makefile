@@ -12,5 +12,12 @@ VERILOG_CORE = phoeniX.v
 
 HEX_FILE = firmware.hex
 
+test: phoeniX.vvp firmware.hex
+	  vvp -N phoeniX.vvp
 
+phoeniX.vvp: $(VERILOG_TB) $(VERILOG_CORE)
+	iverilog -o phoeniX.vvp $(VERILOG_TB) $(VERILOG_CORE)
+	chmod -x phoeniX.vvp
 
+firmware.hex: firmware.elf
+	$(TOOLCHAIN_PREFIX)objcopy -O verilog $< $@
