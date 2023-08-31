@@ -9,7 +9,7 @@ module AXI4_read #(parameter ADDRESS_WIDTH = 2)
     output reg read_addr_ready,
 
     // read data channel
-    output reg [31 : 0] read_data,
+    input [31 : 0] read_data,
     input  read_data_valid,
     output reg read_data_ready,
 
@@ -85,7 +85,7 @@ module AXI4_read #(parameter ADDRESS_WIDTH = 2)
         else
         begin
             if (read_data_valid & read_data_ready) // look for data handshake
-                read_data <= data_latch;
+                data_latch <= read_data;
             
             if (read_addr_valid & read_addr_ready) // look for address handshake
                 addr_latch <= read_addr;
