@@ -33,3 +33,9 @@ firmware.elf: $(OBJECT)
 
 $(OBJECT): $(SOURCE)
 	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $@ $<  
+
+%.o: %.c
+	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) $<
+
+%.o: %.S
+	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) $<
