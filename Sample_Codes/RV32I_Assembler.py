@@ -111,6 +111,34 @@ def assembler(input_file):
 
     return hex_instructions
 
+def encode_immediate(imm, inst_type):
+    if inst_type == 'I':
+        # I-type: imm[11:0]
+        encoded_imm = (imm & 0xfff) << 20
+    elif inst_type == 'S':
+        # S-type: imm[11:5|4:0]
+        encoded_imm = ((imm & 0xfe0) << 20) | ((imm & 0x1f) << 7)
+    elif inst_type == 'B':
+        # B-type: imm[12|10:5|4:1|11]
+        encoded_imm = ((imm & 0x800) << 20) | ((imm & 0x3f0) << 21) | ((imm & 0x00e) << 7) | ((imm & 0x001) << 11)
+    elif inst_type == 'U':
+        # U-type: imm[31:12]
+        encoded_imm = imm & 0xfffff000
+    elif inst_type == 'J':
+        # J-type: imm[20|10:1|11|19:12]
+        encoded_imm = ((imm & 0xff000) << 12) | ((imm & 0x800) << 9) | ((imm & 0x3ff) << 21) | ((imm & 0x400) << 11)
+    else:
+        raise ValueError(f"Invalid instruction type: {inst_type}")
+
+    return f"{encoded_imm:032b}"  # Convert the encoded immediate to a binary string
+
+# Example usage:
+print(f"Encoding for I-type instruction: {encode_immediate(12, 'I')}")
+print(f"Encoding for S-type instruction: {encode_immediate(12, 'S')}")
+print(f"Encoding for B-type instruction: {encode_immediate(12, 'B')}")
+print(f"Encoding for U-type instruction: {encode_immediate(12, 'U')}")
+print(f"Encoding for J-type instruction: {encode_immediate(12, 'J')}")
+
 # Usage example
 hex_instructions = assembler(input_file)
 for instruction in hex_instructions:
