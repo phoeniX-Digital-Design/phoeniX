@@ -1,6 +1,6 @@
 # phoeniX Makefile
-# This make file is written in order to automate simulation process
-# of a C code on phoeniX core using RISC-V GCC toolchain.
+# This make file is written in order to automation of simulation
+# process of a C code on phoeniX core using RISC-V GCC toolchain.
 # August 2023 - Iran University of Science and Technology
 
 # C source and object files
