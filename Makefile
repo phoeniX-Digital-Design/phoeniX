@@ -12,6 +12,9 @@ OBJECT := $(wildcard *.o)
 TOOLCHAIN_PREFIX = riscv64-unknown-elf-
 CFLAGS = -mabi=ilp32 -march=rv32i
 
+GCC_WARNS  = -Werror -Wall -Wextra -Wshadow -Wundef -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings
+GCC_WARNS += -Wredundant-decls -Wstrict-prototypes -Wmissing-prototypes -pedantic # -Wconversion
+
 # Verilog files decleration
 CORE_NAME    = phoeniX
 VERILOG_CORE = phoeniX.v
