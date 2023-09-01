@@ -1,8 +1,12 @@
-# Makefile
+# phoeniX Makefile
+# This make file is written in order to automate simulation process
+# of a C code on phoeniX core using RISC-V GCC toolchain.
+# August 2023 - Iran University of Science and Technology
 
 # C source and object files
-SOURCE = code.c
-OBJECT = code.o
+# Variable to store the detected C input file
+SOURCE := $(wildcard *.c)
+OBJECT := $(wildcard *.o)
 
 # RISC-V toolchain directives
 TOOLCHAIN_PREFIX = riscv64-unknown-elf-
@@ -28,11 +32,11 @@ firmware.hex: firmware.elf
 	$(TOOLCHAIN_PREFIX)objcopy -O verilog $< $@
 
 firmware.elf: $(OBJECT)
-	$(TOOLCHAIN_PREFIX)gcc $(CFLAGS) -Wl,--gc-sections -o $< $@ -T riscv.ld -lstdc++
+	$(TOOLCHAIN_PREFIX)gcc $(CFLAGS) -Wl,--gc-sections -o $@ $< -T riscv.ld -lstdc++
 	chmod -x $@
 
 $(OBJECT): $(SOURCE)
-	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $@ $<  
+	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $< $@  
 
 %.o: %.c
 	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) $<
