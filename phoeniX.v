@@ -1,5 +1,4 @@
 `include "Modules\\Fetch_Unit.v"
-`include "Modules\\Memory_Interface.v"
 `include "Modules\\Instruction_Decoder.v"
 `include "Modules\\Immediate_Generator.v"
 `include "Modules\\Register_File.v"
