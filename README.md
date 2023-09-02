@@ -13,24 +13,23 @@ This repository contains an open source CPU under the [GNU V3.0 license](https:/
 
 - Designed By : [Arvin Delavari](https://github.com/ArvinDelavari) and [Faraz Ghoreishy](https://github.com/FarazGhoreishy)
 - Contact us : arvin7807@gmail.com - farazghoreishy@gmail.com
-- Iran University of Science and Technology - August 2023
+- Iran University of Science and Technology - Summer 2023
 
 ## phoeniX core structure
-
+Parametrized register file suitable for GP registers and CSRs
 The repository contains a collection of Verilog modules that build up the phoeniX RISC-V processor. These building block modules are included in `\Modules` directory in main branch of the repository:
 
-| Module                        | Description                                                                  |
-| ----------------------------- | ---------------------------------------------------------------------------- |
-| `Register_File`               | 32 number of 32-bit general purpose reisters (2 read & 1 write ports)        |
-| `Arithmetic_Logic_Unit`       | ALU with all `I_TYPE` and `R_TYPE` RISC-V instructions support               |
-| `Instruction_Decoder`         | Decoding instructions and seperating `opcode`, `funct` and `imm` fields      |
-| `Immediate_Generator`         | Generating immediate values according to instructions types                  |
-| `Memory_Interface`            | Handle CPU interactions with exrenal memories in fetching and LSU operations |
-| `Fetch_Unit`                  | Instruction Fetch logic implemented using `Memory_Interface` module          | 
-| `Load_Store_Unit`             | Load and Store operations implemented using `Memory_Interface` module        |
-| `Branch_Unit`                 | Condition check for all branch instructions of `RV32I` ISA support           |
-| `Address_Generator`           | Generates adderess for BRANCH, JUMP and LOAD/STORE instrcutions              |
-| `Hazard_Forward_Unit`         | Hazard detection and data forwarding logic in pipelined processor            |
+| Module                        | Description                                                                                   |
+| ----------------------------- | --------------------------------------------------------------------------------------------- |
+| `Register_File`               | Parametrized register file suitable for GP registers and CSRs (2 read & 1 write ports)        |
+| `Arithmetic_Logic_Unit`       | ALU with all `I_TYPE` and `R_TYPE` RISC-V instructions support                                |
+| `Instruction_Decoder`         | Decoding instructions and extracting `opcode`, `funct` and `imm` fields                       |
+| `Immediate_Generator`         | Generating immediate values according to instructions type                                    |
+| `Fetch_Unit`                  | Instruction Fetch logic and program counter addressing                                        | 
+| `Load_Store_Unit`             | Load and Store operations for aligned addresses and wordsize management                       |
+| `Branch_Unit`                 | Condition checking for all branch instructions                                                |
+| `Address_Generator`           | Generating address for BRANCH, JUMP and LOAD/STORE instrcutions                               |
+| `Hazard_Forward_Unit`         | Hazard detection and data forwarding logic in pipelined processor                             |
 
 Main phoeniX RISC-V core file is in the main branch of this repository:
 | Module                        | Description                                                                  |
