@@ -8,11 +8,11 @@ First one is [Windows & Linux (Venus)](https://github.com/ArvinDelavari/PHOENIX-
 
 There is a Python script included in this directory which is executable both in Linux and Windows. To execute this program, you just need to follow these simple steps:
 
-1) Write, simulate and modify your RISC-V assembly code in Venus simulator.
-2) In `VENUS OPTIONS` select `ASSEMBLY` and save the output file as a text file (.txt).
+1) Write, simulate and modify your assembly code in Venus simulator.
+2) In `VENUS OPTIONS` select `Assembly` and save the output file as a text file (.txt).
 3) Enter the created text file name.
-4) Enter the instruction memory file name.
-5) Output files are created and are given to testbench.
+4) Firmware file (instruction memory) will be generated.
+5) Read the firmware file in testbench.
 
 After the following steps, HEX file generated is automatically given to testbench and the created VVP file will be executed. In the end, GTKWave is automatically opened including waveforms of the phoeniX core as the unit under test executing the given program.
 
