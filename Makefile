@@ -6,7 +6,7 @@
 # C source and object files
 # Variable to store the detected C input file
 SOURCE := $(wildcard *.c)
-OBJECT := Fibonacci.o #$(wildcard *.o)
+OBJECT := $(SOURCE).o
 
 # RISC-V toolchain directives
 TOOLCHAIN_PREFIX = riscv64-unknown-elf-
@@ -18,12 +18,12 @@ VERILOG_CORE = phoeniX.v
 VERILOG_TB   = phoeniX_Testbench.v
 
 # Exection process
-#test: $(CORE_NAME).vvp firmware32.hex
-#	  vvp -N $(CORE_NAME).vvp
+test: $(CORE_NAME).vvp firmware32.hex
+	  vvp -N $(CORE_NAME).vvp
 
-#phoeniX.vvp: $(VERILOG_TB) $(VERILOG_CORE)
-#	iverilog -o $(CORE_NAME).vvp $(VERILOG_TB) $(VERILOG_CORE)
-#	chmod -x $(CORE_NAME).vvp
+phoeniX.vvp: $(VERILOG_TB) $(VERILOG_CORE)
+	iverilog -o $(CORE_NAME).vvp $(VERILOG_TB) $(VERILOG_CORE)
+	chmod -x $(CORE_NAME).vvp
 
 firmware32.hex: firmware.hex
 	python3 hex8tohex32.py $< > $@
