@@ -16,13 +16,15 @@ To execute this program, please follow these steps:
 1) Write, simulate and modify your assembly code in Venus simulator.
 2) In 'VENUS OPTIONS' select 'Assembly' and save the output file as a text file (.txt).
 3) Enter the created text file name.
-4) Enter the instruction memory file name.
-5) Output files are created and are given to testbench."""
+4) Rimware file (instruction memory) will be generated.
+5) Reade the firmware file in testbench.
+"""
+
 print(text)
 
 # File names (input from user)
 input_name = input("Enter input file name:\n")
-output_name = input("Enter instruction memory file name:\n")
+output_name = "firmware32.hex"
 
 input_file  = os.path.join(os.getcwd(), input_name)
 output_file = os.path.join(os.getcwd(), output_name)
