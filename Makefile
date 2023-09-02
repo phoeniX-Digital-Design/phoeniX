@@ -1,7 +1,7 @@
 # phoeniX Makefile
 # This make file is written in order to automation of simulation
 # process of a C code on phoeniX core using RISC-V GCC toolchain.
-# August 2023 - Iran University of Science and Technology
+# September 2023 - Iran University of Science and Technology
 
 # C source and object files
 # Variable to store the detected C input file
@@ -24,8 +24,8 @@ VERILOG_TB   = phoeniX_Testbench.v
 test: $(CORE_NAME).vvp firmware32.hex
 	  vvp -N $(CORE_NAME).vvp
 
-phoeniX.vvp: $(VERILOG_TB) $(VERILOG_CORE)
-	iverilog -o $(CORE_NAME).vvp $(VERILOG_TB) $(VERILOG_CORE)
+phoeniX.vvp: $(VERILOG_TB)
+	iverilog -o $(CORE_NAME).vvp $(VERILOG_TB)
 	chmod -x $(CORE_NAME).vvp
 
 firmware32.hex: firmware.hex
