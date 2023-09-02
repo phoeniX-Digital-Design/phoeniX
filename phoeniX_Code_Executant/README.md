@@ -12,8 +12,7 @@ There is a Python script included in this directory which is executable both in 
 2) In `VENUS OPTIONS` select `ASSEMBLY` and save the output file as a text file (.txt).
 3) Enter the created text file name.
 4) Enter the instruction memory file name.
-5) Enter the data memory file name.
-6) Output files are created and are given to testbench.
+5) Output files are created and are given to testbench.
 
 After the following steps, HEX file generated is automatically given to testbench and the created VVP file will be executed. In the end, GTKWave is automatically opened including waveforms of the phoeniX core as the unit under test executing the given program.
 
@@ -45,5 +44,5 @@ After the following steps, HEX file generated is automatically given to testbenc
 
 - Designed By : [Arvin Delavari](https://github.com/ArvinDelavari) and [Faraz Ghoreishy](https://github.com/FarazGhoreishy)
 - Contact us : arvin7807@gmail.com - farazghoreishy@gmail.com
-- Iran University of Science and Technology - August 2023
+- Iran University of Science and Technology - Summer 2023
 
