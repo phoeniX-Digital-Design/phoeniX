@@ -63,6 +63,8 @@ with open(output_file, 'w') as file:
     file.write('cat start.tmp firmware.tmp > firmware.hex\n')
     file.write('python3 hex8tohex32.py firmware.hex > firmware32.hex\n')
     file.write('rm -f start.tmp firmware.tmp\n\n')
+    file.write('cd ..\n')
+    file.write('cd ..\n\n')
 
     file.write('iverilog -o phoeniX.vvp phoeniX_Testbench.v\n')
     file.write('chmod -x phoeniX.vvp\n')
