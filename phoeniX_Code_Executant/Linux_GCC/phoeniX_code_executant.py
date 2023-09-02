@@ -63,6 +63,9 @@ with open(output_file, 'w') as file:
     file.write('cat start.tmp firmware.tmp > firmware.hex\n')
     file.write('python3 hex8tohex32.py firmware.hex > firmware32.hex\n')
     file.write('rm -f start.tmp firmware.tmp\n\n')
+
+    file.write('cp ./firmware32.hex ../../\n\n')
+
     file.write('cd ..\n')
     file.write('cd ..\n\n')
 
