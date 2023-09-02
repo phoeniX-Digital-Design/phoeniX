@@ -2,8 +2,9 @@
 `include "phoeniX.v"
 
 module phoeniX_Testbench;
-    integer data_memory_file;
-    parameter ADDRESS_WIDTH = 12;
+
+    // integer data_memory_file;
+    // parameter ADDRESS_WIDTH = 12;
 
     // Clock Generation
     reg CLK = 1'b1;
@@ -86,28 +87,23 @@ module phoeniX_Testbench;
         wire [31 : 0] x31_t6 	= uut.register_file.Registers[31];
     `endif
 
+    // 4MB memory decleration 
+    reg [31 : 0] Memory [0 : 1024 * 1024 - 1]; // PREVIOUS STATE : reg [31 : 0] Memory [0 : 8 * 1024 - 1];
+    initial $readmemh("sum1to10.mem", Memory);
+    localparam  READ    = 1'b0;
+    localparam  WRITE   = 1'b1;
+
     initial
     begin
         $dumpfile("phoeniX.vcd");
         $dumpvars(0, phoeniX_Testbench);
-
-        $readmemh("sum1to10.mem", Memory);
-        
         // Reset
         repeat (5) @(posedge CLK);
 		reset <= 1'b0;
     end
 
-    ////////////
-    // MEMORY //
-    ////////////
-    reg [31 : 0] Memory [0 : 8 * 1024 - 1];
-
-    localparam  READ    = 1'b0;
-    localparam  WRITE   = 1'b1;
-
     // Instruction Memory Interface Behaviour
-    always @(*) 
+    always @(posedge CLK) //  PREVIOUS STATE : always @(*)
     begin
         if (!instruction_memory_interface_enable) instruction_memory_interface_data <= 32'bz;
         else
@@ -118,7 +114,7 @@ module phoeniX_Testbench;
     end
 
     // Data Memory Interface Behaviour
-    always @(*) 
+    always @(posedge CLK)  //  PREVIOUS STATE : always @(*)
     begin
         if (!data_memory_interface_enable) data_memory_interface_data_reg <= 32'bz;
         else
@@ -135,7 +131,7 @@ module phoeniX_Testbench;
         end    
     end
 
-    always @(posedge CLK) 
+    always @(*) 
     begin
         if (uut.opcode_writeback_reg == `SYSTEM && uut.funct12_writeback_reg == `EBREAK) 
         begin
