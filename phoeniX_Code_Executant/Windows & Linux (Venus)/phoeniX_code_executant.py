@@ -3,7 +3,7 @@
 # | ------------------------------------------------------------ |
 # | Custom-built RISC-V assembly code executant for phoeniX core |
 # |          By : Arvin Delavari - Faraz Ghoreishy               |
-# |   Iran University of Science and Technology - August 2023    |
+# |   Iran University of Science and Technology - Summer 2023    |
 # ----------------------------------------------------------------
 import os
 text = """
