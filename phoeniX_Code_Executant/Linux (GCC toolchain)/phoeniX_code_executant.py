@@ -14,8 +14,7 @@ To execute this program, please follow these steps:
 3) Enter the source files names (.s and .c).
 
 Note: Following files must be included in the repository. please don't remove any of these files:
-- firmware.elf - hex8to32.py - riscv.ld 
-- rv32im.sh    - start.elf   - start.ld
+- hex8to32.py  - riscv.ld   - start.ld
 - start.S      - syscall.c 
 
 """
