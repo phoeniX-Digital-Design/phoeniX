@@ -14,8 +14,7 @@ To execute this program, please follow these steps:
 3) Enter the source files names (.s and .c).
 
 Note: Following files must be included in the repository. please don't remove any of these files:
-- firmware.elf - hex8to32.py - riscv.ld 
-- rv32im.sh    - start.elf   - start.ld
+- hex8to32.py  - riscv.ld   - start.ld
 - start.S      - syscall.c 
 
 """
@@ -64,6 +63,11 @@ with open(output_file, 'w') as file:
     file.write('cat start.tmp firmware.tmp > firmware.hex\n')
     file.write('python3 hex8tohex32.py firmware.hex > firmware32.hex\n')
     file.write('rm -f start.tmp firmware.tmp\n\n')
+
+    file.write('cp ./firmware32.hex ../../\n\n')
+
+    file.write('cd ..\n')
+    file.write('cd ..\n\n')
 
     file.write('iverilog -o phoeniX.vvp phoeniX_Testbench.v\n')
     file.write('chmod -x phoeniX.vvp\n')
