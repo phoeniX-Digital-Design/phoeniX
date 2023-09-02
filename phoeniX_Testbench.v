@@ -103,7 +103,7 @@ module phoeniX_Testbench;
     end
 
     // Instruction Memory Interface Behaviour
-    always @(posedge CLK) //  PREVIOUS STATE : always @(*)
+    always @(negedge CLK) //  PREVIOUS STATE : always @(*)
     begin
         if (!instruction_memory_interface_enable) instruction_memory_interface_data <= 32'bz;
         else
@@ -114,7 +114,7 @@ module phoeniX_Testbench;
     end
 
     // Data Memory Interface Behaviour
-    always @(posedge CLK)  //  PREVIOUS STATE : always @(*)
+    always @(negedge CLK)  //  PREVIOUS STATE : always @(*)
     begin
         if (!data_memory_interface_enable) data_memory_interface_data_reg <= 32'bz;
         else
