@@ -27,7 +27,7 @@ phoeniX.vvp: $(VERILOG_TB) $(VERILOG_CORE)
 
 # Makefile location must be in Sample Codes in order to use this function
 #-------------------------------
-#copy_file: firmware32.hex
+#copy_file:
 #	cp ./firmware32.hex ../../  
 
 firmware32.hex: firmware.hex
