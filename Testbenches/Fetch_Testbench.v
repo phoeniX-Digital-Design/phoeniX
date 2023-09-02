@@ -4,10 +4,8 @@ module Fetch_Testbench;
     parameter RESET_ADDRESS = 32'hFFFFFFFC;
 
     reg CLK = 1'b1;
-    reg CLK_MEM = 1'b1;
 
     // Clock generation
-    always #1 CLK_MEM = ~CLK_MEM;
     always #6 CLK = ~CLK;
 
     reg reset = 1'b1;
@@ -68,16 +66,19 @@ module Fetch_Testbench;
 
         $readmemh("firmware.hex", Memory);
 
-        // Wait for a few clock cycles
-        repeat (5) @(posedge CLK);
+        // Reset
+        repeat (3) @(posedge CLK);
+        // #14
+        // reset = 1'b1;
+        // enable = 1'b0;
 
+        // // Wait for a few clock cycles
+        // #10;
         reset  = 1'b0;
         enable = 1'b1;
-
         repeat (5) @(posedge CLK);
         address = 32'h0;
         jump_branch_enable = 1'b1;
-
         #12
         jump_branch_enable = 1'b0;
         #100;
@@ -94,14 +95,14 @@ module Fetch_Testbench;
     localparam  WRITE   = 1'b1;
 
     // Memory Interface Behaviour
-    always @(posedge CLK) 
+    always @(negedge CLK) 
     begin
         if (!enable_Imem) data_in_Imem <= 32'bz;
         else
         begin
             if (memory_state_Imem == READ)
             begin
-                data_in_Imem = Memory[address_Imem >> 2];
+                data_in_Imem <= Memory[address_Imem >> 2];
             end
         end    
     end

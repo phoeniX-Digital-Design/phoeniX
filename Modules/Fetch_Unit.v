@@ -7,7 +7,7 @@ module Fetch_Unit
 	input [31 : 0] address,                             // Branch or Jump address generated in Address Generator
 	input jump_branch_enable,                           // Generated in Branch Unit module
 
-    output [31 : 0] next_PC,                            // next instruction PC output
+    output reg [31 : 0] next_PC,                            // next instruction PC output
     
     //////////////////////////////
     // Memory Interface Signals //
@@ -29,5 +29,9 @@ module Fetch_Unit
         memory_interface_address = PC;  
     end
 
-    assign next_PC = jump_branch_enable ? address : PC + 32'd4;
+    always @(*)
+    begin
+        if (jump_branch_enable) next_PC <= address;
+        else                    next_PC <= PC + 32'd4;
+    end
 endmodule
