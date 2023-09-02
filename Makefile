@@ -25,6 +25,11 @@ phoeniX.vvp: $(VERILOG_TB) $(VERILOG_CORE)
 	iverilog -o $(CORE_NAME).vvp $(VERILOG_TB) $(VERILOG_CORE)
 	chmod -x $(CORE_NAME).vvp
 
+# Makefile location must be in Sample Codes in order to use this function
+#-------------------------------
+#copy_file: firmware32.hex
+#	cp ./firmware32.hex ../../  
+
 firmware32.hex: firmware.hex
 	python3 hex8tohex32.py $< > $@
 
