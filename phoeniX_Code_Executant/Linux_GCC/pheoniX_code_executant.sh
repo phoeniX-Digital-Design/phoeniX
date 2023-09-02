@@ -13,7 +13,9 @@ cat start.tmp firmware.tmp > firmware.hex
 python3 hex8tohex32.py firmware.hex > firmware32.hex
 rm -f start.tmp firmware.tmp
 
-iverilog -o phoeniX.vvp phoeniX_Testbench.v
-chmod -x phoeniX.vvp
-vvp -N phoeniX.vvp
-gtkwave phoeniX.vcd
+cp ./PHOENIX-CORE/phoeniX_Code_Executant/Linux_GCC/firmware32.hex ./PHOENIX-CORE
+
+#iverilog -o phoeniX.vvp phoeniX_Testbench.v
+#chmod -x phoeniX.vvp
+#vvp -N phoeniX.vvp
+#gtkwave phoeniX.vcd
