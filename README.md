@@ -3,7 +3,7 @@ phoeniX CORE
 
 **phoeniX** RISC-V processor was designed in Verilog HDL based on I extension of [RISC-V Instruction Set Architecture](http://riscv.org/) and can execute `RV32I` instructions. Other extensions will be covered in the upcoming updates. 
 
-You can find a list of full RISC-V assembly instructions in the [ISA documents](https://msyksphinz-self.github.io/riscv-isadoc/html/).
+You can find a list of full RISC-V assembly instructions in the [ISA Specifications Documents](https://riscv.org/technical/specifications/).
 
 The core can be implemented as a softcore CPU on Xilinx 7 Ultrscale/Ultrascale+ series FPGA boards using logic synthesis. This allows for flexible integration of the core's functionality within the FPGA fabric. The Xilinx 7 series FPGA boards provide a versatile platform for hosting the softcore CPU implementation, offering configurable features and adaptability.
 
