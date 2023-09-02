@@ -9,7 +9,7 @@ By : Arvin Delavari - Faraz Ghoreishy
 Iran University of Science and Technology - August 2023
 
 To execute this program, please follow these steps:
-1) Write a C code to be executed on phoeniX core.
+1) Write a C or Assembly code to be executed on phoeniX core.
 2) Enter number of input files.
 3) Enter the source files names (.s and .c).
 
