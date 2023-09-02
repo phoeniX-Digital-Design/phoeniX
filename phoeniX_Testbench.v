@@ -3,6 +3,7 @@
 
 module phoeniX_Testbench;
 
+    initial #2000 $finish;
     // integer data_memory_file;
     // parameter ADDRESS_WIDTH = 12;
 
@@ -89,7 +90,7 @@ module phoeniX_Testbench;
 
     // 4MB memory decleration 
     reg [31 : 0] Memory [0 : 1024 * 1024 - 1]; // PREVIOUS STATE : reg [31 : 0] Memory [0 : 8 * 1024 - 1];
-    initial $readmemh("sum1to10.mem", Memory);
+    initial $readmemh("firmware32.hex", Memory);
     localparam  READ    = 1'b0;
     localparam  WRITE   = 1'b1;
 
