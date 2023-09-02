@@ -4,10 +4,8 @@ module Fetch_Testbench;
     parameter RESET_ADDRESS = 32'hFFFFFFFC;
 
     reg CLK = 1'b1;
-    reg CLK_MEM = 1'b1;
 
     // Clock generation
-    always #1 CLK_MEM = ~CLK_MEM;
     always #6 CLK = ~CLK;
 
     reg reset = 1'b1;
@@ -96,7 +94,7 @@ module Fetch_Testbench;
     localparam  WRITE   = 1'b1;
 
     // Memory Interface Behaviour
-    always @(*) 
+    always @(posedge CLK) 
     begin
         if (!enable_Imem) data_in_Imem <= 32'bz;
         else
