@@ -41,7 +41,7 @@ module Fetch_Testbench;
         .next_PC(next_PC),
 
         .memory_interface_enable(enable_Imem),
-        .memory_interface_memory_state(memory_state_Imem),
+        .memory_interface_state(memory_state_Imem),
         .memory_interface_address(address_Imem),
         .memory_interface_frame_mask(frame_mask_Imem)
     );
@@ -68,18 +68,16 @@ module Fetch_Testbench;
 
         $readmemh("firmware.hex", Memory);
 
-        // Reset
-        #14
-        reset = 1'b1;
-        enable = 1'b0;
-
         // Wait for a few clock cycles
-        #12;
+        repeat (5) @(posedge CLK);
+
         reset  = 1'b0;
         enable = 1'b1;
-        #58
+
+        repeat (5) @(posedge CLK);
         address = 32'h0;
         jump_branch_enable = 1'b1;
+
         #12
         jump_branch_enable = 1'b0;
         #100;
@@ -95,14 +93,16 @@ module Fetch_Testbench;
     localparam  READ    = 1'b0;
     localparam  WRITE   = 1'b1;
 
-    // Memeory Interface Behaviour
+    // Memory Interface Behaviour
     always @(posedge CLK) 
     begin
-        if (!instruction_memory_interface_enable) instruction_memory_interface_data <= 32'bz;
+        if (!enable_Imem) data_in_Imem <= 32'bz;
         else
         begin
-            if (instruction_memory_interface_state == READ)
-                instruction_memory_interface_data <= Memory[instruction_memory_interface_address >> 2];
+            if (memory_state_Imem == READ)
+            begin
+                data_in_Imem = Memory[address_Imem >> 2];
+            end
         end    
     end
 endmodule
