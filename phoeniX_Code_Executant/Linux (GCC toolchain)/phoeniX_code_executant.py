@@ -9,7 +9,7 @@ By : Arvin Delavari - Faraz Ghoreishy
 Iran University of Science and Technology - August 2023
 
 To execute this program, please follow these steps:
-1) Write a C code to be executed on phoeniX core.
+1) Write a C or Assembly code to be executed on phoeniX core.
 2) Enter number of input files.
 3) Enter the source files names (.s and .c).
 
@@ -17,7 +17,6 @@ Note: Following files must be included in the repository. please don't remove an
 - firmware.elf - hex8to32.py - riscv.ld 
 - rv32im.sh    - start.elf   - start.ld
 - start.S      - syscall.c 
-- phoeniX_code_executant_linux.py
 
 """
 print(text)
@@ -47,16 +46,16 @@ output_file  = os.path.join(os.getcwd(), "pheoniX_code_executant.sh")
 with open(output_file, 'w') as file:
 
     for i in range(1, input_file_numbers + 1):
-        file.write('riscv64-unknown-elf-gcc -c -mabi=ilp32 -march=rv32im -o ' + name_input[i] + '.o ' + name_input[i] +'.'+ type_input[i] +'\n')
+        file.write('riscv64-unknown-elf-gcc -c -mabi=ilp32 -march=rv32i -o ' + name_input[i] + '.o ' + name_input[i] +'.'+ type_input[i] +'\n')
         
-    file.write('riscv64-unknown-elf-gcc -c -mabi=ilp32 -march=rv32im -o syscalls.o syscalls.c\n\n')
+    file.write('riscv64-unknown-elf-gcc -c -mabi=ilp32 -march=rv32i -o syscalls.o syscalls.c\n\n')
         
-    file.write('riscv64-unknown-elf-gcc -mabi=ilp32 -march=rv32im -Wl,--gc-sections -o firmware.elf ')
+    file.write('riscv64-unknown-elf-gcc -mabi=ilp32 -march=rv32i -Wl,--gc-sections -o firmware.elf ')
     for i in range(1, input_file_numbers + 1):
         file.write(name_input[i] + '.o ')
     file.write('syscalls.o -T riscv.ld -lstdc++\n\n')
 
-    file.write('riscv64-unknown-elf-gcc -mabi=ilp32 -march=rv32im -nostdlib -o start.elf start.S -T start.ld -lstdc++\n')
+    file.write('riscv64-unknown-elf-gcc -mabi=ilp32 -march=rv32i -nostdlib -o start.elf start.S -T start.ld -lstdc++\n')
     file.write('chmod -x start.elf\n\n')
 
     file.write('riscv64-unknown-elf-objcopy -O verilog start.elf start.tmp\n')
@@ -64,10 +63,9 @@ with open(output_file, 'w') as file:
     
     file.write('cat start.tmp firmware.tmp > firmware.hex\n')
     file.write('python3 hex8tohex32.py firmware.hex > firmware32.hex\n')
-    file.write('python3 phoeniX_firmware.py\n')
     file.write('rm -f start.tmp firmware.tmp\n\n')
 
-    file.write('iverilog -o phoeniX.vvp phoeniX_Testbench.v phoeniX.v\n')
+    file.write('iverilog -o phoeniX.vvp phoeniX_Testbench.v\n')
     file.write('chmod -x phoeniX.vvp\n')
     file.write('vvp -N phoeniX.vvp\n')
     file.write('gtkwave phoeniX.vcd')
