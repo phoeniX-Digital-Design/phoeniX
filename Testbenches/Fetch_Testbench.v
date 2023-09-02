@@ -96,19 +96,13 @@ module Fetch_Testbench;
     localparam  WRITE   = 1'b1;
 
     // Memeory Interface Behaviour
-    always @(*) 
+    always @(posedge CLK) 
     begin
-        if (!enable_Imem)
-            data_in_Imem <= 32'bz;
+        if (!instruction_memory_interface_enable) instruction_memory_interface_data <= 32'bz;
         else
         begin
-            if (memory_state_Imem == READ)
-            begin
-                if (frame_mask_Imem[0]) data_in_Imem[ 7 :  0] <= Memory[address_Imem >> 2][ 7 :  0];
-                if (frame_mask_Imem[1]) data_in_Imem[15 :  8] <= Memory[address_Imem >> 2][15 :  8];
-                if (frame_mask_Imem[2]) data_in_Imem[23 : 16] <= Memory[address_Imem >> 2][23 : 16];
-                if (frame_mask_Imem[3]) data_in_Imem[31 : 24] <= Memory[address_Imem >> 2][31 : 24];
-            end
+            if (instruction_memory_interface_state == READ)
+                instruction_memory_interface_data <= Memory[instruction_memory_interface_address >> 2];
         end    
     end
 endmodule
