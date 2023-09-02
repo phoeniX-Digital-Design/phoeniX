@@ -3,10 +3,8 @@
 
 module LSU_Testbench;
     reg CLK     = 1'b1;
-    reg CLK_MEM = 1'b1;
 
     // Clock generation
-    always #1 CLK_MEM = ~CLK_MEM;
     always #6 CLK = ~CLK;
 
     reg  [6 : 0] opcode = 7'bz;
@@ -194,18 +192,11 @@ module LSU_Testbench;
     localparam  WRITE   = 1'b1;
     
     // Memeory Interface Behaviour
-    always @(*) 
+    always @(negedge CLK) 
     begin
         if (!enable_Dmem)   data_Dmem_reg <= 32'bz;
         else
         begin
-            // if (memory_state_Dmem == READ)
-            // begin
-            //     if (frame_mask_Dmem[3]) data_Dmem_reg[ 7 :  0] <= Memory[address_Dmem >> 2][ 7 :  0];
-            //     if (frame_mask_Dmem[2]) data_Dmem_reg[15 :  8] <= Memory[address_Dmem >> 2][15 :  8];
-            //     if (frame_mask_Dmem[1]) data_Dmem_reg[23 : 16] <= Memory[address_Dmem >> 2][23 : 16];
-            //     if (frame_mask_Dmem[0]) data_Dmem_reg[31 : 24] <= Memory[address_Dmem >> 2][31 : 24];
-            // end
             if (memory_state_Dmem == WRITE) 
             begin
                 if (frame_mask_Dmem[3]) Memory[address_Dmem >> 2][ 7 :  0] <= data_Dmem[ 7 :  0];
