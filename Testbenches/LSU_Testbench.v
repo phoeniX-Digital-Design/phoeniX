@@ -36,7 +36,7 @@ module LSU_Testbench;
         .load_data(load_data),
 
         .memory_interface_enable(enable_Dmem),
-        .memory_interface_memory_state(memory_state_Dmem),
+        .memory_interface_state(memory_state_Dmem),
         .memory_interface_address(address_Dmem),
         .memory_interface_frame_mask(frame_mask_Dmem),
 
