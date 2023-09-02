@@ -68,16 +68,18 @@ module Fetch_Testbench;
 
         $readmemh("firmware.hex", Memory);
 
-        // Wait for a few clock cycles
-        repeat (5) @(posedge CLK);
+        // Reset
+        #14
+        reset = 1'b1;
+        enable = 1'b0;
 
+        // Wait for a few clock cycles
+        #12;
         reset  = 1'b0;
         enable = 1'b1;
-
-        repeat (5) @(posedge CLK);
+        #58
         address = 32'h0;
         jump_branch_enable = 1'b1;
-
         #12
         jump_branch_enable = 1'b0;
         #100;
@@ -94,14 +96,14 @@ module Fetch_Testbench;
     localparam  WRITE   = 1'b1;
 
     // Memory Interface Behaviour
-    always @(posedge CLK) 
+    always @(*) 
     begin
         if (!enable_Imem) data_in_Imem <= 32'bz;
         else
         begin
             if (memory_state_Imem == READ)
             begin
-                data_in_Imem = Memory[address_Imem >> 2];
+                data_in_Imem <= Memory[address_Imem >> 2];
             end
         end    
     end
