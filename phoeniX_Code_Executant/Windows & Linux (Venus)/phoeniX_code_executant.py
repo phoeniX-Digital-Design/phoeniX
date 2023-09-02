@@ -16,8 +16,8 @@ To execute this program, please follow these steps:
 1) Write, simulate and modify your assembly code in Venus simulator.
 2) In 'VENUS OPTIONS' select 'Assembly' and save the output file as a text file (.txt).
 3) Enter the created text file name.
-4) Rimware file (instruction memory) will be generated.
-5) Reade the firmware file in testbench.
+4) Firmware file (instruction memory) will be generated.
+5) Read the firmware file in testbench.
 """
 
 print(text)
@@ -27,7 +27,6 @@ input_name = input("Enter input file name:\n")
 output_name = "firmware32.hex"
 
 input_file  = os.path.join(os.getcwd(), input_name)
-output_file = os.path.join(os.getcwd(), output_name)
 
 # Read the contents of the input file (assembly text file)
 with open(input_file, "r") as file:
@@ -44,39 +43,17 @@ final_hex_code = [elem for elem in modified_lines if elem != '\n\n']
 print(final_hex_code)
 
 # Write the modified contents to the output file
-with open(output_file, "w") as file:
+with open("firmware32.hex", "w") as file:
+    file.writelines(final_hex_code)
+with open("..\\..\\firmware32.hex", "w") as file:
     file.writelines(final_hex_code)
 
+# OS : cmd commands to execute Verilog simulations:
+# 1 - Create VVP file form testbench
+# 2 - Execute VVP file and create VCD file
+# 3 - Open VCD file in GTKWave
+# Output wavforms will be automatically opened in GTKWave
 
-# Open and edit testbench file
-# testbench_file = "phoeniX_Testbench.v"
-
-# with open(testbench_file, 'r') as file:
-#     lines = file.readlines()
-
-# # Edit source files of testbench names
-# with open(testbench_file, 'w') as file:
-#     for line in lines:
-#         # Change instruction memory source file
-#         if line.startswith("\t\t$readmemh("):
-#             print("Line found!")
-#             # Modify the input file name
-#             modified_line = line.replace(line,'\t\t$readmemh("Sample_Codes'+ "\\\\" + output_name +'"' + ', uut.fetch_unit.instruction_memory.Memory);\n' )
-#             file.write(modified_line)
-#         # Change data memory source file
-#         elif line.startswith("\t\tdata_memory_file = $fopen("):
-#             print("Line found!")
-#             # Modify the input file name
-#             modified_line = line.replace(line,'\t\tdata_memory_file = $fopen("Sample_Codes' + "\\\\" + data_mem_name + '"' + ', "w");\n')
-#             file.write(modified_line)
-#         else:
-#             file.write(line)
-
-# # OS : cmd commands to execute Verilog simulations:
-# # 1 - Create VVP file form testbench
-# # 2 - Execute VVP file and create VCD file
-# # 3 - Open VCD file in GTKWave
-# # Output wavforms will be automatically opened in GTKWave
-# os.system('cmd /c "iverilog -o phoeniX.vvp phoeniX_Testbench.v"') 
-# os.system('cmd /c "vvp phoeniX.vvp"') 
-# os.system('cmd /c "gtkwave phoeniX.vcd"') 
+    # os.system('cmd /c "iverilog -o phoeniX.vvp phoeniX_Testbench.v"') 
+    # os.system('cmd /c "vvp phoeniX.vvp"') 
+    # os.system('cmd /c "gtkwave phoeniX.vcd"') 
