@@ -88,7 +88,8 @@ module phoeniX_Testbench;
     `endif
 
     // 4MB memory decleration 
-    reg [31 : 0] Memory [0 : 1024 * 1024 - 1];
+    reg [31 : 0] Memory [0 : 1024 * 1024 - 1]; // PREVIOUS STATE : reg [31 : 0] Memory [0 : 8 * 1024 - 1];
+    initial $readmemh("sum1to10.mem", Memory);
     localparam  READ    = 1'b0;
     localparam  WRITE   = 1'b1;
 
@@ -96,14 +97,13 @@ module phoeniX_Testbench;
     begin
         $dumpfile("phoeniX.vcd");
         $dumpvars(0, phoeniX_Testbench);
-        $readmemh("sum1to10.mem", Memory);
         // Reset
         repeat (5) @(posedge CLK);
 		reset <= 1'b0;
     end
 
     // Instruction Memory Interface Behaviour
-    always @(posedge CLK) 
+    always @(posedge CLK) //  PREVIOUS STATE : always @(*)
     begin
         if (!instruction_memory_interface_enable) instruction_memory_interface_data <= 32'bz;
         else
@@ -114,7 +114,7 @@ module phoeniX_Testbench;
     end
 
     // Data Memory Interface Behaviour
-    always @(posedge CLK) 
+    always @(posedge CLK)  //  PREVIOUS STATE : always @(*)
     begin
         if (!data_memory_interface_enable) data_memory_interface_data_reg <= 32'bz;
         else
