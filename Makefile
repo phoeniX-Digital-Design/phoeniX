@@ -24,8 +24,8 @@ VERILOG_TB   = phoeniX_Testbench.v
 test: $(CORE_NAME).vvp firmware32.hex
 	  vvp -N $(CORE_NAME).vvp
 
-phoeniX.vvp: $(VERILOG_TB) $(VERILOG_CORE)
-	iverilog -o $(CORE_NAME).vvp $(VERILOG_TB) $(VERILOG_CORE)
+phoeniX.vvp: $(VERILOG_TB)
+	iverilog -o $(CORE_NAME).vvp $(VERILOG_TB)
 	chmod -x $(CORE_NAME).vvp
 
 firmware32.hex: firmware.hex
