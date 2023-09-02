@@ -89,7 +89,6 @@ module phoeniX_Testbench;
 
     // 4MB memory decleration 
     reg [31 : 0] Memory [0 : 1024 * 1024 - 1];
-    initial $readmemh("sum1to10.mem", Memory);
     localparam  READ    = 1'b0;
     localparam  WRITE   = 1'b1;
 
@@ -97,6 +96,7 @@ module phoeniX_Testbench;
     begin
         $dumpfile("phoeniX.vcd");
         $dumpvars(0, phoeniX_Testbench);
+        $readmemh("sum1to10.mem", Memory);
         // Reset
         repeat (5) @(posedge CLK);
 		reset <= 1'b0;
