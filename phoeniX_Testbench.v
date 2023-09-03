@@ -9,7 +9,7 @@ module phoeniX_Testbench;
 
     // Clock Generation
     reg CLK = 1'b1;
-    always #6 CLK = ~CLK;
+    always #2 CLK = ~CLK;
 
     reg reset = 1'b1;
     
@@ -140,7 +140,7 @@ module phoeniX_Testbench;
         // begin
         //     $write("%c", data_memory_interface_data[7 : 0]);
         // end 
-        
+
     end
     always @(posedge CLK) 
     begin
