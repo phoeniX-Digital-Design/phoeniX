@@ -131,6 +131,10 @@ module phoeniX_Testbench;
                 data_memory_interface_data_reg <= Memory[data_memory_interface_address >> 2];
         end    
     end
+    always @(posedge CLK) 
+    begin
+        data_memory_interface_data_reg <= 32'bz;    
+    end
 
     always @(*) 
     begin
