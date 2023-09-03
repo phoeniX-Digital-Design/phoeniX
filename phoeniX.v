@@ -7,7 +7,7 @@
 `include "Address_Generator.v"
 `include "Load_Store_Unit.v"
 `include "Hazard_Forward_Unit.v"
-`include "Defines.v"
+`include "Defines.vh"
 
 `ifndef NOP_INSTRUCTION
     `define NOP                     32'h0000_0013

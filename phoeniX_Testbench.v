@@ -136,10 +136,11 @@ module phoeniX_Testbench;
         ////////////////////////////////////
         // Environment Support for printf //
         ////////////////////////////////////
-        if data_memory_interface_address == 32'h1000_0000
-        begin
-            $write("%c", data_memory_interface_data[7 : 0]);
-        end 
+        // if (data_memory_interface_address == 32'h1000_0000)
+        // begin
+        //     $write("%c", data_memory_interface_data[7 : 0]);
+        // end 
+        
     end
     always @(posedge CLK) 
     begin
