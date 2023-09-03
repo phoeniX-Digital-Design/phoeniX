@@ -88,7 +88,9 @@ module phoeniX_Testbench;
         wire [31 : 0] x31_t6 	= uut.register_file.Registers[31];
     `endif
 
-    // 4MB memory decleration 
+    ///////////////////////////////////
+    //   4 MB Memory Instantiation   //
+    ///////////////////////////////////
     reg [31 : 0] Memory [0 : 1024 * 1024 - 1];
     initial $readmemh("firmware.hex", Memory);
     localparam  READ    = 1'b0;
@@ -129,7 +131,15 @@ module phoeniX_Testbench;
             end 
             if (data_memory_interface_state == READ)
                 data_memory_interface_data_reg <= Memory[data_memory_interface_address >> 2];
-        end    
+        end   
+        
+        ////////////////////////////////////
+        // Environment Support for printf //
+        ////////////////////////////////////
+        if data_memory_interface_address == 32'h1000_0000
+        begin
+            $write("%c", data_memory_interface_data[7 : 0]);
+        end 
     end
     always @(posedge CLK) 
     begin
