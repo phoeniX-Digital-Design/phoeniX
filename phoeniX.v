@@ -1,13 +1,13 @@
-`include "Modules\\Fetch_Unit.v"
-`include "Modules\\Instruction_Decoder.v"
-`include "Modules\\Immediate_Generator.v"
-`include "Modules\\Register_File.v"
-`include "Modules\\Arithmetic_Logic_Unit.v"
-`include "Modules\\Jump_Branch_Unit.v"
-`include "Modules\\Address_Generator.v"
-`include "Modules\\Load_Store_Unit.v"
-`include "Modules\\Hazard_Forward_Unit.v"
-`include "Modules\\Defines.v"
+`include "Fetch_Unit.v"
+`include "Instruction_Decoder.v"
+`include "Immediate_Generator.v"
+`include "Register_File.v"
+`include "Arithmetic_Logic_Unit.v"
+`include "Jump_Branch_Unit.v"
+`include "Address_Generator.v"
+`include "Load_Store_Unit.v"
+`include "Hazard_Forward_Unit.v"
+`include "Defines.v"
 
 `define NOP         32'h0000_0013
 `define NOP_OPCODE  `OP_IMM
