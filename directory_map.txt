@@ -1,5 +1,7 @@
 .
 └── repository/
+    ├── Setup/
+    │   └── setup.sh
     ├── Documents/
     │   ├── Images/
     │   └── Pdfs/
@@ -20,7 +22,7 @@
     │   ├── Arithmetic_Logic_Unit.v
     │   └── ...
     ├── Firmware/
-    │   ├── hex_converter -> hex8to32.py
+    │   ├── hex_converter -> 
     │   ├── start_procedure -> start.s
     │   ├── start_linker -> start.ld
     │   ├── riscv_linker -> riscv.ld
