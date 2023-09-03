@@ -523,7 +523,9 @@ module phoeniX
 
     always @(*) 
     begin
-        if  (opcode_execute_reg == `LOAD & (write_index_execute_reg == read_index_1_decode_wire || write_index_execute_reg == read_index_2_decode_wire ) & write_enable_execute_reg)
+        if  (opcode_execute_reg == `LOAD & write_enable_execute_reg &
+            (((write_index_execute_reg == read_index_1_decode_wire) & read_enable_1_decode_wire) || 
+             ((write_index_execute_reg == read_index_2_decode_wire) & read_enable_2_decode_wire)))
         begin
             stall = 1'b1;
             PC_stall_address = PC_decode_reg;
