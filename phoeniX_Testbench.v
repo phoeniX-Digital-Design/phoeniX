@@ -90,7 +90,7 @@ module phoeniX_Testbench;
 
     // 4MB memory decleration 
     reg [31 : 0] Memory [0 : 1024 * 1024 - 1];
-    initial $readmemh("firmware32.hex", Memory);
+    initial $readmemh("firmware.hex", Memory);
     localparam  READ    = 1'b0;
     localparam  WRITE   = 1'b1;
 
