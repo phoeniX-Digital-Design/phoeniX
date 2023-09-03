@@ -1,4 +1,4 @@
-phoeniX CORE
+phoeniX RISC-V CPU
 ======================================
 
 **phoeniX** RISC-V processor was designed in Verilog HDL based on I extension of [RISC-V Instruction Set Architecture](http://riscv.org/) and can execute `RV32I` instructions. Other extensions will be covered in the upcoming updates. 
