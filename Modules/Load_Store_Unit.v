@@ -36,7 +36,7 @@
 `define HALFWORD_UNSIGNED   3'b101
 
 module Load_Store_Unit
-(       
+(
     input  [6 : 0] opcode,                  // Load/Store function
     input  [2 : 0] funct3,                  // Load/Store function
 
@@ -179,7 +179,10 @@ module Load_Store_Unit
                 if (memory_interface_frame_mask == 4'b0011) store_data_reg[31 : 16] <= store_data[15 : 0];
                 if (memory_interface_frame_mask == 4'b1100) store_data_reg[15 :  0] <= store_data[15 : 0];
             end
-            `WORD : store_data_reg <= store_data;
+            `WORD : 
+            begin
+                if (memory_interface_frame_mask == 4'b1111) store_data_reg[31 : 0] = store_data[31 : 0];
+            end 
         endcase
         else store_data_reg <= 32'bz;
     end
