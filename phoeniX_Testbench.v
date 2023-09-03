@@ -3,7 +3,7 @@
 
 module phoeniX_Testbench;
 
-    initial #2000 $finish;
+    initial #10000 $finish;
     // integer data_memory_file;
     // parameter ADDRESS_WIDTH = 12;
 
