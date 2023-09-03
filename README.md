@@ -21,7 +21,7 @@ The repository contains a collection of Verilog modules that build up the phoeni
 | Module                        | Description                                                                                   |
 | ----------------------------- | --------------------------------------------------------------------------------------------- |
 | `Register_File`               | Parametrized register file suitable for GP registers and CSRs (2 read & 1 write ports)        |
-| `Arithmetic_Logic_Unit`       | ALU with all `I_TYPE` and `R_TYPE` RISC-V instructions support                                |
+| `Arithmetic_Logic_Unit`       | ALU with support for `I_TYPE` and `R_TYPE` RISC-V instructions                                |
 | `Instruction_Decoder`         | Decoding instructions and extracting `opcode`, `funct` and `imm` fields                       |
 | `Immediate_Generator`         | Generating immediate values according to instructions type                                    |
 | `Fetch_Unit`                  | Instruction Fetch logic and program counter addressing                                        | 
