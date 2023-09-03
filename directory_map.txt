@@ -1,0 +1,49 @@
+.
+└── repository/
+    ├── Documents/
+    │   ├── Images/
+    │   └── Pdfs/
+    ├── Features/
+    │   ├── AXI4-Lite/
+    │   ├── Branch_Prediction/
+    │   ├── Clock_Genrator/
+    │   └── ...
+    ├── Synthesis/
+    │   ├── Qflow_TSMC_180nm/
+    │   │   ├── images/
+    │   │   ├── gds/
+    │   │   └── ...
+    │   ├── SiliconCompiler_FREEPDK_45nm/
+    │   └── SiliconCompiler_ASAP7/
+    ├── Modules/
+    │   ├── Address_Generator.v
+    │   ├── Arithmetic_Logic_Unit.v
+    │   └── ...
+    ├── Firmware/
+    │   ├── hex_converter -> hex8to32.py
+    │   ├── start_procedure -> start.s
+    │   ├── start_linker -> start.ld
+    │   ├── riscv_linker -> riscv.ld
+    │   └── syscalls -> syscalls.c
+    ├── Software/
+    │   ├── Sample_Assembly_Codes/
+    │   │   └── Program_directory/
+    │   │       ├── Program.S
+    │   │       ├── Program.txt
+    │   │       └── Program_firmware.hex
+    │   ├── Sample_C_Codes/
+    │   │   └── Program_directory/
+    │   │       ├── Program.c
+    │   │       ├── Program.o
+    │   │       └── Program_firmware.hex        
+    │   └── User_Codes/
+    │       └── Program_directory/
+    │           ├── Program.c
+    │           ├── Program.o
+    │           └── Program_firmware.hex 
+    ├── phoeniX.v
+    ├── phoeniX_Testbench.v
+    ├── phoeniX.vvp
+    ├── phoeniX.vcd
+    ├── phoeniX.gtkw
+    └── Makefile

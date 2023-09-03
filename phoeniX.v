@@ -9,11 +9,16 @@
 `include "Hazard_Forward_Unit.v"
 `include "Defines.v"
 
-`define NOP         32'h0000_0013
-`define NOP_OPCODE  `OP_IMM
-`define NOP_funct12 12'h000
-`define NOP_funct7  7'b000_0000
-`define NOP_funct3  3'b000
+`ifndef NOP_INSTRUCTION
+    `define NOP                     32'h0000_0013
+    `define NOP_OPCODE              `OP_IMM
+    `define NOP_funct12             12'h000
+    `define NOP_funct7              7'b000_0000
+    `define NOP_funct3              3'b000
+    `define NOP_immediate           12'h000
+    `define NOP_instruction_type   `I_TYPE
+    `define NOP_write_index         5'b00000
+`endif /*NOP_INSTRUCTION*/
 
 module phoeniX 
 #(
@@ -208,6 +213,9 @@ module phoeniX
             funct7_execute_reg <= `NOP_funct7;
             funct12_execute_reg <= `NOP_funct12;
 
+            immediate_execute_reg <= `NOP_immediate;
+            instruction_type_execute_reg <= `NOP_instruction_type;
+            write_index_execute_reg <= `NOP_write_index;
         end
         else
         begin
@@ -218,11 +226,11 @@ module phoeniX
             funct3_execute_reg <= funct3_decode_wire;
             funct7_execute_reg <= funct7_decode_wire;
             funct12_execute_reg <= funct12_decode_wire;
-        end
 
-        immediate_execute_reg <= immediate_decode_wire; 
-        instruction_type_execute_reg <= instruction_type_decode_wire;
-        write_index_execute_reg <= write_index_decode_wire;
+            immediate_execute_reg <= immediate_decode_wire; 
+            instruction_type_execute_reg <= instruction_type_decode_wire;
+            write_index_execute_reg <= write_index_decode_wire;
+        end
         
         bus_rs1 <= bus_rs1_decode_wire;
         bus_rs2 <= bus_rs2_decode_wire;
