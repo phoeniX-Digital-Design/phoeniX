@@ -5,7 +5,6 @@
     - Input immediate comes from Immediate_Generator
     - Inputs forward_exe_rs1, forward_exe_rs2 comes from the execution-unit output (bypassed)
     - Input signals opcode, funct3, funct7, comes from Instruction_Decoder
-    - Input signals mux1_select, mux2_select comes from Control_Unit
     - Supported Instructions :
 
         I-TYPE : ADDI - SLTI - SLTIU            R-TYPE : ADD  - SUB  - SLL           
