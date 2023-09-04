@@ -27,7 +27,7 @@ The repository contains a collection of Verilog modules that build up the phoeni
 | `Fetch_Unit`                  | Instruction Fetch logic and program counter addressing                                        | 
 | `Load_Store_Unit`             | Load and Store operations for aligned addresses and wordsize management                       |
 | `Branch_Unit`                 | Condition checking for all branch instructions                                                |
-| `Address_Generator`           | Generating address for BRANCH, JUMP and LOAD/STORE instrcutions                               |
+| `Address_Generator`           | Generating address for BRANCH, JUMP and LOAD/STORE instructions                               |
 | `Hazard_Forward_Unit`         | Hazard detection and data forwarding logic in pipelined processor                             |
 
 Main phoeniX RISC-V core file is in the main branch of this repository:
