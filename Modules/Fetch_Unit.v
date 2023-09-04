@@ -1,13 +1,13 @@
 module Fetch_Unit
 (
-	input enable,                                       // Memory Interface module enable pin (from Control Unit)
+	input enable,                    // Memory Interface module enable pin (from Control Unit)
 
     input [31 : 0] PC,
 
-	input [31 : 0] address,                             // Branch or Jump address generated in Address Generator
-	input jump_branch_enable,                           // Generated in Branch Unit module
+	input [31 : 0] address,         // Branch or Jump address generated in Address Generator
+	input jump_branch_enable,       // Generated in Branch Unit module
 
-    output reg [31 : 0] next_PC,                            // next instruction PC output
+    output reg [31 : 0] next_PC,    // next instruction PC output
     
     //////////////////////////////
     // Memory Interface Signals //
