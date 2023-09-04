@@ -92,7 +92,7 @@ module phoeniX_Testbench;
     //   4 MB Memory Instantiation   //
     ///////////////////////////////////
     reg [31 : 0] Memory [0 : 1024 * 1024 - 1];
-    initial $readmemh("firmware.hex", Memory);
+    initial $readmemh("firmware32.hex", Memory);
     localparam  READ    = 1'b0;
     localparam  WRITE   = 1'b1;
 
@@ -136,10 +136,10 @@ module phoeniX_Testbench;
         ////////////////////////////////////
         // Environment Support for printf //
         ////////////////////////////////////
-        // if (data_memory_interface_address == 32'h1000_0000)
-        // begin
-        //     $write("%c", data_memory_interface_data[7 : 0]);
-        // end 
+        if (data_memory_interface_address == 32'h1000_0000)
+        begin
+            $write("%c", data_memory_interface_data[7 : 0]);
+        end 
 
     end
     always @(posedge CLK) 
