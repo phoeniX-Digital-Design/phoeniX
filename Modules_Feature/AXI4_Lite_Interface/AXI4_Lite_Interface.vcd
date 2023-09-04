@@ -1,0 +1,175 @@
+$date
+	Wed Aug 30 22:08:43 2023
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module AXI4_Lite_Interface_Testbench $end
+$var wire 3 ! axi_awprot [2:0] $end
+$var wire 32 " axi_rdata [31:0] $end
+$var wire 1 # ready $end
+$var wire 32 $ rdata [31:0] $end
+$var wire 1 % axi_wvalid $end
+$var wire 4 & axi_wstrb [3:0] $end
+$var wire 32 ' axi_wdata [31:0] $end
+$var wire 1 ( axi_rready $end
+$var wire 1 ) axi_bready $end
+$var wire 1 * axi_awvalid $end
+$var wire 32 + axi_awaddr [31:0] $end
+$var wire 1 , axi_arvalid $end
+$var wire 3 - axi_arprot [2:0] $end
+$var wire 32 . axi_araddr [31:0] $end
+$var reg 32 / addr [31:0] $end
+$var reg 1 0 axi_arready $end
+$var reg 1 1 axi_awready $end
+$var reg 1 2 axi_bvalid $end
+$var reg 1 3 axi_clk $end
+$var reg 1 4 axi_rvalid $end
+$var reg 1 5 axi_wready $end
+$var reg 1 6 instr $end
+$var reg 1 7 resetn $end
+$var reg 1 8 valid $end
+$var reg 32 9 wdata [31:0] $end
+$var reg 4 : wstrb [3:0] $end
+$scope module uut $end
+$var wire 32 ; addr [31:0] $end
+$var wire 32 < axi_araddr [31:0] $end
+$var wire 1 0 axi_arready $end
+$var wire 1 , axi_arvalid $end
+$var wire 32 = axi_awaddr [31:0] $end
+$var wire 3 > axi_awprot [2:0] $end
+$var wire 1 1 axi_awready $end
+$var wire 1 * axi_awvalid $end
+$var wire 1 ) axi_bready $end
+$var wire 1 2 axi_bvalid $end
+$var wire 1 3 axi_clk $end
+$var wire 32 ? axi_rdata [31:0] $end
+$var wire 1 ( axi_rready $end
+$var wire 1 4 axi_rvalid $end
+$var wire 32 @ axi_wdata [31:0] $end
+$var wire 1 5 axi_wready $end
+$var wire 4 A axi_wstrb [3:0] $end
+$var wire 1 % axi_wvalid $end
+$var wire 1 6 instr $end
+$var wire 32 B rdata [31:0] $end
+$var wire 1 # ready $end
+$var wire 1 7 resetn $end
+$var wire 1 8 valid $end
+$var wire 32 C wdata [31:0] $end
+$var wire 4 D wstrb [3:0] $end
+$var wire 3 E axi_arprot [2:0] $end
+$var reg 1 F ack_arvalid $end
+$var reg 1 G ack_awvalid $end
+$var reg 1 H ack_wvalid $end
+$var reg 1 I response $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+xI
+xH
+xG
+xF
+b0 E
+b0 D
+b0 C
+bz B
+b0 A
+b0 @
+bz ?
+b0 >
+b0 =
+b0 <
+b0 ;
+b0 :
+b0 9
+08
+07
+06
+x5
+x4
+03
+02
+x1
+x0
+b0 /
+b0 .
+b0 -
+0,
+b0 +
+0*
+0)
+0(
+b0 '
+b0 &
+0%
+bz $
+x#
+bz "
+b0 !
+$end
+#5
+17
+#15
+x*
+x%
+1#
+b100 -
+b100 E
+1)
+b1111 &
+b1111 A
+b1111 :
+b1111 D
+b10101011110011011110111100000001 '
+b10101011110011011110111100000001 @
+b10101011110011011110111100000001 9
+b10101011110011011110111100000001 C
+b10010001101000101011001111000 +
+b10010001101000101011001111000 =
+b10010001101000101011001111000 .
+b10010001101000101011001111000 <
+b10010001101000101011001111000 /
+b10010001101000101011001111000 ;
+00
+01
+15
+12
+16
+18
+#25
+0*
+0%
+x,
+0)
+1(
+x#
+b0 -
+b0 E
+b0 &
+b0 A
+b0 :
+b0 D
+b0 '
+b0 @
+b0 9
+b0 C
+b10000111011001010100001100100001 +
+b10000111011001010100001100100001 =
+b10000111011001010100001100100001 .
+b10000111011001010100001100100001 <
+b10000111011001010100001100100001 /
+b10000111011001010100001100100001 ;
+10
+11
+05
+02
+06
+#35

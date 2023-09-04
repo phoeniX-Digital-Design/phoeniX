@@ -1,20 +1,21 @@
 [*]
-[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Wed Aug 23 19:01:34 2023
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Sun Sep  3 09:08:58 2023
 [*]
-[dumpfile] "D:\GitHub\RV32-Core\phoeniX.vcd"
-[dumpfile_mtime] "Wed Aug 23 17:05:34 2023"
-[dumpfile_size] 650940
-[savefile] "D:\GitHub\RV32-Core\phoeniX.gtkw"
-[timestart] 286
-[size] 1920 1009
+[dumpfile] "/home/faraz/git/PHOENIX-CORE/phoeniX.vcd"
+[dumpfile_mtime] "Sun Sep  3 08:53:11 2023"
+[dumpfile_size] 661923
+[savefile] "/home/faraz/git/PHOENIX-CORE/phoeniX.gtkw"
+[timestart] 5370
+[size] 1680 1013
 [pos] -1 -1
-*-5.490754 408 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-7.736956 6156 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] phoeniX_Testbench.
+[treeopen] phoeniX_Testbench.uut.
 [treeopen] phoeniX_Testbench.uut.fetch_unit.
 [treeopen] phoeniX_Testbench.uut.load_store_unit.
-[sst_width] 43
-[signals_width] 605
+[sst_width] 48
+[signals_width] 310
 [sst_expanded] 0
 [sst_vpaned_height] 257
 @28
@@ -23,12 +24,10 @@ phoeniX_Testbench.uut.fetch_unit.enable
 @200
 -
 @28
-phoeniX_Testbench.CLK_MEM
 phoeniX_Testbench.CLK
-@23
-phoeniX_Testbench.uut.PC_fetch_reg[31:0]
 @22
-phoeniX_Testbench.uut.instruction_fetch_wire[31:0]
+phoeniX_Testbench.uut.PC_fetch_reg[31:0]
+phoeniX_Testbench.uut.next_PC_wire[31:0]
 @200
 -
 -FETCH -> DECODE
@@ -170,6 +169,18 @@ phoeniX_Testbench.uut.alu_output_execute_wire[31:0]
 phoeniX_Testbench.uut.jump_branch_enable_execute_wire
 @200
 -
+@28
+phoeniX_Testbench.uut.jump_branch_unit.branch_enable
+phoeniX_Testbench.uut.jump_branch_unit.jump_enable
+phoeniX_Testbench.uut.jump_branch_unit.instruction_type[2:0]
+@200
+-
+@28
+phoeniX_Testbench.uut.stall
+@22
+phoeniX_Testbench.uut.PC_stall_address[31:0]
+@200
+-
 -EXECUTE -> MEMORY
 -
 @28
@@ -213,17 +224,18 @@ phoeniX_Testbench.uut.write_enable_memory_reg
 phoeniX_Testbench.uut.write_index_memory_reg[4:0]
 @200
 -
+@29
+phoeniX_Testbench.uut.data_memory_interface_enable
 @22
 [color] 4
 phoeniX_Testbench.uut.load_store_unit.address[31:0]
+phoeniX_Testbench.uut.data_memory_interface_address[31:0]
 @420
 [color] 4
 phoeniX_Testbench.uut.load_store_unit.store_data[31:0]
-[color] 4
-phoeniX_Testbench.uut.load_store_unit.enable
-@24
-phoeniX_Testbench.uut.load_store_unit.data_memory.state[3:0]
-phoeniX_Testbench.uut.load_store_unit.data_memory.next_state[3:0]
+@22
+phoeniX_Testbench.uut.load_data_memory_wire[31:0]
+phoeniX_Testbench.uut.data_memory_interface_data[31:0]
 @200
 -
 -MEMORY -> WRITEBACK

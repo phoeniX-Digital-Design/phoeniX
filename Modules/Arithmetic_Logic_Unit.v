@@ -5,7 +5,6 @@
     - Input immediate comes from Immediate_Generator
     - Inputs forward_exe_rs1, forward_exe_rs2 comes from the execution-unit output (bypassed)
     - Input signals opcode, funct3, funct7, comes from Instruction_Decoder
-    - Input signals mux1_select, mux2_select comes from Control_Unit
     - Supported Instructions :
 
         I-TYPE : ADDI - SLTI - SLTIU            R-TYPE : ADD  - SUB  - SLL           
@@ -70,10 +69,11 @@ module Arithmetic_Logic_Unit
     always @(*) 
     begin
         case (opcode)
-        `OP     : begin mux1_select = 1'b0; mux2_select = 2'b00; end // R-TYPE instructions
-        `OP_IMM : begin mux1_select = 1'b0; mux2_select = 2'b01; end // I-TYPE instructions
-        `JALR   : begin mux1_select = 1'b1; mux2_select = 2'b10; end // JALR   instructions
-        `JAL    : begin mux1_select = 1'b1; mux2_select = 2'b10; end // JAL    instructions
+        `OP     : begin mux1_select = 1'b0; mux2_select = 2'b00; end // R-TYPE 
+        `OP_IMM : begin mux1_select = 1'b0; mux2_select = 2'b01; end // I-TYPE 
+        `JALR   : begin mux1_select = 1'b1; mux2_select = 2'b10; end // JALR   
+        `JAL    : begin mux1_select = 1'b1; mux2_select = 2'b10; end // JAL    
+        `AUIPC  : begin mux1_select = 1'b1; mux2_select = 2'b01; end // AUIPC
         endcase        
     end
 

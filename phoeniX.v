@@ -1,34 +1,54 @@
-`include "Modules\\Fetch_Unit.v"
-`include "Modules\\Memory_Interface.v"
-`include "Modules\\Instruction_Decoder.v"
-`include "Modules\\Immediate_Generator.v"
-`include "Modules\\Register_File.v"
-`include "Modules\\Arithmetic_Logic_Unit.v"
-`include "Modules\\Jump_Branch_Unit.v"
-`include "Modules\\Address_Generator.v"
-`include "Modules\\Load_Store_Unit.v"
-`include "Modules\\Hazard_Forward_Unit.v"
-`include "Modules\\Defines.v"
+`include "Fetch_Unit.v"
+`include "Instruction_Decoder.v"
+`include "Immediate_Generator.v"
+`include "Register_File.v"
+`include "Arithmetic_Logic_Unit.v"
+`include "Jump_Branch_Unit.v"
+`include "Address_Generator.v"
+`include "Load_Store_Unit.v"
+`include "Hazard_Forward_Unit.v"
+`include "Defines.vh"
 
-`define NOP         32'h0000_0013
-`define NOP_OPCODE  `OP_IMM
-`define NOP_funct7  7'bz
-`define NOP_funct3  3'b000
+`ifndef NOP_INSTRUCTION
+    `define NOP                     32'h0000_0013
+    `define NOP_OPCODE              `OP_IMM
+    `define NOP_funct12             12'h000
+    `define NOP_funct7              7'b000_0000
+    `define NOP_funct3              3'b000
+    `define NOP_immediate           12'h000
+    `define NOP_instruction_type   `I_TYPE
+    `define NOP_write_index         5'b00000
+`endif /*NOP_INSTRUCTION*/
 
 module phoeniX 
 #(
-    parameter RESET_ADDRESS = 32'hFFFFFFFC,
-    parameter ADDRESS_WIDTH = 8
+    parameter RESET_ADDRESS = 32'hFFFFFFFC
 ) 
 (
     input CLK,
-    input CLK_MEM,
-    input reset
+    input reset,
+
+    //////////////////////////////////////////
+    // Instruction Memory Interface Signals //
+    //////////////////////////////////////////
+    output instruction_memory_interface_enable,
+    output instruction_memory_interface_state,
+    output  [31 : 0] instruction_memory_interface_address,
+    output  [ 3 : 0] instruction_memory_interface_frame_mask,
+    input   [31 : 0] instruction_memory_interface_data, 
+
+    ///////////////////////////////////
+    // Data Memory Interface Signals //
+    ///////////////////////////////////
+    output data_memory_interface_enable,
+    output data_memory_interface_state,
+    output  [31 : 0] data_memory_interface_address,
+    output  [ 3 : 0] data_memory_interface_frame_mask,
+    inout   [31 : 0] data_memory_interface_data 
 );
     // ---------------------------------
     // Wire Declarations for Fetch Stage
     // ---------------------------------
-    wire [31 : 0] instruction_fetch_wire;
     wire [31 : 0] PC_fetch_wire;
     wire [31 : 0] next_PC_wire;
     
@@ -40,19 +60,18 @@ module phoeniX
     // ------------------------
     // Fetch Unit Instantiation
     // ------------------------
-    Fetch_Unit
-    #(
-        .ADDRESS_WIDTH(ADDRESS_WIDTH)
-    ) 
-    fetch_unit
+    Fetch_Unit fetch_unit
     (
-        .CLK(CLK_MEM),
         .enable(!reset),              // TBD : to be changed to fetch control state with control
         .PC(PC_fetch_reg),
         .address(address_execute_wire),
         .jump_branch_enable(jump_branch_enable_execute_wire),
         .next_PC(next_PC_wire),
-        .fetched_instruction(instruction_fetch_wire)    
+
+        .memory_interface_enable(instruction_memory_interface_enable),
+        .memory_interface_state(instruction_memory_interface_state),
+        .memory_interface_address(instruction_memory_interface_address),
+        .memory_interface_frame_mask(instruction_memory_interface_frame_mask)    
     );
 
     // ------------------------
@@ -84,22 +103,22 @@ module phoeniX
         if (jump_branch_enable_execute_wire || stall)
             instruction_decode_reg <= `NOP;
         else
-            instruction_decode_reg <= instruction_fetch_wire;
+            instruction_decode_reg <= instruction_memory_interface_data;
     end
 
     // ----------------------------------
     // Wire Declarations for Decode Stage
     // ----------------------------------
-    wire [2 : 0] instruction_type_decode_wire;
+    wire [ 2 : 0] instruction_type_decode_wire;
     
-    wire [6 : 0] opcode_decode_wire;
-    wire [2 : 0] funct3_decode_wire;
-    wire [6 : 0] funct7_decode_wire;
+    wire [ 6 : 0] opcode_decode_wire;
+    wire [ 2 : 0] funct3_decode_wire;
+    wire [ 6 : 0] funct7_decode_wire;
     wire [11 : 0] funct12_decode_wire;
 
-    wire [4 : 0] read_index_1_decode_wire;
-    wire [4 : 0] read_index_2_decode_wire;
-    wire [4 : 0] write_index_decode_wire;
+    wire [ 4 : 0] read_index_1_decode_wire;
+    wire [ 4 : 0] read_index_2_decode_wire;
+    wire [ 4 : 0] write_index_decode_wire;
     wire [31 : 0] immediate_decode_wire;
     wire read_enable_1_decode_wire;
     wire read_enable_2_decode_wire;
@@ -152,9 +171,9 @@ module phoeniX
     wire [31 : 0] bus_rs1_decode_wire;
     wire [31 : 0] bus_rs2_decode_wire;
 
-    // ----------------------------------------------------------------------------------------
-    // assign inputs to source bus 1 & 2  --> TBD: to be selected between RF source and FW data
-    // ----------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------
+    // assign inputs to source bus 1 & 2  --> to be selected between RF source and FW data
+    // -----------------------------------------------------------------------------------
     assign bus_rs1_decode_wire = FW_enable_1 ? FW_source_1 : RF_source_1;
     assign bus_rs2_decode_wire = FW_enable_2 ? FW_source_2 : RF_source_2;
     
@@ -164,13 +183,14 @@ module phoeniX
     reg [31 : 0] PC_execute_reg;
     reg [31 : 0] instruction_execute_reg;
 
-    reg [6 : 0] opcode_execute_reg;
-    reg [2 : 0] funct3_execute_reg;
-    reg [6 : 0] funct7_execute_reg;
+    reg [ 6 : 0] opcode_execute_reg;
+    reg [ 2 : 0] funct3_execute_reg;
+    reg [ 6 : 0] funct7_execute_reg;
+    reg [11 : 0] funct12_execute_reg;
 
     reg [31 : 0] immediate_execute_reg;
-    reg [2 : 0] instruction_type_execute_reg;
-    reg [4 : 0] write_index_execute_reg;
+    reg [ 2 : 0] instruction_type_execute_reg;
+    reg [ 4 : 0] write_index_execute_reg;
     reg write_enable_execute_reg;
     
     reg [31 : 0] bus_rs1;
@@ -191,6 +211,11 @@ module phoeniX
             opcode_execute_reg <= `NOP_OPCODE;
             funct3_execute_reg <= `NOP_funct3;
             funct7_execute_reg <= `NOP_funct7;
+            funct12_execute_reg <= `NOP_funct12;
+
+            immediate_execute_reg <= `NOP_immediate;
+            instruction_type_execute_reg <= `NOP_instruction_type;
+            write_index_execute_reg <= `NOP_write_index;
         end
         else
         begin
@@ -200,11 +225,12 @@ module phoeniX
             opcode_execute_reg <= opcode_decode_wire;
             funct3_execute_reg <= funct3_decode_wire;
             funct7_execute_reg <= funct7_decode_wire;
-        end
+            funct12_execute_reg <= funct12_decode_wire;
 
-        immediate_execute_reg <= immediate_decode_wire; 
-        instruction_type_execute_reg <= instruction_type_decode_wire;
-        write_index_execute_reg <= write_index_decode_wire;
+            immediate_execute_reg <= immediate_decode_wire; 
+            instruction_type_execute_reg <= instruction_type_decode_wire;
+            write_index_execute_reg <= write_index_decode_wire;
+        end
         
         bus_rs1 <= bus_rs1_decode_wire;
         bus_rs2 <= bus_rs2_decode_wire;
@@ -274,13 +300,14 @@ module phoeniX
     reg [31 : 0] PC_memory_reg;
     reg [31 : 0] instruction_memory_reg;
 
-    reg [6 : 0] opcode_memory_reg;
-    reg [2 : 0] funct3_memory_reg;
-    reg [6 : 0] funct7_memory_reg;
+    reg [ 6 : 0] opcode_memory_reg;
+    reg [ 2 : 0] funct3_memory_reg;
+    reg [ 6 : 0] funct7_memory_reg;
+    reg [11 : 0] funct12_memory_reg;
 
     reg [31 : 0] immediate_memory_reg;
-    reg [2 : 0] instruction_type_memory_reg;
-    reg [4 : 0] write_index_memory_reg;
+    reg [ 2 : 0] instruction_type_memory_reg;
+    reg [ 4 : 0] write_index_memory_reg;
     reg write_enable_memory_reg;
 
     reg [31 : 0] address_memory_reg;
@@ -300,7 +327,8 @@ module phoeniX
         opcode_memory_reg <= opcode_execute_reg;
         funct3_memory_reg <= funct3_execute_reg;
         funct7_memory_reg <= funct7_execute_reg;
-        
+        funct12_memory_reg <= funct12_execute_reg;
+
         immediate_memory_reg <= immediate_execute_reg;
         instruction_type_memory_reg <= instruction_type_execute_reg;
         write_index_memory_reg <= write_index_execute_reg;
@@ -323,18 +351,19 @@ module phoeniX
     // -----------------------------
     // Load Store Unit Instantiation
     // -----------------------------
-    Load_Store_Unit
-    #(
-        .ADDRESS_WIDTH(ADDRESS_WIDTH)
-    ) 
-    load_store_unit
+    Load_Store_Unit load_store_unit
     (
-        .CLK(CLK_MEM),
         .opcode(opcode_memory_reg),
         .funct3(funct3_memory_reg),
         .address(address_memory_reg),
         .store_data(bus_rs2_memory_reg),
-        .load_data(load_data_memory_wire)
+        .load_data(load_data_memory_wire),
+
+        .memory_interface_enable(data_memory_interface_enable),
+        .memory_interface_state(data_memory_interface_state),
+        .memory_interface_address(data_memory_interface_address),
+        .memory_interface_frame_mask(data_memory_interface_frame_mask),
+        .memory_interface_data(data_memory_interface_data)
     );
 
     // -------------------------------------
@@ -343,13 +372,14 @@ module phoeniX
     reg [31 : 0] PC_writeback_reg;
     reg [31 : 0] instruction_writeback_reg;
 
-    reg [6 : 0] opcode_writeback_reg;
-    reg [2 : 0] funct3_writeback_reg;
-    reg [6 : 0] funct7_writeback_reg;
+    reg [ 6 : 0] opcode_writeback_reg;
+    reg [ 2 : 0] funct3_writeback_reg;
+    reg [ 6 : 0] funct7_writeback_reg;
+    reg [11 : 0] funct12_writeback_reg;
 
     reg [31 : 0] immediate_writeback_reg;
-    reg [2 : 0] instruction_type_writeback_reg;
-    reg [4 : 0] write_index_writeback_reg;
+    reg [ 2 : 0] instruction_type_writeback_reg;
+    reg [ 4 : 0] write_index_writeback_reg;
     reg write_enable_writeback_reg;
 
     reg [31 : 0] load_data_writeback_reg;
@@ -366,6 +396,7 @@ module phoeniX
         opcode_writeback_reg <= opcode_memory_reg;
         funct3_writeback_reg <= funct3_memory_reg;
         funct7_writeback_reg <= funct7_memory_reg;
+        funct12_writeback_reg <= funct12_memory_reg;
 
         immediate_writeback_reg <= immediate_memory_reg;
         instruction_type_writeback_reg <= instruction_type_memory_reg;
@@ -393,6 +424,28 @@ module phoeniX
         endcase
     end
 
+    reg write_enable;
+    reg [ 4 : 0] write_index;
+    reg [31 : 0] write_data;
+
+    always @(*)
+    begin
+        case (opcode_execute_reg)
+            `LUI :
+            begin
+                write_enable = write_enable_execute_reg;
+                write_index = write_index_execute_reg;
+                write_data = immediate_execute_reg;  
+            end
+            default : 
+            begin
+                write_enable = write_enable_writeback_reg;
+                write_index = write_index_writeback_reg;
+                write_data = write_data_writeback_reg;
+            end
+        endcase
+    end
+    
     ////////////////////////////////////////
     //    Register File Instantiation     //
     ////////////////////////////////////////
@@ -408,13 +461,13 @@ module phoeniX
 
         .read_enable_1(read_enable_1_decode_wire),
         .read_enable_2(read_enable_2_decode_wire),
-        .write_enable(opcode_execute_reg == `LUI ? write_enable_execute_reg : write_enable_writeback_reg),
+        .write_enable(write_enable),
 
         .read_index_1(read_index_1_decode_wire),
         .read_index_2(read_index_2_decode_wire),
-        .write_index(opcode_execute_reg == `LUI ? write_index_execute_reg : write_index_writeback_reg),
+        .write_index(write_index),
 
-        .write_data(opcode_execute_reg == `LUI ? immediate_execute_reg : write_data_writeback_reg),
+        .write_data(write_data),
         .read_data_1(RF_source_1),
         .read_data_2(RF_source_2)
     );
@@ -470,7 +523,9 @@ module phoeniX
 
     always @(*) 
     begin
-        if  (opcode_execute_reg == `LOAD & (write_index_execute_reg == read_index_1_decode_wire || write_index_execute_reg == read_index_2_decode_wire ) & write_enable_execute_reg)
+        if  (opcode_execute_reg == `LOAD & write_enable_execute_reg &
+            (((write_index_execute_reg == read_index_1_decode_wire) & read_enable_1_decode_wire) || 
+             ((write_index_execute_reg == read_index_2_decode_wire) & read_enable_2_decode_wire)))
         begin
             stall = 1'b1;
             PC_stall_address = PC_decode_reg;
