@@ -1,9 +1,3 @@
-    /* --------------------------------------------------------------
-    |    THE FOLLOWING MODULE IS ONLY THE BASE OF HAZARD DETECTION  |
-    |    AND FORWARDING UNIT. THIS MODULE IS NOT COMPLETED YET      |
-    |    AND IT WILL BE UPDATED SOON                                |
-    -------------------------------------------------------------- */
-
 module Hazard_Forward_Unit 
 (
     input [4 : 0] source_index,          
