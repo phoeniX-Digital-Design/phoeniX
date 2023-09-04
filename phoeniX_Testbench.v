@@ -1,11 +1,13 @@
-`timescale 1 ns / 1 ps
+`timescale 1 ns / 1 ns
 `include "phoeniX.v"
+
+`ifndef FIRMWARE
+    `define FIRMWARE
+`endif /*FIRMWARE*/
 
 module phoeniX_Testbench;
 
     // initial #10000 $finish;
-    // integer data_memory_file;
-    // parameter ADDRESS_WIDTH = 12;
 
     // Clock Generation
     reg CLK = 1'b1;
@@ -92,7 +94,7 @@ module phoeniX_Testbench;
     //   4 MB Memory Instantiation   //
     ///////////////////////////////////
     reg [31 : 0] Memory [0 : 1024 * 1024 - 1];
-    initial $readmemh("firmware.hex", Memory);
+    initial $readmemh(`FIRMWARE, Memory);
     localparam  READ    = 1'b0;
     localparam  WRITE   = 1'b1;
 
@@ -151,23 +153,10 @@ module phoeniX_Testbench;
     begin
         if (uut.opcode_writeback_reg == `SYSTEM && uut.funct12_writeback_reg == `EBREAK) 
         begin
-            repeat (5) @(posedge CLK);
             reset <= 1'b1;
-            $display("--> SIMULATION FINISHED");
+            repeat (5) @(posedge CLK);
+            $display("--> EXECUTION FINISHED <--");
             $dumpoff;
-
-            // data_memory_file = $fopen("Sample_Codes\\ASM Codes\\Test_RV32I_Fibonacci_data.mem", "w");
-            // for (integer addr = 0; addr < 2 ** ADDRESS_WIDTH; addr = addr + 4)
-            // begin
-            //     $fdisplay(  data_memory_file, "%h\t%h\t%h\t%h\t%h",
-            //                 addr, 
-            //                 Memory[addr],
-            //                 Memory[addr + 1],
-            //                 Memory[addr + 2],
-            //                 Memory[addr + 3]);
-            // end
-            // $fclose(data_memory_file);
-
             $finish;
         end
     end
