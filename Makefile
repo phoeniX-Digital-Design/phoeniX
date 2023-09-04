@@ -1,54 +1,67 @@
 # phoeniX Makefile
-# This make file is written in order to automate simulation process
+# This makefile is used in order to automate the simulation process
 # of a C code on phoeniX core using RISC-V GCC toolchain.
 # Summer 2023 - Iran University of Science and Technology
 
-# C source and object files
-# Variable to store the detected C input file
-SOURCE := $(wildcard *.c)
-OBJECT := $(SOURCE).o
+CORE_NAME = phoeniX
+CORE_TESTBENCH = $(CORE_NAME)_Testbench.v
 
-# RISC-V toolchain directives
 TOOLCHAIN_PREFIX = riscv64-unknown-elf-
 
 MABI = ilp32
 MARCH = rv32i
-OPT = -O3
-CFLAGS = -mabi=$(MABI) -march=$(MARCH) $(OPT)
 
-# Verilog files decleration
-CORE_NAME    = phoeniX
-VERILOG_CORE = phoeniX.v
-VERILOG_TB   = phoeniX_Testbench.v
+CFLAGS = -mabi=$(MABI) -march=$(MARCH)
+CFLAG_LINKING = -Wl,--gc-sections
 
-# Exection process
-test: $(CORE_NAME).vvp firmware32.hex
-	  vvp -N $(CORE_NAME).vvp
+command := $(firstword $(MAKECMDGOALS))
+project := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
 
-$(CORE_NAME).vvp: $(VERILOG_TB) $(VERILOG_CORE)
-	iverilog -o $(CORE_NAME).vvp $(VERILOG_TB) $(VERILOG_CORE)
-	chmod -x $(CORE_NAME).vvp
+ifeq ($(command),sample)
+    PROJECT_DIR = $(SOFTWARE_DIR)/$(SAMPLE_C_DIR)/$(project)
+else ifeq ($(command),code)
+	PROJECT_DIR = $(SOFTWARE_DIR)/$(USER_CODE_DIR)/$(project)
+endif
 
-# Makefile location must be in Sample Codes in order to use this function
-#-------------------------------
-#copy_file:
-#	cp ./firmware32.hex ../../  
+FIRMWARE_DIR = Firmware
+SOFTWARE_DIR = Software
+SAMPLE_C_DIR = Sample_C_Codes
+USER_CODE_DIR = User_Codes
 
-firmware32.hex: firmware.hex
-	python3 hex8tohex32.py $< > $@
+SOURCE_C := $(wildcard $(PROJECT_DIR)/*.c)
+OBJECT_C := $(basename $(SOURCE_C)).o
 
-firmware.hex: firmware.elf
-	$(TOOLCHAIN_PREFIX)objcopy -O verilog $< $@
+SOURCE_S := $(wildcard $(PROJECT_DIR)/*.s $(PROJECT_DIR)/*.S)
+OBJECT_S := $(addsuffix .o, $(basename $(SOURCE_S)))
 
-firmware.elf: $(OBJECT)
-	$(TOOLCHAIN_PREFIX)gcc $(CFLAGS) -Wl,--gc-sections -o $@ $< -T riscv.ld -lstdc++
-	chmod -x $@
+$(command): firmware.hex
+	@echo "Running Sample Project "$(project)"!"
+	rm -rf $(PROJECT_DIR)/*.tmp $(PROJECT_DIR)/*.mem $(PROJECT_DIR)/*.o $(PROJECT_DIR)/*.elf
+	iverilog -DFIRMWARE=\"$(PROJECT_DIR)/$(project)_firmware.hex\" -o $(CORE_NAME).vvp $(CORE_TESTBENCH)
+	vvp $(CORE_NAME).vvp 
+	gtkwave $(CORE_NAME).gtkw
 
-$(OBJECT): $(SOURCE)
-	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $@ $<  
+firmware.hex: start.elf firmware.elf
+	@echo "Hello?"
+	cat $(PROJECT_DIR)/start.tmp $(PROJECT_DIR)/firmware.tmp > $(PROJECT_DIR)/firmware.mem
+	python3 $(FIRMWARE_DIR)/hex_converter.py $(PROJECT_DIR)/firmware.mem > $(PROJECT_DIR)/$(project)_firmware.hex
 
-%.o: %.c
-	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) $<
+firmware.elf: $(OBJECT_C) $(OBJECT_S)
+	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $(PROJECT_DIR)/syscalls.o $(FIRMWARE_DIR)/syscalls.c
+	$(TOOLCHAIN_PREFIX)gcc $(CFLAGS) $(CFLAG_LINKING) -o $(PROJECT_DIR)/$(project)_firmware.elf $< $(PROJECT_DIR)/syscalls.o -T $(FIRMWARE_DIR)/riscv.ld -lstdc++
+	$(TOOLCHAIN_PREFIX)objdump -d $(PROJECT_DIR)/$(project)_firmware.elf > $(PROJECT_DIR)/$(project)_firmware.txt
+	$(TOOLCHAIN_PREFIX)objcopy -O verilog $(PROJECT_DIR)/$(project)_firmware.elf $(PROJECT_DIR)/firmware.tmp
 
-%.o: %.S
-	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) $<
+start.elf:
+	$(TOOLCHAIN_PREFIX)gcc $(CFLAGS) -nostdlib -o $(PROJECT_DIR)/$(project)_start.elf $(FIRMWARE_DIR)/start.s -T $(FIRMWARE_DIR)/start.ld -lstdc++
+	$(TOOLCHAIN_PREFIX)objcopy -O verilog $(PROJECT_DIR)/$(project)_start.elf $(PROJECT_DIR)/start.tmp
+
+$(OBJECT_C): $(SOURCE_C)
+	@echo "Hello are you there?"
+	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $@ $<
+
+$(OBJECT_S): $(SOURCE_S)
+	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $@ $<
+
+%::
+	@true
