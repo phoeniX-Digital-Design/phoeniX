@@ -37,7 +37,7 @@ OBJECT_S := $(addsuffix .o, $(basename $(SOURCE_S)))
 $(command): firmware.hex
 	@echo "Running Sample Project "$(project)"!"
 	rm -rf $(PROJECT_DIR)/*.tmp $(PROJECT_DIR)/*.mem $(PROJECT_DIR)/*.o $(PROJECT_DIR)/*.elf
-	iverilog -DFIRMWARE=\"$(PROJECT_DIR)/$(project)_firmware.hex\" -o $(CORE_NAME).vvp $(CORE_TESTBENCH)
+	iverilog -IModules -DFIRMWARE=\"$(PROJECT_DIR)/$(project)_firmware.hex\" -o $(CORE_NAME).vvp $(CORE_TESTBENCH)
 	vvp $(CORE_NAME).vvp 
 	gtkwave $(CORE_NAME).gtkw
 
