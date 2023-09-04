@@ -1,6 +1,6 @@
 module Fetch_Unit
 (
-	input enable,                    // Memory Interface module enable pin
+	input enable,                    // Memory interface enable pin
 
     input [31 : 0] PC,
 
