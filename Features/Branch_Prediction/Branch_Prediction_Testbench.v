@@ -1,13 +1,13 @@
 `include "Branch_Predictor.v"
 
-module Branch_Predictor_tb;
+module Branch_Prediction_Testbench;
 
   reg clk;
   reg reset;
   reg branch;
   wire predict;
 
-  Branch_Predictor dut 
+  Branch_Prediction uut 
   (
     .clk(clk),
     .reset(reset),

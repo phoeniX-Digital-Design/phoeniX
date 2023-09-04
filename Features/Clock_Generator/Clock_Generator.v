@@ -1,4 +1,7 @@
-module Clock_Generator #(parameter DIVIDER = 10)
+module Clock_Generator 
+#(
+    parameter DIVIDER = 10
+)
 (
     input        reset,
     input        clk_in,    // Input clock

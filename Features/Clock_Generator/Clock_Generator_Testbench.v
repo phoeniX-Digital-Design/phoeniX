@@ -1,6 +1,6 @@
 `include "Clock_Generator.v"
 
-module Clock_Generator_TB;
+module Clock_Generator_Testbench;
 
     reg  reset;
     reg  clk_in;
@@ -19,7 +19,7 @@ module Clock_Generator_TB;
 
     initial begin
         $dumpfile("Clock_Generator.vcd");
-        $dumpvars(0, Clock_Generator_TB);
+        $dumpvars(0, Clock_Generator_Testbench);
         reset  = 1;   // Restart : Initialize output clock
         clk_in = 0;   // Initialize input clock
         #20 
