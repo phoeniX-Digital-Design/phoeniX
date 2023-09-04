@@ -1,17 +1,16 @@
 /*
-    RV32IMF Core - Arithmetic Logic Unit
+    phoeniX RV32I core - Arithmetic Logic Unit
     - This unit executes R-Type, I-Type and J-Type instructions
     - Inputs bus_rs1, bus_rs2 comes from Register_File
     - Input immediate comes from Immediate_Generator
-    - Inputs forward_exe_rs1, forward_exe_rs2 comes from the execution-unit output (bypassed)
     - Input signals opcode, funct3, funct7, comes from Instruction_Decoder
     - Supported Instructions :
 
         I-TYPE : ADDI - SLTI - SLTIU            R-TYPE : ADD  - SUB  - SLL           
                  XORI - ORI  - ANDI                      SLT  - SLTU - XOR                         
-                 SLLI - SRLI - SRAI  - AUIPC             SRL  - SRA  - OR  - AND
+                 SLLI - SRLI - SRAI                      SRL  - SRA  - OR  - AND
         
-        J-TYPE : JAL  - JALR                             
+        J-TYPE : JAL  - JALR                    U-TYPE : AUIPC         
 */
 
 `ifndef OPCODES
