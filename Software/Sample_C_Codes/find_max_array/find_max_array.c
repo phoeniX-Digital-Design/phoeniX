@@ -25,6 +25,7 @@ int main()
 	int n = sizeof(arr) / sizeof(arr[0]);
 
 	// Function call
-	printf("Largest in given array is %d", largest(arr, n));
+	int max_array = largest(arr, n);
+	// printf("Largest in given array is %d", largest(arr, n));
 	return 0;
 }
