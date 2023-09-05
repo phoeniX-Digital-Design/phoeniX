@@ -2,7 +2,7 @@
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-    `define FIRMWARE
+	`define FIRMWARE
 `endif /*FIRMWARE*/
 
 module phoeniX_Testbench;

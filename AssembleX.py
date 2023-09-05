@@ -9,6 +9,7 @@ import os
 import sys
 import glob
 
+testbench_file = "phoeniX_Testbench.v"
 option = sys.argv[1]
 project_name = sys.argv[2]
 output_name = project_name + "_firmware" + ".hex"
@@ -41,15 +42,36 @@ final_hex_code = [elem for elem in modified_lines if elem != '\n\n']
 with open(output_file, "w") as file:
     file.writelines(final_hex_code)
 
-# OS : cmd commands to execute Verilog simulations:
-# 1 - Create VVP file form testbench
-# 2 - Execute VVP file and create VCD file
-# 3 - Open VCD file in GTKWave
-# Output wavforms will be automatically opened in GTKWave
+# Change firmware in the testbench file
+with open(testbench_file, 'r') as file:
+    lines = file.readlines()
+# Edit source files of testbench names
+with open(testbench_file, 'w') as file:
+    for line in lines:
+        # Change instruction memory source file
+        if line.startswith("\t`define FIRMWARE"):
+            print("Line found!")
+            # Modify the input file name
+            output_file = output_file.replace("\\", "\\\\")
+            modified_line = line.replace(line,'\t`define FIRMWARE '+ '"' + output_file + '"' +'\n' )
+            file.write(modified_line)
+        else:
+            file.write(line)
 
-print(output_file, type(output_file))
-command = f"iverilog -IModules -DFIRMWARE=\"{output_file}\" -o phoeniX.vvp phoeniX_Testbench.v"
-print(command)
-#os.system(command) 
-#os.system("vvp phoeniX.vvp") 
-#os.system("gtkwave phoeniX.gtkw") 
+# OS : cmd commands to execute Verilog simulations:
+
+os.system("iverilog -IModules -o phoeniX.vvp phoeniX_Testbench.v") 
+os.system("vvp phoeniX.vvp") 
+
+with open(testbench_file, 'w') as file:
+    for line in lines:
+        # Change instruction memory source file
+        if line.startswith("\t`define FIRMWARE"):
+            print("Line found!")
+            # Modify the input file name
+            modified_line = line.replace(line,'\t`define FIRMWARE\n' )
+            file.write(modified_line)
+        else:
+            file.write(line)
+
+os.system("gtkwave phoeniX.gtkw") 

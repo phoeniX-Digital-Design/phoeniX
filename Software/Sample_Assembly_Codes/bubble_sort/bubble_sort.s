@@ -108,3 +108,4 @@ main:
 	mv	a0,a5
 	lw	s0,44(sp)
 	addi	sp,sp,48
+    ebreak
