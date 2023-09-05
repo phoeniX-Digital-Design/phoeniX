@@ -2,7 +2,7 @@
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-    `define FIRMWARE
+    `define FIRMWARE "Software\\User_Codes\\fibonacci_assembly\\fibonacci_assembly_firmware.hex"
 `endif /*FIRMWARE*/
 
 module phoeniX_Testbench;
