@@ -50,6 +50,6 @@ with open(output_file, "w") as file:
 print(output_file, type(output_file))
 command = f"iverilog -IModules -DFIRMWARE=\"{output_file}\" -o phoeniX.vvp phoeniX_Testbench.v"
 print(command)
-os.system(command) 
-os.system("vvp phoeniX.vvp") 
-# os.system("gtkwave phoeniX.gtkw") 
+#os.system(command) 
+#os.system("vvp phoeniX.vvp") 
+#os.system("gtkwave phoeniX.gtkw") 
