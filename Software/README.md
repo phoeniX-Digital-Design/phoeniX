@@ -1,7 +1,7 @@
-Sample Codes for phoeniX core
+Software layer of phoeniX core
 ====================================== 
 
-In this directory, there are two subdirectories including sample codes in RISC-V assembly and C.
+In this directory, there are three subdirectories included.
 
 ### Assembly codes
 These RISC-V assembly codes were written and simulated in [Venus Simulator](https://marketplace.visualstudio.com/items?itemName=hm.riscv-venus). You can add new assembly codes and simulate them on phoeniX core using `AssembleX.py` script. Instructions are included in the script, you can execute it an read the manual inside the application.
