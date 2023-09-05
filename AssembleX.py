@@ -59,19 +59,16 @@ with open(testbench_file, 'w') as file:
             file.write(line)
 
 # OS : cmd commands to execute Verilog simulations:
-
 os.system("iverilog -IModules -o phoeniX.vvp phoeniX_Testbench.v") 
 os.system("vvp phoeniX.vvp") 
-
 with open(testbench_file, 'w') as file:
     for line in lines:
-        # Change instruction memory source file
+        # Change testbench file
         if line.startswith("\t`define FIRMWARE"):
             print("Line found!")
-            # Modify the input file name
-            modified_line = line.replace(line,'\t`define FIRMWARE\n' )
+            # Remove firmware file address
+            modified_line = line.replace(line,'\t`define FIRMWARE\n')
             file.write(modified_line)
         else:
             file.write(line)
-
 os.system("gtkwave phoeniX.gtkw") 
