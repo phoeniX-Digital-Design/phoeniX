@@ -30,8 +30,16 @@ This repository contains an open source CPU under the [GNU V3.0 license](https:/
 ## Features
 
  - Classic 5-stage pipline
+
+ The classic 5-stage pipeline in a processor improves instruction throughput by dividing execution into sequential stages. By incorporating data forwarding and bypassing options, such as operand and memory bypassing, the pipeline minimizes stalls caused by data hazards. These enhancements allow for efficient forwarding of data between stages, reducing dependencies on the register file and memory access delays. As a result, the pipeline achieves higher performance, reduced stalls, and improved instruction-level parallelism, enabling concurrent processing of independent instructions.
+
  - Distributed Control
+
+Distributed control logic refers to a design approach in which the control signals required for instruction execution are generated within the individual blocks or stages of a processor core, eliminating the need for a centralized control unit. In this paradigm, each block or stage is responsible for generating and managing its own control signals based on the current instruction being processed. This decentralized control mechanism offers several benefits. Firstly, it simplifies the overall processor architecture by removing the need for a separate control unit, reducing complexity and potentially improving the overall efficiency and performance. Secondly, distributed control logic can facilitate better pipelining and parallelism, as each block can independently generate control signals based on its own requirements, potentially reducing dependencies and increasing instruction-level parallelism. Additionally, distributed control logic can enhance modularity and scalability, as individual blocks can be designed and optimized independently, allowing for easier customization and future upgrades. Overall, this approach can contribute to more efficient and flexible processor designs, enabling improved performance and adaptability in various computing scenarios.
+
  - Modularity
+
+Modularity in processor design refers to the practice of breaking down the overall system into smaller, independent modules that can be designed, optimized, and tested separately. This approach offers several benefits. Firstly, modularity increases flexibility and reusability, as individual modules can be easily interchanged or upgraded without requiring significant changes to the entire system. This enables efficient customization and adaptation to different application requirements. Secondly, modularity aids in design verification and testing, as individual modules can be tested in isolation, simplifying the debugging process and reducing the overall development time. Additionally, modularity facilitates scalability, allowing for the addition or removal of modules to meet evolving needs. Moreover, modular designs can lead to improved overall system reliability, as faults or failures in one module are less likely to affect the functionality of the entire system. Overall, modularity in processor design promotes flexibility, reusability, scalability, ease of testing, and increased system reliability, making it a valuable approach in building efficient and adaptable processors.
 
 ## Directory Map
 
@@ -116,7 +124,7 @@ The `phoeniX.v` contains the main phoeniX RISC-V core and is included in the top
 
 phoeniX currently supports 32-bit word memories with synchronized access time. The core always addresses memory by a word aligned address and access a four byte frame from memory which is then operated on based on a `frame_mask` for half-word and byte operations. Designed with the influence of Harvard architecture, the phoeniX native memory interface ensures the elimination of structural hazard occurrences while accessing memory. It incorporates two distinctive address and data buses, specifically dedicated to instructions and data. As can be seen from the top module's port instantiations, both these memory interfaces for instruction have a data, address and control bus. Data bus related to data memory interface is bi-directional and therefore defined as `inout` net type while the data bus for instruction memory interface is uni-directional and is considered as an `input` from the processor point of view. 
 
-*Unaligned Memory Accesses:* phoeniX Load Store Unit does not support misaligned accesses. At the moment we are working to add support accesses that are not aligned on word boundaries by implementing the procedure with multiple separate aligned accesses requring additional clock cycles.
+*Unaligned Memory Accesses:* phoeniX Load Store Unit does not support misaligned accesses. At the moment we are working to add support accesses that are not aligned on word boundaries by implementing the procedure with multiple separate aligned accesses requiring  additional clock cycles.
 
 ## Building RISC-V Toolchain
 You can use the scripts provided in the original RISC-v repositories and [riscv-tools](https://github.com/riscv/riscv-tools). The default settings in the original repos build scripts will build a compiler, assembler and linker that can target any RISC-V ISA.
