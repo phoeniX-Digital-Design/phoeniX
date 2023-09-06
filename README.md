@@ -127,13 +127,8 @@ phoeniX currently supports 32-bit word memories with synchronized access time. T
 *Unaligned Memory Accesses:* phoeniX Load Store Unit does not support misaligned accesses. At the moment we are working to add support accesses that are not aligned on word boundaries by implementing the procedure with multiple separate aligned accesses requiring  additional clock cycles.
 
 ## Building RISC-V Toolchain
-<<<<<<< HEAD
 You can use the scripts provided in the original RISC-v repositories and [riscv-tools](https://github.com/riscv/riscv-tools). The default settings in the original repos build scripts will build a compiler, assembler and linker that can target any RISC-V ISA.
 You can also use the provided shell script in `/Setup`. All shell scripts and Makefiles provided in this repository target Ubuntu 20.04 unless otherwise specified. Simply run the `setup.sh` from your terminal, it will automatically install the required perquisites, iVerilog version 12 and gtkwave.
-=======
-In order to be able to compile your source files and run or simulate with RISC-V, you need to install `RISC-V GNU Compiler Toolchain`. You can follow the installation process from the [riscv-gnu-toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain) repository or use the scripts provided in the original RISC-v repositories and [riscv-tools](https://github.com/riscv/riscv-tools). The default settings in the original repos build scripts will build a compiler, assembler and linker that can target any RISC-V ISA.
-You can also use the provided shell script in `/Setup` directory. All shell scripts and Makefiles provided in this repository target Ubuntu 20.04 unless otherwise specified. Simply run the `setup.sh` from your terminal, it will automatically install the required prequistes, iVerilog version 12 and gtkwave.
->>>>>>> 9ed4f91812cbf00e8e6e297f5eaaac823383453b
 
 ```console
 user@Ubuntu:~$ git clone https://github.com/ArvinDelavari/phoeniX-RV32.git
