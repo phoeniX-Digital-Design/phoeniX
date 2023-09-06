@@ -29,6 +29,9 @@ This repository contains an open source CPU under the [GNU V3.0 license](https:/
 
 ## Features
 -----------
+ - Classic 5-stage pipline
+ - Distributed Control
+ - Modularity
 
 ## Directory Map
 ----------------
@@ -72,7 +75,7 @@ repository/
     │   │       ├── Program.o
     │   │       └── Program_firmware.hex        
     │   └── User_Codes/
-    │       └── Program_directory    /
+    │       └── Program_directory/
     │           ├── Program.c
     │           ├── Program.o
     │           └── Program_firmware.hex 
@@ -106,9 +109,14 @@ Each modules was designed with concepts of modularity and distributed-control in
 The `phoeniX.v` contains the main phoeniX RISC-V core and is included in the top directory of this repo:
 | Module                        | Description                                                                  |
 | ----------------------------- | ---------------------------------------------------------------------------- |
-| `phoeniX`                     | phoeniX 32 bit RISC-V core (RV32I) top Verilog module                       |
+| `phoeniX`                     | phoeniX 32 bit RISC-V core (RV32I) top Verilog module                        |
+| `phoeniX_Testbench`           | phoeniX testbench module including main core, memory and interface logic     |
 
 ## phoeniX Memory Interface
+
+phoeniX currently supports 32-bit word memories with synchronized access time.
+
+*Unaligned Memory Accesses:* phoeniX Load Store Unit does not support misaligned accesses.  
 
 There's a set of sample RISC-V assembly codes in the `\Sample_Codes` directory. These codes were written and simulated using [Venus Simulator](https://marketplace.visualstudio.com/items?itemName=hm.riscv-venus) using its Visual Studio Code extension. Venus can also create the HEX output file of the assembly code which will be needed to be given to the core, in the instruction memory. There are also some C codes included in [C codes](https://github.com/ArvinDelavari/PHOENIX-CORE/tree/main/Sample_Codes/C%20codes) directory. These codes are executed by [RISC-V compiler toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain) in Linux. In the end, outputs are turned into HEX format named `firmware.hex` and `firmware32.hex` and in order to be given to the CPU for simulations inside the testbench.
 
