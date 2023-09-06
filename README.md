@@ -128,7 +128,7 @@ phoeniX currently supports 32-bit word memories with synchronized access time. T
 
 ## Building RISC-V Toolchain
 You can use the scripts provided in the original RISC-v repositories and [riscv-tools](https://github.com/riscv/riscv-tools). The default settings in the original repos build scripts will build a compiler, assembler and linker that can target any RISC-V ISA.
-You can also use the provided shell script in `/Setup`. All shell scripts and Makefiles provided in this repository target Ubuntu 20.04 unless otherwise specified. Simply run the `setup.sh` from your terminal, it will automatically install the required prequistes, iVerilog version 12 and gtkwave.
+You can also use the provided shell script in `/Setup`. All shell scripts and Makefiles provided in this repository target Ubuntu 20.04 unless otherwise specified. Simply run the `setup.sh` from your terminal, it will automatically install the required perquisites, iVerilog version 12 and gtkwave.
 
 ```console
 user@Ubuntu:~$ git clone https://github.com/ArvinDelavari/phoeniX-RV32.git
@@ -139,7 +139,7 @@ user@Ubuntu:~$ ./setup.sh
 Using your favorite editor open `.bashrc` file from the `home` directory of your ubuntu. Replace `{user}` with your own user name and add the following lines to the end of file. This will your PATH environment variable and is required to run `RISC-V GNU Compiler` automatically without exporting `PATH` variable each time.
 
 Note
-: The script provided `setup.sh` and the following lines are set configure the toolchain based on `8.3.0` version of the compiler and toolchain. If you wish to install a different version please beware and change the requied lines in `setup.sh` and the following lines.
+: The script provided `setup.sh` and the following lines are set configure the toolchain based on `8.3.0` version of the compiler and toolchain. If you wish to install a different version please beware and change the required lines in `setup.sh` and the following lines.
 
 ```sh
 export PATH=/home/{user}/riscv_toolchain/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/bin:$PATH
