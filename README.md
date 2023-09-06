@@ -123,10 +123,10 @@ You can use the scripts provided in the original RISC-v repositories and [riscv-
 You can also use the provided shell script in `/Setup`. All shell scripts and Makefiles provided in this repository target Ubuntu 20.04 unless otherwise specified. Simply run the `setup.sh` from your terminal, it will automatically install the required prequistes, iVerilog version 12 and gtkwave.
 
 ```console
-git clone https://github.com/ArvinDelavari/phoeniX-RV32.git
-cd Setup
-chmod +x setup.sh
-./setup.sh
+user@Ubuntu:~$ git clone https://github.com/ArvinDelavari/phoeniX-RV32.git
+user@Ubuntu:~$ cd Setup
+user@Ubuntu:~$ chmod +x setup.sh
+user@Ubuntu:~$ ./setup.sh
 ```
 Using your favorite editor open `.bashrc` file from the `home` directory of your ubuntu. Replace `{user}` with your own user name and add the following lines to the end of file. This will your PATH environment variable and is required to run `RISC-V GNU Compiler` automatically without exporting `PATH` variable each time.
 
