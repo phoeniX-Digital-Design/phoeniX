@@ -28,13 +28,13 @@ This repository contains an open source CPU under the [GNU V3.0 license](https:/
 
 
 ## Features
------------
+
  - Classic 5-stage pipline
  - Distributed Control
  - Modularity
 
 ## Directory Map
-----------------
+
 The tree below provides a map to all directories and sub-directories of the repository. Detailed descriptions on contents of these directories are provided in the following sections and each specific `README.md`.
 <pre style="font-size:16px">
 repository/
@@ -88,7 +88,7 @@ repository/
 </pre>
 
 ## phoeniX Core Structure
--------------------------
+
 
 The repository contains a collection of Verilog modules that build up the phoeniX RISC-V processor. These building block modules are included in `\Modules`.
 Each modules was designed with concepts of modularity and distributed-control in mind. This deliberate approach allows for effortless replacement and configuration of individual building blocks, resulting in a simplified process.
