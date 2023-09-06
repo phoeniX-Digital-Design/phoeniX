@@ -29,17 +29,29 @@ This repository contains an open source CPU under the [GNU V3.0 license](https:/
 
 ## Features
 
- - Classic 5-stage pipline
+ - **Classic 5-stage pipline**
 
- The classic 5-stage pipeline in a processor improves instruction throughput by dividing execution into sequential stages. By incorporating data forwarding and bypassing options, such as operand and memory bypassing, the pipeline minimizes stalls caused by data hazards. These enhancements allow for efficient forwarding of data between stages, reducing dependencies on the register file and memory access delays. As a result, the pipeline achieves higher performance, reduced stalls, and improved instruction-level parallelism, enabling concurrent processing of independent instructions.
+ The classic 5-stage pipeline in a processor improves instruction throughput by dividing execution into sequential stages. By incorporating data forwarding and bypassing options, such as forwarding data from execution, memory or writeback stage, the pipeline minimizes stalls caused by data hazards. As a result, the pipeline achieves higher performance, reduced stalls, and improved instruction-level parallelism, enabling concurrent processing of independent instructions.
 
- - Distributed Control
+ - **Distributed Control**
 
-Distributed control logic refers to a design approach in which the control signals required for instruction execution are generated within the individual blocks or stages of a processor core, eliminating the need for a centralized control unit. In this paradigm, each block or stage is responsible for generating and managing its own control signals based on the current instruction being processed. This decentralized control mechanism offers several benefits. Firstly, it simplifies the overall processor architecture by removing the need for a separate control unit, reducing complexity and potentially improving the overall efficiency and performance. Secondly, distributed control logic can facilitate better pipelining and parallelism, as each block can independently generate control signals based on its own requirements, potentially reducing dependencies and increasing instruction-level parallelism. Additionally, distributed control logic can enhance modularity and scalability, as individual blocks can be designed and optimized independently, allowing for easier customization and future upgrades. Overall, this approach can contribute to more efficient and flexible processor designs, enabling improved performance and adaptability in various computing scenarios.
+Distributed control logic refers to a design approach in which the control signals required for instruction execution are generated within the individual blocks the processor core, eliminating the need for a centralized control unit. In this approach, each building block is responsible for generating and managing its own control signals based on the current instruction being processed. There are several benefits to this decentralized control mechanism.
 
- - Modularity
+Firstly, it simplifies the overall processor architecture by removing the need for a separate control unit, reducing complexity and potentially improving the overall performance. 
 
-Modularity in processor design refers to the practice of breaking down the overall system into smaller, independent modules that can be designed, optimized, and tested separately. This approach offers several benefits. Firstly, modularity increases flexibility and reusability, as individual modules can be easily interchanged or upgraded without requiring significant changes to the entire system. This enables efficient customization and adaptation to different application requirements. Secondly, modularity aids in design verification and testing, as individual modules can be tested in isolation, simplifying the debugging process and reducing the overall development time. Additionally, modularity facilitates scalability, allowing for the addition or removal of modules to meet evolving needs. Moreover, modular designs can lead to improved overall system reliability, as faults or failures in one module are less likely to affect the functionality of the entire system. Overall, modularity in processor design promotes flexibility, reusability, scalability, ease of testing, and increased system reliability, making it a valuable approach in building efficient and adaptable processors.
+Secondly, distributed control logic can facilitate better pipelining, as each block can independently generate control signals based on its own requirements, potentially reducing dependencies and increasing instruction-level parallelism. 
+
+Additionally, distributed control logic can enhance modularity and scalability as will be discussed in the next part. Since individual blocks can be designed and optimized independently, it allows for easier customization and future upgrades. Overall, this approach can contribute to a more flexible processor design.
+
+ - **Modularity**
+
+Modularity in processor design promotes flexibility, reusability, scalability, simpler testing, and increased system reliability by breaking down the procesor into smaller, independent modules that form the building blocks. Each one of these building blocks can be designed, optimized, and tested separately. This approach offers several benefits. 
+
+First, modularity increases flexibility and reusability, as individual modules can be easily interchanged or upgraded without requiring significant changes to the main core. This enables efficient customization and adaptation to different application requirements (e.g. adding a multiplier/divider module to the design would cause significant changes to a centralized control unit, but in this methodolgy, designing self-controlled execution units would lead to a much simple integration of the module to the main coe).
+
+Secondly, modularity aids in design verification and testing, as individual modules can be tested in isolated testbenches, simplifying the debugging process and reducing the overall development time. 
+
+Additionally, modular designs can lead to improved overall system reliability, as faults and failures in one module are less likely to affect the functionality of the entire processor.
 
 ## Directory Map
 
@@ -185,4 +197,3 @@ There's a set of sample RISC-V assembly codes in the `/Sample_Codes` directory. 
 ```
 ```
 </div>
-> blockquote
