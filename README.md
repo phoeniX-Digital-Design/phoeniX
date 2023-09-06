@@ -122,7 +122,7 @@ phoeniX currently supports 32-bit word memories with synchronized access time. T
 You can use the scripts provided in the original RISC-v repositories and [riscv-tools](https://github.com/riscv/riscv-tools). The default settings in the original repos build scripts will build a compiler, assembler and linker that can target any RISC-V ISA.
 You can also use the provided shell script in `/Setup`. All shell scripts and Makefiles provided in this repository target Ubuntu 20.04 unless otherwise specified. Simply run the `setup.sh` from your terminal, it will automatically install the required prequistes, iVerilog version 12 and gtkwave.
 
-```
+```console
 git clone https://github.com/ArvinDelavari/phoeniX-RV32.git
 cd Setup
 chmod +x setup.sh
