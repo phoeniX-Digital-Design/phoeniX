@@ -1,7 +1,7 @@
 phoeniX RISC-V CPU
-======================================
+==================
 
-**phoeniX** RISC-V processor was designed in Verilog HDL based on I extension of [RISC-V Instruction Set Architecture](http://riscv.org/) and can execute `RV32I` instructions. Other extensions will be covered in the upcoming updates. 
+**phoeniX** RISC-V processor is designed in Verilog HDL based on the 32-bit Base Instrcution Set of [RISC-V Instruction Set Architecture](http://riscv.org/) and can execute `RV32I` instructions. Support for other extensions will be covered in the upcoming updates. 
 
 You can find a list of full RISC-V assembly instructions in the [ISA Specifications Documents](https://riscv.org/technical/specifications/).
 
@@ -15,7 +15,20 @@ This repository contains an open source CPU under the [GNU V3.0 license](https:/
 - Contact us : arvin7807@gmail.com - farazghoreishy@gmail.com
 - Iran University of Science and Technology - Summer 2023
 
-## phoeniX core structure
+## Table of Contents
+
+- [Features](#Features)
+- [Directory Map](#Directory-Map)
+- [phoeniX Core Structure](#phoeniX-Core-Structure)
+- [phoeniX Memory Interface](#phoeniX-Memory-Interface)
+- [Building RISC-V Toolchain](#Building-RISC-V-Toolchain)
+- [phoeniX Execution Flow](#phoeniX-Execution-Flow)
+- [Synthesis Result](#Synthesis-Result)
+
+
+phoeniX Core Structure
+----------------------
+
 The repository contains a collection of Verilog modules that build up the phoeniX RISC-V processor. These building block modules are included in `\Modules` directory in main branch of the repository:
 
 | Module                        | Description                                                                                   |
@@ -42,3 +55,7 @@ There's a set of sample RISC-V assembly codes in the `\Sample_Codes` directory. 
 ## phoeniX Code Executant
 
 In the directory [phoeniX_Code_Executant](https://github.com/ArvinDelavari/PHOENIX-CORE/tree/main/phoeniX_Code_Executant) there are two subdirectories included for automation of simulation process on phoeniX core. One is designed for both Linux and Windows systems using [Venus Simulator](https://marketplace.visualstudio.com/items?itemName=hm.riscv-venus) extension on VS-Code and the other is only for Linux systems using [RISC-V compiler toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain). Both of these two systems are implemented using a Python script which you can execute and check out output of the simulations on the phoeniX core by following some simple steps. Further descriptions are included in the directory.
+
+
+term
+: definition
