@@ -1,0 +1,11 @@
+Qflow project preparation output log Thu Aug 31 14:02:30 2023
+
+--------------------------------
+Qflow project setup
+--------------------------------
+
+Technology set to osu018
+
+No actions specified on command line;
+creating qflow script file /home/arvin/Desktop/QFlow_test/phoeniX/qflow_exec.sh only.
+Uncomment lines in this file and source the file to run the flow.

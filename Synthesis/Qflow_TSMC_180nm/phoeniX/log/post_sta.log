@@ -1,0 +1,21 @@
+Qflow static timing analysis logfile created on Thu 31 Aug 2023 02:23:54 PM +0330
+Converting qrouter output to vesta delay format
+Running rc2dly -r phoeniX.rc -l /usr/local/share/qflow/tech/osu018/osu018_stdcells.lib -d phoeniX.dly
+Converting qrouter output to SPEF delay format
+Running rc2dly -D : -r phoeniX.rc -l /usr/local/share/qflow/tech/osu018/osu018_stdcells.lib -d phoeniX.spef
+Converting qrouter output to SDF delay format
+Running rc2dly -r phoeniX.rc -l /usr/local/share/qflow/tech/osu018/osu018_stdcells.lib -d phoeniX.sdf
+Running vesta static timing analysis with back-annotated extracted wire delays
+vesta -c -d phoeniX.dly --long phoeniX.rtlnopwr.v /usr/local/share/qflow/tech/osu018/osu018_stdcells.lib
+----------------------------------------------
+Vesta static timing analysis tool
+for qflow 1.3.17
+(c) 2013-2018 Tim Edwards, Open Circuit Design
+----------------------------------------------
+
+Parsing library "osu018_stdcells"
+End of library at line 6141
+Parsing module "phoeniX"
+Lib read /usr/local/share/qflow/tech/osu018/osu018_stdcells.lib:  Processed 6142 lines.
+ERROR: Net result_writeback_reg_10_! not found in hash table
+Verilog netlist read:  Processed 6450 lines.

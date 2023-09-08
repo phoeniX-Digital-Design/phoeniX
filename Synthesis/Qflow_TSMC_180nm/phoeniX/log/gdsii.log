@@ -1,0 +1,335 @@
+Qflow gdsii logfile created on Thu 31 Aug 2023 02:24:52 PM +0330
+magic -dnull -noconsole  /home/arvin/Desktop/QFlow_test/phoeniX/layout/generate_gds_phoeniX.tcl
+
+Magic 8.3 revision 50 - Compiled on Tue 15 Aug 2023 09:47:27 PM +0330.
+Starting magic under Tcl interpreter
+Using the terminal as the console.
+Using NULL graphics device.
+Processing system .magicrc file
+Input style lambda=0.10(p): scaleFactor=10, multiplier=1
+Contact size value ignored (using GDS generation rules).
+Contact size value ignored (using GDS generation rules).
+Contact size value ignored (using GDS generation rules).
+Contact size value ignored (using GDS generation rules).
+Contact size value ignored (using GDS generation rules).
+Contact size value ignored (using GDS generation rules).
+Loading "/home/arvin/Desktop/QFlow_test/phoeniX/layout/generate_gds_phoeniX.tcl" from command line.
+Root cell box:
+           width x height  (   llx,  lly  ), (   urx,  ury  )
+
+microns:    0.00 x 0.00    (  0.00,  0.00 ), (  0.00,  0.00 )
+lambda:        0 x 0       (     0,  0    ), (     0,  0    )
+Warning: Calma reading is not undoable!  I hope that's OK.
+Library written using GDS-II Release 3.0
+Library name: iit_stdcells
+Reading "FILL".
+Moving label "vdd" from space to metal1 in cell FILL.
+Moving label "gnd" from space to metal1 in cell FILL.
+Reading "AND2X1".
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+Moving label "Y" from space to metal1 in cell AND2X1.
+Moving label "B" from space to metal1 in cell AND2X1.
+Moving label "vdd" from space to metal1 in cell AND2X1.
+Moving label "gnd" from space to metal1 in cell AND2X1.
+Moving label "A" from space to metal1 in cell AND2X1.
+Reading "AND2X2".
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+Moving label "vdd" from space to metal1 in cell AND2X2.
+Moving label "gnd" from space to metal1 in cell AND2X2.
+Moving label "A" from space to metal1 in cell AND2X2.
+Moving label "B" from space to metal1 in cell AND2X2.
+Moving label "Y" from space to metal1 in cell AND2X2.
+Reading "AOI21X1".
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+Moving label "gnd" from space to metal1 in cell AOI21X1.
+Moving label "vdd" from space to metal1 in cell AOI21X1.
+Moving label "A" from space to metal1 in cell AOI21X1.
+Moving label "B" from space to metal1 in cell AOI21X1.
+Moving label "Y" from space to metal1 in cell AOI21X1.
+Moving label "C" from space to metal1 in cell AOI21X1.
+Reading "AOI22X1".
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+Moving label "gnd" from space to metal1 in cell AOI22X1.
+Moving label "vdd" from space to metal1 in cell AOI22X1.
+Moving label "C" from space to metal1 in cell AOI22X1.
+Moving label "D" from space to metal1 in cell AOI22X1.
+Moving label "Y" from space to metal1 in cell AOI22X1.
+Moving label "A" from space to metal1 in cell AOI22X1.
+Moving label "B" from space to metal1 in cell AOI22X1.
+Reading "BUFX2".
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+Moving label "vdd" from space to metal1 in cell BUFX2.
+Moving label "gnd" from space to metal1 in cell BUFX2.
+Moving label "A" from space to metal1 in cell BUFX2.
+Moving label "Y" from space to metal1 in cell BUFX2.
+Reading "BUFX4".
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+CIF file read warning: Input off lambda grid by 1/2; snapped to grid.
+Warning limit set:  Remaining warnings will not be reported.
+Moving label "vdd" from space to metal1 in cell BUFX4.
+Moving label "gnd" from space to metal1 in cell BUFX4.
+Moving label "A" from space to metal1 in cell BUFX4.
+Moving label "Y" from space to metal1 in cell BUFX4.
+Reading "DFFNEGX1".
+Moving label "CLK" from space to metal1 in cell DFFNEGX1.
+Moving label "vdd" from space to metal1 in cell DFFNEGX1.
+Moving label "D" from space to metal1 in cell DFFNEGX1.
+Moving label "gnd" from space to metal1 in cell DFFNEGX1.
+Moving label "Q" from space to metal1 in cell DFFNEGX1.
+Reading "NOR3X1".
+Moving label "vdd" from space to metal1 in cell NOR3X1.
+Moving label "gnd" from space to metal1 in cell NOR3X1.
+Moving label "B" from space to metal1 in cell NOR3X1.
+Moving label "C" from space to metal1 in cell NOR3X1.
+Moving label "A" from space to metal1 in cell NOR3X1.
+Moving label "Y" from space to metal1 in cell NOR3X1.
+Reading "DFFPOSX1".
+Moving label "vdd" from space to metal1 in cell DFFPOSX1.
+Moving label "D" from space to metal1 in cell DFFPOSX1.
+Moving label "gnd" from space to metal1 in cell DFFPOSX1.
+Moving label "Q" from space to metal1 in cell DFFPOSX1.
+Moving label "CLK" from space to metal1 in cell DFFPOSX1.
+Reading "FAX1".
+Moving label "gnd" from space to metal1 in cell FAX1.
+Moving label "vdd" from space to metal1 in cell FAX1.
+Moving label "A" from space to metal1 in cell FAX1.
+Moving label "B" from space to metal1 in cell FAX1.
+Moving label "C" from space to metal1 in cell FAX1.
+Moving label "YC" from space to metal1 in cell FAX1.
+Moving label "YS" from space to metal1 in cell FAX1.
+Reading "HAX1".
+Moving label "vdd" from space to metal1 in cell HAX1.
+Moving label "gnd" from space to metal1 in cell HAX1.
+Moving label "YC" from space to metal1 in cell HAX1.
+Moving label "A" from space to metal1 in cell HAX1.
+Moving label "B" from space to metal1 in cell HAX1.
+Moving label "YS" from space to metal1 in cell HAX1.
+Reading "INVX1".
+Moving label "A" from space to metal1 in cell INVX1.
+Moving label "Y" from space to metal1 in cell INVX1.
+Moving label "vdd" from space to metal1 in cell INVX1.
+Moving label "gnd" from space to metal1 in cell INVX1.
+Reading "INVX2".
+Moving label "vdd" from space to metal1 in cell INVX2.
+Moving label "gnd" from space to metal1 in cell INVX2.
+Moving label "Y" from space to metal1 in cell INVX2.
+Moving label "A" from space to metal1 in cell INVX2.
+Reading "INVX4".
+Moving label "vdd" from space to metal1 in cell INVX4.
+Moving label "gnd" from space to metal1 in cell INVX4.
+Moving label "Y" from space to metal1 in cell INVX4.
+Moving label "A" from space to metal1 in cell INVX4.
+Reading "INVX8".
+Moving label "vdd" from space to metal1 in cell INVX8.
+Moving label "gnd" from space to metal1 in cell INVX8.
+Moving label "A" from space to metal1 in cell INVX8.
+Moving label "Y" from space to metal1 in cell INVX8.
+Reading "NAND2X1".
+Moving label "vdd" from space to metal1 in cell NAND2X1.
+Moving label "Y" from space to metal1 in cell NAND2X1.
+Moving label "gnd" from space to metal1 in cell NAND2X1.
+Moving label "A" from space to metal1 in cell NAND2X1.
+Moving label "B" from space to metal1 in cell NAND2X1.
+Reading "NAND3X1".
+Moving label "B" from space to metal1 in cell NAND3X1.
+Moving label "vdd" from space to metal1 in cell NAND3X1.
+Moving label "gnd" from space to metal1 in cell NAND3X1.
+Moving label "A" from space to metal1 in cell NAND3X1.
+Moving label "C" from space to metal1 in cell NAND3X1.
+Moving label "Y" from space to metal1 in cell NAND3X1.
+Reading "NOR2X1".
+Moving label "vdd" from space to metal1 in cell NOR2X1.
+Moving label "B" from space to metal1 in cell NOR2X1.
+Moving label "gnd" from space to metal1 in cell NOR2X1.
+Moving label "Y" from space to metal1 in cell NOR2X1.
+Moving label "A" from space to metal1 in cell NOR2X1.
+Reading "OAI21X1".
+Moving label "gnd" from space to metal1 in cell OAI21X1.
+Moving label "vdd" from space to metal1 in cell OAI21X1.
+Moving label "A" from space to metal1 in cell OAI21X1.
+Moving label "B" from space to metal1 in cell OAI21X1.
+Moving label "Y" from space to metal1 in cell OAI21X1.
+Moving label "C" from space to metal1 in cell OAI21X1.
+Reading "OAI22X1".
+Moving label "gnd" from space to metal1 in cell OAI22X1.
+Moving label "vdd" from space to metal1 in cell OAI22X1.
+Moving label "D" from space to metal1 in cell OAI22X1.
+Moving label "C" from space to metal1 in cell OAI22X1.
+Moving label "A" from space to metal1 in cell OAI22X1.
+Moving label "B" from space to metal1 in cell OAI22X1.
+Moving label "Y" from space to metal1 in cell OAI22X1.
+Reading "OR2X1".
+Moving label "Y" from space to metal1 in cell OR2X1.
+Moving label "B" from space to metal1 in cell OR2X1.
+Moving label "vdd" from space to metal1 in cell OR2X1.
+Moving label "gnd" from space to metal1 in cell OR2X1.
+Moving label "A" from space to metal1 in cell OR2X1.
+Reading "OR2X2".
+Moving label "Y" from space to metal1 in cell OR2X2.
+Moving label "B" from space to metal1 in cell OR2X2.
+Moving label "vdd" from space to metal1 in cell OR2X2.
+Moving label "gnd" from space to metal1 in cell OR2X2.
+Moving label "A" from space to metal1 in cell OR2X2.
+Reading "TBUFX1".
+Moving label "vdd" from space to metal1 in cell TBUFX1.
+Moving label "gnd" from space to metal1 in cell TBUFX1.
+Moving label "EN" from space to metal1 in cell TBUFX1.
+Moving label "A" from space to metal1 in cell TBUFX1.
+Moving label "Y" from space to metal1 in cell TBUFX1.
+Reading "TBUFX2".
+Moving label "vdd" from space to metal1 in cell TBUFX2.
+Moving label "gnd" from space to metal1 in cell TBUFX2.
+Moving label "A" from space to metal1 in cell TBUFX2.
+Moving label "EN" from space to metal1 in cell TBUFX2.
+Moving label "Y" from space to metal1 in cell TBUFX2.
+Reading "XOR2X1".
+Moving label "Y" from space to metal1 in cell XOR2X1.
+Moving label "vdd" from space to metal1 in cell XOR2X1.
+Moving label "B" from space to metal1 in cell XOR2X1.
+Moving label "A" from space to metal1 in cell XOR2X1.
+Moving label "gnd" from space to metal1 in cell XOR2X1.
+Reading "MUX2X1".
+Moving label "S" from space to metal1 in cell MUX2X1.
+Moving label "vdd" from space to metal1 in cell MUX2X1.
+Moving label "gnd" from space to metal1 in cell MUX2X1.
+Moving label "Y" from space to metal1 in cell MUX2X1.
+Moving label "A" from space to metal1 in cell MUX2X1.
+Moving label "B" from space to metal1 in cell MUX2X1.
+Reading "XNOR2X1".
+Moving label "A" from space to metal1 in cell XNOR2X1.
+Moving label "B" from space to metal1 in cell XNOR2X1.
+Moving label "gnd" from space to metal1 in cell XNOR2X1.
+Moving label "vdd" from space to metal1 in cell XNOR2X1.
+Moving label "Y" from space to metal1 in cell XNOR2X1.
+Reading "LATCH".
+Moving label "D" from space to metal1 in cell LATCH.
+Moving label "Q" from space to metal1 in cell LATCH.
+Moving label "gnd" from space to metal1 in cell LATCH.
+Moving label "vdd" from space to metal1 in cell LATCH.
+Moving label "CLK" from space to metal1 in cell LATCH.
+Reading "DFFSR".
+Moving label "gnd" from space to metal1 in cell DFFSR.
+Moving label "vdd" from space to metal1 in cell DFFSR.
+Moving label "D" from space to metal1 in cell DFFSR.
+Moving label "S" from space to metal1 in cell DFFSR.
+Moving label "R" from space to metal1 in cell DFFSR.
+Moving label "Q" from space to metal1 in cell DFFSR.
+Moving label "CLK" from space to metal1 in cell DFFSR.
+Reading "CLKBUF1".
+Moving label "A" from space to metal1 in cell CLKBUF1.
+Moving label "vdd" from space to metal1 in cell CLKBUF1.
+Moving label "gnd" from space to metal1 in cell CLKBUF1.
+Moving label "Y" from space to metal1 in cell CLKBUF1.
+Reading "CLKBUF2".
+Moving label "vdd" from space to metal1 in cell CLKBUF2.
+Moving label "gnd" from space to metal1 in cell CLKBUF2.
+Moving label "A" from space to metal1 in cell CLKBUF2.
+Moving label "Y" from space to metal1 in cell CLKBUF2.
+Reading "CLKBUF3".
+Moving label "gnd" from space to metal1 in cell CLKBUF3.
+Moving label "vdd" from space to metal1 in cell CLKBUF3.
+Moving label "A" from space to metal1 in cell CLKBUF3.
+Moving label "Y" from space to metal1 in cell CLKBUF3.
+Reading "iit_stdcells".
+phoeniX: 10000 rects
+phoeniX: 20000 rects
+phoeniX: 30000 rects
+phoeniX: 40000 rects
+phoeniX: 50000 rects
+phoeniX: 60000 rects
+phoeniX: 70000 rects
+phoeniX: 80000 rects
+Processing timestamp mismatches: FILL, OAI21X1, BUFX2, NOR2X1, AOI22X1, INVX1, OAI22X1, NAND2X1, INVX2, NAND3X1, INVX4, DFFPOSX1, OR2X2, BUFX4, AOI21X1, XOR2X1, NOR3X1, CLKBUF1, AND2X2, XNOR2X1, INVX8, MUX2X1.
+GDS generating script ended on Thu 31 Aug 2023 02:24:57 PM +0330
