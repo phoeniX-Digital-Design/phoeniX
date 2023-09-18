@@ -1,4 +1,4 @@
-<img src="https://github.com/ArvinDelavari/phoeniX-RV32/blob/%F0%9F%94%A7-execution-flow/Documents/phoeniX%20Logo%20files/phoenix_logotype_bb_transparent.png" alt="Image" width="200" height="100" style="vertical-align:middle"> RISC-V CPU  
+<img src="https://github.com/ArvinDelavari/phoeniX-RV32/blob/%F0%9F%94%A7-execution-flow/Documents/phoeniX%20Logo%20files/phoenix_logotype_bb_transparent.png" alt="Image" width="250" height="150" style="vertical-align:middle"> RISC-V CPU  
 ==================
 
 
