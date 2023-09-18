@@ -1,5 +1,4 @@
 phoeniX RISC-V CPU <img src="[your-image-url-or-path](https://github.com/ArvinDelavari/phoeniX-RV32/assets/86099054/30a6829e-b47d-4466-b7bc-7c06d926f439)" alt="Image" width="100" height="100" style="vertical-align:middle"> 
-
 ==================
 <div align="justify">
  
