@@ -1,6 +1,8 @@
-phoeniX RISC-V CPU <img src="[your-image-url-or-path](https://github.com/ArvinDelavari/phoeniX-RV32/assets/86099054/30a6829e-b47d-4466-b7bc-7c06d926f439)" alt="Image" width="100" height="100" style="vertical-align:middle"> 
+phoeniX RISC-V CPU  ![phoenix_logotype_bb_transparent](https://github.com/ArvinDelavari/phoeniX-RV32/assets/86099054/09163837-a02b-40cd-beef-29903a06ee99)
 ==================
 <div align="justify">
+
+
  
 **phoeniX** RISC-V processor is designed in Verilog HDL based on the 32-bit Base Instrcution Set of [RISC-V Instruction Set Architecture](http://riscv.org/) and can execute `RV32I` instructions. Support for other extensions will be covered in the upcoming updates. 
 
