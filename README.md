@@ -1,5 +1,7 @@
-phoeniX RISC-V CPU  ![phoenix_logotype_bb_transparent](https://github.com/ArvinDelavari/phoeniX-RV32/assets/86099054/09163837-a02b-40cd-beef-29903a06ee99)
+phoeniX RISC-V CPU  <img src="https://github.com/ArvinDelavari/phoeniX-RV32/blob/%F0%9F%94%A7-execution-flow/Documents/phoeniX%20Logo%20files/phoenix_logotype_bb.png" alt="Image" width="100" height="100" style="vertical-align:middle">
 ==================
+
+
 <div align="justify">
 
 
