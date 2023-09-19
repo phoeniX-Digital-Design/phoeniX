@@ -120,6 +120,8 @@ Each modules was designed with concepts of modularity and distributed-control in
 
 </div>
 
+![Alt text](https://github.com/ArvinDelavari/phoeniX-RV32/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoeniX_Block_Diagram.png "phoeniX Block Diagram")
+
 | Module                        | Description                                                                                   |
 | ----------------------------- | --------------------------------------------------------------------------------------------- |
 | `Address_Generator`           | Generating address for BRANCH, JUMP and LOAD/STORE instructions                               |
