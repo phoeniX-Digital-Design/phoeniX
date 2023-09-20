@@ -225,9 +225,9 @@ Provided that you name your project sub-directory correctly and the RISC-V Toolc
 #### Running Sample Codes
 <div align="justify">
 
-We have meticulously developed a sophisticated, lightweight, and user-friendly software solution with the help of Python. Our innovative software, `AssembleX`, has been crafted to cater to the specific needs of Windows systems, enabling seamless execution of assembly code on the phoeniX processor. 
+We have meticulously developed a lightweight and user-friendly software solution with the help of Python. Our execution assistant software, `AssembleX`, has been crafted to cater to the specific needs of Windows systems, enabling seamless execution of assembly code on the phoeniX processor. 
 
-This tool significantly enhances the efficiency and effectiveness of the code execution process, offering a streamlined experience for users seeking to enter the realm of assembly programming in a very simple way.
+This tool  enhances the efficiency of the code execution process, offering a streamlined experience for users seeking to enter the realm of assembly programming on pheoniX processor in a very simple and user-friendly way.
 
 Before running the script, note that the assembly output of the Venus Simulator for the code must be also saved in the project directory.
 To run any of these sample projects simply run python `AssembleX.py sample` followed by the name of the project passed as a variable named project to the Python script.
