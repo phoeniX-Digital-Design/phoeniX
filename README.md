@@ -265,7 +265,9 @@ The physical design and layout of phoeniX was done ysing [Qflow](http://opencirc
 The OSU018 technology, also known as the TSMC 0.18 micron process technology, which was used for phoeniX layout dessisgn, is a widely adopted semiconductor fabrication process developed by Oklahoma State University. It belongs to the 180nm technology node, which refers to the minimum feature size or gate length of transistors produced using this process.
 The OSU018 technology offers several key characteristics and capabilities that make it suitable for a range of digital integrated circuit designs. 
 
-
+Here is a picture of final layout result of the phoeniX core using Qflow:
+![IMG_6971](https://github.com/phoeniX-Digital-Design/phoeniX/assets/86099054/1f605f7b-3548-4740-af99-e05e437f641e)
+![IMG_6972](https://github.com/phoeniX-Digital-Design/phoeniX/assets/86099054/8ac48aaa-0ae1-45ec-a979-e9d0693151ea)
 
 The Static Time Analysis (STA) results indicate that the maximum delay observed in the core modules, and consequently in the pipeline stages, is approximately 4 nanoseconds. Setting the **clock cycle time at 4 nanoseconds** allows for sufficient margin to account for the maximum delay across the modules, ensuring that data propagates through the pipeline within the specified time frame. 
 By adhering to this timing requirement, the processor can achieve a performance level of approximately **250 MHz**, enabling efficient execution of instructions and supporting the desired operational specifications.
