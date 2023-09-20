@@ -225,7 +225,10 @@ Provided that you name your project sub-directory correctly and the RISC-V Toolc
 #### Running Sample Codes
 <div align="justify">
 
-We have meticulously developed a sophisticated, lightweight, and user-friendly software solution with the help of Python. Our innovative software, `AssembleX`, has been crafted to cater to the specific needs of Windows systems, enabling seamless execution of assembly code on the phoeniX processor. This tool significantly enhances the efficiency and effectiveness of the code execution process, offering a streamlined experience for users seeking to enter the realm of assembly programming in a very simple way.
+We have meticulously developed a sophisticated, lightweight, and user-friendly software solution with the help of Python. Our innovative software, `AssembleX`, has been crafted to cater to the specific needs of Windows systems, enabling seamless execution of assembly code on the phoeniX processor. 
+
+This tool significantly enhances the efficiency and effectiveness of the code execution process, offering a streamlined experience for users seeking to enter the realm of assembly programming in a very simple way.
+
 Before running the script, note that the assembly output of the Venus Simulator for the code must be also saved in the project directory.
 To run any of these sample projects simply run python `AssembleX.py sample` followed by the name of the project passed as a variable named project to the Python script.
 The input command format for the terminal follows the structure illustrated below:
@@ -242,13 +245,11 @@ After execution of this script, firmware file will be generated and this final f
 #### Running Your Own Code
 <div align="justify">
 
-In order to run your own code on phoeniX, create a directory named to your project such as `/my_project` in `/Software/User_Codes/`. Put all your `.c` and `.s` files in `/my_project` and run the following `make` command from the main directory:
+In order to run your own code on phoeniX, create a directory named to your project such as `/my_project in /Software/User_Codes/`. Put all your ``user_code.s` files in my_project and run the following command from the main directory:
 ```
-make code project=my_project
+python AssembleX.py code my_project
 ```
-Provided that you name your project sub-directory correctly and the RISC-V Toolchain is configured without any troubles on your machine, the Makefile will compile all your source files separately, then using the linker script `riscv.ld` provided in `/Firmware` it links all the object files necessary together and creates `firmware.elf`. It then creates `start.elf` which is built from `start.s` and `start.ld` and concatenate these together and finally forms the `my_project_firmware.hex`. After that, `iverilog` and `gtkwave` are used to compile the design and view the selected waveforms.
-> Further Configurations
-: The default testbench provided as `phoeniX_Testbench.v` is currently set to support up to 4MBytes of memory and the stack pointer register `sp` is configured accordingly. If you wish to change this, you need configure both the testbench and the initial value the `sp` is set to in `/Firmware/start.s`. If you wish to use other specific libraries and header files not provided in `/Firmware` please beware you may need to change linker scripts `riscv.ld` and `start.ld`.
+Provided that you name your project sub-directory correctly the AssembleX software will create `my_project_firmware.hex` and fed it directly to the testbench of phoeniX processor. After that, iverilog and GTKWave are used to compile the design and view the selected waveforms.
 </div>
 
 
