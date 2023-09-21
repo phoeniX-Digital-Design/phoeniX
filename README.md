@@ -1,12 +1,12 @@
-<div class="container">
-    <div class="image">
+<div>
+    <div>
         <picture>
             <source media="(prefers-color-scheme: dark)" srcset="https://github.com/phoeniX-Digital-Design/.github/blob/main/profile/phoenix_logotype_bb_transparent.png" width="320" height="150" style="vertical-align:middle">
             <img alt="logo in light mode and dark mode" src="https://github.com/phoeniX-Digital-Design/.github/blob/main/profile/phoenix_logotype_transparent.png" width="320" height="150" style="vertical-align:middle"> 
         </picture> 
     </div>
-    <div class="text">
-        <h1>RISC-V CPU</h1>
+    <div>
+        <h1 style="vertical-align:middle">RISC-V CPU</h1>
     </div>
 </div>
 <!-- ![logotype](https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoenix_logotype_bb_transparent_320x150.png#gh-dark-mode-only)
@@ -292,20 +292,3 @@ By adhering to this timing requirement, the processor can achieve a performance 
 
 </div>
 
-<style>
-    .container {
-    display: flex;
-    align-items: center;
-    justify-content: center
-    }
-    img {
-    max-width: 100%
-    }
-    .image {
-    flex-basis: 40%
-    }
-    .text {
-    font-size: 20px;
-    padding-left: 20px;
-    }
-</style>
