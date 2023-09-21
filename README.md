@@ -1,7 +1,7 @@
 <picture>
- <source media="(prefers-color-scheme: dark)" srcset="https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoenix_logotype_bb_transparent.png">
- <img alt="Shows an illustrated sun in light color mode and a moon with stars in dark color mode." src="https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoenix_logotype_transparent.png">
-</picture>
+ <source media="(prefers-color-scheme: dark)" srcset="https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoenix_logotype_bb_transparent.png" alt="Light Theme Image" width="320" height="150" style="vertical-align:middle">
+ <img alt="Shows an illustrated sun in light color mode and a moon with stars in dark color mode." src="https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoenix_logotype_transparent.png" alt="Light Theme Image" width="320" height="150" style="vertical-align:middle">
+</picture> RISC-V CPU
  
 ==================
 
