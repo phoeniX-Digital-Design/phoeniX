@@ -3,7 +3,7 @@
     <img alt="logo in light mode and dark mode" src="https://github.com/phoeniX-Digital-Design/.github/blob/main/profile/phoenix_logotype_transparent.png" width="320" height="150" style="vertical-align:middle"> 
 </picture>  -->
 ![logo](https://github.com/phoeniX-Digital-Design/.github/blob/main/profile/phoenix_logotype_bb_transparent_320x150.png#gh-dark-mode-only)
-![logo](https://github.com/phoeniX-Digital-Design/.github/blob/main/profile/phoenix_logotype_transparent_320x150.png#gh-light-mode-only)
+<!-- ![logo](https://github.com/phoeniX-Digital-Design/.github/blob/main/profile/phoenix_logotype_transparent_320x150.png#gh-light-mode-only) -->
 RISC-V CPU
 ==========
 
