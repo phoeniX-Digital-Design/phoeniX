@@ -1,4 +1,4 @@
-Address Genrator
+Address Generator
 ============
 
 |   Signal  |   Width  | Direction |           Description          |
