@@ -1,12 +1,12 @@
 <div>
-    <div>
+    <div style=display:inline-block>
         <picture>
             <source media="(prefers-color-scheme: dark)" srcset="https://github.com/phoeniX-Digital-Design/.github/blob/main/profile/phoenix_logotype_bb_transparent.png" width="320" height="150" style="vertical-align:middle">
             <img alt="logo in light mode and dark mode" src="https://github.com/phoeniX-Digital-Design/.github/blob/main/profile/phoenix_logotype_transparent.png" width="320" height="150" style="vertical-align:middle"> 
         </picture> 
     </div>
-    <div>
-        <h1 style="vertical-align:middle">RISC-V CPU</h1>
+    <div style=display:inline-block>
+        <h1>RISC-V CPU</h1>
     </div>
 </div>
 <!-- ![logotype](https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoenix_logotype_bb_transparent_320x150.png#gh-dark-mode-only)
