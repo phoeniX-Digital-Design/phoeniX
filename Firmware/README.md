@@ -13,5 +13,5 @@ The Makefile relies on essential scripts located in the `Firmware` directory, wh
 - `syscall.c` : C code implementing a minimalistic set of system calls and related functions
 - `hex_converter.py` : Python script to generate a Verilog standard hex file representing the instruction memory
 
-However, users can customize these scripts to suit their specific application requirements if needed, while still ensuring the Makefile's integrity and functionality. Detailed descriptions of each script in the Firmware directory are provided below.
+However, users can customize these scripts to suit their specific application requirements if needed, while still ensuring the Makefile's integrity and functionality.
 </div>
