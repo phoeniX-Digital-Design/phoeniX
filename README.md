@@ -75,10 +75,11 @@ repository/
     │   ├── Clock_Genrator/
     │   └── ...
     ├── Synthesis/
-    │   └── Qflow_TSMC_180nm/
-    │       ├── images/
-    │       ├── gds/
-    │       └── ...
+    │   ├── Qflow_TSMC_180nm/
+    │   │   ├── images/
+    │   │   ├── gds/
+    │   │   └── ...
+    │   └── Vivado_Schematics
     ├── Modules/
     │   ├── Address_Generator.v
     │   ├── Arithmetic_Logic_Unit.v
