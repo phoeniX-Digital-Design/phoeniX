@@ -1,18 +1,7 @@
-<div>
-    <div style="float: left">
-        <picture>
-            <source media="(prefers-color-scheme: dark)" srcset="https://github.com/phoeniX-Digital-Design/.github/blob/main/profile/phoenix_logotype_bb_transparent.png" width="320" height="150">
-            <img alt="logo in light mode and dark mode" src="https://github.com/phoeniX-Digital-Design/.github/blob/main/profile/phoenix_logotype_transparent.png" width="320" height="150"> 
-        </picture> 
-    </div>
-    <div>
-        RISC-V CPU
-    </div>
-</div>
-<!-- ![logotype](https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoenix_logotype_bb_transparent_320x150.png#gh-dark-mode-only)
-![logotype](https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoenix_logotype_transparent_320x150.png#gh-light-mode-only) -->
-<!-- RISC-V CPU -->
-<!-- ========== -->
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoenix_full_logotype_bb.png" width="500" height="150" style="vertical-align:middle">
+    <img alt="logo in light mode and dark mode" src="https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoenix_full_logotype.png" width="500" height="150" style="vertical-align:middle"> 
+</picture> 
 
 <div align="justify">
  
