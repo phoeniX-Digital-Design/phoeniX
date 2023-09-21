@@ -1,4 +1,7 @@
-# Address Genrator
+phoeniX Processor Modules
+==========================
+
+## Address Genrator
 Responsible for generating target address of BRANCH, JUMP and LOAD/STORE instructions
 |   Signal  |   Width  | Direction |           Description          |
 |:---------:|:--------:|:---------:|:------------------------------:|
@@ -8,7 +11,7 @@ Responsible for generating target address of BRANCH, JUMP and LOAD/STORE instruc
 | immediate | [31 : 0] |   input   | Immediate field of instruction |
 |  address  | [31 : 0] |   output  |  Target Address of instruction |
 
-# Arithmetic_Logic_Unit
+## Arithmetic_Logic_Unit
 Arithemtic logic unit with support for `I_TYPE` and `R_TYPE` instructions plus `U_TYPE` and return address calculations for `J-TYPE`
 |   Signal   |   Width  | Direction |                  Description                  |
 |:----------:|:--------:|:---------:|:---------------------------------------------:|
@@ -21,7 +24,7 @@ Arithemtic logic unit with support for `I_TYPE` and `R_TYPE` instructions plus `
 |  immediate | [31 : 0] |   input   |         Immediate field of instruction        |
 | alu_output | [31 : 0] |   output  | Result of alu operations on selected operands |
 
-# Fetch_Unit
+## Fetch_Unit
 Logic required for fetching instructions from memory and setting value of the program counter
 |  Signal |   Width  | Direction |                 Description                |
 |:-------:|:--------:|:---------:|:------------------------------------------:|
@@ -30,7 +33,7 @@ Logic required for fetching instructions from memory and setting value of the pr
 | address | [31 : 0] |   input   | PC target address caused by jump or branch |
 | next_PC | [31 : 0] |   output  |        Value to latch on PC register       |
 
-# Hazard_Forward_Unit
+## Hazard_Forward_Unit
 Module responsible for detecting true data dependency detection and forwarding logic to reduce stalls 
 |        Signal       |   Width  | Direction |                    Description                    |
 |:-------------------:|:--------:|:---------:|:-------------------------------------------------:|
@@ -47,7 +50,7 @@ Module responsible for detecting true data dependency detection and forwarding l
 |    forward_enable   |     1    |   output  |  Enable signal for controlling forwarding action  |
 |     forward_data    | [31 : 0] |   output  |         Data to be forwarded to the source        |
 
-# Immediate Generator
+## Immediate Generator
 Parser of a fetched instruction for generating immediate values according to the instruction's type 
 |      Signal      |  Width   | Direction |                          Description                          |
 |:----------------:|:--------:|:---------:|:-------------------------------------------------------------:|
@@ -55,7 +58,7 @@ Parser of a fetched instruction for generating immediate values according to the
 | instruction_type |  [2 : 0] |   input   | Type of the instruction used for different immediate variants |
 |     immediate    | [31 : 0] |   output  |         Immediate value generated from the instruction        |
 
-# Instruction Decoder
+## Instruction Decoder
 Responsible for decomposing an instruction to separate fields
 |      Signal      |  Width   | Direction |                                 Description                                 |
 |:----------------:|:--------:|:---------:|:---------------------------------------------------------------------------:|
@@ -72,7 +75,7 @@ Responsible for decomposing an instruction to separate fields
 |   read_enable_2  |     1    |   output  |       Correctness of reading second source register from register file      |
 |   write_enable   |     1    |   output  |         Correctness of writing destination register to register file        |
 
-# Jump Branch Unit
+## Jump Branch Unit
 Condition checker and decision maker for individual branch types and jump instruction 
 |       Signal       |  Width   | Direction |                    Description                   |
 |:------------------:|:--------:|:---------:|:------------------------------------------------:|
@@ -83,7 +86,7 @@ Condition checker and decision maker for individual branch types and jump instru
 |         rs2        | [31 : 0] |   input   |                 Source register 2                |
 | jump_branch_enable |     1    |   output  | Indicator whether jump or branch should be taken |
 
-# Load Store Unit
+## Load Store Unit
 Module responsible for Load and Store operations for aligned addresses and wordsize management 
 |            Signal           |  Width   | Direction |                                      Description                                     |
 |:---------------------------:|:--------:|:---------:|:------------------------------------------------------------------------------------:|
@@ -98,7 +101,7 @@ Module responsible for Load and Store operations for aligned addresses and words
 | memory_interface_frame_mask |  [3 : 0] |   output  | Frame mask for selection of relevant bytes of the memory frame   as seen by the core |
 |    memory_interface_data    | [31 : 0] |   inout   |         Data bits transferring during the processor and memory   interactions        |
 
-# Register File
+## Register File
 A parametrized register file suitable for general purpose and control-status registers benefiting from 2 read ports and 1 write port
 |     Signal    |  Width   | Direction |                        Description                        |
 |:-------------:|:--------:|:---------:|:---------------------------------------------------------:|
