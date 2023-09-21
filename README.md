@@ -1,20 +1,3 @@
-<style>
-    .container {
-    display: flex;
-    align-items: center;
-    justify-content: center
-    }
-    img {
-    max-width: 100%
-    }
-    .image {
-    flex-basis: 40%
-    }
-    .text {
-    font-size: 20px;
-    padding-left: 20px;
-    }
-</style>
 <div class="container">
     <div class="image">
         <picture>
@@ -308,3 +291,21 @@ The Static Time Analysis (STA) results indicate that the maximum delay observed 
 By adhering to this timing requirement, the processor can achieve a performance level of approximately **250 MHz**, enabling efficient execution of instructions and supporting the desired operational specifications.
 
 </div>
+
+<style>
+    .container {
+    display: flex;
+    align-items: center;
+    justify-content: center
+    }
+    img {
+    max-width: 100%
+    }
+    .image {
+    flex-basis: 40%
+    }
+    .text {
+    font-size: 20px;
+    padding-left: 20px;
+    }
+</style>
