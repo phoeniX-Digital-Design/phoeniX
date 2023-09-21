@@ -1,7 +1,7 @@
 phoeniX Processor Modules
 ==========================
 
-## Address Genrator
+## Address Generator
 Responsible for generating target address of BRANCH, JUMP and LOAD/STORE instructions
 |   Signal  |   Width  | Direction |           Description          |
 |:---------:|:--------:|:---------:|:------------------------------:|
@@ -11,7 +11,7 @@ Responsible for generating target address of BRANCH, JUMP and LOAD/STORE instruc
 | immediate | [31 : 0] |   input   | Immediate field of instruction |
 |  address  | [31 : 0] |   output  |  Target Address of instruction |
 
-## Arithmetic_Logic_Unit
+## Arithmetic Logic Unit
 Arithemtic logic unit with support for `I_TYPE` and `R_TYPE` instructions plus `U_TYPE` and return address calculations for `J-TYPE`
 |   Signal   |   Width  | Direction |                  Description                  |
 |:----------:|:--------:|:---------:|:---------------------------------------------:|
@@ -24,7 +24,7 @@ Arithemtic logic unit with support for `I_TYPE` and `R_TYPE` instructions plus `
 |  immediate | [31 : 0] |   input   |         Immediate field of instruction        |
 | alu_output | [31 : 0] |   output  | Result of alu operations on selected operands |
 
-## Fetch_Unit
+## Fetch Unit
 Logic required for fetching instructions from memory and setting value of the program counter
 |  Signal |   Width  | Direction |                 Description                |
 |:-------:|:--------:|:---------:|:------------------------------------------:|
@@ -33,7 +33,7 @@ Logic required for fetching instructions from memory and setting value of the pr
 | address | [31 : 0] |   input   | PC target address caused by jump or branch |
 | next_PC | [31 : 0] |   output  |        Value to latch on PC register       |
 
-## Hazard_Forward_Unit
+## Hazard Forward Unit
 Module responsible for detecting true data dependency detection and forwarding logic to reduce stalls 
 |        Signal       |   Width  | Direction |                    Description                    |
 |:-------------------:|:--------:|:---------:|:-------------------------------------------------:|
