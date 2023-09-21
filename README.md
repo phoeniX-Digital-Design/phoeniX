@@ -76,8 +76,9 @@ repository/
     │   └── ...
     ├── Synthesis/
     │   ├── Qflow_TSMC_180nm/
-    │   │   ├── images/
-    │   │   ├── gds/
+    │   │   ├── layout/
+    │   │   ├── synthesis/
+    │   │   ├── log/
     │   │   └── ...
     │   └── Vivado_Schematics
     ├── Modules/
