@@ -1,27 +1,7 @@
-<div class="theme-image">
-
-  <img src="https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoenix_logotype_transparent.png" alt="Light Theme Image" width="320" height="150" style="vertical-align:middle">
-  <img src="https://github.com/ArvinDelavari/phoeniX-RV32/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoenix_logotype_bb_transparent.png" alt="Dark Theme Image" width="320" height="150" style="vertical-align:middle">
-</div>
-
-<style>
-
-.theme-image img {
-  display: none;
-}
-
-@media (prefers-color-scheme: light) {
-  .theme-image img:first-child {
-    display: block;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .theme-image img:last-child {
-    display: block;
-  }
-}
-</style>
+<picture>
+ <source media="(prefers-color-scheme: dark)" srcset="https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoenix_logotype_bb_transparent.png">
+ <img alt="Shows an illustrated sun in light color mode and a moon with stars in dark color mode." src="https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoenix_logotype_transparent.png">
+</picture>
  
 ==================
 
