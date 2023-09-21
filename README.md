@@ -165,8 +165,13 @@ You can also use the provided shell script in `/Setup` directory. All shell scri
 </div>
 
 ```console
+<<<<<<< HEAD
 user@Ubuntu:~$ git clone https://github.com/ArvinDelavari/phoeniX-RV32.git
 user@Ubuntu:~$ cd phoeniX-RV32
+=======
+user@Ubuntu:~$ git clone https://github.com/phoeniX-Digital-Design/phoeniX.git
+user@Ubuntu:~$ cd phoeniX
+>>>>>>> efd290ab979470fa3ec6ac2ea5d5debb86ab4b5a
 user@Ubuntu:~$ cd Setup
 user@Ubuntu:~$ chmod +x setup.sh
 user@Ubuntu:~$ ./setup.sh
