@@ -1,7 +1,6 @@
 ![image](https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoenix_logotype_bb_transparent.png#gh-dark-mode-only)
 ![image](https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoenix_logotype_transparent.png#gh-light-mode-only)
 
-=============== 
 
 <div align="justify">
  
