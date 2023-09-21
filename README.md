@@ -123,7 +123,7 @@ Each modules was designed with concepts of modularity and distributed-control in
 
 </div>
 
-![Alt text](https://github.com/ArvinDelavari/phoeniX-RV32/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoeniX_Block_Diagram.png "phoeniX Block Diagram")
+![Alt text](https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoeniX_Block_Diagram.png "phoeniX Block Diagram")
 
 | Module                        | Description                                                                                   |
 | ----------------------------- | --------------------------------------------------------------------------------------------- |
@@ -149,7 +149,7 @@ The `phoeniX.v` contains the main phoeniX RISC-V core and is included in the top
 
 phoeniX currently supports 32-bit word memories with synchronized access time. The core always addresses memory by a word aligned address and access a four byte frame from memory which is then operated on based on a `frame_mask` for half-word and byte operations. 
 
-![Alt text](https://github.com/ArvinDelavari/phoeniX-RV32/blob/%F0%9F%94%A7-execution-flow/Documents/Images/frame_mask_table.png "Frame Mask Values on different aligned memory accesses")
+![Alt text](https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/frame_mask_table.png "Frame Mask Values on different aligned memory accesses")
 
 Designed with the influence of Harvard architecture, the phoeniX native memory interface ensures the elimination of structural hazard occurrences while accessing memory. It incorporates two distinctive address and data buses, specifically dedicated to instructions and data. As can be seen from the top module's port instantiations, both these memory interfaces have a data, address and control bus. Data bus related to data memory interface is bi-directional and therefore defined as `inout` net type while the data bus for instruction memory interface is uni-directional and is considered as an `input` from the processor's point of view. 
 
@@ -167,7 +167,7 @@ You can also use the provided shell script in `/Setup` directory. All shell scri
 </div>
 
 ```console
-user@Ubuntu:~$ git clone https://github.com/ArvinDelavari/phoeniX-RV32.git
+user@Ubuntu:~$ git clone https://github.com/phoeniX-Digital-Design/phoeniX.git
 user@Ubuntu:~$ cd phoeniX-RV32
 user@Ubuntu:~$ cd Setup
 user@Ubuntu:~$ chmod +x setup.sh
@@ -229,44 +229,43 @@ Provided that you name your project sub-directory correctly and the RISC-V Toolc
 #### Running Sample Codes
 <div align="justify">
 
-We have meticulously developed a lightweight and user-friendly software solution with the help of Python. Our execution assistant software, `AssembleX`, has been crafted to cater to the specific needs of Windows systems, enabling seamless execution of assembly code on the phoeniX processor. 
-
-This tool  enhances the efficiency of the code execution process, offering a streamlined experience for users seeking to enter the realm of assembly programming on pheoniX processor in a very simple and user-friendly way.
-
-Before running the script, note that the assembly output of the Venus Simulator for the code must be also saved in the project directory.
-To run any of these sample projects simply run python `AssembleX.py sample` followed by the name of the project passed as a variable named project to the Python script.
-The input command format for the terminal follows the structure illustrated below:
+The directory `/Software/Sample_Assembly_Codes` contains assembly codes for some conventional programs and algorithms. Sample projects provided at this time are `bubble_sort`, `fibonacci`, `find_max_array`, `sum1ton`.
+To run any of these sample projects simply run `python AssembleX.py sample` followed by the name of the sample project you want.
 ```
-python AssembleX.py sample {project_name}
+python AssembleX.py sample {project}
 ```
 For example:
 ```
 python AssembleX.py sample fibonacci
 ```
-After execution of this script, firmware file will be generated and this final file can be directly fed to our Verilog testbench. AssembleX automatically runs the testbench and calls upon gtkwave to display the selected signals in the waveform viewer application, gtkwave.
 </div>
 
 #### Running Your Own Code
 <div align="justify">
 
-In order to run your own code on phoeniX, create a directory named to your project such as `/my_project in /Software/User_Codes/`. Put all your ``user_code.s` files in my_project and run the following command from the main directory:
+Currently you can simulate the execution of your assembly codes on phoeniX with the help of Visual Studio Code extension [`RISC-V Venus Simulator`](https://marketplace.visualstudio.com/items?itemName=hm.riscv-venus) and `AssembleX` software. This lightweight execution assistant software is developed with Python, and has been crafted to the execution flow on Windows systems more comprehensive.
+
+In order to run your own assembly codes on phoeniX, create a directory named to your project such as `/my_project` in `/Software/User_Codes/`. Put all your `.s` files in `/my_project`. First simulate your code with `Venus` and then from the VS-code debug panel, select `VENUS OPTIONS` > `Views` > `Assembly`. A new tab will pop up in the Visual Studio Code editor that includes full instructions along with their addresses and their hex format.
+Save this new tab as a `.txt` file in `/my_project`.\
+Note
+: that the assembly output of the Venus Simulator for the code must be also saved in the project directory.\
+To run your projects from the main directory simply run `python AssembleX.py code` followed by the name of the project which will be passed as a variable to the Python script:
 ```
 python AssembleX.py code my_project
 ```
-Provided that you name your project sub-directory correctly the AssembleX software will create `my_project_firmware.hex` and fed it directly to the testbench of phoeniX processor. After that, iverilog and GTKWave are used to compile the design and view the selected waveforms.
-</div>
 
+After execution of this script, a firmware file will be generated which can be directly fed to the Verilog testbench. AssembleX modifies the testbench file to include this new firmware file and automatically runs the testbench and calls upon gtkwave to display the selected signals. It also reverts the changes made in testbench file for next simulations.
+</div>
 
 ## Synthesis Result
 <div align="justify">
 
 phoeniX core design is capable of synthesis for both FPGA targets and ASIC design. The code has been carefully crafted to enable the utilization of the processor as a soft-core on Xilinx FPGA devices. 
-While the core is entirely synthesizable, it is important to note that implementation is limited to Xilinx Ultrascale and Ultrascale+ series of [AMD Xilinx FPGA devices](https://www.amd.com/en/products/xilinx), owing to the processor's size requirements.
-In fact, the phoeniX core can be implemented as a softcore CPU on Xilinx 7 Ultrascale/Ultrascale+ series FPGA boards using logic synthesis.
+While the core is entirely synthesizable, it is important to note that implementation is limited to Xilinx Ultrascale and Ultrascale+ series of [AMD Xilinx FPGA devices](https://www.amd.com/en/products/xilinx), owing to the processor's pipline structle requiring many logic cells. The phoeniX core can be implemented as a softcore CPU on Xilinx 7 Ultrascale/Ultrascale+ series FPGA boards using logic synthesis.
 
-The physical design and layout of phoeniX was done ysing [Qflow](http://opencircuitdesign.com/qflow/), a popular open-source VLSI (Very Large Scale Integration) design tool. Qflow is a complete design flow that encompasses various stages of the VLSI design process, including synthesis, placement, routing, and verification.
+The physical design and layout of phoeniX was done using [Qflow](http://opencircuitdesign.com/qflow/), a popular open-source VLSI (Very Large Scale Integration) design tool. Qflow is a complete design flow that encompasses various stages of the VLSI design process, including synthesis, placement, routing, and verification.
 
-The OSU018 technology, also known as the [TSMC 0.18 micron](https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_018micron) process technology, which was used for phoeniX layout dessisgn, is a widely adopted semiconductor fabrication process developed by Oklahoma State University. It belongs to the 180nm technology node, which refers to the minimum feature size or gate length of transistors produced using this process.
+The OSU018 technology, also known as the [TSMC 0.18 micron](https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_018micron) process technology, which was used for phoeniX layout design, is a widely adopted semiconductor fabrication process developed by Oklahoma State University. It belongs to the 180nm technology node, which refers to the minimum feature size produced using this process.
 The OSU018 technology offers several key characteristics and capabilities that make it suitable for a range of digital integrated circuit designs. 
 </div>
 
@@ -278,7 +277,7 @@ Here is a picture of final layout result of the phoeniX core using Qflow:
 
 <div align="justify">
 
-The Static Time Analysis (STA) results indicate that the maximum delay observed in the core modules, and consequently in the pipeline stages, is approximately 4 nanoseconds. Setting the **clock cycle time at 4 nanoseconds** allows for sufficient margin to account for the maximum delay across the modules, ensuring that data propagates through the pipeline within the specified time frame. 
+The Static Time Analysis (STA) results indicate that the maximum delay observed in the core modules, and consequently in the pipeline stages, is approximately 4 nanoseconds. Setting the **clock cycle time at 4 nanoseconds** allows for sufficient margin to account for the maximum delay across the modules plus register setup time and hold time, ensuring that data propagates through the pipeline within the specified time frame. 
 By adhering to this timing requirement, the processor can achieve a performance level of approximately **250 MHz**, enabling efficient execution of instructions and supporting the desired operational specifications.
 
 </div>
