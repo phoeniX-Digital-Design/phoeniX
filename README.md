@@ -272,9 +272,9 @@ The OSU018 technology offers several key characteristics and capabilities that m
 
 Here is a picture of final layout result of the phoeniX core using Qflow:
 
-![IMG_6971](https://github.com/phoeniX-Digital-Design/phoeniX/assets/86099054/1f605f7b-3548-4740-af99-e05e437f641e)
+![GDS](https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Synthesis/Qflow_TSMC_180nm/Pictures/GDS.png)
 
-![IMG_6972](https://github.com/phoeniX-Digital-Design/phoeniX/assets/86099054/8ac48aaa-0ae1-45ec-a979-e9d0693151ea)
+![MAG](https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Synthesis/Qflow_TSMC_180nm/Pictures/MAG.png)
 
 <div align="justify">
 
