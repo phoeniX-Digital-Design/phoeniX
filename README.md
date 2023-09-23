@@ -264,7 +264,7 @@ phoeniX core design is capable of synthesis for both FPGA targets and ASIC desig
 While the core is entirely synthesizable, it is important to note that implementation is limited to Xilinx Ultrascale and Ultrascale+ series of [AMD Xilinx FPGA devices](https://www.amd.com/en/products/xilinx), owing to the processor's size requirements.
 In fact, the phoeniX core can be implemented as a softcore CPU on Xilinx 7 Ultrascale/Ultrascale+ series FPGA boards using logic synthesis.
 
-The physical design and layout of phoeniX was done ysing [Qflow](http://opencircuitdesign.com/qflow/), a popular open-source VLSI (Very Large Scale Integration) design tool. Qflow is a complete design flow that encompasses various stages of the VLSI design process, including synthesis, placement, routing, and verification.
+The physical design and layout of phoeniX was done using [Qflow](http://opencircuitdesign.com/qflow/), a popular open-source VLSI (Very Large Scale Integration) design tool. Qflow is a complete design flow that encompasses various stages of the VLSI design process, including synthesis, placement, routing, and verification.
 
 The OSU018 technology, also known as the [TSMC 0.18 micron](https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_018micron) process technology, which was used for phoeniX layout dessisgn, is a widely adopted semiconductor fabrication process developed by Oklahoma State University. It belongs to the 180nm technology node, which refers to the minimum feature size or gate length of transistors produced using this process.
 The OSU018 technology offers several key characteristics and capabilities that make it suitable for a range of digital integrated circuit designs. 
