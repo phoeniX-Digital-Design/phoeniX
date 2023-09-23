@@ -1,1 +1,3 @@
-Documents/* linguist-vendored
+Synthesis/Qflow_TSMC_180nm/Layout/* linguist-vendored
+Synthesis/Qflow_TSMC_180nm/log/* linguist-vendored
+Synthesis/Qflow_TSMC_180nm/synthesis/* linguist-vendored
