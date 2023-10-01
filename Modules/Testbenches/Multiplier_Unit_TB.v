@@ -3,7 +3,7 @@
 module Multiplier_Unit_TB;
 
     // Parameters
-    parameter APPROXIMATE = 0;
+    parameter APPROXIMATE = 0; // Change to 1 for testing if statement in module -> test passed
     parameter ACCURACY = 0;
 
     // Inputs
