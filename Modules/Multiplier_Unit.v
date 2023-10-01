@@ -41,17 +41,17 @@ module Multiplier_Unit #(parameter APPROXIMATE = 0, parameter ACCURACY = 0)
 );
 
     // Data forwarding will be covered in the core file (phoeniX.v)
-    reg  [31 : 0]  operand_1; 
-    reg  [31 : 0]  operand_2;
-    reg [31:0] input_1;
-    reg [31:0] input_2;
-    reg  accuracy;
+    reg [31 : 0]  operand_1; 
+    reg [31 : 0]  operand_2;
+    reg [31 : 0] input_1;
+    reg [31 : 0] input_2;
+    reg accuracy;
 
     // Latching operands coming from data bus
     always @(*) begin
         operand_1 = bus_rs1;
         operand_1 = bus_rs2;
-        accuracy  = accuracy_level;
+        accuracy = accuracy_level;
         // Checking if the multiplier is accuracy controlable or not
         if (APPROXIMATE == 1 && ACCURACY == 0)
         begin
