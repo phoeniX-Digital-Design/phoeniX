@@ -20,7 +20,9 @@
 */
 
 // *** Include your headers and modules here ***
-`include "Modules/Multiplier_ECA.v"
+
+// `include "Modules/Multiplier_ECA.v"
+
 // *** End of including headers and modules ***
 
 module Multiplier_Unit #(parameter APPROXIMATE = 0, parameter ACCURACY = 0)
@@ -89,9 +91,37 @@ module Multiplier_Unit #(parameter APPROXIMATE = 0, parameter ACCURACY = 0)
     end
 
     // *** Instantiate your multiplier here ***
-    // Sample:
+    // Please instantiate you multiplier module using the guidelines
     multiplier mul (input_1, input_2, accuracy, busy, result);
-    // Multiplier_ECA Multiplier (mask, input_1, input_2, busy, result);
+    // Multiplier_ECA Multiplier (mask, input_1, input_2, result);
     // *** End of multiplier instantiation ***
 
+endmodule
+
+module multiplier 
+(
+   input [31 : 0] input_1, 
+   input [31 : 0] input_2, 
+   input [7  : 0] accuracy, 
+   output busy, 
+   output reg [31 : 0] result
+);
+    reg [31 : 0] output_mul;
+
+    always @(*) begin
+        result = output_mul;
+        if (accuracy == 0)
+        begin 
+            output_mul = input_1 * input_2;
+        end
+        else if (accuracy == 1)
+        begin 
+            output_mul = (input_1 * input_2) - 1;
+        end
+        else if (accuracy == 2)
+        begin 
+            output_mul = (input_1 * input_2) - 2;
+        end
+    end
+    
 endmodule
