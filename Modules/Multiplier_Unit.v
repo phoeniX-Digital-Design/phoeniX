@@ -40,9 +40,9 @@ module Multiplier_Unit #(parameter APPROXIMATE = 0, parameter ACCURACY = 0)
     output reg [31 : 0] mul_output
 );
 
-    // Data forwarding will be covered in the core file (phoeniX.v)
-    reg  [31 : 0]  operand_1; 
-    reg  [31 : 0]  operand_2;
+    // Data forwarding will be considered in the core file (phoeniX.v)
+    reg  [31 : 0] operand_1; 
+    reg  [31 : 0] operand_2;
     reg  [31 : 0] input_1;
     reg  [31 : 0] input_2;
     reg  [7  : 0] accuracy;
@@ -92,9 +92,8 @@ module Multiplier_Unit #(parameter APPROXIMATE = 0, parameter ACCURACY = 0)
     end
 
     // *** Instantiate your multiplier here ***
-    // Please instantiate you multiplier module using the guidelines
-    multiplier mul (input_1, input_2, accuracy, busy, result);
-    // Multiplier_ECA Multiplier (mask, input_1, input_2, result);
+    // Please instantiate your multiplier module using the guidelines and phoeniX naming conventions
+    /* Sample multiplier */ multiplier mul (input_1, input_2, accuracy, busy, result);
     // *** End of multiplier instantiation ***
 
 endmodule
@@ -124,8 +123,7 @@ module multiplier
             output_mul = (input_1 * input_2) - 2;
         end
         // No accuracy control logic in multiplier
-        else
-        begin 
+        else begin 
             output_mul = input_1 * input_2;
         end
     end
