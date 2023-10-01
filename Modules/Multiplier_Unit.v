@@ -123,6 +123,11 @@ module multiplier
         begin 
             output_mul = (input_1 * input_2) - 2;
         end
+        // No accuracy control logic in multiplier
+        else
+        begin 
+            output_mul = input_1 * input_2;
+        end
     end
     
 endmodule

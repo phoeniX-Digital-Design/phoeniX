@@ -1,0 +1,107 @@
+$date
+	Sun Oct 01 18:38:14 2023
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module Multiplier_Unit_TB $end
+$var wire 1 ! mul_unit_busy $end
+$var wire 32 " mul_output [31:0] $end
+$var parameter 32 # ACCURACY $end
+$var parameter 32 $ APPROXIMATE $end
+$var reg 8 % accuracy_level [7:0] $end
+$var reg 32 & bus_rs1 [31:0] $end
+$var reg 32 ' bus_rs2 [31:0] $end
+$var reg 3 ( funct3 [2:0] $end
+$var reg 7 ) funct7 [6:0] $end
+$var reg 7 * opcode [6:0] $end
+$scope module uut $end
+$var wire 8 + accuracy_level [7:0] $end
+$var wire 32 , bus_rs1 [31:0] $end
+$var wire 32 - bus_rs2 [31:0] $end
+$var wire 1 . busy $end
+$var wire 3 / funct3 [2:0] $end
+$var wire 7 0 funct7 [6:0] $end
+$var wire 7 1 opcode [6:0] $end
+$var wire 32 2 result [31:0] $end
+$var parameter 32 3 ACCURACY $end
+$var parameter 32 4 APPROXIMATE $end
+$var reg 8 5 accuracy [7:0] $end
+$var reg 32 6 input_1 [31:0] $end
+$var reg 32 7 input_2 [31:0] $end
+$var reg 32 8 mul_output [31:0] $end
+$var reg 1 ! mul_unit_busy $end
+$var reg 32 9 operand_1 [31:0] $end
+$var reg 32 : operand_2 [31:0] $end
+$scope module mul $end
+$var wire 8 ; accuracy [7:0] $end
+$var wire 1 . busy $end
+$var wire 32 < input_1 [31:0] $end
+$var wire 32 = input_2 [31:0] $end
+$var reg 32 > output_mul [31:0] $end
+$var reg 32 ? result [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b0 4
+b0 3
+b0 $
+b0 #
+$end
+#0
+$dumpvars
+b11001000 ?
+b11001000 >
+b10100 =
+b1010 <
+b0 ;
+b10100 :
+b1010 9
+b11001000 8
+b10100 7
+b1010 6
+b0 5
+b11001000 2
+b110011 1
+b1 0
+b0 /
+z.
+b10100 -
+b1010 ,
+b0 +
+b110011 *
+b1 )
+b0 (
+b10100 '
+b1010 &
+b0 %
+b11001000 "
+z!
+$end
+#20
+b11000111 "
+b11000111 8
+b11000111 2
+b11000111 ?
+b11000111 >
+b1 5
+b1 ;
+b1 %
+b1 +
+#40
+b11000110 "
+b11000110 8
+b11000110 2
+b11000110 ?
+b11000110 >
+b10 5
+b10 ;
+b10 %
+b10 +
+#60
