@@ -2,11 +2,9 @@
 
 module Multiplier_Unit_TB;
 
-    // Parameters
     parameter APPROXIMATE = 0; // Change to 1 for testing if statement in module -> test passed
     parameter ACCURACY = 0;
-
-    // Inputs
+    
     reg [6:0] opcode;
     reg [6:0] funct7;
     reg [2:0] funct3;
@@ -14,11 +12,9 @@ module Multiplier_Unit_TB;
     reg [31:0] bus_rs1;
     reg [31:0] bus_rs2;
 
-    // Outputs
     wire mul_unit_busy;
     wire [31:0] mul_output;
 
-    // Instantiate the DUT (Multiplier_Unit)
     Multiplier_Unit #(APPROXIMATE, ACCURACY) uut 
     (
         .opcode(opcode),
