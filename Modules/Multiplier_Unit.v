@@ -39,9 +39,10 @@ module Multiplier_Unit #(parameter APPROXIMATE = 0, parameter ACCURACY = 0)
 );
 
     // Data forwarding will be covered in the core file (phoeniX.v)
-
     reg  [31 : 0]  operand_1; 
     reg  [31 : 0]  operand_2;
+    reg [31:0] input_1;
+    reg [31:0] input_2;
     reg  accuracy;
 
     // Latching operands coming from data bus
@@ -62,7 +63,6 @@ module Multiplier_Unit #(parameter APPROXIMATE = 0, parameter ACCURACY = 0)
     begin
         mul_output = result;
         mul_unit_busy = busy;
-
         casex ({funct7, funct3, opcode})
             // I-TYPE Intructions
             17'b0000001_000_0110011 : begin  // MUL
