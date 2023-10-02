@@ -5,9 +5,9 @@
   PLEASE DO NOT REMOVE THE COMMENTS IN THIS MODULE
   =====================================================================
   Inputs:
-  - input_1: 32-bit input operand 1.
-  - input_2: 32-bit input operand 2.
-  - accuracy: 4-bit accuracy setting.
+  - input_1:  32-bit input operand 1.
+  - input_2:  32-bit input operand 2.
+  - accuracy: 8-bit accuracy setting.
   Outputs:
   - busy: Output indicating the busy status of the multiplier.
   - result: 32-bit result of the multiplication.
