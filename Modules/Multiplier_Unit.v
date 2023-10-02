@@ -67,7 +67,6 @@ module Multiplier_Unit #(parameter APPROXIMATE = 0, parameter ACCURACY = 0)
         mul_output = result;
         mul_unit_busy = busy;
         casex ({funct7, funct3, opcode})
-            // I-TYPE Intructions
             17'b0000001_000_0110011 : begin  // MUL
                 input_1 = $signed(operand_1);
                 input_2 = $signed(operand_2);
