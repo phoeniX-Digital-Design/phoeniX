@@ -21,9 +21,7 @@
 */
 
 // *** Include your headers and modules here ***
-
-// `include "Modules/Divider.v"
-
+`include "../User_Modules/Sample_Divider/Sample_Divider.v"
 // *** End of including headers and modules ***
 
 module Divider_Unit #(parameter APPROXIMATE = 0, parameter ACCURACY = 0)
@@ -35,8 +33,8 @@ module Divider_Unit #(parameter APPROXIMATE = 0, parameter ACCURACY = 0)
 
     input [7 : 0] accuracy_level,
 
-    input [31 : 0] bus_rs1,
-    input [31 : 0] bus_rs2,
+    input [31 : 0] rs1,
+    input [31 : 0] rs2,
 
     output reg div_unit_busy,
     output reg [31 : 0] div_output
@@ -52,8 +50,8 @@ module Divider_Unit #(parameter APPROXIMATE = 0, parameter ACCURACY = 0)
 
     // Latching operands coming from data bus
     always @(*) begin
-        operand_1 = bus_rs1;
-        operand_2 = bus_rs2;
+        operand_1 = rs1;
+        operand_2 = rs2;
         accuracy = accuracy_level;
         // Checking if the divider is accuracy controlable or not
         if (APPROXIMATE == 1 && ACCURACY == 0)
@@ -95,40 +93,7 @@ module Divider_Unit #(parameter APPROXIMATE = 0, parameter ACCURACY = 0)
 
     // *** Instantiate your divider here ***
     // Please instantiate your divider module using the guidelines and phoeniX naming conventions
-    /* Sample Divider */ Divider div (CLK, input_1, input_2, accuracy, busy, result);
+    Sample_Divider div (CLK, input_1, input_2, accuracy, busy, result);
     // *** End of divider instantiation ***
 
-endmodule
-
-module Divider 
-(
-    input CLK,
-    input [31 : 0] input_1, 
-    input [31 : 0] input_2, 
-    input [7  : 0] accuracy, 
-    output busy, 
-    output reg [31 : 0] result
-);
-    reg [31 : 0] output_div;
-
-    always @(*) begin
-        assign result = output_div;
-        if (accuracy == 0)
-        begin 
-            output_div = input_1 / input_2;
-        end
-        else if (accuracy == 1)
-        begin 
-            output_div = (input_1 / input_2) - 1;
-        end
-        else if (accuracy == 2)
-        begin 
-            output_div = (input_1 / input_2) - 2;
-        end
-        // No accuracy control logic in divider
-        else begin 
-            output_div = input_1 / input_2;
-        end
-    end
-    
 endmodule

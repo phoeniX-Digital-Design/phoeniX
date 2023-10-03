@@ -30,7 +30,7 @@
 */
 
 // *** Include your header files and modules here ***
-
+`include "../User_Modules/Sample_Adder/Sample_Adder.v"
 // *** End of including header files and modules ***
 
 `ifndef OPCODES
@@ -157,18 +157,13 @@ module Arithmetic_Logic_Unit_APX #(parameter APPROXIMATE = 0, parameter ACCURACY
             {7'bx_xxx_xxx, 3'b111, `OP_IMM} : alu_output = operand_1 & operand_2;                               // ANDI
             
             // R-TYPE Instructions
-            {7'b0_000_000, 3'b000, `OP}     : begin                                                             // ADD
+            {7'b0_000_000, 3'b000, `OP}     :                                                                   // ADD
+            begin
             if (APPROXIMATE == 1)
-            begin
-                input_1 = operand_1;
-                input_2 = operand_2;
-                alu_output = result;
-                if (ACCURACY == 1) begin accuracy = accuracy_level; end 
+            begin input_1 = operand_1; input_2 = operand_2; alu_output = result;
+            if (ACCURACY == 1) begin accuracy = accuracy_level; end 
             end
-            else if (APPROXIMATE == 0)
-            begin
-                alu_output = operand_1 + operand_2;  
-            end
+            else if (APPROXIMATE == 0) begin alu_output = operand_1 + operand_2; end
             end
             {7'b0_100_000, 3'b000, `OP}     : alu_output = operand_1 - operand_2;                               // SUB
             {7'b0_000_000, 3'b001, `OP}     : alu_output = operand_1 << operand_2;                              // SLL
@@ -193,39 +188,7 @@ module Arithmetic_Logic_Unit_APX #(parameter APPROXIMATE = 0, parameter ACCURACY
 
     // *** Instantiate your adder circuit here ***
     // Please instantiate your adder module using the guidelines and phoeniX naming conventions
-    /* Sample multiplier */ adder add (input_1, input_2, accuracy, result);
-    // *** End of multiplier instantiation ***
+    Sample_Adder adder (input_1, input_2, accuracy, result);
+    // *** End of adder instantiation ***
 
-endmodule
-
-module adder 
-(
-    input [31 : 0] input_1, 
-    input [31 : 0] input_2, 
-    input [7  : 0] accuracy, 
-    output reg [31 : 0] result
-);
-
-    reg [31 : 0] output_alu;
-
-    always @(*) begin
-        assign result = output_alu;
-        if (accuracy == 0)
-        begin 
-            output_alu = input_1 + input_2;
-        end
-        else if (accuracy == 1)
-        begin 
-            output_alu = (input_1 + input_2) - 1;
-        end
-        else if (accuracy == 2)
-        begin 
-            output_alu = (input_1 + input_2) - 2;
-        end
-        // No accuracy control logic in adder
-        else begin 
-            output_alu = input_1 + input_2;
-        end
-    end
-    
 endmodule
