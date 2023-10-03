@@ -2,9 +2,9 @@
 
 module Multiplier_Unit_TB;
 
-    parameter APPROXIMATE = 0; // Change to 1 for testing if statement in module -> test passed
-    parameter ACCURACY = 0;
-    
+    parameter APPROXIMATE = 1; // Change to 1 for testing if statement in module -> test passed
+    parameter ACCURACY = 1;
+    reg CLK = 0;
     reg [6:0] opcode;
     reg [6:0] funct7;
     reg [2:0] funct3;
@@ -17,6 +17,7 @@ module Multiplier_Unit_TB;
 
     Multiplier_Unit #(APPROXIMATE, ACCURACY) uut 
     (
+        .CLK(CLK),
         .opcode(opcode),
         .funct7(funct7),
         .funct3(funct3),
@@ -26,6 +27,8 @@ module Multiplier_Unit_TB;
         .mul_unit_busy(mul_unit_busy),
         .mul_output(mul_output)
     );
+
+    always #10 CLK = ~CLK;
 
     initial begin
         $dumpfile("MUL.vcd");
