@@ -1,0 +1,137 @@
+$date
+	Tue Oct 03 11:39:06 2023
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module Arithmetic_Logic_Unit_APX_TB $end
+$var wire 32 ! alu_output [31:0] $end
+$var reg 32 " PC [31:0] $end
+$var reg 8 # accuracy_level [7:0] $end
+$var reg 3 $ funct3 [2:0] $end
+$var reg 7 % funct7 [6:0] $end
+$var reg 32 & immediate [31:0] $end
+$var reg 7 ' opcode [6:0] $end
+$var reg 32 ( rs1 [31:0] $end
+$var reg 32 ) rs2 [31:0] $end
+$scope module ALU_APX $end
+$var wire 32 * PC [31:0] $end
+$var wire 8 + accuracy_level [7:0] $end
+$var wire 3 , funct3 [2:0] $end
+$var wire 7 - funct7 [6:0] $end
+$var wire 32 . immediate [31:0] $end
+$var wire 7 / opcode [6:0] $end
+$var wire 32 0 rs1 [31:0] $end
+$var wire 32 1 rs2 [31:0] $end
+$var wire 32 2 result [31:0] $end
+$var parameter 32 3 ACCURACY $end
+$var parameter 32 4 APPROXIMATE $end
+$var reg 8 5 accuracy [7:0] $end
+$var reg 32 6 alu_output [31:0] $end
+$var reg 32 7 input_1 [31:0] $end
+$var reg 32 8 input_2 [31:0] $end
+$var reg 1 9 mux1_select $end
+$var reg 2 : mux2_select [1:0] $end
+$var reg 32 ; operand_1 [31:0] $end
+$var reg 32 < operand_2 [31:0] $end
+$scope module add $end
+$var wire 8 = accuracy [7:0] $end
+$var wire 32 > input_1 [31:0] $end
+$var wire 32 ? input_2 [31:0] $end
+$var reg 32 @ output_alu [31:0] $end
+$var reg 32 A result [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b1 4
+b1 3
+$end
+#0
+$dumpvars
+bx A
+bx @
+bx ?
+bx >
+bx =
+bx <
+bx ;
+bx :
+x9
+bx 8
+bx 7
+bx 6
+bx 5
+bx 2
+bx 1
+bx 0
+bx /
+bx .
+bx -
+bx ,
+bx +
+bx *
+bx )
+bx (
+bx '
+bx &
+bx %
+bx $
+bx #
+bx "
+bx !
+$end
+#10000
+b1001 !
+b1001 6
+b1001 2
+b1001 A
+b1001 @
+b101 8
+b101 ?
+b100 7
+b100 >
+b101 <
+b100 ;
+b0 5
+b0 =
+b0 :
+09
+b101 )
+b101 1
+b100 (
+b100 0
+b0 #
+b0 +
+b0 %
+b0 -
+b0 $
+b0 ,
+b110011 '
+b110011 /
+#25000
+b1000 !
+b1000 6
+b1000 2
+b1000 A
+b1000 @
+b1 5
+b1 =
+b1 #
+b1 +
+#40000
+b111 !
+b111 6
+b111 2
+b111 A
+b111 @
+b10 5
+b10 =
+b10 #
+b10 +
+#55000
