@@ -1,5 +1,5 @@
 $date
-	Tue Oct 03 10:01:26 2023
+	Tue Oct 03 11:55:43 2023
 $end
 $version
 	Icarus Verilog
@@ -14,20 +14,20 @@ $var parameter 32 # ACCURACY $end
 $var parameter 32 $ APPROXIMATE $end
 $var reg 1 % CLK $end
 $var reg 8 & accuracy_level [7:0] $end
-$var reg 32 ' bus_rs1 [31:0] $end
-$var reg 32 ( bus_rs2 [31:0] $end
-$var reg 3 ) funct3 [2:0] $end
-$var reg 7 * funct7 [6:0] $end
-$var reg 7 + opcode [6:0] $end
+$var reg 3 ' funct3 [2:0] $end
+$var reg 7 ( funct7 [6:0] $end
+$var reg 7 ) opcode [6:0] $end
+$var reg 32 * rs1 [31:0] $end
+$var reg 32 + rs2 [31:0] $end
 $scope module uut $end
 $var wire 1 % CLK $end
 $var wire 8 , accuracy_level [7:0] $end
-$var wire 32 - bus_rs1 [31:0] $end
-$var wire 32 . bus_rs2 [31:0] $end
-$var wire 1 / busy $end
-$var wire 3 0 funct3 [2:0] $end
-$var wire 7 1 funct7 [6:0] $end
-$var wire 7 2 opcode [6:0] $end
+$var wire 1 - busy $end
+$var wire 3 . funct3 [2:0] $end
+$var wire 7 / funct7 [6:0] $end
+$var wire 7 0 opcode [6:0] $end
+$var wire 32 1 rs1 [31:0] $end
+$var wire 32 2 rs2 [31:0] $end
 $var wire 32 3 result [31:0] $end
 $var parameter 32 4 ACCURACY $end
 $var parameter 32 5 APPROXIMATE $end
@@ -41,7 +41,7 @@ $var reg 32 ; operand_2 [31:0] $end
 $scope module mul $end
 $var wire 1 % CLK $end
 $var wire 8 < accuracy [7:0] $end
-$var wire 1 / busy $end
+$var wire 1 - busy $end
 $var wire 32 = input_1 [31:0] $end
 $var wire 32 > input_2 [31:0] $end
 $var reg 32 ? output_mul [31:0] $end
@@ -71,18 +71,18 @@ b10100 8
 b1010 7
 b0 6
 bx 3
-b110011 2
-b1 1
-b0 0
-z/
-b10100 .
-b1010 -
+b10100 2
+b1010 1
+b110011 0
+b1 /
+b0 .
+z-
 b0 ,
-b110011 +
-b1 *
-b0 )
-b10100 (
-b1010 '
+b10100 +
+b1010 *
+b110011 )
+b1 (
+b0 '
 b0 &
 0%
 bx "

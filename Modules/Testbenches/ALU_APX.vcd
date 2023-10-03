@@ -1,5 +1,5 @@
 $date
-	Tue Oct 03 11:39:06 2023
+	Tue Oct 03 12:00:45 2023
 $end
 $version
 	Icarus Verilog
@@ -37,7 +37,7 @@ $var reg 1 9 mux1_select $end
 $var reg 2 : mux2_select [1:0] $end
 $var reg 32 ; operand_1 [31:0] $end
 $var reg 32 < operand_2 [31:0] $end
-$scope module add $end
+$scope module adder $end
 $var wire 8 = accuracy [7:0] $end
 $var wire 32 > input_1 [31:0] $end
 $var wire 32 ? input_2 [31:0] $end

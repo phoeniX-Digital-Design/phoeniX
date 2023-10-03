@@ -9,8 +9,8 @@ module Multiplier_Unit_TB;
     reg [6:0] funct7;
     reg [2:0] funct3;
     reg [7:0] accuracy_level;
-    reg [31:0] bus_rs1;
-    reg [31:0] bus_rs2;
+    reg [31:0] rs1;
+    reg [31:0] rs2;
 
     wire mul_unit_busy;
     wire [31:0] mul_output;
@@ -22,8 +22,8 @@ module Multiplier_Unit_TB;
         .funct7(funct7),
         .funct3(funct3),
         .accuracy_level(accuracy_level),
-        .bus_rs1(bus_rs1),
-        .bus_rs2(bus_rs2),
+        .rs1(rs1),
+        .rs2(rs2),
         .mul_unit_busy(mul_unit_busy),
         .mul_output(mul_output)
     );
@@ -39,8 +39,8 @@ module Multiplier_Unit_TB;
         funct3 = 3'b000;
 
         accuracy_level = 8'b00000000;
-        bus_rs1 = 32'd10;
-        bus_rs2 = 32'd20;
+        rs1 = 32'd10;
+        rs2 = 32'd20;
 
         #20;
         $display("Multiplier output: %d", mul_output);
@@ -51,15 +51,15 @@ module Multiplier_Unit_TB;
         funct3 = 3'b000;
 
         accuracy_level = 8'b00000001;
-        bus_rs1 = 32'd10;
-        bus_rs2 = 32'd20;
+        rs1 = 32'd10;
+        rs2 = 32'd20;
         #20;
         $display("Multiplier output: %d", mul_output);
         $display("Multiplier busy: %d", mul_unit_busy);
 
         accuracy_level = 8'b00000010;
-        bus_rs1 = 32'd10;
-        bus_rs2 = 32'd20;
+        rs1 = 32'd10;
+        rs2 = 32'd20;
         #20;
         $display("Multiplier output: %d", mul_output);
         $display("Multiplier busy: %d", mul_unit_busy);
