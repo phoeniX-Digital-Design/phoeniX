@@ -35,8 +35,8 @@ module Multiplier_Unit #(parameter APPROXIMATE = 0, parameter ACCURACY = 0)
 
     input [7 : 0] accuracy_level,
 
-    input [31 : 0] bus_rs1,
-    input [31 : 0] bus_rs2,
+    input [31 : 0] rs1,
+    input [31 : 0] rs2,
 
     output reg mul_unit_busy,
     output reg [31 : 0] mul_output
@@ -52,8 +52,8 @@ module Multiplier_Unit #(parameter APPROXIMATE = 0, parameter ACCURACY = 0)
 
     // Latching operands coming from data bus
     always @(*) begin
-        operand_1 = bus_rs1;
-        operand_2 = bus_rs2;
+        operand_1 = rs1;
+        operand_2 = rs2;
         accuracy = accuracy_level;
         // Checking if the multiplier is accuracy controlable or not
         if (APPROXIMATE == 1 && ACCURACY == 0)
