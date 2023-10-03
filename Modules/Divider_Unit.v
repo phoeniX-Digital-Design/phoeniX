@@ -5,6 +5,7 @@
   PLEASE DO NOT REMOVE THE COMMENTS IN THIS MODULE
   =====================================================================
   Inputs:
+  - CLK: Source clock signal
   - input_1:  32-bit input operand 1.
   - input_2:  32-bit input operand 2.
   - accuracy: 8-bit accuracy setting.
@@ -14,7 +15,7 @@
   =====================================================================
   Naming Convention:
   All user-defined divider modules should follow this format:
-  - Inputs: input_1, input_2, accuracy
+  - Inputs: CLK, input_1, input_2, accuracy
   - Outputs: busy, result
   ======================================================================
 */
@@ -27,6 +28,7 @@
 
 module Divider_Unit #(parameter APPROXIMATE = 0, parameter ACCURACY = 0)
 (
+    input CLK,
     input [6 : 0] opcode,
     input [6 : 0] funct7,
     input [2 : 0] funct3,
@@ -58,6 +60,14 @@ module Divider_Unit #(parameter APPROXIMATE = 0, parameter ACCURACY = 0)
         begin
             accuracy = 8'bz; // Divider is not accuracy controlable -> input signal = Z
         end
+        else if (APPROXIMATE == 0 && ACCURACY == 0)
+        begin
+            accuracy = 8'bz; // Divider is not accuracy controlable -> input signal = Z
+        end
+        else if (APPROXIMATE == 0 && ACCURACY == 1)
+        begin
+            accuracy = 8'bz; // Divider is not accuracy controlable -> input signal = Z
+        end
         // If the divider is accuracy controlable, the accuarcy will be extracted from CSRs.
         // The extracted accuracy level will be directly give to `accuracy_level` and `accuracy`
     end
@@ -85,18 +95,19 @@ module Divider_Unit #(parameter APPROXIMATE = 0, parameter ACCURACY = 0)
 
     // *** Instantiate your divider here ***
     // Please instantiate your divider module using the guidelines and phoeniX naming conventions
-    /* Sample Divider */ Divider div (input_1, input_2, accuracy, busy, result);
+    /* Sample Divider */ Divider div (CLK, input_1, input_2, accuracy, busy, result);
     // *** End of divider instantiation ***
 
 endmodule
 
 module Divider 
 (
-   input [31 : 0] input_1, 
-   input [31 : 0] input_2, 
-   input [7  : 0] accuracy, 
-   output busy, 
-   output reg [31 : 0] result
+    input CLK,
+    input [31 : 0] input_1, 
+    input [31 : 0] input_2, 
+    input [7  : 0] accuracy, 
+    output busy, 
+    output reg [31 : 0] result
 );
     reg [31 : 0] output_div;
 

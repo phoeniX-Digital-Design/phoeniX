@@ -4,7 +4,7 @@ module Divider_Unit_TB;
 
     parameter APPROXIMATE = 1; // Change to 1 for testing if statement in module -> test passed
     parameter ACCURACY = 1;
-    
+    reg CLK = 0;
     reg [6:0] opcode;
     reg [6:0] funct7;
     reg [2:0] funct3;
@@ -17,6 +17,7 @@ module Divider_Unit_TB;
 
     Divider_Unit #(APPROXIMATE, ACCURACY) uut 
     (
+        .CLK(CLK),
         .opcode(opcode),
         .funct7(funct7),
         .funct3(funct3),
@@ -26,6 +27,8 @@ module Divider_Unit_TB;
         .div_unit_busy(div_unit_busy),
         .div_output(div_output)
     );
+
+    always #10 CLK = ~CLK;
 
     initial begin
         $dumpfile("DIV.vcd");
