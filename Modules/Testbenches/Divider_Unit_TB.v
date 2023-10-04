@@ -2,8 +2,8 @@
 
 module Divider_Unit_TB;
 
-    parameter APPROXIMATE = 1; // Change to 1 for testing if statement in module -> test passed
-    parameter ACCURACY = 1;
+    parameter USER_DESIGN = 1; // Change to 1 for testing if statement in module -> test passed
+    parameter APX_ACC_CONTROL = 1;
     reg CLK = 0;
     reg [6:0] opcode;
     reg [6:0] funct7;
@@ -15,7 +15,7 @@ module Divider_Unit_TB;
     wire div_unit_busy;
     wire [31:0] div_output;
 
-    Divider_Unit #(APPROXIMATE, ACCURACY) uut 
+    Divider_Unit #(USER_DESIGN, APX_ACC_CONTROL) uut 
     (
         .CLK(CLK),
         .opcode(opcode),

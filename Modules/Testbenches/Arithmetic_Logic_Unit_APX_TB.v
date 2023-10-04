@@ -13,7 +13,7 @@ module Arithmetic_Logic_Unit_APX_TB;
     reg  [31 : 0] immediate;
     wire [31 : 0] alu_output;
 
-    Arithmetic_Logic_Unit_APX #(.APPROXIMATE(1), .ACCURACY(1)) ALU_APX 
+    Arithmetic_Logic_Unit_APX #(.USER_DESIGN(1), .APX_ACC_CONTROL(1)) ALU_APX 
     (
         .opcode(opcode),
         .funct3(funct3),

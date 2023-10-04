@@ -24,7 +24,7 @@
 `include "../User_Modules/Sample_Divider/Sample_Divider.v"
 // *** End of including headers and modules ***
 
-module Divider_Unit #(parameter APPROXIMATE = 0, parameter ACCURACY = 0)
+module Divider_Unit #(parameter USER_DESIGN = 0, parameter APX_ACC_CONTROL = 0)
 (
     input CLK,
     input [6 : 0] opcode,
@@ -54,15 +54,15 @@ module Divider_Unit #(parameter APPROXIMATE = 0, parameter ACCURACY = 0)
         operand_2 = rs2;
         accuracy = accuracy_level;
         // Checking if the divider is accuracy controlable or not
-        if (APPROXIMATE == 1 && ACCURACY == 0)
+        if (USER_DESIGN == 1 && APX_ACC_CONTROL == 0)
         begin
             accuracy = 8'bz; // Divider is not accuracy controlable -> input signal = Z
         end
-        else if (APPROXIMATE == 0 && ACCURACY == 0)
+        else if (USER_DESIGN == 0 && APX_ACC_CONTROL == 0)
         begin
             accuracy = 8'bz; // Divider is not accuracy controlable -> input signal = Z
         end
-        else if (APPROXIMATE == 0 && ACCURACY == 1)
+        else if (USER_DESIGN == 0 && APX_ACC_CONTROL == 1)
         begin
             accuracy = 8'bz; // Divider is not accuracy controlable -> input signal = Z
         end

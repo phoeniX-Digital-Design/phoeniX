@@ -1,5 +1,5 @@
 $date
-	Tue Oct 03 11:55:43 2023
+	Wed Oct 04 18:11:28 2023
 $end
 $version
 	Icarus Verilog
@@ -10,8 +10,8 @@ $end
 $scope module Multiplier_Unit_TB $end
 $var wire 1 ! mul_unit_busy $end
 $var wire 32 " mul_output [31:0] $end
-$var parameter 32 # ACCURACY $end
-$var parameter 32 $ APPROXIMATE $end
+$var parameter 32 # APX_ACC_CONTROL $end
+$var parameter 32 $ USER_DESIGN $end
 $var reg 1 % CLK $end
 $var reg 8 & accuracy_level [7:0] $end
 $var reg 3 ' funct3 [2:0] $end
@@ -29,8 +29,8 @@ $var wire 7 0 opcode [6:0] $end
 $var wire 32 1 rs1 [31:0] $end
 $var wire 32 2 rs2 [31:0] $end
 $var wire 32 3 result [31:0] $end
-$var parameter 32 4 ACCURACY $end
-$var parameter 32 5 APPROXIMATE $end
+$var parameter 32 4 APX_ACC_CONTROL $end
+$var parameter 32 5 USER_DESIGN $end
 $var reg 8 6 accuracy [7:0] $end
 $var reg 32 7 input_1 [31:0] $end
 $var reg 32 8 input_2 [31:0] $end

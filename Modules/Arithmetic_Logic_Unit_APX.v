@@ -65,7 +65,7 @@
     `define custom_3    7'b11_110_11
 `endif
 
-module Arithmetic_Logic_Unit_APX #(parameter APPROXIMATE = 0, parameter ACCURACY = 0)
+module Arithmetic_Logic_Unit_APX #(parameter USER_DESIGN = 0, parameter APX_ACC_CONTROL = 0)
 (
     input [6 : 0] opcode,               // ALU Operation
     input [2 : 0] funct3,               // ALU Operation
@@ -93,15 +93,15 @@ module Arithmetic_Logic_Unit_APX #(parameter APPROXIMATE = 0, parameter ACCURACY
     always @(*) begin
         accuracy = accuracy_level;
         // Checking if the adder is accuracy controlable or not
-        if (APPROXIMATE == 1 && ACCURACY == 0)
+        if (USER_DESIGN == 1 && APX_ACC_CONTROL == 0)
         begin
             accuracy = 8'bz; // Adder is not accuracy controlable -> input signal = Z
         end
-        else if (APPROXIMATE == 0 && ACCURACY == 0)
+        else if (USER_DESIGN == 0 && APX_ACC_CONTROL == 0)
         begin
             accuracy = 8'bz; // Adder is not approximate and accuracy controlable -> input signal = Z
         end
-        else if (APPROXIMATE == 0 && ACCURACY == 1)
+        else if (USER_DESIGN == 0 && APX_ACC_CONTROL == 1)
         begin
             accuracy = 8'bz; // Adder is not approximate and accuracy controlable -> input signal = Z
         end
@@ -149,11 +149,11 @@ module Arithmetic_Logic_Unit_APX #(parameter APPROXIMATE = 0, parameter ACCURACY
             // I-TYPE Intructions
             {7'bx_xxx_xxx, 3'b000, `OP_IMM} :                                                                   // ADDI
             begin 
-            if (APPROXIMATE == 1)
+            if (USER_DESIGN == 1)
             begin input_1 = operand_1; input_2 = operand_2; alu_output = result;
-            if (ACCURACY == 1) begin accuracy = accuracy_level; end 
+            if (APX_ACC_CONTROL == 1) begin accuracy = accuracy_level; end 
             end
-            else if (APPROXIMATE == 0) begin alu_output = operand_1 + operand_2; end 
+            else if (USER_DESIGN == 0) begin alu_output = operand_1 + operand_2; end 
             end                     
             {7'b0_000_000, 3'b001, `OP_IMM} : alu_output = operand_1 << operand_2 [4 : 0];                      // SLLI
             {7'bx_xxx_xxx, 3'b010, `OP_IMM} : alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;     // SLTI
@@ -167,19 +167,19 @@ module Arithmetic_Logic_Unit_APX #(parameter APPROXIMATE = 0, parameter ACCURACY
             // R-TYPE Instructions
             {7'b0_000_000, 3'b000, `OP}     :                                                                   // ADD
             begin
-            if (APPROXIMATE == 1)
+            if (USER_DESIGN == 1)
             begin input_1 = operand_1; input_2 = operand_2; alu_output = result;
-            if (ACCURACY == 1) begin accuracy = accuracy_level; end 
+            if (APX_ACC_CONTROL == 1) begin accuracy = accuracy_level; end 
             end
-            else if (APPROXIMATE == 0) begin alu_output = operand_1 + operand_2; end
+            else if (USER_DESIGN == 0) begin alu_output = operand_1 + operand_2; end
             end
             {7'b0_100_000, 3'b000, `OP}     :                                                                   // SUB
             begin
-            if (APPROXIMATE == 1)
+            if (USER_DESIGN == 1)
             begin input_1 = operand_1; input_2 = ~(operand_2) + 1; alu_output = result;
-            if (ACCURACY == 1) begin accuracy = accuracy_level; end 
+            if (APX_ACC_CONTROL == 1) begin accuracy = accuracy_level; end 
             end
-            else if (APPROXIMATE == 0) begin alu_output = operand_1 - operand_2; end
+            else if (USER_DESIGN == 0) begin alu_output = operand_1 - operand_2; end
             end
             {7'b0_000_000, 3'b001, `OP}     : alu_output = operand_1 << operand_2;                              // SLL
             {7'b0_000_000, 3'b010, `OP}     : alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;     // SLT

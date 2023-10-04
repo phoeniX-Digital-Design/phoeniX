@@ -7,20 +7,20 @@
 :vpi_module "C:\iverilog\lib\ivl\vhdl_textio.vpi";
 :vpi_module "C:\iverilog\lib\ivl\v2005_math.vpi";
 :vpi_module "C:\iverilog\lib\ivl\va_math.vpi";
-S_0000023ab94e6900 .scope module, "Divider_Unit_TB" "Divider_Unit_TB" 2 3;
+S_000002263a5d6900 .scope module, "Divider_Unit_TB" "Divider_Unit_TB" 2 3;
  .timescale 0 0;
-P_0000023ab94ebf60 .param/l "ACCURACY" 0 2 6, +C4<00000000000000000000000000000001>;
-P_0000023ab94ebf98 .param/l "APPROXIMATE" 0 2 5, +C4<00000000000000000000000000000001>;
-v0000023ab9532bd0_0 .var "CLK", 0 0;
-v0000023ab9532e50_0 .var "accuracy_level", 7 0;
-v0000023ab9532c70_0 .net "div_output", 31 0, v0000023ab95326d0_0;  1 drivers
-v0000023ab9532d10_0 .net "div_unit_busy", 0 0, v0000023ab95323b0_0;  1 drivers
-v0000023ab95324f0_0 .var "funct3", 2 0;
-v0000023ab9532ef0_0 .var "funct7", 6 0;
-v0000023ab9532810_0 .var "opcode", 6 0;
-v0000023ab95330d0_0 .var "rs1", 31 0;
-v0000023ab95321d0_0 .var "rs2", 31 0;
-S_0000023ab94e6a90 .scope module, "uut" "Divider_Unit" 2 18, 3 27 0, S_0000023ab94e6900;
+P_000002263a5dbf60 .param/l "APX_ACC_CONTROL" 0 2 6, +C4<00000000000000000000000000000001>;
+P_000002263a5dbf98 .param/l "USER_DESIGN" 0 2 5, +C4<00000000000000000000000000000001>;
+v000002263a6221d0_0 .var "CLK", 0 0;
+v000002263a6224f0_0 .var "accuracy_level", 7 0;
+v000002263a622ef0_0 .net "div_output", 31 0, v000002263a6226d0_0;  1 drivers
+v000002263a622810_0 .net "div_unit_busy", 0 0, v000002263a622770_0;  1 drivers
+v000002263a6228b0_0 .var "funct3", 2 0;
+v000002263a622a90_0 .var "funct7", 6 0;
+v000002263a622b30_0 .var "opcode", 6 0;
+v000002263a6223b0_0 .var "rs1", 31 0;
+v000002263a622950_0 .var "rs2", 31 0;
+S_000002263a5d6a90 .scope module, "uut" "Divider_Unit" 2 18, 3 27 0, S_000002263a5d6900;
  .timescale 0 0;
     .port_info 0 /INPUT 1 "CLK";
     .port_info 1 /INPUT 7 "opcode";
@@ -31,30 +31,30 @@ S_0000023ab94e6a90 .scope module, "uut" "Divider_Unit" 2 18, 3 27 0, S_0000023ab
     .port_info 6 /INPUT 32 "rs2";
     .port_info 7 /OUTPUT 1 "div_unit_busy";
     .port_info 8 /OUTPUT 32 "div_output";
-P_0000023ab94e6f00 .param/l "ACCURACY" 0 3 27, +C4<00000000000000000000000000000001>;
-P_0000023ab94e6f38 .param/l "APPROXIMATE" 0 3 27, +C4<00000000000000000000000000000001>;
-v0000023ab9541a00_0 .net "CLK", 0 0, v0000023ab9532bd0_0;  1 drivers
-v0000023ab9541aa0_0 .var "accuracy", 7 0;
-v0000023ab9597000_0 .net "accuracy_level", 7 0, v0000023ab9532e50_0;  1 drivers
-o0000023ab9549fd8 .functor BUFZ 1, C4<z>; HiZ drive
-v0000023ab95970a0_0 .net "busy", 0 0, o0000023ab9549fd8;  0 drivers
-v0000023ab95326d0_0 .var "div_output", 31 0;
-v0000023ab95323b0_0 .var "div_unit_busy", 0 0;
-v0000023ab9532950_0 .net "funct3", 2 0, v0000023ab95324f0_0;  1 drivers
-v0000023ab9532270_0 .net "funct7", 6 0, v0000023ab9532ef0_0;  1 drivers
-v0000023ab9532450_0 .var "input_1", 31 0;
-v0000023ab9532a90_0 .var "input_2", 31 0;
-v0000023ab95329f0_0 .net "opcode", 6 0, v0000023ab9532810_0;  1 drivers
-v0000023ab9533030_0 .var "operand_1", 31 0;
-v0000023ab9532f90_0 .var "operand_2", 31 0;
-v0000023ab9532770_0 .net "result", 31 0, v0000023ab9541960_0;  1 drivers
-v0000023ab9532db0_0 .net "rs1", 31 0, v0000023ab95330d0_0;  1 drivers
-v0000023ab9532b30_0 .net "rs2", 31 0, v0000023ab95321d0_0;  1 drivers
-E_0000023ab9528420/0 .event anyedge, v0000023ab9541960_0, v0000023ab952b350_0, v0000023ab9532270_0, v0000023ab9532950_0;
-E_0000023ab9528420/1 .event anyedge, v0000023ab95329f0_0, v0000023ab9533030_0, v0000023ab9532f90_0;
-E_0000023ab9528420 .event/or E_0000023ab9528420/0, E_0000023ab9528420/1;
-E_0000023ab9528a60 .event anyedge, v0000023ab9532db0_0, v0000023ab9532b30_0, v0000023ab9597000_0;
-S_0000023ab9541730 .scope module, "div" "Sample_Divider" 3 96, 4 1 0, S_0000023ab94e6a90;
+P_000002263a5d6f00 .param/l "APX_ACC_CONTROL" 0 3 27, +C4<00000000000000000000000000000001>;
+P_000002263a5d6f38 .param/l "USER_DESIGN" 0 3 27, +C4<00000000000000000000000000000001>;
+v000002263a631a00_0 .net "CLK", 0 0, v000002263a6221d0_0;  1 drivers
+v000002263a631aa0_0 .var "accuracy", 7 0;
+v000002263a687000_0 .net "accuracy_level", 7 0, v000002263a6224f0_0;  1 drivers
+o000002263a639fd8 .functor BUFZ 1, C4<z>; HiZ drive
+v000002263a6870a0_0 .net "busy", 0 0, o000002263a639fd8;  0 drivers
+v000002263a6226d0_0 .var "div_output", 31 0;
+v000002263a622770_0 .var "div_unit_busy", 0 0;
+v000002263a622630_0 .net "funct3", 2 0, v000002263a6228b0_0;  1 drivers
+v000002263a622d10_0 .net "funct7", 6 0, v000002263a622a90_0;  1 drivers
+v000002263a622590_0 .var "input_1", 31 0;
+v000002263a6230d0_0 .var "input_2", 31 0;
+v000002263a622310_0 .net "opcode", 6 0, v000002263a622b30_0;  1 drivers
+v000002263a622e50_0 .var "operand_1", 31 0;
+v000002263a622f90_0 .var "operand_2", 31 0;
+v000002263a622450_0 .net "result", 31 0, v000002263a631960_0;  1 drivers
+v000002263a623030_0 .net "rs1", 31 0, v000002263a6223b0_0;  1 drivers
+v000002263a622db0_0 .net "rs2", 31 0, v000002263a622950_0;  1 drivers
+E_000002263a6187a0/0 .event anyedge, v000002263a631960_0, v000002263a61b350_0, v000002263a622d10_0, v000002263a622630_0;
+E_000002263a6187a0/1 .event anyedge, v000002263a622310_0, v000002263a622e50_0, v000002263a622f90_0;
+E_000002263a6187a0 .event/or E_000002263a6187a0/0, E_000002263a6187a0/1;
+E_000002263a618aa0 .event anyedge, v000002263a623030_0, v000002263a622db0_0, v000002263a687000_0;
+S_000002263a631730 .scope module, "div" "Sample_Divider" 3 96, 4 1 0, S_000002263a5d6a90;
  .timescale 0 0;
     .port_info 0 /INPUT 1 "CLK";
     .port_info 1 /INPUT 32 "input_1";
@@ -62,83 +62,83 @@ S_0000023ab9541730 .scope module, "div" "Sample_Divider" 3 96, 4 1 0, S_0000023a
     .port_info 3 /INPUT 8 "accuracy";
     .port_info 4 /OUTPUT 1 "busy";
     .port_info 5 /OUTPUT 32 "result";
-v0000023ab952a7b0_0 .net "CLK", 0 0, v0000023ab9532bd0_0;  alias, 1 drivers
-v0000023ab952b2b0_0 .net "accuracy", 7 0, v0000023ab9541aa0_0;  1 drivers
-v0000023ab952b350_0 .net "busy", 0 0, o0000023ab9549fd8;  alias, 0 drivers
-v0000023ab94e6c20_0 .net "input_1", 31 0, v0000023ab9532450_0;  1 drivers
-v0000023ab94e6cc0_0 .net "input_2", 31 0, v0000023ab9532a90_0;  1 drivers
-v0000023ab95418c0_0 .var "output_div", 31 0;
-v0000023ab9541960_0 .var "result", 31 0;
-E_0000023ab95289e0 .event anyedge, v0000023ab95418c0_0, v0000023ab952b2b0_0, v0000023ab94e6c20_0, v0000023ab94e6cc0_0;
-    .scope S_0000023ab9541730;
+v000002263a61a7b0_0 .net "CLK", 0 0, v000002263a6221d0_0;  alias, 1 drivers
+v000002263a61b2b0_0 .net "accuracy", 7 0, v000002263a631aa0_0;  1 drivers
+v000002263a61b350_0 .net "busy", 0 0, o000002263a639fd8;  alias, 0 drivers
+v000002263a5d6c20_0 .net "input_1", 31 0, v000002263a622590_0;  1 drivers
+v000002263a5d6cc0_0 .net "input_2", 31 0, v000002263a6230d0_0;  1 drivers
+v000002263a6318c0_0 .var "output_div", 31 0;
+v000002263a631960_0 .var "result", 31 0;
+E_000002263a6188a0 .event anyedge, v000002263a6318c0_0, v000002263a61b2b0_0, v000002263a5d6c20_0, v000002263a5d6cc0_0;
+    .scope S_000002263a631730;
 T_0 ;
-    %wait E_0000023ab95289e0;
-    %load/vec4 v0000023ab95418c0_0;
-    %cassign/vec4 v0000023ab9541960_0;
-    %cassign/link v0000023ab9541960_0, v0000023ab95418c0_0;
-    %load/vec4 v0000023ab952b2b0_0;
+    %wait E_000002263a6188a0;
+    %load/vec4 v000002263a6318c0_0;
+    %cassign/vec4 v000002263a631960_0;
+    %cassign/link v000002263a631960_0, v000002263a6318c0_0;
+    %load/vec4 v000002263a61b2b0_0;
     %pad/u 32;
     %cmpi/e 0, 0, 32;
     %jmp/0xz  T_0.0, 4;
-    %load/vec4 v0000023ab94e6c20_0;
-    %load/vec4 v0000023ab94e6cc0_0;
+    %load/vec4 v000002263a5d6c20_0;
+    %load/vec4 v000002263a5d6cc0_0;
     %div;
-    %store/vec4 v0000023ab95418c0_0, 0, 32;
+    %store/vec4 v000002263a6318c0_0, 0, 32;
     %jmp T_0.1;
 T_0.0 ;
-    %load/vec4 v0000023ab952b2b0_0;
+    %load/vec4 v000002263a61b2b0_0;
     %pad/u 32;
     %cmpi/e 1, 0, 32;
     %jmp/0xz  T_0.2, 4;
-    %load/vec4 v0000023ab94e6c20_0;
-    %load/vec4 v0000023ab94e6cc0_0;
+    %load/vec4 v000002263a5d6c20_0;
+    %load/vec4 v000002263a5d6cc0_0;
     %div;
     %subi 1, 0, 32;
-    %store/vec4 v0000023ab95418c0_0, 0, 32;
+    %store/vec4 v000002263a6318c0_0, 0, 32;
     %jmp T_0.3;
 T_0.2 ;
-    %load/vec4 v0000023ab952b2b0_0;
+    %load/vec4 v000002263a61b2b0_0;
     %pad/u 32;
     %cmpi/e 2, 0, 32;
     %jmp/0xz  T_0.4, 4;
-    %load/vec4 v0000023ab94e6c20_0;
-    %load/vec4 v0000023ab94e6cc0_0;
+    %load/vec4 v000002263a5d6c20_0;
+    %load/vec4 v000002263a5d6cc0_0;
     %div;
     %subi 2, 0, 32;
-    %store/vec4 v0000023ab95418c0_0, 0, 32;
+    %store/vec4 v000002263a6318c0_0, 0, 32;
     %jmp T_0.5;
 T_0.4 ;
-    %load/vec4 v0000023ab94e6c20_0;
-    %load/vec4 v0000023ab94e6cc0_0;
+    %load/vec4 v000002263a5d6c20_0;
+    %load/vec4 v000002263a5d6cc0_0;
     %div;
-    %store/vec4 v0000023ab95418c0_0, 0, 32;
+    %store/vec4 v000002263a6318c0_0, 0, 32;
 T_0.5 ;
 T_0.3 ;
 T_0.1 ;
     %jmp T_0;
     .thread T_0, $push;
-    .scope S_0000023ab94e6a90;
+    .scope S_000002263a5d6a90;
 T_1 ;
-    %wait E_0000023ab9528a60;
-    %load/vec4 v0000023ab9532db0_0;
-    %store/vec4 v0000023ab9533030_0, 0, 32;
-    %load/vec4 v0000023ab9532b30_0;
-    %store/vec4 v0000023ab9532f90_0, 0, 32;
-    %load/vec4 v0000023ab9597000_0;
-    %store/vec4 v0000023ab9541aa0_0, 0, 8;
+    %wait E_000002263a618aa0;
+    %load/vec4 v000002263a623030_0;
+    %store/vec4 v000002263a622e50_0, 0, 32;
+    %load/vec4 v000002263a622db0_0;
+    %store/vec4 v000002263a622f90_0, 0, 32;
+    %load/vec4 v000002263a687000_0;
+    %store/vec4 v000002263a631aa0_0, 0, 8;
     %jmp T_1;
     .thread T_1, $push;
-    .scope S_0000023ab94e6a90;
+    .scope S_000002263a5d6a90;
 T_2 ;
-    %wait E_0000023ab9528420;
-    %load/vec4 v0000023ab9532770_0;
-    %store/vec4 v0000023ab95326d0_0, 0, 32;
-    %load/vec4 v0000023ab95970a0_0;
-    %store/vec4 v0000023ab95323b0_0, 0, 1;
-    %load/vec4 v0000023ab9532270_0;
-    %load/vec4 v0000023ab9532950_0;
+    %wait E_000002263a6187a0;
+    %load/vec4 v000002263a622450_0;
+    %store/vec4 v000002263a6226d0_0, 0, 32;
+    %load/vec4 v000002263a6870a0_0;
+    %store/vec4 v000002263a622770_0, 0, 1;
+    %load/vec4 v000002263a622d10_0;
+    %load/vec4 v000002263a622630_0;
     %concat/vec4; draw_concat_vec4
-    %load/vec4 v0000023ab95329f0_0;
+    %load/vec4 v000002263a622310_0;
     %concat/vec4; draw_concat_vec4
     %dup/vec4;
     %pushi/vec4 1587, 0, 17;
@@ -157,21 +157,21 @@ T_2 ;
     %cmp/x;
     %jmp/1 T_2.3, 4;
     %pushi/vec4 0, 4294967295, 32;
-    %store/vec4 v0000023ab95326d0_0, 0, 32;
+    %store/vec4 v000002263a6226d0_0, 0, 32;
     %pushi/vec4 0, 1, 1;
-    %store/vec4 v0000023ab95323b0_0, 0, 1;
+    %store/vec4 v000002263a622770_0, 0, 1;
     %jmp T_2.5;
 T_2.0 ;
-    %load/vec4 v0000023ab9533030_0;
-    %store/vec4 v0000023ab9532450_0, 0, 32;
-    %load/vec4 v0000023ab9532f90_0;
-    %store/vec4 v0000023ab9532a90_0, 0, 32;
+    %load/vec4 v000002263a622e50_0;
+    %store/vec4 v000002263a622590_0, 0, 32;
+    %load/vec4 v000002263a622f90_0;
+    %store/vec4 v000002263a6230d0_0, 0, 32;
     %jmp T_2.5;
 T_2.1 ;
-    %load/vec4 v0000023ab9533030_0;
-    %store/vec4 v0000023ab9532450_0, 0, 32;
-    %load/vec4 v0000023ab9532f90_0;
-    %store/vec4 v0000023ab9532a90_0, 0, 32;
+    %load/vec4 v000002263a622e50_0;
+    %store/vec4 v000002263a622590_0, 0, 32;
+    %load/vec4 v000002263a622f90_0;
+    %store/vec4 v000002263a6230d0_0, 0, 32;
     %jmp T_2.5;
 T_2.2 ;
     %jmp T_2.5;
@@ -181,57 +181,57 @@ T_2.5 ;
     %pop/vec4 1;
     %jmp T_2;
     .thread T_2, $push;
-    .scope S_0000023ab94e6900;
+    .scope S_000002263a5d6900;
 T_3 ;
     %pushi/vec4 0, 0, 1;
-    %store/vec4 v0000023ab9532bd0_0, 0, 1;
+    %store/vec4 v000002263a6221d0_0, 0, 1;
     %end;
     .thread T_3;
-    .scope S_0000023ab94e6900;
+    .scope S_000002263a5d6900;
 T_4 ;
     %delay 10, 0;
-    %load/vec4 v0000023ab9532bd0_0;
+    %load/vec4 v000002263a6221d0_0;
     %inv;
-    %store/vec4 v0000023ab9532bd0_0, 0, 1;
+    %store/vec4 v000002263a6221d0_0, 0, 1;
     %jmp T_4;
     .thread T_4;
-    .scope S_0000023ab94e6900;
+    .scope S_000002263a5d6900;
 T_5 ;
     %vpi_call 2 34 "$dumpfile", "DIV.vcd" {0 0 0};
-    %vpi_call 2 35 "$dumpvars", 32'sb00000000000000000000000000000000, S_0000023ab94e6900 {0 0 0};
+    %vpi_call 2 35 "$dumpvars", 32'sb00000000000000000000000000000000, S_000002263a5d6900 {0 0 0};
     %pushi/vec4 51, 0, 7;
-    %store/vec4 v0000023ab9532810_0, 0, 7;
+    %store/vec4 v000002263a622b30_0, 0, 7;
     %pushi/vec4 1, 0, 7;
-    %store/vec4 v0000023ab9532ef0_0, 0, 7;
+    %store/vec4 v000002263a622a90_0, 0, 7;
     %pushi/vec4 4, 0, 3;
-    %store/vec4 v0000023ab95324f0_0, 0, 3;
+    %store/vec4 v000002263a6228b0_0, 0, 3;
     %pushi/vec4 0, 0, 8;
-    %store/vec4 v0000023ab9532e50_0, 0, 8;
+    %store/vec4 v000002263a6224f0_0, 0, 8;
     %pushi/vec4 400, 0, 32;
-    %store/vec4 v0000023ab95330d0_0, 0, 32;
+    %store/vec4 v000002263a6223b0_0, 0, 32;
     %pushi/vec4 20, 0, 32;
-    %store/vec4 v0000023ab95321d0_0, 0, 32;
+    %store/vec4 v000002263a622950_0, 0, 32;
     %delay 20, 0;
-    %vpi_call 2 46 "$display", "Divider output: %d", v0000023ab9532c70_0 {0 0 0};
-    %vpi_call 2 47 "$display", "Divider busy: %d", v0000023ab9532d10_0 {0 0 0};
+    %vpi_call 2 46 "$display", "Divider output: %d", v000002263a622ef0_0 {0 0 0};
+    %vpi_call 2 47 "$display", "Divider busy: %d", v000002263a622810_0 {0 0 0};
     %pushi/vec4 1, 0, 8;
-    %store/vec4 v0000023ab9532e50_0, 0, 8;
+    %store/vec4 v000002263a6224f0_0, 0, 8;
     %pushi/vec4 100, 0, 32;
-    %store/vec4 v0000023ab95330d0_0, 0, 32;
+    %store/vec4 v000002263a6223b0_0, 0, 32;
     %pushi/vec4 20, 0, 32;
-    %store/vec4 v0000023ab95321d0_0, 0, 32;
+    %store/vec4 v000002263a622950_0, 0, 32;
     %delay 20, 0;
-    %vpi_call 2 53 "$display", "Divider output: %d", v0000023ab9532c70_0 {0 0 0};
-    %vpi_call 2 54 "$display", "Divider busy: %d", v0000023ab9532d10_0 {0 0 0};
+    %vpi_call 2 53 "$display", "Divider output: %d", v000002263a622ef0_0 {0 0 0};
+    %vpi_call 2 54 "$display", "Divider busy: %d", v000002263a622810_0 {0 0 0};
     %pushi/vec4 2, 0, 8;
-    %store/vec4 v0000023ab9532e50_0, 0, 8;
+    %store/vec4 v000002263a6224f0_0, 0, 8;
     %pushi/vec4 500, 0, 32;
-    %store/vec4 v0000023ab95330d0_0, 0, 32;
+    %store/vec4 v000002263a6223b0_0, 0, 32;
     %pushi/vec4 20, 0, 32;
-    %store/vec4 v0000023ab95321d0_0, 0, 32;
+    %store/vec4 v000002263a622950_0, 0, 32;
     %delay 20, 0;
-    %vpi_call 2 60 "$display", "Divider output: %d", v0000023ab9532c70_0 {0 0 0};
-    %vpi_call 2 61 "$display", "Divider busy: %d", v0000023ab9532d10_0 {0 0 0};
+    %vpi_call 2 60 "$display", "Divider output: %d", v000002263a622ef0_0 {0 0 0};
+    %vpi_call 2 61 "$display", "Divider busy: %d", v000002263a622810_0 {0 0 0};
     %vpi_call 2 63 "$finish" {0 0 0};
     %end;
     .thread T_5;
