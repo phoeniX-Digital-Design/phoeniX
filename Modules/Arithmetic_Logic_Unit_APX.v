@@ -147,7 +147,14 @@ module Arithmetic_Logic_Unit_APX #(parameter APPROXIMATE = 0, parameter ACCURACY
     begin
         casex ({funct7, funct3, opcode})
             // I-TYPE Intructions
-            {7'bx_xxx_xxx, 3'b000, `OP_IMM} : alu_output = operand_1 + operand_2;                               // ADDI
+            {7'bx_xxx_xxx, 3'b000, `OP_IMM} :                                                                   // ADDI
+            begin 
+            if (APPROXIMATE == 1)
+            begin input_1 = operand_1; input_2 = operand_2; alu_output = result;
+            if (ACCURACY == 1) begin accuracy = accuracy_level; end 
+            end
+            else if (APPROXIMATE == 0) begin alu_output = operand_1 + operand_2; end 
+            end                     
             {7'b0_000_000, 3'b001, `OP_IMM} : alu_output = operand_1 << operand_2 [4 : 0];                      // SLLI
             {7'bx_xxx_xxx, 3'b010, `OP_IMM} : alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;     // SLTI
             {7'bx_xxx_xxx, 3'b011, `OP_IMM} : alu_output = operand_1 < operand_2 ? 1 : 0;                       // SLTIU
