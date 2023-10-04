@@ -39,13 +39,40 @@ module Testbench;
         B = 16'b0101010101010101;
         Cin = 1;
         #10;
-        $display("Test case 1:");
+        $display("Test case 2:");
         $display("A = %d", A);
         $display("B = %d", B);
         $display("Cin = %d", Cin);
         $display("Sum = %b", Sum);
         $display("Cout = %d", Cout);
         #10;
+
+        // Test case 3
+        A = 16'b0000001111111111;
+        B = 16'b0000001111111111;
+        Cin = 0;
+        #10;
+        $display("Test case 3:");
+        $display("A = %b", A);
+        $display("B = %b", B);
+        $display("Cin = %b", Cin);
+        $display("Sum = %b", Sum);
+        $display("Cout = %b", Cout);
+        #10;
+
+        // Test case 4
+        A = 16'b0000001111111111;
+        B = 16'b0000001111111111;
+        Cin = 1;
+        #10;
+        $display("Test case 4:");
+        $display("A = %b", A);
+        $display("B = %b", B);
+        $display("Cin = %b", Cin);
+        $display("Sum = %b", Sum);
+        $display("Cout = %b", Cout);
+        #10;
+
         $finish;
 
     end
