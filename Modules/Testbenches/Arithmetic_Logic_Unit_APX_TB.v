@@ -30,6 +30,7 @@ module Arithmetic_Logic_Unit_APX_TB;
 
         $dumpfile("ALU_APX.vcd");
         $dumpvars(0, Arithmetic_Logic_Unit_APX_TB);
+
         // ADD Test:
         #10;
         opcode = 7'b0110011;
@@ -88,6 +89,36 @@ module Arithmetic_Logic_Unit_APX_TB;
         immediate = 32'h00000003;
         #5
         $display("ALU ADDI output: %d", alu_output);
+        #10
+
+        // SUB Test:
+        #10;
+        opcode = 7'b0110011;
+        funct3 = 3'b000;
+        funct7 = 7'b0100000;
+        accuracy_level = 8'b0000_0000;
+        rs1 = 32'h00000006;
+        rs2 = 32'h00000003;
+        #5
+        $display("ALU SUB output: %d", alu_output);
+        #10;
+        opcode = 7'b0110011;
+        funct3 = 3'b000;
+        funct7 = 7'b0100000;
+        accuracy_level = 8'b0000_0001;
+        rs1 = 32'h00000006;
+        rs2 = 32'h00000003;
+        #5
+        $display("ALU SUB output: %d", alu_output);
+        #10;
+        opcode = 7'b0110011;
+        funct3 = 3'b000;
+        funct7 = 7'b0100000;
+        accuracy_level = 8'b0000_0010;
+        rs1 = 32'h00000006;
+        rs2 = 32'h00000003;
+        #5
+        $display("ALU SUB output: %d", alu_output);
         #10
         $finish;
 
