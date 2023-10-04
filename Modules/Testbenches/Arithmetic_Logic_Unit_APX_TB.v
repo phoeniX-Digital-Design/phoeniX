@@ -30,6 +30,7 @@ module Arithmetic_Logic_Unit_APX_TB;
 
         $dumpfile("ALU_APX.vcd");
         $dumpvars(0, Arithmetic_Logic_Unit_APX_TB);
+        // ADD Test:
         #10;
         opcode = 7'b0110011;
         funct3 = 3'b000;
@@ -38,7 +39,7 @@ module Arithmetic_Logic_Unit_APX_TB;
         rs1 = 32'h00000004;
         rs2 = 32'h00000005;
         #5
-        $display("ALU output: %d", alu_output);
+        $display("ALU ADD output: %d", alu_output);
         #10;
         opcode = 7'b0110011;
         funct3 = 3'b000;
@@ -47,7 +48,7 @@ module Arithmetic_Logic_Unit_APX_TB;
         rs1 = 32'h00000004;
         rs2 = 32'h00000005;
         #5
-        $display("ALU output: %d", alu_output);
+        $display("ALU ADD output: %d", alu_output);
         #10;
         opcode = 7'b0110011;
         funct3 = 3'b000;
@@ -56,9 +57,39 @@ module Arithmetic_Logic_Unit_APX_TB;
         rs1 = 32'h00000004;
         rs2 = 32'h00000005;
         #5
-        $display("ALU output: %d", alu_output);
+        $display("ALU ADD output: %d", alu_output);
+        #10
 
-        #10 $finish;
+        // ADDI Test:
+        #10;
+        opcode = 7'b0010011;
+        funct3 = 3'b000;
+        accuracy_level = 8'b0000_0000;
+        rs1 = 32'h00000004;
+        rs2 = 32'h00000005;
+        immediate = 32'h00000003;
+        #5
+        $display("ALU ADDI output: %d", alu_output);
+        #10;
+        opcode = 7'b0010011;
+        funct3 = 3'b000;
+        accuracy_level = 8'b0000_0001;
+        rs1 = 32'h00000004;
+        rs2 = 32'h00000005;
+        immediate = 32'h00000003;
+        #5
+        $display("ALU ADDI output: %d", alu_output);
+        #10;
+        opcode = 7'b0010011;
+        funct3 = 3'b000;
+        accuracy_level = 8'b0000_0010;
+        rs1 = 32'h00000004;
+        rs2 = 32'h00000005;
+        immediate = 32'h00000003;
+        #5
+        $display("ALU ADDI output: %d", alu_output);
+        #10
+        $finish;
 
     end
 
