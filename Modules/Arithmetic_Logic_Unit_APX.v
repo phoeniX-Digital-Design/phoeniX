@@ -173,7 +173,14 @@ module Arithmetic_Logic_Unit_APX #(parameter APPROXIMATE = 0, parameter ACCURACY
             end
             else if (APPROXIMATE == 0) begin alu_output = operand_1 + operand_2; end
             end
-            {7'b0_100_000, 3'b000, `OP}     : alu_output = operand_1 - operand_2;                               // SUB
+            {7'b0_100_000, 3'b000, `OP}     :                                                                   // SUB
+            begin
+            if (APPROXIMATE == 1)
+            begin input_1 = operand_1; input_2 = ~(operand_2) + 1; alu_output = result;
+            if (ACCURACY == 1) begin accuracy = accuracy_level; end 
+            end
+            else if (APPROXIMATE == 0) begin alu_output = operand_1 - operand_2; end
+            end
             {7'b0_000_000, 3'b001, `OP}     : alu_output = operand_1 << operand_2;                              // SLL
             {7'b0_000_000, 3'b010, `OP}     : alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;     // SLT
             {7'b0_000_000, 3'b011, `OP}     : alu_output = operand_1 < operand_2 ? 1 : 0;                       // SLTU
