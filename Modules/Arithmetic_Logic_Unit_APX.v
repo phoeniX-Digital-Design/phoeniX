@@ -1,4 +1,5 @@
 /*
+    phoeniX RV32IMX CORE: Approximation Guidlines
     =====================================================================
     Module: User Adder Circuit
     Description: Adder module with configurable accuracy (optional)
@@ -16,11 +17,11 @@
     - Inputs: input_1, input_2, accuracy
     - Outputs: result
     ======================================================================
-    phoeniX RV32I core - Arithmetic Logic Unit
+    phoeniX RV32IMX core - Arithmetic Logic Unit
     - This unit executes R-Type, I-Type and J-Type instructions
-    - Inputs bus_rs1, bus_rs2 comes from Register_File
-    - Input immediate comes from Immediate_Generator
-    - Input signals opcode, funct3, funct7, comes from Instruction_Decoder
+    - Inputs `rs1`, `rs2` comes from `Register_File` (DATA BUS)
+    - Input `immediate` comes from `Immediate_Generator`
+    - Input signals `opcode`, `funct3`, `funct7`, comes from `Instruction_Decoder`
     - Supported Instructions :
         I-TYPE : ADDI - SLTI - SLTIU            R-TYPE : ADD  - SUB  - SLL           
                  XORI - ORI  - ANDI                      SLT  - SLTU - XOR                         
@@ -122,7 +123,7 @@ module Arithmetic_Logic_Unit_APX #(parameter APPROXIMATE = 0, parameter ACCURACY
         `AUIPC  : begin mux1_select = 1'b1; mux2_select = 2'b01; end // AUIPC
         endcase        
     end
-
+    
     // ALU Multiplexer 1
     always @(*) 
     begin
@@ -131,7 +132,7 @@ module Arithmetic_Logic_Unit_APX #(parameter APPROXIMATE = 0, parameter ACCURACY
             1'b1 : operand_1 = PC;
         endcase
     end
-
+    
     // ALU Multiplexer 2
     always @(*) 
     begin
@@ -187,8 +188,10 @@ module Arithmetic_Logic_Unit_APX #(parameter APPROXIMATE = 0, parameter ACCURACY
     end
 
     // *** Instantiate your adder circuit here ***
-    // Please instantiate your adder module using the guidelines and phoeniX naming conventions
+    // Please instantiate your adder module according to the guidelines and naming conventions of phoeniX
+    // --------------------------------------------------------------------------------------------------
     Sample_Adder adder (input_1, input_2, accuracy, result);
-    // *** End of adder instantiation ***
+    // --------------------------------------------------------------------------------------------------
+    // *** End of adder module instantiation ***
 
 endmodule
