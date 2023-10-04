@@ -2,10 +2,10 @@
 
 module Testbench;
 
-    reg [15:0] A;
-    reg [15:0] B;
-    reg Cin;
-    wire [15:0] Sum;
+    reg  [15 : 0] A;
+    reg  [15 : 0] B;
+    reg  Cin;
+    wire [15 : 0] Sum;
     wire Cout;
 
     Fast_Low_Power_Carry_Select_Adder #(.LEN(16)) uut 
@@ -55,14 +55,17 @@ module Testbench;
         $display("Test case 3:");
         $display("A = %b", A);
         $display("B = %b", B);
+        $display("A = %d", A);
+        $display("B = %d", B);
         $display("Cin = %b", Cin);
         $display("Sum = %b", Sum);
+        $display("Sum = %d", Sum);
         $display("Cout = %b", Cout);
         #10;
 
         // Test case 4
-        A = 16'b0000001111111111;
         B = 16'b0000001111111111;
+        A = 16'b0000001111111111;
         Cin = 1;
         #10;
         $display("Test case 4:");
@@ -71,6 +74,19 @@ module Testbench;
         $display("Cin = %b", Cin);
         $display("Sum = %b", Sum);
         $display("Cout = %b", Cout);
+        #10;
+
+        // Test case 5
+        B = 16'd1023;
+        A = 16'd1024;
+        Cin = 0;
+        #10;
+        $display("Test case 5:");
+        $display("A = %d", A);
+        $display("B = %d", B);
+        $display("Cin = %d", Cin);
+        $display("Sum = %d", Sum);
+        $display("Cout = %d", Cout);
         #10;
 
         $finish;
