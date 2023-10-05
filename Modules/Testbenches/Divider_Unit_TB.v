@@ -2,9 +2,9 @@
 
 module Divider_Unit_TB;
 
-    parameter X_EXTENISION = 1;
-    parameter USER_DESIGN  = 1; // Change to 1 for testing if statement in module -> test passed
-    parameter APX_ACC_CONTROL = 1;
+    parameter DIV_X_EXTENISION = 1;
+    parameter DIV_USER_DESIGN  = 1; // Change to 1 for testing if statement in module -> test passed
+    parameter DIV_APX_ACC_CONTROL = 1;
     reg CLK = 0;
     reg [6:0] opcode;
     reg [6:0] funct7;
@@ -16,7 +16,7 @@ module Divider_Unit_TB;
     wire div_unit_busy;
     wire [31:0] div_output;
 
-    Divider_Unit #(X_EXTENISION, USER_DESIGN, APX_ACC_CONTROL) uut 
+    Divider_Unit #(DIV_X_EXTENISION, DIV_USER_DESIGN, DIV_APX_ACC_CONTROL) uut 
     (
         .CLK(CLK),
         .opcode(opcode),

@@ -1,5 +1,5 @@
 $date
-	Thu Oct 05 13:15:46 2023
+	Thu Oct 05 13:38:09 2023
 $end
 $version
 	Icarus Verilog
@@ -10,9 +10,9 @@ $end
 $scope module Divider_Unit_TB $end
 $var wire 1 ! div_unit_busy $end
 $var wire 32 " div_output [31:0] $end
-$var parameter 32 # APX_ACC_CONTROL $end
-$var parameter 32 $ USER_DESIGN $end
-$var parameter 32 % X_EXTENISION $end
+$var parameter 32 # DIV_APX_ACC_CONTROL $end
+$var parameter 32 $ DIV_USER_DESIGN $end
+$var parameter 32 % DIV_X_EXTENISION $end
 $var reg 1 & CLK $end
 $var reg 8 ' accuracy_level [7:0] $end
 $var reg 3 ( funct3 [2:0] $end
@@ -30,50 +30,54 @@ $var wire 7 1 opcode [6:0] $end
 $var wire 32 2 rs1 [31:0] $end
 $var wire 32 3 rs2 [31:0] $end
 $var wire 32 4 result [31:0] $end
-$var parameter 32 5 APX_ACC_CONTROL $end
-$var parameter 32 6 USER_DESIGN $end
-$var parameter 32 7 X_EXTENISION $end
-$var reg 8 8 accuracy [7:0] $end
-$var reg 32 9 div_output [31:0] $end
+$var wire 32 5 remainder [31:0] $end
+$var parameter 32 6 DIV_APX_ACC_CONTROL $end
+$var parameter 32 7 DIV_USER_DESIGN $end
+$var parameter 32 8 DIV_X_EXTENISION $end
+$var reg 8 9 accuracy [7:0] $end
+$var reg 32 : div_output [31:0] $end
 $var reg 1 ! div_unit_busy $end
-$var reg 32 : input_1 [31:0] $end
-$var reg 32 ; input_2 [31:0] $end
-$var reg 32 < operand_1 [31:0] $end
-$var reg 32 = operand_2 [31:0] $end
+$var reg 32 ; input_1 [31:0] $end
+$var reg 32 < input_2 [31:0] $end
+$var reg 32 = operand_1 [31:0] $end
+$var reg 32 > operand_2 [31:0] $end
 $scope module div $end
 $var wire 1 & CLK $end
-$var wire 8 > accuracy [7:0] $end
+$var wire 8 ? accuracy [7:0] $end
 $var wire 1 . busy $end
-$var wire 32 ? input_1 [31:0] $end
-$var wire 32 @ input_2 [31:0] $end
-$var reg 32 A output_div [31:0] $end
-$var reg 32 B result [31:0] $end
+$var wire 32 @ input_1 [31:0] $end
+$var wire 32 A input_2 [31:0] $end
+$var reg 32 B output_div [31:0] $end
+$var reg 32 C remainder [31:0] $end
+$var reg 32 D result [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 $comment Show the parameter values. $end
 $dumpall
+b1 8
 b1 7
 b1 6
-b1 5
 b1 %
 b1 $
 b1 #
 $end
 #0
 $dumpvars
+b10100 D
+b0 C
 b10100 B
 b10100 A
-b10100 @
-b110010000 ?
-b0 >
-b10100 =
-b110010000 <
-b10100 ;
-b110010000 :
-b10100 9
-b0 8
+b110010000 @
+b0 ?
+b10100 >
+b110010000 =
+b10100 <
+b110010000 ;
+b10100 :
+b0 9
+b0 5
 b10100 4
 b10100 3
 b110010000 2
@@ -96,15 +100,15 @@ $end
 1&
 #20
 b100 "
-b100 9
+b100 :
 b100 4
+b100 D
 b100 B
-b100 A
-b1100100 :
-b1100100 ?
-b1 8
-b1 >
-b1100100 <
+b1100100 ;
+b1100100 @
+b1 9
+b1 ?
+b1100100 =
 0&
 b1100100 +
 b1100100 2
@@ -114,15 +118,15 @@ b1 -
 1&
 #40
 b10111 "
-b10111 9
+b10111 :
 b10111 4
+b10111 D
 b10111 B
-b10111 A
-b111110100 :
-b111110100 ?
-b10 8
-b10 >
-b111110100 <
+b111110100 ;
+b111110100 @
+b10 9
+b10 ?
+b111110100 =
 0&
 b111110100 +
 b111110100 2
