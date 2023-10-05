@@ -65,7 +65,7 @@
     `define custom_3    7'b11_110_11
 `endif
 
-module Arithmetic_Logic_Unit_APX #(parameter ALU_X_EXTENISION = 0, parameter ALU_USER_DESIGN = 0, parameter ALU_APX_ACC_CONTROL = 0)
+module Arithmetic_Logic_Unit
 (
     input [6 : 0] opcode,               // ALU Operation
     input [2 : 0] funct3,               // ALU Operation
