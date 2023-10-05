@@ -16,7 +16,7 @@
   Naming Convention:
   All user-defined divider modules should follow this format:
   - Inputs: CLK, input_1, input_2, accuracy
-  - Outputs: busy, result
+  - Outputs: busy, result, remainder
   ======================================================================
 */
 
@@ -24,7 +24,7 @@
 `include "../User_Modules/Sample_Divider/Sample_Divider.v"
 // *** End of including headers and modules ***
 
-module Divider_Unit #(parameter X_EXTENISION = 0, parameter USER_DESIGN = 0, parameter APX_ACC_CONTROL = 0)
+module Divider_Unit #(parameter DIV_X_EXTENISION = 0, parameter DIV_USER_DESIGN = 0, parameter DIV_APX_ACC_CONTROL = 0)
 (
     input CLK,
     input [6 : 0] opcode,
@@ -47,29 +47,30 @@ module Divider_Unit #(parameter X_EXTENISION = 0, parameter USER_DESIGN = 0, par
     reg  [31 : 0] input_2;
     reg  [7  : 0] accuracy;
     wire [31 : 0] result;
+    wire [31 : 0] remainder;
 
     // Latching operands coming from data bus
     always @(*) begin
         operand_1 = rs1;
         operand_2 = rs2;
         // Checking if the module is accuracy controlable or not
-        if (X_EXTENISION == 0 && USER_DESIGN == 1 && APX_ACC_CONTROL == 0)
+        if (DIV_X_EXTENISION == 0 && DIV_USER_DESIGN == 1 && DIV_APX_ACC_CONTROL == 0)
         begin
             accuracy = 8'bz; // Module is not approximate and accuracy controlable but is user designed -> input signal = Z
         end
-        else if (X_EXTENISION == 0 && USER_DESIGN == 0 && APX_ACC_CONTROL == 0)
+        else if (DIV_X_EXTENISION == 0 && DIV_USER_DESIGN == 0 && DIV_APX_ACC_CONTROL == 0)
         begin
             accuracy = 8'bz; // Module is not approximate,accuracy controlable and user designed -> input signal = Z
         end
-        else if (X_EXTENISION == 0 && USER_DESIGN == 0 && APX_ACC_CONTROL == 1)
+        else if (DIV_X_EXTENISION == 0 && DIV_USER_DESIGN == 0 && DIV_APX_ACC_CONTROL == 1)
         begin
             accuracy = 8'bz; // Module is not approximate and accuracy controlable -> input signal = Z
         end
-        else if (X_EXTENISION == 1 && USER_DESIGN == 1 && APX_ACC_CONTROL == 0)
+        else if (DIV_X_EXTENISION == 1 && DIV_USER_DESIGN == 1 && DIV_APX_ACC_CONTROL == 0)
         begin
             accuracy = 8'bz; // Module is approximate but not accuracy controlable -> input signal = Z
         end
-        else if (X_EXTENISION == 1 && USER_DESIGN == 1 && APX_ACC_CONTROL == 1)
+        else if (DIV_X_EXTENISION == 1 && DIV_USER_DESIGN == 1 && DIV_APX_ACC_CONTROL == 1)
         begin
             accuracy = accuracy_level; // Module is  approximate and accuracy controlable
         end
@@ -79,20 +80,23 @@ module Divider_Unit #(parameter X_EXTENISION = 0, parameter USER_DESIGN = 0, par
 
     always @(*) 
     begin
-        div_output = result;
         div_unit_busy = busy;
         casex ({funct7, funct3, opcode})
             17'b0000001_100_0110011 : begin  // DIV
                 input_1 = operand_1;
                 input_2 = $signed(operand_2);
+                div_output = result;
             end
             17'b0000001_101_0110011 : begin  // DIV
                 input_1 = operand_1;
                 input_2 = operand_2;
+                div_output = result;
             end
             17'b0000001_110_0110011 : begin  // REM
+                div_output = remainder;
             end
             17'b0000001_111_0110011 : begin  // REMU
+                div_output = $signed(remainder);
             end
             default: begin div_output = 32'bz; div_unit_busy = 1'bz; end // Wrong opcode                
         endcase
@@ -100,7 +104,7 @@ module Divider_Unit #(parameter X_EXTENISION = 0, parameter USER_DESIGN = 0, par
 
     // *** Instantiate your divider here ***
     // Please instantiate your divider module using the guidelines and phoeniX naming conventions
-    Sample_Divider div (CLK, input_1, input_2, accuracy, busy, result);
+    Sample_Divider div (CLK, input_1, input_2, accuracy, busy, result, remainder);
     // *** End of divider instantiation ***
 
 endmodule
