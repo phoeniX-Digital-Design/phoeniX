@@ -24,7 +24,7 @@
 `include "../User_Modules/Sample_Multiplier/Sample_Multiplier.v"
 // *** End of including headers and modules ***
 
-module Multiplier_Unit #(parameter USER_DESIGN = 0, parameter APX_ACC_CONTROL = 0)
+module Multiplier_Unit #(parameter X_EXTENISION = 0, parameter USER_DESIGN = 0, parameter APX_ACC_CONTROL = 0)
 (
     input CLK,
     input [6 : 0] opcode,
@@ -52,21 +52,28 @@ module Multiplier_Unit #(parameter USER_DESIGN = 0, parameter APX_ACC_CONTROL = 
     always @(*) begin
         operand_1 = rs1;
         operand_2 = rs2;
-        accuracy = accuracy_level;
-        // Checking if the multiplier is accuracy controlable or not
-        if (USER_DESIGN == 1 && APX_ACC_CONTROL == 0)
+        // Checking if the module is accuracy controlable or not
+        if (X_EXTENISION == 0 && USER_DESIGN == 1 && APX_ACC_CONTROL == 0)
         begin
-            accuracy = 8'bz; // Multiplier is not accuracy controlable -> input signal = Z
+            accuracy = 8'bz; // Module is not approximate and accuracy controlable but is user designed -> input signal = Z
         end
-        else if (USER_DESIGN == 0 && APX_ACC_CONTROL == 0)
+        else if (X_EXTENISION == 0 && USER_DESIGN == 0 && APX_ACC_CONTROL == 0)
         begin
-            accuracy = 8'bz; // Multiplier is not accuracy controlable -> input signal = Z
+            accuracy = 8'bz; // Module is not approximate,accuracy controlable and user designed -> input signal = Z
         end
-        else if (USER_DESIGN == 0 && APX_ACC_CONTROL == 1)
+        else if (X_EXTENISION == 0 && USER_DESIGN == 0 && APX_ACC_CONTROL == 1)
         begin
-            accuracy = 8'bz; // Multiplier is not accuracy controlable -> input signal = Z
+            accuracy = 8'bz; // Module is not approximate and accuracy controlable -> input signal = Z
         end
-        // If the multiplier is accuracy controlable, the accuarcy will be extracted from CSRs.
+        else if (X_EXTENISION == 1 && USER_DESIGN == 1 && APX_ACC_CONTROL == 0)
+        begin
+            accuracy = 8'bz; // Module is approximate but not accuracy controlable -> input signal = Z
+        end
+        else if (X_EXTENISION == 1 && USER_DESIGN == 1 && APX_ACC_CONTROL == 1)
+        begin
+            accuracy = accuracy_level; // Module is  approximate and accuracy controlable
+        end
+        // If the module is accuracy controlable, the accuarcy will be extracted from CSRs.
         // The extracted accuracy level will be directly give to `accuracy_level` and `accuracy`
     end
 

@@ -65,7 +65,7 @@
     `define custom_3    7'b11_110_11
 `endif
 
-module Arithmetic_Logic_Unit_APX #(parameter USER_DESIGN = 0, parameter APX_ACC_CONTROL = 0)
+module Arithmetic_Logic_Unit_APX #(parameter X_EXTENISION = 0, parameter USER_DESIGN = 0, parameter APX_ACC_CONTROL = 0)
 (
     input [6 : 0] opcode,               // ALU Operation
     input [2 : 0] funct3,               // ALU Operation
@@ -91,21 +91,28 @@ module Arithmetic_Logic_Unit_APX #(parameter USER_DESIGN = 0, parameter APX_ACC_
     
     // Latching operands coming from data bus
     always @(*) begin
-        accuracy = accuracy_level;
-        // Checking if the adder is accuracy controlable or not
-        if (USER_DESIGN == 1 && APX_ACC_CONTROL == 0)
+        // Checking if the module is accuracy controlable or not
+        if (X_EXTENISION == 0 && USER_DESIGN == 1 && APX_ACC_CONTROL == 0)
         begin
-            accuracy = 8'bz; // Adder is not accuracy controlable -> input signal = Z
+            accuracy = 8'bz; // Module is not approximate and accuracy controlable but is user designed -> input signal = Z
         end
-        else if (USER_DESIGN == 0 && APX_ACC_CONTROL == 0)
+        else if (X_EXTENISION == 0 && USER_DESIGN == 0 && APX_ACC_CONTROL == 0)
         begin
-            accuracy = 8'bz; // Adder is not approximate and accuracy controlable -> input signal = Z
+            accuracy = 8'bz; // Module is not approximate,accuracy controlable and user designed -> input signal = Z
         end
-        else if (USER_DESIGN == 0 && APX_ACC_CONTROL == 1)
+        else if (X_EXTENISION == 0 && USER_DESIGN == 0 && APX_ACC_CONTROL == 1)
         begin
-            accuracy = 8'bz; // Adder is not approximate and accuracy controlable -> input signal = Z
+            accuracy = 8'bz; // Module is not approximate and accuracy controlable -> input signal = Z
         end
-        // If the adder is accuracy controlable, the accuarcy will be extracted from CSRs.
+        else if (X_EXTENISION == 1 && USER_DESIGN == 1 && APX_ACC_CONTROL == 0)
+        begin
+            accuracy = 8'bz; // Module is approximate but not accuracy controlable -> input signal = Z
+        end
+        else if (X_EXTENISION == 1 && USER_DESIGN == 1 && APX_ACC_CONTROL == 1)
+        begin
+            accuracy = accuracy_level; // Module is  approximate and accuracy controlable
+        end
+        // If the module is accuracy controlable, the accuarcy will be extracted from CSRs.
         // The extracted accuracy level will be directly give to `accuracy_level` and `accuracy`
     end
 
