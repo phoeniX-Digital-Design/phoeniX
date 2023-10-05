@@ -24,7 +24,7 @@
 `include "../User_Modules/Sample_Multiplier/Sample_Multiplier.v"
 // *** End of including headers and modules ***
 
-module Multiplier_Unit #(parameter X_EXTENISION = 0, parameter USER_DESIGN = 0, parameter APX_ACC_CONTROL = 0)
+module Multiplier_Unit #(parameter MUL_X_EXTENISION = 0, parameter MUL_USER_DESIGN = 0, parameter MUL_APX_ACC_CONTROL = 0)
 (
     input CLK,
     input [6 : 0] opcode,
@@ -53,23 +53,23 @@ module Multiplier_Unit #(parameter X_EXTENISION = 0, parameter USER_DESIGN = 0, 
         operand_1 = rs1;
         operand_2 = rs2;
         // Checking if the module is accuracy controlable or not
-        if (X_EXTENISION == 0 && USER_DESIGN == 1 && APX_ACC_CONTROL == 0)
+        if (MUL_X_EXTENISION == 0 && MUL_USER_DESIGN == 1 && MUL_APX_ACC_CONTROL == 0)
         begin
             accuracy = 8'bz; // Module is not approximate and accuracy controlable but is user designed -> input signal = Z
         end
-        else if (X_EXTENISION == 0 && USER_DESIGN == 0 && APX_ACC_CONTROL == 0)
+        else if (MUL_X_EXTENISION == 0 && MUL_USER_DESIGN == 0 && MUL_APX_ACC_CONTROL == 0)
         begin
             accuracy = 8'bz; // Module is not approximate,accuracy controlable and user designed -> input signal = Z
         end
-        else if (X_EXTENISION == 0 && USER_DESIGN == 0 && APX_ACC_CONTROL == 1)
+        else if (MUL_X_EXTENISION == 0 && MUL_USER_DESIGN == 0 && MUL_APX_ACC_CONTROL == 1)
         begin
             accuracy = 8'bz; // Module is not approximate and accuracy controlable -> input signal = Z
         end
-        else if (X_EXTENISION == 1 && USER_DESIGN == 1 && APX_ACC_CONTROL == 0)
+        else if (MUL_X_EXTENISION == 1 && MUL_USER_DESIGN == 1 && MUL_APX_ACC_CONTROL == 0)
         begin
             accuracy = 8'bz; // Module is approximate but not accuracy controlable -> input signal = Z
         end
-        else if (X_EXTENISION == 1 && USER_DESIGN == 1 && APX_ACC_CONTROL == 1)
+        else if (MUL_X_EXTENISION == 1 && MUL_USER_DESIGN == 1 && MUL_APX_ACC_CONTROL == 1)
         begin
             accuracy = accuracy_level; // Module is  approximate and accuracy controlable
         end
