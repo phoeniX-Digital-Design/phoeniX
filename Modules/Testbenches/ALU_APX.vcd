@@ -1,5 +1,5 @@
 $date
-	Thu Oct 05 13:08:06 2023
+	Thu Oct 05 13:25:09 2023
 $end
 $version
 	Icarus Verilog
@@ -27,9 +27,9 @@ $var wire 7 / opcode [6:0] $end
 $var wire 32 0 rs1 [31:0] $end
 $var wire 32 1 rs2 [31:0] $end
 $var wire 32 2 result [31:0] $end
-$var parameter 32 3 APX_ACC_CONTROL $end
-$var parameter 32 4 USER_DESIGN $end
-$var parameter 32 5 X_EXTENISION $end
+$var parameter 32 3 ALU_APX_ACC_CONTROL $end
+$var parameter 32 4 ALU_USER_DESIGN $end
+$var parameter 32 5 ALU_X_EXTENISION $end
 $var reg 8 6 accuracy [7:0] $end
 $var reg 32 7 alu_output [31:0] $end
 $var reg 32 8 input_1 [31:0] $end
