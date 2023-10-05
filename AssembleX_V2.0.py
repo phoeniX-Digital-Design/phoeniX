@@ -32,7 +32,7 @@ elif option == 'code':
 else:
     raise ValueError("Options are: sample, code")
 
-file_path = "Software" + "/" + directory,directory + "/" + project_name + "/" + output_name + ".txt"
+file_path = "Software" + "/" + directory + "/" + project_name + "/" + output_name + ".txt"
 hex_file_path = "Software" + "/" + directory + "/" + project_name + "/" + output_name + ".hex"
 print ("file path = " + file_path)
 
@@ -117,7 +117,7 @@ with open(testbench_file, 'w') as file:
             print("Line found!")
             # Modify the input file name
             output_file = output_file.replace("\\", "\\\\")
-            modified_line = line.replace(line,'\t`define FIRMWARE '+ '"' + output_file + '"' +'\n' )
+            modified_line = line.replace(line,'\t`define FIRMWARE '+ '"' + output_file +".hex" + '"' +'\n' )
             file.write(modified_line)
         else:
             file.write(line)
