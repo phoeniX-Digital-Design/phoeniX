@@ -1,5 +1,5 @@
 $date
-	Wed Oct 04 18:12:13 2023
+	Thu Oct 05 13:15:46 2023
 $end
 $version
 	Icarus Verilog
@@ -12,119 +12,123 @@ $var wire 1 ! div_unit_busy $end
 $var wire 32 " div_output [31:0] $end
 $var parameter 32 # APX_ACC_CONTROL $end
 $var parameter 32 $ USER_DESIGN $end
-$var reg 1 % CLK $end
-$var reg 8 & accuracy_level [7:0] $end
-$var reg 3 ' funct3 [2:0] $end
-$var reg 7 ( funct7 [6:0] $end
-$var reg 7 ) opcode [6:0] $end
-$var reg 32 * rs1 [31:0] $end
-$var reg 32 + rs2 [31:0] $end
+$var parameter 32 % X_EXTENISION $end
+$var reg 1 & CLK $end
+$var reg 8 ' accuracy_level [7:0] $end
+$var reg 3 ( funct3 [2:0] $end
+$var reg 7 ) funct7 [6:0] $end
+$var reg 7 * opcode [6:0] $end
+$var reg 32 + rs1 [31:0] $end
+$var reg 32 , rs2 [31:0] $end
 $scope module uut $end
-$var wire 1 % CLK $end
-$var wire 8 , accuracy_level [7:0] $end
-$var wire 1 - busy $end
-$var wire 3 . funct3 [2:0] $end
-$var wire 7 / funct7 [6:0] $end
-$var wire 7 0 opcode [6:0] $end
-$var wire 32 1 rs1 [31:0] $end
-$var wire 32 2 rs2 [31:0] $end
-$var wire 32 3 result [31:0] $end
-$var parameter 32 4 APX_ACC_CONTROL $end
-$var parameter 32 5 USER_DESIGN $end
-$var reg 8 6 accuracy [7:0] $end
-$var reg 32 7 div_output [31:0] $end
+$var wire 1 & CLK $end
+$var wire 8 - accuracy_level [7:0] $end
+$var wire 1 . busy $end
+$var wire 3 / funct3 [2:0] $end
+$var wire 7 0 funct7 [6:0] $end
+$var wire 7 1 opcode [6:0] $end
+$var wire 32 2 rs1 [31:0] $end
+$var wire 32 3 rs2 [31:0] $end
+$var wire 32 4 result [31:0] $end
+$var parameter 32 5 APX_ACC_CONTROL $end
+$var parameter 32 6 USER_DESIGN $end
+$var parameter 32 7 X_EXTENISION $end
+$var reg 8 8 accuracy [7:0] $end
+$var reg 32 9 div_output [31:0] $end
 $var reg 1 ! div_unit_busy $end
-$var reg 32 8 input_1 [31:0] $end
-$var reg 32 9 input_2 [31:0] $end
-$var reg 32 : operand_1 [31:0] $end
-$var reg 32 ; operand_2 [31:0] $end
+$var reg 32 : input_1 [31:0] $end
+$var reg 32 ; input_2 [31:0] $end
+$var reg 32 < operand_1 [31:0] $end
+$var reg 32 = operand_2 [31:0] $end
 $scope module div $end
-$var wire 1 % CLK $end
-$var wire 8 < accuracy [7:0] $end
-$var wire 1 - busy $end
-$var wire 32 = input_1 [31:0] $end
-$var wire 32 > input_2 [31:0] $end
-$var reg 32 ? output_div [31:0] $end
-$var reg 32 @ result [31:0] $end
+$var wire 1 & CLK $end
+$var wire 8 > accuracy [7:0] $end
+$var wire 1 . busy $end
+$var wire 32 ? input_1 [31:0] $end
+$var wire 32 @ input_2 [31:0] $end
+$var reg 32 A output_div [31:0] $end
+$var reg 32 B result [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 $comment Show the parameter values. $end
 $dumpall
+b1 7
+b1 6
 b1 5
-b1 4
+b1 %
 b1 $
 b1 #
 $end
 #0
 $dumpvars
+b10100 B
+b10100 A
 b10100 @
-b10100 ?
-b10100 >
-b110010000 =
-b0 <
+b110010000 ?
+b0 >
+b10100 =
+b110010000 <
 b10100 ;
 b110010000 :
 b10100 9
-b110010000 8
-b10100 7
-b0 6
+b0 8
+b10100 4
 b10100 3
-b10100 2
-b110010000 1
-b110011 0
-b1 /
-b100 .
-z-
-b0 ,
-b10100 +
-b110010000 *
-b110011 )
-b1 (
-b100 '
-b0 &
-0%
+b110010000 2
+b110011 1
+b1 0
+b100 /
+z.
+b0 -
+b10100 ,
+b110010000 +
+b110011 *
+b1 )
+b100 (
+b0 '
+0&
 b10100 "
 z!
 $end
 #10
-1%
+1&
 #20
 b100 "
-b100 7
-b100 3
-b100 @
-b100 ?
-b1100100 8
-b1100100 =
-b1 6
-b1 <
+b100 9
+b100 4
+b100 B
+b100 A
 b1100100 :
-0%
-b1100100 *
-b1100100 1
-b1 &
-b1 ,
+b1100100 ?
+b1 8
+b1 >
+b1100100 <
+0&
+b1100100 +
+b1100100 2
+b1 '
+b1 -
 #30
-1%
+1&
 #40
 b10111 "
-b10111 7
-b10111 3
-b10111 @
-b10111 ?
-b111110100 8
-b111110100 =
-b10 6
-b10 <
+b10111 9
+b10111 4
+b10111 B
+b10111 A
 b111110100 :
-0%
-b111110100 *
-b111110100 1
-b10 &
-b10 ,
+b111110100 ?
+b10 8
+b10 >
+b111110100 <
+0&
+b111110100 +
+b111110100 2
+b10 '
+b10 -
 #50
-1%
+1&
 #60
-0%
+0&
