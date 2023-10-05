@@ -1,5 +1,5 @@
 $date
-	Thu Oct 05 13:10:01 2023
+	Thu Oct 05 13:30:28 2023
 $end
 $version
 	Icarus Verilog
@@ -10,9 +10,9 @@ $end
 $scope module Multiplier_Unit_TB $end
 $var wire 1 ! mul_unit_busy $end
 $var wire 32 " mul_output [31:0] $end
-$var parameter 32 # APX_ACC_CONTROL $end
-$var parameter 32 $ USER_DESIGN $end
-$var parameter 32 % X_EXTENISION $end
+$var parameter 32 # MUL_APX_ACC_CONTROL $end
+$var parameter 32 $ MUL_USER_DESIGN $end
+$var parameter 32 % MUL_X_EXTENISION $end
 $var reg 1 & CLK $end
 $var reg 8 ' accuracy_level [7:0] $end
 $var reg 3 ( funct3 [2:0] $end
@@ -30,9 +30,9 @@ $var wire 7 1 opcode [6:0] $end
 $var wire 32 2 rs1 [31:0] $end
 $var wire 32 3 rs2 [31:0] $end
 $var wire 32 4 result [31:0] $end
-$var parameter 32 5 APX_ACC_CONTROL $end
-$var parameter 32 6 USER_DESIGN $end
-$var parameter 32 7 X_EXTENISION $end
+$var parameter 32 5 MUL_APX_ACC_CONTROL $end
+$var parameter 32 6 MUL_USER_DESIGN $end
+$var parameter 32 7 MUL_X_EXTENISION $end
 $var reg 8 8 accuracy [7:0] $end
 $var reg 32 9 input_1 [31:0] $end
 $var reg 32 : input_2 [31:0] $end

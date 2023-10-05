@@ -2,9 +2,9 @@
 
 module Multiplier_Unit_TB;
 
-    parameter X_EXTENISION = 1;
-    parameter USER_DESIGN = 1;  // Change to 1 for testing if statement in module -> test passed
-    parameter APX_ACC_CONTROL = 1;
+    parameter MUL_X_EXTENISION = 1;
+    parameter MUL_USER_DESIGN  = 1;
+    parameter MUL_APX_ACC_CONTROL = 1;
     reg CLK = 0;
     reg [6:0] opcode;
     reg [6:0] funct7;
@@ -16,7 +16,7 @@ module Multiplier_Unit_TB;
     wire mul_unit_busy;
     wire [31:0] mul_output;
 
-    Multiplier_Unit #(X_EXTENISION, USER_DESIGN, APX_ACC_CONTROL) uut 
+    Multiplier_Unit #(MUL_X_EXTENISION, MUL_USER_DESIGN, MUL_APX_ACC_CONTROL) uut 
     (
         .CLK(CLK),
         .opcode(opcode),
