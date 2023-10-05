@@ -1,22 +1,11 @@
 /*
     phoeniX RV32IMX CORE: Approximation Guidlines
-    =====================================================================
-    Module: User Adder Circuit
-    Description: Adder module with configurable accuracy (optional)
-    PLEASE DO NOT REMOVE THE COMMENTS IN THIS MODULE
-    =====================================================================
-    Inputs:
-    - input_1:  32-bit input operand 1.
-    - input_2:  32-bit input operand 2.
-    - accuracy: 32-bit accuracy indicator CSR.
-    Outputs:
-    - result: 32-bit result of the addition.
-    =====================================================================
-    Naming Convention:
-    All user-defined adder modules should follow this format:
-    - Inputs: input_1, input_2, accuracy
-    - Outputs: result
-    ======================================================================
+    ==================================================================================================
+    CSR Guideline:
+    CSR [0]      : APPROXIMATE = 1 | ACCURATE = 0
+    CSR [2  : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate and approximate circuits)
+    CSR [31 : 3] : APPROXIMATION_ERROR_CONTROL
+    ==================================================================================================
     phoeniX RV32IMX core - Arithmetic Logic Unit
     - This unit executes R-Type, I-Type and J-Type instructions
     - Inputs `rs1`, `rs2` comes from `Register_File` (DATA BUS)
@@ -26,7 +15,6 @@
         I-TYPE : ADDI - SLTI - SLTIU            R-TYPE : ADD  - SUB  - SLL           
                  XORI - ORI  - ANDI                      SLT  - SLTU - XOR                         
                  SLLI - SRLI - SRAI                      SRL  - SRA  - OR  - AND
-        
         J-TYPE : JAL  - JALR                    U-TYPE : AUIPC         
 */
 
@@ -89,7 +77,6 @@ module Arithmetic_Logic_Unit
     reg  [31 : 0] adder_input_2;
     
     wire [31 : 0] adder_result;
-      
 
     reg         mux1_select;
     reg [1 : 0] mux2_select;
@@ -162,7 +149,6 @@ module Arithmetic_Logic_Unit
         endcase
     end
 
-
     // ----------------------------------------- //
     // Arithmetical Instructions: ADDI, ADD, SUB //
     // ----------------------------------------- //
@@ -171,10 +157,10 @@ module Arithmetic_Logic_Unit
     always @(*) 
     begin
         casex ({funct7, funct3, opcode})
-            {7'bx_xxx_xxx, 3'b000, `OP_IMM} : begin adder_input_1 = operand_1; adder_input_2 = operand_2; adder_Cin = 1'b0; alu_output = adder_result; end
-            {7'b0_000_000, 3'b000, `OP}     : begin adder_input_1 = operand_1; adder_input_2 = operand_2; adder_Cin = 1'b0; alu_output = adder_result; end
+            {7'bx_xxx_xxx, 3'b000, `OP_IMM} : begin adder_input_1 = operand_1; adder_input_2 = operand_2; adder_Cin = 1'b0;  alu_output = adder_result; end
+            {7'b0_000_000, 3'b000, `OP}     : begin adder_input_1 = operand_1; adder_input_2 = operand_2; adder_Cin = 1'b0;  alu_output = adder_result; end
             {7'b0_100_000, 3'b000, `OP}     : begin adder_input_1 = operand_1; adder_input_2 = ~operand_2; adder_Cin = 1'b1; alu_output = adder_result; end
-            default: 
+            default: alu_output = 32'bz; 
         endcase    
     end
     
@@ -184,17 +170,15 @@ module Arithmetic_Logic_Unit
     Approximate_Accuracy_Controlable_Adder 
     #(
         .LEN(32),
-        .APX_LEN(8),
+        .APX_LEN(8)
     )
     AC_APX_Adder 
     (
-        .Er( accuracy_control[9 : 2] | accuracy_control[0]), 
+        .Er(accuracy_control[10 : 3] | {8{~accuracy_control[0]}}), 
         .A(adder_input_1),
         .B(adder_input_2),
         .Cin(adder_Cin),
-
-        .Sum(adder_result),
-        .Cout()
+        .Sum(adder_result)
     );
     // --------------------------------------------------------------------------------------------------
     // *** End of adder module instantiation ***
