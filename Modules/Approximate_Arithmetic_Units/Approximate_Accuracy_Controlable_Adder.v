@@ -178,7 +178,6 @@ module Mux_2to1
             default: begin data_out = {LEN{1'bz}}; end
         endcase
     end
-
 endmodule
 
 module Error_Configurable_Ripple_Carry_Adder 
@@ -213,7 +212,6 @@ module Error_Configurable_Ripple_Carry_Adder
         end
     assign Cout = Carry[LEN];
     endgenerate
-    
 endmodule
 
 module Ripple_Carry_Adder 
@@ -246,7 +244,6 @@ module Ripple_Carry_Adder
         end
     assign Cout = Carry[LEN];
     endgenerate
-    
 endmodule
 
 module Error_Configurable_Full_Adder
@@ -276,7 +273,8 @@ module Full_Adder
     assign Cout = (A && B) || (A && Cin) || (B && Cin); 
 endmodule
 
-module Half_Adder (
+module Half_Adder 
+(
     input A,
     input B, 
     output Sum, 
