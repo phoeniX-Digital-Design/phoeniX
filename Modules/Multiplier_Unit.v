@@ -8,9 +8,9 @@
   - CLK: Source clock signal
   - input_1:  32-bit input operand 1.
   - input_2:  32-bit input operand 2.
-  - accuracy: 8-bit accuracy setting.
+  - accuracy: 32-bit accuracy indicator CSR.
   Outputs:
-  - busy: Output indicating the busy status of the multiplier.
+  - ready: Output indicating the busy status of the multiplier.
   - result: 32-bit result of the multiplication.
   =====================================================================
   Naming Convention:
@@ -21,7 +21,7 @@
 */
 
 // *** Include your headers and modules here ***
-`include "../User_Modules/Sample_Multiplier/Sample_Multiplier.v"
+`include "../Approximate_Arithmetic_Units/Approximate_Accuracy_Controlable_Multiplier.v"
 // *** End of including headers and modules ***
 
 module Multiplier_Unit #(parameter MUL_X_EXTENISION = 0, parameter MUL_USER_DESIGN = 0, parameter MUL_APX_ACC_CONTROL = 0)

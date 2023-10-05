@@ -21,7 +21,7 @@
 */
 
 // *** Include your headers and modules here ***
-`include "../User_Modules/Sample_Divider/Sample_Divider.v"
+`include "../Approximate_Arithmetic_Units/Approximate_Accuracy_Controlable_Divider.v"
 // *** End of including headers and modules ***
 
 module Divider_Unit #(parameter DIV_X_EXTENISION = 0, parameter DIV_USER_DESIGN = 0, parameter DIV_APX_ACC_CONTROL = 0)
