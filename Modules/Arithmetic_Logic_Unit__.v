@@ -1,38 +1,17 @@
 /*
-    phoeniX RV32IMX CORE: Approximation Guidlines
-    =====================================================================
-    Module: User Adder Circuit
-    Description: Adder module with configurable accuracy (optional)
-    PLEASE DO NOT REMOVE THE COMMENTS IN THIS MODULE
-    =====================================================================
-    Inputs:
-    - input_1:  32-bit input operand 1.
-    - input_2:  32-bit input operand 2.
-    - accuracy: 8-bit accuracy setting.
-    Outputs:
-    - result: 32-bit result of the addition.
-    =====================================================================
-    Naming Convention:
-    All user-defined adder modules should follow this format:
-    - Inputs: input_1, input_2, accuracy
-    - Outputs: result
-    ======================================================================
-    phoeniX RV32IMX core - Arithmetic Logic Unit
+    phoeniX RV32I core - Arithmetic Logic Unit
     - This unit executes R-Type, I-Type and J-Type instructions
-    - Inputs `rs1`, `rs2` comes from `Register_File` (DATA BUS)
-    - Input `immediate` comes from `Immediate_Generator`
-    - Input signals `opcode`, `funct3`, `funct7`, comes from `Instruction_Decoder`
+    - Inputs bus_rs1, bus_rs2 comes from Register_File
+    - Input immediate comes from Immediate_Generator
+    - Input signals opcode, funct3, funct7, comes from Instruction_Decoder
     - Supported Instructions :
+
         I-TYPE : ADDI - SLTI - SLTIU            R-TYPE : ADD  - SUB  - SLL           
                  XORI - ORI  - ANDI                      SLT  - SLTU - XOR                         
                  SLLI - SRLI - SRAI                      SRL  - SRA  - OR  - AND
         
         J-TYPE : JAL  - JALR                    U-TYPE : AUIPC         
 */
-
-// *** Include your header files and modules here ***
-`include "../User_Modules/Sample_Adder/Sample_Adder.v"
-// *** End of including header files and modules ***
 
 `ifndef OPCODES
     `define LOAD        7'b00_000_11
@@ -65,13 +44,11 @@
     `define custom_3    7'b11_110_11
 `endif
 
-module Arithmetic_Logic_Unit_APX #(parameter ALU_X_EXTENISION = 0, parameter ALU_USER_DESIGN = 0, parameter ALU_APX_ACC_CONTROL = 0)
+module Arithmetic_Logic_Unit 
 (
     input [6 : 0] opcode,               // ALU Operation
     input [2 : 0] funct3,               // ALU Operation
     input [6 : 0] funct7,               // ALU Operation
-
-    input [7 : 0] accuracy_level,
 
     input [31 : 0] PC,                  // Program Counter Register
     input [31 : 0] rs1,                 // Register Source 1
@@ -81,41 +58,9 @@ module Arithmetic_Logic_Unit_APX #(parameter ALU_X_EXTENISION = 0, parameter ALU
     output reg [31 : 0] alu_output      // ALU Result
 );
 
-    reg  [31 : 0] operand_1; 
-    reg  [31 : 0] operand_2;
-
-    reg  [31 : 0] input_1;
-    reg  [31 : 0] input_2;
-    reg  [7  : 0] accuracy;
-    wire [31 : 0] result;
+    reg [31 : 0] operand_1;
+    reg [31 : 0] operand_2;
     
-    // Latching operands coming from data bus
-    always @(*) begin
-        // Checking if the module is accuracy controlable or not
-        if (ALU_X_EXTENISION == 0 && ALU_USER_DESIGN == 1 && ALU_APX_ACC_CONTROL == 0)
-        begin
-            accuracy = 8'bz; // Module is not approximate and accuracy controlable but is user designed -> input signal = Z
-        end
-        else if (ALU_X_EXTENISION == 0 && ALU_USER_DESIGN == 0 && ALU_APX_ACC_CONTROL == 0)
-        begin
-            accuracy = 8'bz; // Module is not approximate,accuracy controlable and user designed -> input signal = Z
-        end
-        else if (ALU_X_EXTENISION == 0 && ALU_USER_DESIGN == 0 && ALU_APX_ACC_CONTROL == 1)
-        begin
-            accuracy = 8'bz; // Module is not approximate and accuracy controlable -> input signal = Z
-        end
-        else if (ALU_X_EXTENISION == 1 && ALU_USER_DESIGN == 1 && ALU_APX_ACC_CONTROL == 0)
-        begin
-            accuracy = 8'bz; // Module is approximate but not accuracy controlable -> input signal = Z
-        end
-        else if (ALU_X_EXTENISION == 1 && ALU_USER_DESIGN == 1 && ALU_APX_ACC_CONTROL == 1)
-        begin
-            accuracy = accuracy_level; // Module is  approximate and accuracy controlable
-        end
-        // If the module is accuracy controlable, the accuarcy will be extracted from CSRs.
-        // The extracted accuracy level will be directly give to `accuracy_level` and `accuracy`
-    end
-
     reg         mux1_select;
     reg [1 : 0] mux2_select;
 
@@ -130,7 +75,7 @@ module Arithmetic_Logic_Unit_APX #(parameter ALU_X_EXTENISION = 0, parameter ALU
         `AUIPC  : begin mux1_select = 1'b1; mux2_select = 2'b01; end // AUIPC
         endcase        
     end
-    
+
     // ALU Multiplexer 1
     always @(*) 
     begin
@@ -139,7 +84,7 @@ module Arithmetic_Logic_Unit_APX #(parameter ALU_X_EXTENISION = 0, parameter ALU
             1'b1 : operand_1 = PC;
         endcase
     end
-    
+
     // ALU Multiplexer 2
     always @(*) 
     begin
@@ -154,14 +99,7 @@ module Arithmetic_Logic_Unit_APX #(parameter ALU_X_EXTENISION = 0, parameter ALU
     begin
         casex ({funct7, funct3, opcode})
             // I-TYPE Intructions
-            {7'bx_xxx_xxx, 3'b000, `OP_IMM} :                                                                   // ADDI
-            begin 
-            if (ALU_USER_DESIGN == 1)
-            begin input_1 = operand_1; input_2 = operand_2; alu_output = result;
-            if (ALU_APX_ACC_CONTROL == 1) begin accuracy = accuracy_level; end 
-            end
-            else if (ALU_USER_DESIGN == 0) begin alu_output = operand_1 + operand_2; end 
-            end                     
+            {7'bx_xxx_xxx, 3'b000, `OP_IMM} : alu_output = operand_1 + operand_2;                               // ADDI
             {7'b0_000_000, 3'b001, `OP_IMM} : alu_output = operand_1 << operand_2 [4 : 0];                      // SLLI
             {7'bx_xxx_xxx, 3'b010, `OP_IMM} : alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;     // SLTI
             {7'bx_xxx_xxx, 3'b011, `OP_IMM} : alu_output = operand_1 < operand_2 ? 1 : 0;                       // SLTIU
@@ -172,22 +110,8 @@ module Arithmetic_Logic_Unit_APX #(parameter ALU_X_EXTENISION = 0, parameter ALU
             {7'bx_xxx_xxx, 3'b111, `OP_IMM} : alu_output = operand_1 & operand_2;                               // ANDI
             
             // R-TYPE Instructions
-            {7'b0_000_000, 3'b000, `OP}     :                                                                   // ADD
-            begin
-            if (ALU_USER_DESIGN == 1)
-            begin input_1 = operand_1; input_2 = operand_2; alu_output = result;
-            if (ALU_APX_ACC_CONTROL == 1) begin accuracy = accuracy_level; end 
-            end
-            else if (ALU_USER_DESIGN == 0) begin alu_output = operand_1 + operand_2; end
-            end
-            {7'b0_100_000, 3'b000, `OP}     :                                                                   // SUB
-            begin
-            if (ALU_USER_DESIGN == 1)
-            begin input_1 = operand_1; input_2 = ~(operand_2) + 1; alu_output = result;
-            if (ALU_APX_ACC_CONTROL == 1) begin accuracy = accuracy_level; end 
-            end
-            else if (ALU_USER_DESIGN == 0) begin alu_output = operand_1 - operand_2; end
-            end
+            {7'b0_000_000, 3'b000, `OP}     : alu_output = operand_1 + operand_2;                               // ADD
+            {7'b0_100_000, 3'b000, `OP}     : alu_output = operand_1 - operand_2;                               // SUB
             {7'b0_000_000, 3'b001, `OP}     : alu_output = operand_1 << operand_2;                              // SLL
             {7'b0_000_000, 3'b010, `OP}     : alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;     // SLT
             {7'b0_000_000, 3'b011, `OP}     : alu_output = operand_1 < operand_2 ? 1 : 0;                       // SLTU
@@ -207,12 +131,4 @@ module Arithmetic_Logic_Unit_APX #(parameter ALU_X_EXTENISION = 0, parameter ALU
             default: alu_output = 32'bz; 
         endcase
     end
-
-    // *** Instantiate your adder circuit here ***
-    // Please instantiate your adder module according to the guidelines and naming conventions of phoeniX
-    // --------------------------------------------------------------------------------------------------
-    Sample_Adder adder (input_1, input_2, accuracy, result);
-    // --------------------------------------------------------------------------------------------------
-    // *** End of adder module instantiation ***
-
 endmodule

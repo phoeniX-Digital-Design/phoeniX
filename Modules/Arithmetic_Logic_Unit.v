@@ -1,17 +1,38 @@
 /*
-    phoeniX RV32I core - Arithmetic Logic Unit
+    phoeniX RV32IMX CORE: Approximation Guidlines
+    =====================================================================
+    Module: User Adder Circuit
+    Description: Adder module with configurable accuracy (optional)
+    PLEASE DO NOT REMOVE THE COMMENTS IN THIS MODULE
+    =====================================================================
+    Inputs:
+    - input_1:  32-bit input operand 1.
+    - input_2:  32-bit input operand 2.
+    - accuracy: 32-bit accuracy indicator CSR.
+    Outputs:
+    - result: 32-bit result of the addition.
+    =====================================================================
+    Naming Convention:
+    All user-defined adder modules should follow this format:
+    - Inputs: input_1, input_2, accuracy
+    - Outputs: result
+    ======================================================================
+    phoeniX RV32IMX core - Arithmetic Logic Unit
     - This unit executes R-Type, I-Type and J-Type instructions
-    - Inputs bus_rs1, bus_rs2 comes from Register_File
-    - Input immediate comes from Immediate_Generator
-    - Input signals opcode, funct3, funct7, comes from Instruction_Decoder
+    - Inputs `rs1`, `rs2` comes from `Register_File` (DATA BUS)
+    - Input `immediate` comes from `Immediate_Generator`
+    - Input signals `opcode`, `funct3`, `funct7`, comes from `Instruction_Decoder`
     - Supported Instructions :
-
         I-TYPE : ADDI - SLTI - SLTIU            R-TYPE : ADD  - SUB  - SLL           
                  XORI - ORI  - ANDI                      SLT  - SLTU - XOR                         
                  SLLI - SRLI - SRAI                      SRL  - SRA  - OR  - AND
         
         J-TYPE : JAL  - JALR                    U-TYPE : AUIPC         
 */
+
+// *** Include your header files and modules here ***
+`include "../Approximate_Arithmetic_Units/Approximate_Accuracy_Controlable_Adder.v"
+// *** End of including header files and modules ***
 
 `ifndef OPCODES
     `define LOAD        7'b00_000_11
@@ -44,11 +65,13 @@
     `define custom_3    7'b11_110_11
 `endif
 
-module Arithmetic_Logic_Unit 
+module Arithmetic_Logic_Unit_APX #(parameter ALU_X_EXTENISION = 0, parameter ALU_USER_DESIGN = 0, parameter ALU_APX_ACC_CONTROL = 0)
 (
     input [6 : 0] opcode,               // ALU Operation
     input [2 : 0] funct3,               // ALU Operation
     input [6 : 0] funct7,               // ALU Operation
+
+    input [31 : 0] accuracy_control,
 
     input [31 : 0] PC,                  // Program Counter Register
     input [31 : 0] rs1,                 // Register Source 1
@@ -58,9 +81,16 @@ module Arithmetic_Logic_Unit
     output reg [31 : 0] alu_output      // ALU Result
 );
 
-    reg [31 : 0] operand_1;
-    reg [31 : 0] operand_2;
+    reg  [31 : 0] operand_1; 
+    reg  [31 : 0] operand_2;
+
+    reg adder_Cin;
+    reg  [31 : 0] adder_input_1;
+    reg  [31 : 0] adder_input_2;
     
+    wire [31 : 0] adder_result;
+      
+
     reg         mux1_select;
     reg [1 : 0] mux2_select;
 
@@ -75,7 +105,7 @@ module Arithmetic_Logic_Unit
         `AUIPC  : begin mux1_select = 1'b1; mux2_select = 2'b01; end // AUIPC
         endcase        
     end
-
+    
     // ALU Multiplexer 1
     always @(*) 
     begin
@@ -84,7 +114,7 @@ module Arithmetic_Logic_Unit
             1'b1 : operand_1 = PC;
         endcase
     end
-
+    
     // ALU Multiplexer 2
     always @(*) 
     begin
@@ -95,11 +125,13 @@ module Arithmetic_Logic_Unit
         endcase
     end
 
+    // ----------------------------------------- //
+    // Logical, Jump and PC Control Instrcutions //
+    // ----------------------------------------- //
     always @(*)
     begin
         casex ({funct7, funct3, opcode})
             // I-TYPE Intructions
-            {7'bx_xxx_xxx, 3'b000, `OP_IMM} : alu_output = operand_1 + operand_2;                               // ADDI
             {7'b0_000_000, 3'b001, `OP_IMM} : alu_output = operand_1 << operand_2 [4 : 0];                      // SLLI
             {7'bx_xxx_xxx, 3'b010, `OP_IMM} : alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;     // SLTI
             {7'bx_xxx_xxx, 3'b011, `OP_IMM} : alu_output = operand_1 < operand_2 ? 1 : 0;                       // SLTIU
@@ -110,8 +142,6 @@ module Arithmetic_Logic_Unit
             {7'bx_xxx_xxx, 3'b111, `OP_IMM} : alu_output = operand_1 & operand_2;                               // ANDI
             
             // R-TYPE Instructions
-            {7'b0_000_000, 3'b000, `OP}     : alu_output = operand_1 + operand_2;                               // ADD
-            {7'b0_100_000, 3'b000, `OP}     : alu_output = operand_1 - operand_2;                               // SUB
             {7'b0_000_000, 3'b001, `OP}     : alu_output = operand_1 << operand_2;                              // SLL
             {7'b0_000_000, 3'b010, `OP}     : alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;     // SLT
             {7'b0_000_000, 3'b011, `OP}     : alu_output = operand_1 < operand_2 ? 1 : 0;                       // SLTU
@@ -131,4 +161,42 @@ module Arithmetic_Logic_Unit
             default: alu_output = 32'bz; 
         endcase
     end
+
+
+    // ----------------------------------------- //
+    // Arithmetical Instructions: ADDI, ADD, SUB //
+    // ----------------------------------------- //
+
+    // *** Implement the control systems required for your circuit ***
+    always @(*) 
+    begin
+        casex ({funct7, funct3, opcode})
+            {7'bx_xxx_xxx, 3'b000, `OP_IMM} : begin adder_input_1 = operand_1; adder_input_2 = operand_2; adder_Cin = 1'b0; alu_output = adder_result; end
+            {7'b0_000_000, 3'b000, `OP}     : begin adder_input_1 = operand_1; adder_input_2 = operand_2; adder_Cin = 1'b0; alu_output = adder_result; end
+            {7'b0_100_000, 3'b000, `OP}     : begin adder_input_1 = operand_1; adder_input_2 = ~operand_2; adder_Cin = 1'b1; alu_output = adder_result; end
+            default: 
+        endcase    
+    end
+    
+    // *** Instantiate your adder circuit here ***
+    // Please instantiate your adder module according to the guidelines and naming conventions of phoeniX
+    // --------------------------------------------------------------------------------------------------
+    Approximate_Accuracy_Controlable_Adder 
+    #(
+        .LEN(32),
+        .APX_LEN(8),
+    )
+    AC_APX_Adder 
+    (
+        .Er( accuracy_control[9 : 2] &  accuracy_control[0]), 
+        .A(adder_input_1),
+        .B(adder_input_2),
+        .Cin(adder_Cin),
+
+        .Sum(adder_result),
+        .Cout()
+    );
+    // --------------------------------------------------------------------------------------------------
+    // *** End of adder module instantiation ***
+
 endmodule
