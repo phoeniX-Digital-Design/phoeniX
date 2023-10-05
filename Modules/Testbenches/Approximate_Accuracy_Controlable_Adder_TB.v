@@ -1,6 +1,6 @@
-`include "ACAPX_Adder.v"
+`include "../Approximate_Arithmetic_Units/Approximate_Accuracy_Controlable_Adder.v"
 
-module ACAPX_Adder_Testbench;
+module Approximate_Accuracy_Controlable_Adder_TB;
 
     integer n = 20;
     integer i = 0;
@@ -8,7 +8,7 @@ module ACAPX_Adder_Testbench;
     parameter len = 32;
     parameter apx_len = 8;
 
-    reg [apx_len - 1 : 0] Er = {4'b0, 4'b1};
+    reg [apx_len - 1 : 0] Er = {4'b0000, 4'b1111};
 
     reg  [len - 1 : 0] A;
     reg  [len - 1 : 0] B;
@@ -20,7 +20,7 @@ module ACAPX_Adder_Testbench;
 
     reg [len : 0] res_check;
 
-    ACAPX_Adder 
+    Approximate_Accuracy_Controlable_Adder 
     #(
         .LEN(len),
         .APX_LEN(apx_len)
@@ -37,8 +37,8 @@ module ACAPX_Adder_Testbench;
 
     initial 
     begin
-        $dumpfile("ACAPX_Adder.vcd");
-        $dumpvars(0, ACAPX_Adder_Testbench);
+        $dumpfile("Approximate_Accuracy_Controlable_Adder.vcd");
+        $dumpvars(0, Approximate_Accuracy_Controlable_Adder_TB);
 
         for (i = 0; i < n; i = i + 1)
         begin
