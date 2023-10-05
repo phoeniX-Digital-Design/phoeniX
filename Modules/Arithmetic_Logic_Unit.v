@@ -188,7 +188,7 @@ module Arithmetic_Logic_Unit
     )
     AC_APX_Adder 
     (
-        .Er( accuracy_control[9 : 2] &  accuracy_control[0]), 
+        .Er( accuracy_control[9 : 2] | accuracy_control[0]), 
         .A(adder_input_1),
         .B(adder_input_2),
         .Cin(adder_Cin),
