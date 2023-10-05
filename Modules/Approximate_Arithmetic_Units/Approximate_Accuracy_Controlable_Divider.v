@@ -1,4 +1,4 @@
-module Sample_Divider 
+module Approximate_Accuracy_Controlable_Divider 
 (
     input CLK,
     input [31 : 0] input_1, 

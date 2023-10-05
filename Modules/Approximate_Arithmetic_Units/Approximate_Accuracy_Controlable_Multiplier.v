@@ -1,18 +1,4 @@
-module multiplier 
-(
-   input [31 : 0] input_1, 
-   input [31 : 0] input_2, 
-   input [7  : 0] accuracy, 
-   output busy, 
-   output [31 : 0] result
-);
-
-assign result = input_1 * input_2;
-    
-endmodule
-
-
-module Multiplier_ECA 
+module Approximate_Accuracy_Controlable_Multiplier 
 (
     input [6 : 0] u,
     input [7 : 0] Operand_1,

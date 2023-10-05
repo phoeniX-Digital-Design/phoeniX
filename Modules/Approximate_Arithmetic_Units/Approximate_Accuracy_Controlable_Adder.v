@@ -1,4 +1,4 @@
-module ACAPX_Adder 
+module Approximate_Accuracy_Controlable_Adder 
 #(
     parameter LEN = 32,
     parameter APX_LEN = 8         // Valid Options for APX_LEN : 4, 8, 12, 16, ...
