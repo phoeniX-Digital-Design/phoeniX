@@ -1,51 +1,57 @@
 /*
-  =====================================================================
-  Module: User Multiplier
-  Description: Multiplier module with configurable accuracy (optional)
-  PLEASE DO NOT REMOVE THE COMMENTS IN THIS MODULE
-  =====================================================================
-  Inputs:
-  - CLK: Source clock signal
-  - input_1:  32-bit input operand 1.
-  - input_2:  32-bit input operand 2.
-  - accuracy: 32-bit accuracy indicator CSR.
-  Outputs:
-  - ready: Output indicating the busy status of the multiplier.
-  - result: 32-bit result of the multiplication.
-  =====================================================================
-  Naming Convention:
-  All user-defined multiplier modules should follow this format:
-  - Inputs: CLK, input_1, input_2, accuracy
-  - Outputs: busy, result
-  ======================================================================
+    phoeniX RV32IMX Multiplier: Developer Guidelines
+    ==========================================================================================================================
+    DEVELOPER NOTICE:
+    - Kindly adhere to the established guidelines and naming conventions outlined in the project documentation. 
+    - Following these standards will ensure smooth integration of your custom-made modules into this codebase.
+    - Thank you for your cooperation.
+    ==========================================================================================================================
+    Multiplier Approximation CSR:
+    - Multiplier circuit is used for 4 M-Extension instructions: MUL/MULH/MULHSU/MULHU
+    - Internal signals are all generated according to phoeniX core "Self Control Logic" of the modules so developer won't 
+      need to change anything inside this module (excepts parts which are considered for developers to instatiate their own 
+      custom made designs).
+    - Instantiate your modules (Approximate or Accurate) between the comments in the code.
+    - How to work with the speical purpose CSR:
+        CSR [0]      : APPROXIMATE = 1 | ACCURATE = 0
+        CSR [2  : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate and approximate circuits)
+        CSR [31 : 3] : APPROXIMATION_ERROR_CONTROL
+    - PLEASE DO NOT REMOVE ANY OF THE COMMENTS IN THIS FILE
+    - Input and Output paramaters:
+        Input:  error_control = {accuracy_control[USER_ERROR_LEN:3], accuracy_control[2:1] (module select), accuracy_control[0]}
+        Input:  mul_input_1   = First operand of your module
+        Input:  mul_input_2   = Second operand of your module
+        Output: mul_result    = Module output
+    ==========================================================================================================================
 */
 
 // *** Include your headers and modules here ***
 `include "../Approximate_Arithmetic_Units/Approximate_Accuracy_Controlable_Multiplier.v"
 // *** End of including headers and modules ***
 
-module Multiplier_Unit #(parameter MUL_X_EXTENISION = 0, parameter MUL_USER_DESIGN = 0, parameter MUL_APX_ACC_CONTROL = 0)
+module Multiplier_Unit
 (
-    input CLK,
-    input [6 : 0] opcode,
-    input [6 : 0] funct7,
-    input [2 : 0] funct3,
+    input CLK,                          // Source Clock Signal
 
-    input [7 : 0] accuracy_level,
+    input [6 : 0] opcode,               // ALU Operation
+    input [6 : 0] funct7,               // ALU Operation
+    input [2 : 0] funct3,               // ALU Operation
 
-    input [31 : 0] rs1,
-    input [31 : 0] rs2,
+    input [31 : 0] accuracy_control,    // Approximation Control Register
 
-    output reg mul_unit_busy,
-    output reg [31 : 0] mul_output
+    input [31 : 0] rs1,                 // Register Source 1
+    input [31 : 0] rs2,                 // Register Source 2
+
+    output reg mul_unit_busy,           // For Multiplier Unit Condition Checking
+    output reg [31 : 0] mul_output      // Multiplier Unit Result
 );
 
-    // Data forwarding will be considered in the core file (phoeniX.v)
+    // Data forwarding will be considered in the core file (top = phoeniX.v)
     reg  [31 : 0] operand_1; 
     reg  [31 : 0] operand_2;
     reg  [31 : 0] input_1;
     reg  [31 : 0] input_2;
-    reg  [7  : 0] accuracy;
+    reg  [31 : 0] accuracy;
     wire [31 : 0] result;
 
     // Latching operands coming from data bus
@@ -55,19 +61,19 @@ module Multiplier_Unit #(parameter MUL_X_EXTENISION = 0, parameter MUL_USER_DESI
         // Checking if the module is accuracy controlable or not
         if (MUL_X_EXTENISION == 0 && MUL_USER_DESIGN == 1 && MUL_APX_ACC_CONTROL == 0)
         begin
-            accuracy = 8'bz; // Module is not approximate and accuracy controlable but is user designed -> input signal = Z
+            accuracy = 32'bz; // Module is not approximate and accuracy controlable but is user designed -> input signal = Z
         end
         else if (MUL_X_EXTENISION == 0 && MUL_USER_DESIGN == 0 && MUL_APX_ACC_CONTROL == 0)
         begin
-            accuracy = 8'bz; // Module is not approximate,accuracy controlable and user designed -> input signal = Z
+            accuracy = 32'bz; // Module is not approximate,accuracy controlable and user designed -> input signal = Z
         end
         else if (MUL_X_EXTENISION == 0 && MUL_USER_DESIGN == 0 && MUL_APX_ACC_CONTROL == 1)
         begin
-            accuracy = 8'bz; // Module is not approximate and accuracy controlable -> input signal = Z
+            accuracy = 32'bz; // Module is not approximate and accuracy controlable -> input signal = Z
         end
         else if (MUL_X_EXTENISION == 1 && MUL_USER_DESIGN == 1 && MUL_APX_ACC_CONTROL == 0)
         begin
-            accuracy = 8'bz; // Module is approximate but not accuracy controlable -> input signal = Z
+            accuracy = 32'bz; // Module is approximate but not accuracy controlable -> input signal = Z
         end
         else if (MUL_X_EXTENISION == 1 && MUL_USER_DESIGN == 1 && MUL_APX_ACC_CONTROL == 1)
         begin
@@ -105,9 +111,19 @@ module Multiplier_Unit #(parameter MUL_X_EXTENISION = 0, parameter MUL_USER_DESI
         endcase
     end
 
-    // *** Instantiate your multiplier here ***
-    // Please instantiate your multiplier module using the guidelines and phoeniX naming conventions
-    Sample_Multiplier mul (CLK, input_1, input_2, accuracy, busy, result);
-    // *** End of multiplier instantiation ***
+    // *** Instantiate your adder circuit here ***
+    // Please instantiate your adder module according to the guidelines and naming conventions of phoeniX
+    // --------------------------------------------------------------------------------------------------
+    Sample_Multiplier mul 
+    (
+        CLK, 
+        input_1, 
+        input_2, 
+        accuracy, 
+        busy, 
+        result
+    );
+    // --------------------------------------------------------------------------------------------------
+    // *** End of adder module instantiation ***
 
 endmodule

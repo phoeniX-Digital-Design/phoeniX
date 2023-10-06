@@ -16,7 +16,7 @@
         CSR [0]      : APPROXIMATE = 1 | ACCURATE = 0
         CSR [2  : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate and approximate circuits)
         CSR [31 : 3] : APPROXIMATION_ERROR_CONTROL
-    - PLEASE DO NOT REMOVE ANY OG THE COMMENTS IN THIS FILE
+    - PLEASE DO NOT REMOVE ANY OF THE COMMENTS IN THIS FILE
     - Input and Output paramaters:
         Input:  error_control = {accuracy_control[USER_ERROR_LEN:3], accuracy_control[2:1] (module select), accuracy_control[0]}
         Input:  adder_input_1 = First operand of your module
