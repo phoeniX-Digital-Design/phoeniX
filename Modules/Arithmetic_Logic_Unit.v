@@ -1,12 +1,29 @@
 /*
-    phoeniX RV32IMX CORE: Approximation Guidlines
-    ==================================================================================================
-    CSR Guideline:
-    CSR [0]      : APPROXIMATE = 1 | ACCURATE = 0
-    CSR [2  : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate and approximate circuits)
-    CSR [31 : 3] : APPROXIMATION_ERROR_CONTROL
-    ==================================================================================================
-    phoeniX RV32IMX core - Arithmetic Logic Unit
+    phoeniX RV32IMX ALU: Developer Guidelines
+    ==========================================================================================================================
+    DEVELOPER NOTICE:
+    - Kindly adhere to the established guidelines and naming conventions outlined in the project documentation. 
+    - Following these standards will ensure smooth integration of your custom-made modules into this codebase.
+    - Thank you for your cooperation.
+    ==========================================================================================================================
+    ALU Approximation CSR:
+    - One adder circuit is used for 3 integer instructions: ADD/ADDI/SUB
+    - Internal signals are all generated according to phoeniX core "Self Control Logic" of the modules so developer won't 
+      need to change anything inside this module (excepts parts which are considered for developers to instatiate their own 
+      custom made designs).
+    - Instantiate your modules (Approximate or Accurate) between the comments in the code.
+    - How to work with the speical purpose CSR:
+        CSR [0]      : APPROXIMATE = 1 | ACCURATE = 0
+        CSR [2  : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate and approximate circuits)
+        CSR [31 : 3] : APPROXIMATION_ERROR_CONTROL
+    - PLEASE DO NOT REMOVE ANY OG THE COMMENTS IN THIS FILE
+    - Input and Output paramaters:
+        Input:  error_control = {accuracy_control[USER_ERROR_LEN:3], accuracy_control[2:1] (module select), accuracy_control[0]}
+        Input:  adder_input_1 = First operand of your module
+        Input:  adder_input_2 = Second operand of your module
+        Input:  adder_Cin     = Input Carry
+        Output: adder_result  = Module output
+    ==========================================================================================================================
     - This unit executes R-Type, I-Type and J-Type instructions
     - Inputs `rs1`, `rs2` comes from `Register_File` (DATA BUS)
     - Input `immediate` comes from `Immediate_Generator`
@@ -59,7 +76,7 @@ module Arithmetic_Logic_Unit
     input [2 : 0] funct3,               // ALU Operation
     input [6 : 0] funct7,               // ALU Operation
 
-    input [31 : 0] accuracy_control,
+    input [31 : 0] accuracy_control,    // Approximation Control Register
 
     input [31 : 0] PC,                  // Program Counter Register
     input [31 : 0] rs1,                 // Register Source 1
