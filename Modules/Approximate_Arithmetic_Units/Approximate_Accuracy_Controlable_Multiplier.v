@@ -142,23 +142,23 @@ module Multiplier_Stage_2
     assign CarrySignal[0] = 0;
     assign CarrySignal[1] = 0;
 
-    Half_Adder HA_1 (P7[1], V1[1], CarrySignal[2], SumSignal[1]);
+    Half_Adder HA_1 (P7[1], V1[1], SumSignal[1], CarrySignal[2]);
 
-    Full_Adder FA_1 (P7[2], V1[2], V2[2], CarrySignal[3], SumSignal[2]);
-    Full_Adder FA_2 (P7[3], V1[3], V2[3], CarrySignal[4], SumSignal[3]);
+    Full_Adder FA_1 (P7[2], V1[2], V2[2], SumSignal[2], CarrySignal[3]);
+    Full_Adder FA_2 (P7[3], V1[3], V2[3], SumSignal[3], CarrySignal[4]);
 
-    Full_Adder FA_3 (P7[4], Q7[4], ORed_PPs[4], CarrySignal[5], SumSignal[4]);
-    Full_Adder FA_4 (P7[5], Q7[5], ORed_PPs[5], CarrySignal[6], SumSignal[5]);
-    Full_Adder FA_5 (P7[6], Q7[6], ORed_PPs[6], CarrySignal[7], SumSignal[6]);
-    Full_Adder FA_6 (P7[7], Q7[7], ORed_PPs[7], CarrySignal[8], SumSignal[7]);
-    Full_Adder FA_7 (P7[8], Q7[8], ORed_PPs[8], CarrySignal[9], SumSignal[8]);
-    Full_Adder FA_8 (P7[9], Q7[9], ORed_PPs[9], CarrySignal[10], SumSignal[9]);
-    Full_Adder FA_9 (P7[10], Q7[10], ORed_PPs[10], CarrySignal[11], SumSignal[10]);
+    Full_Adder FA_3 (P7[4], Q7[4], ORed_PPs[4], SumSignal[4], CarrySignal[5]);
+    Full_Adder FA_4 (P7[5], Q7[5], ORed_PPs[5], SumSignal[5], CarrySignal[6]);
+    Full_Adder FA_5 (P7[6], Q7[6], ORed_PPs[6], SumSignal[6], CarrySignal[7]);
+    Full_Adder FA_6 (P7[7], Q7[7], ORed_PPs[7], SumSignal[7], CarrySignal[8]);
+    Full_Adder FA_7 (P7[8], Q7[8], ORed_PPs[8], SumSignal[8], CarrySignal[9]);
+    Full_Adder FA_8 (P7[9], Q7[9], ORed_PPs[9], SumSignal[9], CarrySignal[10]);
+    Full_Adder FA_9 (P7[10], Q7[10], ORed_PPs[10], SumSignal[10], CarrySignal[11]);
 
-    Full_Adder FA_10 (P7[11], V1[11], V2[11], CarrySignal[12], SumSignal[11]);
-    Full_Adder FA_11 (P7[12], V1[12], V2[12], CarrySignal[13], SumSignal[12]);
+    Full_Adder FA_10 (P7[11], V1[11], V2[11], SumSignal[11], CarrySignal[12]);
+    Full_Adder FA_11 (P7[12], V1[12], V2[12], SumSignal[12], CarrySignal[13]);
 
-    Half_Adder HA_2 (P7[13], V1[13], CarrySignal[14], SumSignal[13]);
+    Half_Adder HA_2 (P7[13], V1[13], SumSignal[13], CarrySignal[14]);
 
     assign SumSignal[14] = P7[14];
 endmodule
@@ -190,9 +190,9 @@ module Multiplier_Stage_3
     Error_Configurable_Full_Adder ECA_FA_7 (Er[6], SumSignal[11], CarrySignal[11], inter_Carry[10], Result[11], inter_Carry[11]);
 
 
-    Full_Adder FA_12 (SumSignal[12], CarrySignal[12], inter_Carry[11], inter_Carry[12], Result[12]);
-    Full_Adder FA_13 (SumSignal[13], CarrySignal[13], inter_Carry[12], inter_Carry[13], Result[13]);
-    Full_Adder FA_14 (SumSignal[14], CarrySignal[14], inter_Carry[13], Result[15], Result[14]);
+    Full_Adder FA_12 (SumSignal[12], CarrySignal[12], inter_Carry[11], Result[12], inter_Carry[12]);
+    Full_Adder FA_13 (SumSignal[13], CarrySignal[13], inter_Carry[12], Result[13], inter_Carry[13]);
+    Full_Adder FA_14 (SumSignal[14], CarrySignal[14], inter_Carry[13], Result[14], Result[15]);
 endmodule
 
 module iCAC 

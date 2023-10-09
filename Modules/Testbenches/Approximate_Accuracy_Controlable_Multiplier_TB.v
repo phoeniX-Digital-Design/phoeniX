@@ -12,6 +12,8 @@ module Approximate_Accuracy_Controlable_Multiplier_TB;
     reg  [len - 1 : 0] Multiplicand;
     reg  [len - 1 : 0] Multiplier;
     wire [2 * len - 1 : 0] Product;
+    reg [2 * len - 1 : 0] Result;
+
     reg [6 : 0] Er = 7'b111_1111;
 
     Approximate_Accuracy_Controlable_Multiplier uut 
@@ -32,12 +34,9 @@ module Approximate_Accuracy_Controlable_Multiplier_TB;
         begin
             Multiplicand = $random;
             Multiplier = $random;
+            Result = Multiplicand * Multiplier;
             #60;
-            
-            $display("Test case %d:");
-            $display("A = %d \t B = %d", Multiplicand, Multiplier);
-            $display("Result = %d \t", Product);
-            $display("\n\n\n");
+            $display("A = %d \t B = %d \t Result = %d -- Accurate = %d --> %b\n", Multiplicand, Multiplier, Product, Result, Product == Multiplicand * Multiplier);
             #40;
         end
         $finish;
