@@ -8,14 +8,14 @@
     output busy                 // = 1 while calculation
 );
 
-    reg active;             // True if the divider is running  
-    reg [4  : 0] cycle;     // Number of cycles to go  
-    reg [31 : 0] result;    // Begin with operand_1, end with division result  
-    reg [31 : 0] denom;     // Second operand (operand_2)  
-    reg [31 : 0] work;      // remunning remainder
+    reg active;                 // True if the divider is running  
+    reg [4  : 0] cycle;         // Number of cycles to go  
+    reg [31 : 0] result;        // Begin with operand_1, end with division result  
+    reg [31 : 0] denom;         // Second operand (operand_2)  
+    reg [31 : 0] work;          // remunning remainder
 
     // Calculate the current digit
-    wire [32 : 0] sub = {work[30 : 0], result[31]} - denom;  
+    wire [32 : 0] sub = {work[30 : 0], result[31]} - denom;
 
     wire [31 : 0] div_result;
     wire [31 : 0] rem_result;
@@ -46,7 +46,6 @@
 
     // The state machine  
     always @(posedge CLK) begin  
-
 
             if (active) 
             begin  
