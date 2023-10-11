@@ -1,0 +1,12982 @@
+$date
+	Wed Oct 11 16:25:44 2023
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ns
+$end
+$scope module Approximate_Accuracy_Controlable_Divider_TB $end
+$var wire 32 ! rem [31:0] $end
+$var wire 32 " div [31:0] $end
+$var wire 1 # busy $end
+$var reg 1 $ CLK $end
+$var reg 8 % Error [7:0] $end
+$var reg 32 & operand_1 [31:0] $end
+$var reg 32 ' operand_2 [31:0] $end
+$scope module uut $end
+$var wire 1 $ CLK $end
+$var wire 8 ( Er [7:0] $end
+$var wire 1 # busy $end
+$var wire 32 ) div_result [31:0] $end
+$var wire 32 * operand_1 [31:0] $end
+$var wire 32 + operand_2 [31:0] $end
+$var wire 1 , output_ready $end
+$var wire 32 - rem_result [31:0] $end
+$var wire 33 . sub_test [32:0] $end
+$var wire 33 / sub_prim [32:0] $end
+$var wire 32 0 sub_module [31:0] $end
+$var wire 33 1 sub [32:0] $end
+$var wire 1 2 c_out $end
+$var reg 1 3 active $end
+$var reg 5 4 cycle [4:0] $end
+$var reg 32 5 denom [31:0] $end
+$var reg 32 6 div [31:0] $end
+$var reg 32 7 latched_div_result [31:0] $end
+$var reg 32 8 latched_rem_result [31:0] $end
+$var reg 32 9 rem [31:0] $end
+$var reg 32 : result [31:0] $end
+$var reg 32 ; work [31:0] $end
+$scope module approximate_subtract $end
+$var wire 32 < A [31:0] $end
+$var wire 32 = B [31:0] $end
+$var wire 1 > Cin $end
+$var wire 8 ? Er [7:0] $end
+$var wire 32 @ Sum [31:0] $end
+$var wire 1 2 Cout $end
+$var wire 32 A C [31:0] $end
+$var parameter 32 B APX_LEN $end
+$var parameter 32 C LEN $end
+$scope begin genblk1[4] $end
+$var wire 1 D HA_Carry $end
+$var wire 4 E EC_RCA_Output [7:4] $end
+$var wire 1 F EC_RCA_Carry $end
+$var wire 4 G BU_Output [7:4] $end
+$var wire 1 H BU_Carry $end
+$var parameter 4 I i $end
+$scope module BU_1 $end
+$var wire 4 J A [3:0] $end
+$var wire 1 H C0 $end
+$var wire 1 K C1 $end
+$var wire 1 L C2 $end
+$var wire 1 M C3 $end
+$var wire 4 N B [4:1] $end
+$upscope $end
+$scope module EC_RCA $end
+$var wire 3 O A [2:0] $end
+$var wire 3 P B [2:0] $end
+$var wire 3 Q Er [2:0] $end
+$var wire 3 R Sum [2:0] $end
+$var wire 1 F Cout $end
+$var wire 1 D Cin $end
+$var wire 4 S Carry [3:0] $end
+$var parameter 32 T LEN $end
+$scope begin genblk1[0] $end
+$var parameter 2 U i $end
+$scope module ECFA $end
+$var wire 1 V A $end
+$var wire 1 W B $end
+$var wire 1 X Cin $end
+$var wire 1 Y Cout $end
+$var wire 1 Z Er $end
+$var wire 1 [ Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[1] $end
+$var parameter 2 \ i $end
+$scope module ECFA $end
+$var wire 1 ] A $end
+$var wire 1 ^ B $end
+$var wire 1 _ Cin $end
+$var wire 1 ` Cout $end
+$var wire 1 a Er $end
+$var wire 1 b Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[2] $end
+$var parameter 3 c i $end
+$scope module ECFA $end
+$var wire 1 d A $end
+$var wire 1 e B $end
+$var wire 1 f Cin $end
+$var wire 1 g Cout $end
+$var wire 1 h Er $end
+$var wire 1 i Sum $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module HA $end
+$var wire 1 j A $end
+$var wire 1 k B $end
+$var wire 1 D Cout $end
+$var wire 1 l Sum $end
+$upscope $end
+$scope module MUX $end
+$var wire 5 m data_in_1 [4:0] $end
+$var wire 5 n data_in_2 [4:0] $end
+$var wire 1 o select $end
+$var parameter 32 p LEN $end
+$var reg 5 q data_out [4:0] $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[8] $end
+$var wire 4 r RCA_Output [11:8] $end
+$var wire 1 s RCA_Carry $end
+$var wire 1 t HA_Carry $end
+$var wire 4 u BU_Output [11:8] $end
+$var wire 1 v BU_Carry $end
+$var parameter 5 w i $end
+$scope module BU_1 $end
+$var wire 4 x A [3:0] $end
+$var wire 1 v C0 $end
+$var wire 1 y C1 $end
+$var wire 1 z C2 $end
+$var wire 1 { C3 $end
+$var wire 4 | B [4:1] $end
+$upscope $end
+$scope module HA $end
+$var wire 1 } A $end
+$var wire 1 ~ B $end
+$var wire 1 t Cout $end
+$var wire 1 !" Sum $end
+$upscope $end
+$scope module MUX $end
+$var wire 5 "" data_in_1 [4:0] $end
+$var wire 5 #" data_in_2 [4:0] $end
+$var wire 1 $" select $end
+$var parameter 32 %" LEN $end
+$var reg 5 &" data_out [4:0] $end
+$upscope $end
+$scope module RCA $end
+$var wire 3 '" A [2:0] $end
+$var wire 3 (" B [2:0] $end
+$var wire 1 t Cin $end
+$var wire 3 )" Sum [2:0] $end
+$var wire 1 s Cout $end
+$var wire 4 *" Carry [3:0] $end
+$var parameter 32 +" LEN $end
+$scope begin genblk1[0] $end
+$var parameter 2 ," i $end
+$scope module FA $end
+$var wire 1 -" A $end
+$var wire 1 ." B $end
+$var wire 1 /" Cin $end
+$var wire 1 0" Cout $end
+$var wire 1 1" Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[1] $end
+$var parameter 2 2" i $end
+$scope module FA $end
+$var wire 1 3" A $end
+$var wire 1 4" B $end
+$var wire 1 5" Cin $end
+$var wire 1 6" Cout $end
+$var wire 1 7" Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[2] $end
+$var parameter 3 8" i $end
+$scope module FA $end
+$var wire 1 9" A $end
+$var wire 1 :" B $end
+$var wire 1 ;" Cin $end
+$var wire 1 <" Cout $end
+$var wire 1 =" Sum $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[12] $end
+$var wire 4 >" RCA_Output [15:12] $end
+$var wire 1 ?" RCA_Carry $end
+$var wire 1 @" HA_Carry $end
+$var wire 4 A" BU_Output [15:12] $end
+$var wire 1 B" BU_Carry $end
+$var parameter 5 C" i $end
+$scope module BU_1 $end
+$var wire 4 D" A [3:0] $end
+$var wire 1 B" C0 $end
+$var wire 1 E" C1 $end
+$var wire 1 F" C2 $end
+$var wire 1 G" C3 $end
+$var wire 4 H" B [4:1] $end
+$upscope $end
+$scope module HA $end
+$var wire 1 I" A $end
+$var wire 1 J" B $end
+$var wire 1 @" Cout $end
+$var wire 1 K" Sum $end
+$upscope $end
+$scope module MUX $end
+$var wire 5 L" data_in_1 [4:0] $end
+$var wire 5 M" data_in_2 [4:0] $end
+$var wire 1 N" select $end
+$var parameter 32 O" LEN $end
+$var reg 5 P" data_out [4:0] $end
+$upscope $end
+$scope module RCA $end
+$var wire 3 Q" A [2:0] $end
+$var wire 3 R" B [2:0] $end
+$var wire 1 @" Cin $end
+$var wire 3 S" Sum [2:0] $end
+$var wire 1 ?" Cout $end
+$var wire 4 T" Carry [3:0] $end
+$var parameter 32 U" LEN $end
+$scope begin genblk1[0] $end
+$var parameter 2 V" i $end
+$scope module FA $end
+$var wire 1 W" A $end
+$var wire 1 X" B $end
+$var wire 1 Y" Cin $end
+$var wire 1 Z" Cout $end
+$var wire 1 [" Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[1] $end
+$var parameter 2 \" i $end
+$scope module FA $end
+$var wire 1 ]" A $end
+$var wire 1 ^" B $end
+$var wire 1 _" Cin $end
+$var wire 1 `" Cout $end
+$var wire 1 a" Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[2] $end
+$var parameter 3 b" i $end
+$scope module FA $end
+$var wire 1 c" A $end
+$var wire 1 d" B $end
+$var wire 1 e" Cin $end
+$var wire 1 f" Cout $end
+$var wire 1 g" Sum $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[16] $end
+$var wire 4 h" RCA_Output [19:16] $end
+$var wire 1 i" RCA_Carry $end
+$var wire 1 j" HA_Carry $end
+$var wire 4 k" BU_Output [19:16] $end
+$var wire 1 l" BU_Carry $end
+$var parameter 6 m" i $end
+$scope module BU_1 $end
+$var wire 4 n" A [3:0] $end
+$var wire 1 l" C0 $end
+$var wire 1 o" C1 $end
+$var wire 1 p" C2 $end
+$var wire 1 q" C3 $end
+$var wire 4 r" B [4:1] $end
+$upscope $end
+$scope module HA $end
+$var wire 1 s" A $end
+$var wire 1 t" B $end
+$var wire 1 j" Cout $end
+$var wire 1 u" Sum $end
+$upscope $end
+$scope module MUX $end
+$var wire 5 v" data_in_1 [4:0] $end
+$var wire 5 w" data_in_2 [4:0] $end
+$var wire 1 x" select $end
+$var parameter 32 y" LEN $end
+$var reg 5 z" data_out [4:0] $end
+$upscope $end
+$scope module RCA $end
+$var wire 3 {" A [2:0] $end
+$var wire 3 |" B [2:0] $end
+$var wire 1 j" Cin $end
+$var wire 3 }" Sum [2:0] $end
+$var wire 1 i" Cout $end
+$var wire 4 ~" Carry [3:0] $end
+$var parameter 32 !# LEN $end
+$scope begin genblk1[0] $end
+$var parameter 2 "# i $end
+$scope module FA $end
+$var wire 1 ## A $end
+$var wire 1 $# B $end
+$var wire 1 %# Cin $end
+$var wire 1 &# Cout $end
+$var wire 1 '# Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[1] $end
+$var parameter 2 (# i $end
+$scope module FA $end
+$var wire 1 )# A $end
+$var wire 1 *# B $end
+$var wire 1 +# Cin $end
+$var wire 1 ,# Cout $end
+$var wire 1 -# Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[2] $end
+$var parameter 3 .# i $end
+$scope module FA $end
+$var wire 1 /# A $end
+$var wire 1 0# B $end
+$var wire 1 1# Cin $end
+$var wire 1 2# Cout $end
+$var wire 1 3# Sum $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[20] $end
+$var wire 4 4# RCA_Output [23:20] $end
+$var wire 1 5# RCA_Carry $end
+$var wire 1 6# HA_Carry $end
+$var wire 4 7# BU_Output [23:20] $end
+$var wire 1 8# BU_Carry $end
+$var parameter 6 9# i $end
+$scope module BU_1 $end
+$var wire 4 :# A [3:0] $end
+$var wire 1 8# C0 $end
+$var wire 1 ;# C1 $end
+$var wire 1 <# C2 $end
+$var wire 1 =# C3 $end
+$var wire 4 ># B [4:1] $end
+$upscope $end
+$scope module HA $end
+$var wire 1 ?# A $end
+$var wire 1 @# B $end
+$var wire 1 6# Cout $end
+$var wire 1 A# Sum $end
+$upscope $end
+$scope module MUX $end
+$var wire 5 B# data_in_1 [4:0] $end
+$var wire 5 C# data_in_2 [4:0] $end
+$var wire 1 D# select $end
+$var parameter 32 E# LEN $end
+$var reg 5 F# data_out [4:0] $end
+$upscope $end
+$scope module RCA $end
+$var wire 3 G# A [2:0] $end
+$var wire 3 H# B [2:0] $end
+$var wire 1 6# Cin $end
+$var wire 3 I# Sum [2:0] $end
+$var wire 1 5# Cout $end
+$var wire 4 J# Carry [3:0] $end
+$var parameter 32 K# LEN $end
+$scope begin genblk1[0] $end
+$var parameter 2 L# i $end
+$scope module FA $end
+$var wire 1 M# A $end
+$var wire 1 N# B $end
+$var wire 1 O# Cin $end
+$var wire 1 P# Cout $end
+$var wire 1 Q# Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[1] $end
+$var parameter 2 R# i $end
+$scope module FA $end
+$var wire 1 S# A $end
+$var wire 1 T# B $end
+$var wire 1 U# Cin $end
+$var wire 1 V# Cout $end
+$var wire 1 W# Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[2] $end
+$var parameter 3 X# i $end
+$scope module FA $end
+$var wire 1 Y# A $end
+$var wire 1 Z# B $end
+$var wire 1 [# Cin $end
+$var wire 1 \# Cout $end
+$var wire 1 ]# Sum $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[24] $end
+$var wire 4 ^# RCA_Output [27:24] $end
+$var wire 1 _# RCA_Carry $end
+$var wire 1 `# HA_Carry $end
+$var wire 4 a# BU_Output [27:24] $end
+$var wire 1 b# BU_Carry $end
+$var parameter 6 c# i $end
+$scope module BU_1 $end
+$var wire 4 d# A [3:0] $end
+$var wire 1 b# C0 $end
+$var wire 1 e# C1 $end
+$var wire 1 f# C2 $end
+$var wire 1 g# C3 $end
+$var wire 4 h# B [4:1] $end
+$upscope $end
+$scope module HA $end
+$var wire 1 i# A $end
+$var wire 1 j# B $end
+$var wire 1 `# Cout $end
+$var wire 1 k# Sum $end
+$upscope $end
+$scope module MUX $end
+$var wire 5 l# data_in_1 [4:0] $end
+$var wire 5 m# data_in_2 [4:0] $end
+$var wire 1 n# select $end
+$var parameter 32 o# LEN $end
+$var reg 5 p# data_out [4:0] $end
+$upscope $end
+$scope module RCA $end
+$var wire 3 q# A [2:0] $end
+$var wire 3 r# B [2:0] $end
+$var wire 1 `# Cin $end
+$var wire 3 s# Sum [2:0] $end
+$var wire 1 _# Cout $end
+$var wire 4 t# Carry [3:0] $end
+$var parameter 32 u# LEN $end
+$scope begin genblk1[0] $end
+$var parameter 2 v# i $end
+$scope module FA $end
+$var wire 1 w# A $end
+$var wire 1 x# B $end
+$var wire 1 y# Cin $end
+$var wire 1 z# Cout $end
+$var wire 1 {# Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[1] $end
+$var parameter 2 |# i $end
+$scope module FA $end
+$var wire 1 }# A $end
+$var wire 1 ~# B $end
+$var wire 1 !$ Cin $end
+$var wire 1 "$ Cout $end
+$var wire 1 #$ Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[2] $end
+$var parameter 3 $$ i $end
+$scope module FA $end
+$var wire 1 %$ A $end
+$var wire 1 &$ B $end
+$var wire 1 '$ Cin $end
+$var wire 1 ($ Cout $end
+$var wire 1 )$ Sum $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[28] $end
+$var wire 4 *$ RCA_Output [31:28] $end
+$var wire 1 +$ RCA_Carry $end
+$var wire 1 ,$ HA_Carry $end
+$var wire 4 -$ BU_Output [31:28] $end
+$var wire 1 .$ BU_Carry $end
+$var parameter 6 /$ i $end
+$scope module BU_1 $end
+$var wire 4 0$ A [3:0] $end
+$var wire 1 .$ C0 $end
+$var wire 1 1$ C1 $end
+$var wire 1 2$ C2 $end
+$var wire 1 3$ C3 $end
+$var wire 4 4$ B [4:1] $end
+$upscope $end
+$scope module HA $end
+$var wire 1 5$ A $end
+$var wire 1 6$ B $end
+$var wire 1 ,$ Cout $end
+$var wire 1 7$ Sum $end
+$upscope $end
+$scope module MUX $end
+$var wire 5 8$ data_in_1 [4:0] $end
+$var wire 5 9$ data_in_2 [4:0] $end
+$var wire 1 :$ select $end
+$var parameter 32 ;$ LEN $end
+$var reg 5 <$ data_out [4:0] $end
+$upscope $end
+$scope module RCA $end
+$var wire 3 =$ A [2:0] $end
+$var wire 3 >$ B [2:0] $end
+$var wire 1 ,$ Cin $end
+$var wire 3 ?$ Sum [2:0] $end
+$var wire 1 +$ Cout $end
+$var wire 4 @$ Carry [3:0] $end
+$var parameter 32 A$ LEN $end
+$scope begin genblk1[0] $end
+$var parameter 2 B$ i $end
+$scope module FA $end
+$var wire 1 C$ A $end
+$var wire 1 D$ B $end
+$var wire 1 E$ Cin $end
+$var wire 1 F$ Cout $end
+$var wire 1 G$ Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[1] $end
+$var parameter 2 H$ i $end
+$scope module FA $end
+$var wire 1 I$ A $end
+$var wire 1 J$ B $end
+$var wire 1 K$ Cin $end
+$var wire 1 L$ Cout $end
+$var wire 1 M$ Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[2] $end
+$var parameter 3 N$ i $end
+$scope module FA $end
+$var wire 1 O$ A $end
+$var wire 1 P$ B $end
+$var wire 1 Q$ Cin $end
+$var wire 1 R$ Cout $end
+$var wire 1 S$ Sum $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module EC_RCA_1 $end
+$var wire 4 T$ A [3:0] $end
+$var wire 4 U$ B [3:0] $end
+$var wire 1 > Cin $end
+$var wire 4 V$ Er [3:0] $end
+$var wire 4 W$ Sum [3:0] $end
+$var wire 1 X$ Cout $end
+$var wire 5 Y$ Carry [4:0] $end
+$var parameter 32 Z$ LEN $end
+$scope begin genblk1[0] $end
+$var parameter 2 [$ i $end
+$scope module ECFA $end
+$var wire 1 \$ A $end
+$var wire 1 ]$ B $end
+$var wire 1 ^$ Cin $end
+$var wire 1 _$ Cout $end
+$var wire 1 `$ Er $end
+$var wire 1 a$ Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[1] $end
+$var parameter 2 b$ i $end
+$scope module ECFA $end
+$var wire 1 c$ A $end
+$var wire 1 d$ B $end
+$var wire 1 e$ Cin $end
+$var wire 1 f$ Cout $end
+$var wire 1 g$ Er $end
+$var wire 1 h$ Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[2] $end
+$var parameter 3 i$ i $end
+$scope module ECFA $end
+$var wire 1 j$ A $end
+$var wire 1 k$ B $end
+$var wire 1 l$ Cin $end
+$var wire 1 m$ Cout $end
+$var wire 1 n$ Er $end
+$var wire 1 o$ Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[3] $end
+$var parameter 3 p$ i $end
+$scope module ECFA $end
+$var wire 1 q$ A $end
+$var wire 1 r$ B $end
+$var wire 1 s$ Cin $end
+$var wire 1 t$ Cout $end
+$var wire 1 u$ Er $end
+$var wire 1 v$ Sum $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b11 p$
+b10 i$
+b1 b$
+b0 [$
+b100 Z$
+b10 N$
+b1 H$
+b0 B$
+b11 A$
+b101 ;$
+b11100 /$
+b10 $$
+b1 |#
+b0 v#
+b11 u#
+b101 o#
+b11000 c#
+b10 X#
+b1 R#
+b0 L#
+b11 K#
+b101 E#
+b10100 9#
+b10 .#
+b1 (#
+b0 "#
+b11 !#
+b101 y"
+b10000 m"
+b10 b"
+b1 \"
+b0 V"
+b11 U"
+b101 O"
+b1100 C"
+b10 8"
+b1 2"
+b0 ,"
+b11 +"
+b101 %"
+b1000 w
+b101 p
+b10 c
+b1 \
+b0 U
+b11 T
+b100 I
+b100000 C
+b1000 B
+$end
+#0
+$dumpvars
+xv$
+1u$
+xt$
+xs$
+xr$
+xq$
+xo$
+1n$
+xm$
+xl$
+xk$
+xj$
+xh$
+1g$
+xf$
+xe$
+xd$
+xc$
+xa$
+1`$
+x_$
+1^$
+x]$
+x\$
+bx1 Y$
+xX$
+bx W$
+b1111 V$
+bx U$
+bx T$
+xS$
+xR$
+xQ$
+xP$
+xO$
+xM$
+xL$
+xK$
+xJ$
+xI$
+xG$
+xF$
+xE$
+xD$
+xC$
+bx @$
+bx ?$
+bx >$
+bx =$
+bx <$
+x:$
+bx 9$
+bx 8$
+x7$
+x6$
+x5$
+bx 4$
+x3$
+x2$
+x1$
+bx 0$
+x.$
+bx -$
+x,$
+x+$
+bx *$
+x)$
+x($
+x'$
+x&$
+x%$
+x#$
+x"$
+x!$
+x~#
+x}#
+x{#
+xz#
+xy#
+xx#
+xw#
+bx t#
+bx s#
+bx r#
+bx q#
+bx p#
+xn#
+bx m#
+bx l#
+xk#
+xj#
+xi#
+bx h#
+xg#
+xf#
+xe#
+bx d#
+xb#
+bx a#
+x`#
+x_#
+bx ^#
+x]#
+x\#
+x[#
+xZ#
+xY#
+xW#
+xV#
+xU#
+xT#
+xS#
+xQ#
+xP#
+xO#
+xN#
+xM#
+bx J#
+bx I#
+bx H#
+bx G#
+bx F#
+xD#
+bx C#
+bx B#
+xA#
+x@#
+x?#
+bx >#
+x=#
+x<#
+x;#
+bx :#
+x8#
+bx 7#
+x6#
+x5#
+bx 4#
+x3#
+x2#
+x1#
+x0#
+x/#
+x-#
+x,#
+x+#
+x*#
+x)#
+x'#
+x&#
+x%#
+x$#
+x##
+bx ~"
+bx }"
+bx |"
+bx {"
+bx z"
+xx"
+bx w"
+bx v"
+xu"
+xt"
+xs"
+bx r"
+xq"
+xp"
+xo"
+bx n"
+xl"
+bx k"
+xj"
+xi"
+bx h"
+xg"
+xf"
+xe"
+xd"
+xc"
+xa"
+x`"
+x_"
+x^"
+x]"
+x["
+xZ"
+xY"
+xX"
+xW"
+bx T"
+bx S"
+bx R"
+bx Q"
+bx P"
+xN"
+bx M"
+bx L"
+xK"
+xJ"
+xI"
+bx H"
+xG"
+xF"
+xE"
+bx D"
+xB"
+bx A"
+x@"
+x?"
+bx >"
+x="
+x<"
+x;"
+x:"
+x9"
+x7"
+x6"
+x5"
+x4"
+x3"
+x1"
+x0"
+x/"
+x."
+x-"
+bx *"
+bx )"
+bx ("
+bx '"
+bx &"
+x$"
+bx #"
+bx ""
+x!"
+x~
+x}
+bx |
+x{
+xz
+xy
+bx x
+xv
+bx u
+xt
+xs
+bx r
+bx q
+xo
+bx n
+bx m
+xl
+xk
+xj
+xi
+1h
+xg
+xf
+xe
+xd
+xb
+1a
+x`
+x_
+x^
+x]
+x[
+1Z
+xY
+xX
+xW
+xV
+bx S
+bx R
+b111 Q
+bx P
+bx O
+bx N
+xM
+xL
+xK
+bx J
+xH
+bx G
+xF
+bx E
+xD
+bxzzzxzzzxzzzxzzzxzzzxzzzxzzzxzzz A
+bx @
+b11111111 ?
+1>
+bx =
+bx <
+bx ;
+bx :
+bx 9
+bx 8
+bx 7
+bx 6
+bx 5
+bx 4
+x3
+x2
+bx 1
+bx 0
+bx /
+bx .
+bx -
+x,
+b110010 +
+b1111111111 *
+bx )
+b11111111 (
+b110010 '
+b1111111111 &
+b11111111 %
+0$
+x#
+bx "
+bx !
+$end
+#10
+1L
+1v
+1B"
+1l"
+18#
+1b#
+1.$
+0o
+1z
+0s
+1F"
+0?"
+1p"
+0i"
+1<#
+05#
+1f#
+0_#
+12$
+0+$
+1v$
+0X$
+1i
+0F
+0<"
+0f"
+02#
+0\#
+0($
+0R$
+0t$
+0g
+1="
+1g"
+13#
+1]#
+1)$
+1S$
+1{
+0;"
+1G"
+0e"
+1q"
+01#
+1=#
+0[#
+1g#
+0'$
+13$
+0Q$
+1o$
+0s$
+1b
+0f
+06"
+0`"
+0,#
+0V#
+0"$
+0L$
+1h$
+0m$
+0`
+17"
+1a"
+1-#
+1W#
+1#$
+1M$
+b1110 W$
+0a$
+1y
+05"
+1E"
+0_"
+1o"
+0+#
+1;#
+0U#
+1e#
+0!$
+11$
+0K$
+1e$
+0l$
+0_
+0$"
+0H
+0M
+b110 R
+0[
+0N"
+00"
+0x"
+0Z"
+0D#
+0&#
+0n#
+0P#
+0:$
+0z#
+02
+0F$
+1_$
+b11 Y$
+0f$
+0Y
+b1101 n
+b1101 G
+b1101 N
+0K
+b10000 #"
+b0 u
+b0 |
+b111 )"
+11"
+b10000 M"
+b0 A"
+b0 H"
+b111 S"
+1["
+b10000 w"
+b0 k"
+b0 r"
+b111 }"
+1'#
+b10000 C#
+b0 7#
+b0 >#
+b111 I#
+1Q#
+b10000 m#
+b0 a#
+b0 h#
+b111 s#
+1{#
+b111111111111111111111111111001110 .
+b11111111111111111111111111001110 0
+b11111111111111111111111111001110 @
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz0zzz A
+b10000 9$
+b0 -$
+b0 4$
+b111 ?$
+1G$
+b1100 q
+0X
+b1111 &"
+0/"
+b1111 P"
+0Y"
+b1111 z"
+0%#
+b1111 F#
+0O#
+b1111 p#
+0y#
+b1111 <$
+0E$
+0V
+0]
+0d
+0-"
+03"
+09"
+0W"
+0]"
+0c"
+0##
+0)#
+0/#
+0M#
+0S#
+0Y#
+0w#
+0}#
+0%$
+0C$
+0I$
+0O$
+b1100 m
+b1100 E
+b1100 J
+0l
+b0 S
+0D
+0W
+1^
+1e
+b1111 ""
+b1111 r
+b1111 x
+1!"
+b0 *"
+0t
+1."
+14"
+1:"
+b1111 L"
+b1111 >"
+b1111 D"
+1K"
+b0 T"
+0@"
+1X"
+1^"
+1d"
+b1111 v"
+b1111 h"
+b1111 n"
+1u"
+b0 ~"
+0j"
+1$#
+1*#
+10#
+b1111 B#
+b1111 4#
+b1111 :#
+1A#
+b0 J#
+06#
+1N#
+1T#
+1Z#
+b1111 l#
+b1111 ^#
+b1111 d#
+1k#
+b0 t#
+0`#
+1x#
+1~#
+1&$
+b1111 8$
+b1111 *$
+b1111 0$
+17$
+b0 @$
+0,$
+1D$
+1J$
+1P$
+1]$
+0d$
+1k$
+1r$
+0\$
+0c$
+0j$
+0q$
+0j
+b0 O
+0}
+b0 '"
+0I"
+b0 Q"
+0s"
+b0 {"
+0?#
+b0 G#
+0i#
+b0 q#
+05$
+b0 =$
+0k
+b110 P
+1~
+b111 ("
+1J"
+b111 R"
+1t"
+b111 |"
+1@#
+b111 H#
+1j#
+b111 r#
+16$
+b111 >$
+b1101 U$
+b0 T$
+0,
+b111111111111111111111111111001110 1
+b111111111111111111111111111001110 /
+b11111111111111111111111111001101 =
+b0 <
+1#
+13
+b0 -
+b0 ;
+b110010 5
+b1111111111 )
+b1111111111 :
+b11111 4
+1$
+#20
+0$
+#30
+b11110 4
+b11111111110 )
+b11111111110 :
+1$
+#40
+0$
+#50
+b11101 4
+b111111111100 )
+b111111111100 :
+1$
+#60
+0$
+#70
+b11100 4
+b1111111111000 )
+b1111111111000 :
+1$
+#80
+0$
+#90
+b11011 4
+b11111111110000 )
+b11111111110000 :
+1$
+#100
+0$
+#110
+b11010 4
+b111111111100000 )
+b111111111100000 :
+1$
+#120
+0$
+#130
+b11001 4
+b1111111111000000 )
+b1111111111000000 :
+1$
+#140
+0$
+#150
+b11000 4
+b11111111110000000 )
+b11111111110000000 :
+1$
+#160
+0$
+#170
+b10111 4
+b111111111100000000 )
+b111111111100000000 :
+1$
+#180
+0$
+#190
+b10110 4
+b1111111111000000000 )
+b1111111111000000000 :
+1$
+#200
+0$
+#210
+b10101 4
+b11111111110000000000 )
+b11111111110000000000 :
+1$
+#220
+0$
+#230
+b10100 4
+b111111111100000000000 )
+b111111111100000000000 :
+1$
+#240
+0$
+#250
+b10011 4
+b1111111111000000000000 )
+b1111111111000000000000 :
+1$
+#260
+0$
+#270
+b10010 4
+b11111111110000000000000 )
+b11111111110000000000000 :
+1$
+#280
+0$
+#290
+b10001 4
+b111111111100000000000000 )
+b111111111100000000000000 :
+1$
+#300
+0$
+#310
+b10000 4
+b1111111111000000000000000 )
+b1111111111000000000000000 :
+1$
+#320
+0$
+#330
+b1111 4
+b11111111110000000000000000 )
+b11111111110000000000000000 :
+1$
+#340
+0$
+#350
+b1110 4
+b111111111100000000000000000 )
+b111111111100000000000000000 :
+1$
+#360
+0$
+#370
+b1101 4
+b1111111111000000000000000000 )
+b1111111111000000000000000000 :
+1$
+#380
+0$
+#390
+b1100 4
+b11111111110000000000000000000 )
+b11111111110000000000000000000 :
+1$
+#400
+0$
+#410
+b1011 4
+b111111111100000000000000000000 )
+b111111111100000000000000000000 :
+1$
+#420
+0$
+#430
+b1010 4
+b1111111111000000000000000000000 )
+b1111111111000000000000000000000 :
+1$
+#440
+0$
+#450
+b111111111111111111111111111001111 .
+b11111111111111111111111111001111 0
+b11111111111111111111111111001111 @
+b1111 W$
+1a$
+1\$
+b1 T$
+b111111111111111111111111111001111 1
+b111111111111111111111111111001111 /
+b1 <
+b1001 4
+b11111111110000000000000000000000 )
+b11111111110000000000000000000000 :
+1$
+#460
+0$
+#470
+b1101 q
+1o
+0v$
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+1X$
+1t$
+0o$
+1s$
+b111111111111111111111111111010001 .
+b11111111111111111111111111010001 0
+b11111111111111111111111111010001 @
+b1 W$
+0h$
+1m$
+1l$
+b11111 Y$
+1f$
+1c$
+b11 T$
+b111111111111111111111111111010001 1
+b111111111111111111111111111010001 /
+b11 <
+b1000 4
+b11111111100000000000000000000000 )
+b11111111100000000000000000000000 :
+b1 -
+b1 ;
+1$
+#480
+0$
+#490
+b111111111111111111111111111010101 .
+b11111111111111111111111111010101 0
+b11111111111111111111111111010101 @
+b101 W$
+1o$
+1j$
+b111 T$
+b111111111111111111111111111010101 1
+b111111111111111111111111111010101 /
+b111 <
+b111 4
+b11111111000000000000000000000000 )
+b11111111000000000000000000000000 :
+b11 -
+b11 ;
+1$
+#500
+0$
+#510
+b111111111111111111111111111011101 .
+b11111111111111111111111111011101 0
+b11111111111111111111111111011101 @
+b1101 W$
+1v$
+1q$
+b1111 T$
+b111111111111111111111111111011101 1
+b111111111111111111111111111011101 /
+b1111 <
+b110 4
+b11111110000000000000000000000000 )
+b11111110000000000000000000000000 :
+b111 -
+b111 ;
+1$
+#520
+0$
+#530
+b111111111111111111111111111101101 .
+b11111111111111111111111111101101 0
+b11111111111111111111111111101101 @
+b1110 q
+b1110 n
+b1110 G
+b1110 N
+b1101 m
+b1101 E
+b1101 J
+1l
+1j
+b111111111111111111111111111101101 1
+b111111111111111111111111111101101 /
+b11111 <
+b101 4
+b11111100000000000000000000000000 )
+b11111100000000000000000000000000 :
+b1111 -
+b1111 ;
+1$
+#540
+0$
+#550
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+b1101 .
+b1101 0
+b1101 @
+b10000 q
+1H
+1M
+b10000 n
+b0 G
+b0 N
+1K
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+1V
+b1 O
+b1101 1
+b1101 /
+b111111 <
+b100 4
+b11111000000000000000000000000000 )
+b11111000000000000000000000000000 :
+b11111 -
+b11111 ;
+1$
+#560
+0$
+#570
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+b1110 q
+0H
+0M
+b1110 n
+b1110 G
+b1110 N
+0K
+b111111111111111111111111111101001 .
+b11111111111111111111111111101001 0
+b11111111111111111111111111101001 @
+b1001 W$
+0o$
+b1101 m
+b1101 E
+b1101 J
+b110 R
+0[
+0V
+0j$
+b0 O
+b1011 T$
+b111111111111111111111111111101001 1
+b111111111111111111111111111101001 /
+b11011 <
+b11 4
+b11110000000000000000000000000001 )
+b11110000000000000000000000000001 :
+b1101 -
+b1101 ;
+1$
+#580
+0$
+#590
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+b10000 q
+1H
+1M
+b10000 n
+b0 G
+b0 N
+1K
+1o$
+b101 .
+b101 0
+b101 @
+b101 W$
+0v$
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+1V
+1j$
+0q$
+b1 O
+b111 T$
+b101 1
+b101 /
+b110111 <
+b10 4
+b11100000000000000000000000000010 )
+b11100000000000000000000000000010 :
+b11011 -
+b11011 ;
+1$
+#600
+0$
+#610
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0o$
+b1001 W$
+1v$
+b111111111111111111111111111011001 .
+b11111111111111111111111111011001 0
+b11111111111111111111111111011001 @
+b1101 q
+0H
+0M
+b110 R
+0[
+b1101 n
+b1101 G
+b1101 N
+0K
+b1100 m
+b1100 E
+b1100 J
+0l
+0V
+0j$
+1q$
+0j
+b0 O
+b1011 T$
+b111111111111111111111111111011001 1
+b111111111111111111111111111011001 /
+b1011 <
+b1 4
+b11000000000000000000000000000101 )
+b11000000000000000000000000000101 :
+b101 -
+b101 ;
+1$
+#620
+0$
+#630
+1o$
+b101 W$
+0v$
+b111111111111111111111111111100101 .
+b11111111111111111111111111100101 0
+b11111111111111111111111111100101 @
+b1110 q
+b1110 n
+b1110 G
+b1110 N
+b1101 m
+b1101 E
+b1101 J
+1l
+1j$
+0q$
+1j
+b111 T$
+b111111111111111111111111111100101 1
+b111111111111111111111111111100101 /
+b10111 <
+b0 4
+b10000000000000000000000000001010 )
+b10000000000000000000000000001010 :
+b1011 -
+b1011 ;
+1$
+#640
+0$
+#650
+0a$
+b1100 W$
+1v$
+b111111111111111111111111111111100 .
+b11111111111111111111111111111100 0
+b11111111111111111111111111111100 @
+b1111 q
+b111 R
+1[
+b1111 n
+b1111 G
+b1111 N
+b10111 !
+b10111 9
+b10100 "
+b10100 6
+b1110 m
+b1110 E
+b1110 J
+0l
+1V
+0\$
+1q$
+b10111 8
+b10100 7
+0j
+b1 O
+b1110 T$
+1,
+b111111111111111111111111111111100 1
+b111111111111111111111111111111100 /
+b101110 <
+b11111 4
+0#
+03
+b10100 )
+b10100 :
+b10111 -
+b10111 ;
+1$
+#660
+0$
+#670
+0o
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz0zzz A
+0X$
+0t$
+b1100 q
+0s$
+b1101 n
+b1101 G
+b1101 N
+1h$
+0m$
+1o$
+b111111111111111111111111111001110 .
+b11111111111111111111111111001110 0
+b11111111111111111111111111001110 @
+b1110 W$
+1v$
+b1100 m
+b1100 E
+b1100 J
+b110 R
+0[
+0l$
+b11 Y$
+0f$
+0V
+0c$
+0j$
+0q$
+b0 O
+b0 T$
+0,
+b111111111111111111111111111001110 1
+b111111111111111111111111111001110 /
+b0 <
+1#
+13
+b0 8
+b0 -
+b0 ;
+b1111111111 7
+b1111111111 )
+b1111111111 :
+1$
+#680
+0$
+#690
+b11110 4
+b11111111110 7
+b11111111110 )
+b11111111110 :
+1$
+#700
+0$
+#710
+b11101 4
+b111111111100 7
+b111111111100 )
+b111111111100 :
+1$
+#720
+0$
+#730
+b11100 4
+b1111111111000 7
+b1111111111000 )
+b1111111111000 :
+1$
+#740
+0$
+#750
+b11011 4
+b11111111110000 7
+b11111111110000 )
+b11111111110000 :
+1$
+#760
+0$
+#770
+b11010 4
+b111111111100000 7
+b111111111100000 )
+b111111111100000 :
+1$
+#780
+0$
+#790
+b11001 4
+b1111111111000000 7
+b1111111111000000 )
+b1111111111000000 :
+1$
+#800
+0$
+#810
+b11000 4
+b11111111110000000 7
+b11111111110000000 )
+b11111111110000000 :
+1$
+#820
+0$
+#830
+b10111 4
+b111111111100000000 7
+b111111111100000000 )
+b111111111100000000 :
+1$
+#840
+0$
+#850
+b10110 4
+b1111111111000000000 7
+b1111111111000000000 )
+b1111111111000000000 :
+1$
+#860
+0$
+#870
+b10101 4
+b11111111110000000000 7
+b11111111110000000000 )
+b11111111110000000000 :
+1$
+#880
+0$
+#890
+b10100 4
+b111111111100000000000 7
+b111111111100000000000 )
+b111111111100000000000 :
+1$
+#900
+0$
+#910
+b10011 4
+b1111111111000000000000 7
+b1111111111000000000000 )
+b1111111111000000000000 :
+1$
+#920
+0$
+#930
+b10010 4
+b11111111110000000000000 7
+b11111111110000000000000 )
+b11111111110000000000000 :
+1$
+#940
+0$
+#950
+b10001 4
+b111111111100000000000000 7
+b111111111100000000000000 )
+b111111111100000000000000 :
+1$
+#960
+0$
+#970
+b10000 4
+b1111111111000000000000000 7
+b1111111111000000000000000 )
+b1111111111000000000000000 :
+1$
+#980
+0$
+#990
+b1111 4
+b11111111110000000000000000 7
+b11111111110000000000000000 )
+b11111111110000000000000000 :
+1$
+#1000
+0$
+#1010
+b1110 4
+b111111111100000000000000000 7
+b111111111100000000000000000 )
+b111111111100000000000000000 :
+1$
+#1020
+0$
+#1030
+b1101 4
+b1111111111000000000000000000 7
+b1111111111000000000000000000 )
+b1111111111000000000000000000 :
+1$
+#1040
+0$
+#1050
+b1100 4
+b11111111110000000000000000000 7
+b11111111110000000000000000000 )
+b11111111110000000000000000000 :
+1$
+#1060
+0$
+#1070
+b1011 4
+b111111111100000000000000000000 7
+b111111111100000000000000000000 )
+b111111111100000000000000000000 :
+1$
+#1080
+0$
+#1090
+b1010 4
+b1111111111000000000000000000000 7
+b1111111111000000000000000000000 )
+b1111111111000000000000000000000 :
+1$
+#1100
+0$
+#1110
+b111111111111111111111111111001111 .
+b11111111111111111111111111001111 0
+b11111111111111111111111111001111 @
+b1111 W$
+1a$
+1\$
+b1 T$
+b111111111111111111111111111001111 1
+b111111111111111111111111111001111 /
+b1 <
+b1001 4
+b11111111110000000000000000000000 7
+b11111111110000000000000000000000 )
+b11111111110000000000000000000000 :
+1$
+#1120
+0$
+#1130
+b1101 q
+1o
+0v$
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+1X$
+1t$
+0o$
+1s$
+b111111111111111111111111111010001 .
+b11111111111111111111111111010001 0
+b11111111111111111111111111010001 @
+b1 W$
+0h$
+1m$
+1l$
+b11111 Y$
+1f$
+1c$
+b11 T$
+b111111111111111111111111111010001 1
+b111111111111111111111111111010001 /
+b11 <
+b1000 4
+b11111111100000000000000000000000 7
+b11111111100000000000000000000000 )
+b11111111100000000000000000000000 :
+b1 8
+b1 -
+b1 ;
+1$
+#1140
+0$
+#1150
+b111111111111111111111111111010101 .
+b11111111111111111111111111010101 0
+b11111111111111111111111111010101 @
+b101 W$
+1o$
+1j$
+b111 T$
+b111111111111111111111111111010101 1
+b111111111111111111111111111010101 /
+b111 <
+b111 4
+b11111111000000000000000000000000 7
+b11111111000000000000000000000000 )
+b11111111000000000000000000000000 :
+b11 8
+b11 -
+b11 ;
+1$
+#1160
+0$
+#1170
+b111111111111111111111111111011101 .
+b11111111111111111111111111011101 0
+b11111111111111111111111111011101 @
+b1101 W$
+1v$
+1q$
+b1111 T$
+b111111111111111111111111111011101 1
+b111111111111111111111111111011101 /
+b1111 <
+b110 4
+b11111110000000000000000000000000 7
+b11111110000000000000000000000000 )
+b11111110000000000000000000000000 :
+b111 8
+b111 -
+b111 ;
+1$
+#1180
+0$
+#1190
+b111111111111111111111111111101101 .
+b11111111111111111111111111101101 0
+b11111111111111111111111111101101 @
+b1110 q
+b1110 n
+b1110 G
+b1110 N
+b1101 m
+b1101 E
+b1101 J
+1l
+1j
+b111111111111111111111111111101101 1
+b111111111111111111111111111101101 /
+b11111 <
+b101 4
+b11111100000000000000000000000000 7
+b11111100000000000000000000000000 )
+b11111100000000000000000000000000 :
+b1111 8
+b1111 -
+b1111 ;
+1$
+#1200
+0$
+#1210
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+b1101 .
+b1101 0
+b1101 @
+b10000 q
+1H
+1M
+b10000 n
+b0 G
+b0 N
+1K
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+1V
+b1 O
+b1101 1
+b1101 /
+b111111 <
+b100 4
+b11111000000000000000000000000000 7
+b11111000000000000000000000000000 )
+b11111000000000000000000000000000 :
+b11111 8
+b11111 -
+b11111 ;
+1$
+#1220
+0$
+#1230
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+b1110 q
+0H
+0M
+b1110 n
+b1110 G
+b1110 N
+0K
+b111111111111111111111111111101001 .
+b11111111111111111111111111101001 0
+b11111111111111111111111111101001 @
+b1001 W$
+0o$
+b1101 m
+b1101 E
+b1101 J
+b110 R
+0[
+0V
+0j$
+b0 O
+b1011 T$
+b111111111111111111111111111101001 1
+b111111111111111111111111111101001 /
+b11011 <
+b11 4
+b11110000000000000000000000000001 7
+b11110000000000000000000000000001 )
+b11110000000000000000000000000001 :
+b1101 8
+b1101 -
+b1101 ;
+1$
+#1240
+0$
+#1250
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+b10000 q
+1H
+1M
+b10000 n
+b0 G
+b0 N
+1K
+1o$
+b101 .
+b101 0
+b101 @
+b101 W$
+0v$
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+1V
+1j$
+0q$
+b1 O
+b111 T$
+b101 1
+b101 /
+b110111 <
+b10 4
+b11100000000000000000000000000010 7
+b11100000000000000000000000000010 )
+b11100000000000000000000000000010 :
+b11011 8
+b11011 -
+b11011 ;
+1$
+#1260
+0$
+#1270
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0o$
+b1001 W$
+1v$
+b111111111111111111111111111011001 .
+b11111111111111111111111111011001 0
+b11111111111111111111111111011001 @
+b1101 q
+0H
+0M
+b110 R
+0[
+b1101 n
+b1101 G
+b1101 N
+0K
+b1100 m
+b1100 E
+b1100 J
+0l
+0V
+0j$
+1q$
+0j
+b0 O
+b1011 T$
+b111111111111111111111111111011001 1
+b111111111111111111111111111011001 /
+b1011 <
+b1 4
+b11000000000000000000000000000101 7
+b11000000000000000000000000000101 )
+b11000000000000000000000000000101 :
+b101 8
+b101 -
+b101 ;
+1$
+#1280
+0$
+#1290
+1o$
+b101 W$
+0v$
+b111111111111111111111111111100101 .
+b11111111111111111111111111100101 0
+b11111111111111111111111111100101 @
+b1110 q
+b1110 n
+b1110 G
+b1110 N
+b1101 m
+b1101 E
+b1101 J
+1l
+1j$
+0q$
+1j
+b111 T$
+b111111111111111111111111111100101 1
+b111111111111111111111111111100101 /
+b10111 <
+b0 4
+b10000000000000000000000000001010 7
+b10000000000000000000000000001010 )
+b10000000000000000000000000001010 :
+b1011 8
+b1011 -
+b1011 ;
+1$
+#1300
+0$
+#1310
+0a$
+b1100 W$
+1v$
+b111111111111111111111111111111100 .
+b11111111111111111111111111111100 0
+b11111111111111111111111111111100 @
+b1111 q
+b111 R
+1[
+b1111 n
+b1111 G
+b1111 N
+b1110 m
+b1110 E
+b1110 J
+0l
+1V
+0\$
+1q$
+0j
+b1 O
+b1110 T$
+1,
+b111111111111111111111111111111100 1
+b111111111111111111111111111111100 /
+b101110 <
+b11111 4
+0#
+03
+b10100 7
+b10100 )
+b10100 :
+b10111 8
+b10111 -
+b10111 ;
+1$
+#1320
+0$
+#1330
+0o
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz0zzz A
+0X$
+0t$
+b1100 q
+0s$
+b1101 n
+b1101 G
+b1101 N
+1h$
+0m$
+1o$
+b111111111111111111111111111001110 .
+b11111111111111111111111111001110 0
+b11111111111111111111111111001110 @
+b1110 W$
+1v$
+b1100 m
+b1100 E
+b1100 J
+b110 R
+0[
+0l$
+b11 Y$
+0f$
+0V
+0c$
+0j$
+0q$
+b0 O
+b0 T$
+0,
+b111111111111111111111111111001110 1
+b111111111111111111111111111001110 /
+b0 <
+1#
+13
+b0 8
+b0 -
+b0 ;
+b1111111111 7
+b1111111111 )
+b1111111111 :
+1$
+#1340
+0$
+#1350
+b11110 4
+b11111111110 7
+b11111111110 )
+b11111111110 :
+1$
+#1360
+0$
+#1370
+b11101 4
+b111111111100 7
+b111111111100 )
+b111111111100 :
+1$
+#1380
+0$
+#1390
+b11100 4
+b1111111111000 7
+b1111111111000 )
+b1111111111000 :
+1$
+#1400
+0$
+#1410
+b11011 4
+b11111111110000 7
+b11111111110000 )
+b11111111110000 :
+1$
+#1420
+0$
+#1430
+b11010 4
+b111111111100000 7
+b111111111100000 )
+b111111111100000 :
+1$
+#1440
+0$
+#1450
+b11001 4
+b1111111111000000 7
+b1111111111000000 )
+b1111111111000000 :
+1$
+#1460
+0$
+#1470
+b11000 4
+b11111111110000000 7
+b11111111110000000 )
+b11111111110000000 :
+1$
+#1480
+0$
+#1490
+b10111 4
+b111111111100000000 7
+b111111111100000000 )
+b111111111100000000 :
+1$
+#1500
+0$
+#1510
+b10110 4
+b1111111111000000000 7
+b1111111111000000000 )
+b1111111111000000000 :
+1$
+#1520
+0$
+#1530
+b10101 4
+b11111111110000000000 7
+b11111111110000000000 )
+b11111111110000000000 :
+1$
+#1540
+0$
+#1550
+b10100 4
+b111111111100000000000 7
+b111111111100000000000 )
+b111111111100000000000 :
+1$
+#1560
+0$
+#1570
+b10011 4
+b1111111111000000000000 7
+b1111111111000000000000 )
+b1111111111000000000000 :
+1$
+#1580
+0$
+#1590
+b10010 4
+b11111111110000000000000 7
+b11111111110000000000000 )
+b11111111110000000000000 :
+1$
+#1600
+0$
+#1610
+b10001 4
+b111111111100000000000000 7
+b111111111100000000000000 )
+b111111111100000000000000 :
+1$
+#1620
+0$
+#1630
+b10000 4
+b1111111111000000000000000 7
+b1111111111000000000000000 )
+b1111111111000000000000000 :
+1$
+#1640
+0$
+#1650
+b1111 4
+b11111111110000000000000000 7
+b11111111110000000000000000 )
+b11111111110000000000000000 :
+1$
+#1660
+0$
+#1670
+b1110 4
+b111111111100000000000000000 7
+b111111111100000000000000000 )
+b111111111100000000000000000 :
+1$
+#1680
+0$
+#1690
+b1101 4
+b1111111111000000000000000000 7
+b1111111111000000000000000000 )
+b1111111111000000000000000000 :
+1$
+#1700
+0$
+#1710
+b1100 4
+b11111111110000000000000000000 7
+b11111111110000000000000000000 )
+b11111111110000000000000000000 :
+1$
+#1720
+0$
+#1730
+b1011 4
+b111111111100000000000000000000 7
+b111111111100000000000000000000 )
+b111111111100000000000000000000 :
+1$
+#1740
+0$
+#1750
+b1010 4
+b1111111111000000000000000000000 7
+b1111111111000000000000000000000 )
+b1111111111000000000000000000000 :
+1$
+#1760
+0$
+#1770
+b111111111111111111111111111001111 .
+b11111111111111111111111111001111 0
+b11111111111111111111111111001111 @
+b1111 W$
+1a$
+1\$
+b1 T$
+b111111111111111111111111111001111 1
+b111111111111111111111111111001111 /
+b1 <
+b1001 4
+b11111111110000000000000000000000 7
+b11111111110000000000000000000000 )
+b11111111110000000000000000000000 :
+1$
+#1780
+0$
+#1790
+b1101 q
+1o
+0v$
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+1X$
+1t$
+0o$
+1s$
+b111111111111111111111111111010001 .
+b11111111111111111111111111010001 0
+b11111111111111111111111111010001 @
+b1 W$
+0h$
+1m$
+1l$
+b11111 Y$
+1f$
+1c$
+b11 T$
+b111111111111111111111111111010001 1
+b111111111111111111111111111010001 /
+b11 <
+b1000 4
+b11111111100000000000000000000000 7
+b11111111100000000000000000000000 )
+b11111111100000000000000000000000 :
+b1 8
+b1 -
+b1 ;
+1$
+#1800
+0$
+#1810
+b111111111111111111111111111010101 .
+b11111111111111111111111111010101 0
+b11111111111111111111111111010101 @
+b101 W$
+1o$
+1j$
+b111 T$
+b111111111111111111111111111010101 1
+b111111111111111111111111111010101 /
+b111 <
+b111 4
+b11111111000000000000000000000000 7
+b11111111000000000000000000000000 )
+b11111111000000000000000000000000 :
+b11 8
+b11 -
+b11 ;
+1$
+#1820
+0$
+#1830
+b111111111111111111111111111011101 .
+b11111111111111111111111111011101 0
+b11111111111111111111111111011101 @
+b1101 W$
+1v$
+1q$
+b1111 T$
+b111111111111111111111111111011101 1
+b111111111111111111111111111011101 /
+b1111 <
+b110 4
+b11111110000000000000000000000000 7
+b11111110000000000000000000000000 )
+b11111110000000000000000000000000 :
+b111 8
+b111 -
+b111 ;
+1$
+#1840
+0$
+#1850
+b111111111111111111111111111101101 .
+b11111111111111111111111111101101 0
+b11111111111111111111111111101101 @
+b1110 q
+b1110 n
+b1110 G
+b1110 N
+b1101 m
+b1101 E
+b1101 J
+1l
+1j
+b111111111111111111111111111101101 1
+b111111111111111111111111111101101 /
+b11111 <
+b101 4
+b11111100000000000000000000000000 7
+b11111100000000000000000000000000 )
+b11111100000000000000000000000000 :
+b1111 8
+b1111 -
+b1111 ;
+1$
+#1860
+0$
+#1870
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+b1101 .
+b1101 0
+b1101 @
+b10000 q
+1H
+1M
+b10000 n
+b0 G
+b0 N
+1K
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+1V
+b1 O
+b1101 1
+b1101 /
+b111111 <
+b100 4
+b11111000000000000000000000000000 7
+b11111000000000000000000000000000 )
+b11111000000000000000000000000000 :
+b11111 8
+b11111 -
+b11111 ;
+1$
+#1880
+0$
+#1890
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+b1110 q
+0H
+0M
+b1110 n
+b1110 G
+b1110 N
+0K
+b111111111111111111111111111101001 .
+b11111111111111111111111111101001 0
+b11111111111111111111111111101001 @
+b1001 W$
+0o$
+b1101 m
+b1101 E
+b1101 J
+b110 R
+0[
+0V
+0j$
+b0 O
+b1011 T$
+b111111111111111111111111111101001 1
+b111111111111111111111111111101001 /
+b11011 <
+b11 4
+b11110000000000000000000000000001 7
+b11110000000000000000000000000001 )
+b11110000000000000000000000000001 :
+b1101 8
+b1101 -
+b1101 ;
+1$
+#1900
+0$
+#1910
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+b10000 q
+1H
+1M
+b10000 n
+b0 G
+b0 N
+1K
+1o$
+b101 .
+b101 0
+b101 @
+b101 W$
+0v$
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+1V
+1j$
+0q$
+b1 O
+b111 T$
+b101 1
+b101 /
+b110111 <
+b10 4
+b11100000000000000000000000000010 7
+b11100000000000000000000000000010 )
+b11100000000000000000000000000010 :
+b11011 8
+b11011 -
+b11011 ;
+1$
+#1920
+0$
+#1930
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0o$
+b1001 W$
+1v$
+b111111111111111111111111111011001 .
+b11111111111111111111111111011001 0
+b11111111111111111111111111011001 @
+b1101 q
+0H
+0M
+b110 R
+0[
+b1101 n
+b1101 G
+b1101 N
+0K
+b1100 m
+b1100 E
+b1100 J
+0l
+0V
+0j$
+1q$
+0j
+b0 O
+b1011 T$
+b111111111111111111111111111011001 1
+b111111111111111111111111111011001 /
+b1011 <
+b1 4
+b11000000000000000000000000000101 7
+b11000000000000000000000000000101 )
+b11000000000000000000000000000101 :
+b101 8
+b101 -
+b101 ;
+1$
+#1940
+0$
+#1950
+1o$
+b101 W$
+0v$
+b111111111111111111111111111100101 .
+b11111111111111111111111111100101 0
+b11111111111111111111111111100101 @
+b1110 q
+b1110 n
+b1110 G
+b1110 N
+b1101 m
+b1101 E
+b1101 J
+1l
+1j$
+0q$
+1j
+b111 T$
+b111111111111111111111111111100101 1
+b111111111111111111111111111100101 /
+b10111 <
+b0 4
+b10000000000000000000000000001010 7
+b10000000000000000000000000001010 )
+b10000000000000000000000000001010 :
+b1011 8
+b1011 -
+b1011 ;
+1$
+#1960
+0$
+#1970
+0a$
+b1100 W$
+1v$
+b111111111111111111111111111111100 .
+b11111111111111111111111111111100 0
+b11111111111111111111111111111100 @
+b1111 q
+b111 R
+1[
+b1111 n
+b1111 G
+b1111 N
+b1110 m
+b1110 E
+b1110 J
+0l
+1V
+0\$
+1q$
+0j
+b1 O
+b1110 T$
+1,
+b111111111111111111111111111111100 1
+b111111111111111111111111111111100 /
+b101110 <
+b11111 4
+0#
+03
+b10100 7
+b10100 )
+b10100 :
+b10111 8
+b10111 -
+b10111 ;
+1$
+#1980
+0$
+#1990
+0o
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz0zzz A
+0X$
+0t$
+b1100 q
+0s$
+b1101 n
+b1101 G
+b1101 N
+1h$
+0m$
+1o$
+b111111111111111111111111111001110 .
+b11111111111111111111111111001110 0
+b11111111111111111111111111001110 @
+b1110 W$
+1v$
+b1100 m
+b1100 E
+b1100 J
+b110 R
+0[
+0l$
+b11 Y$
+0f$
+0V
+0c$
+0j$
+0q$
+b0 O
+b0 T$
+0,
+b111111111111111111111111111001110 1
+b111111111111111111111111111001110 /
+b0 <
+1#
+13
+b0 8
+b0 -
+b0 ;
+b1111111111 7
+b1111111111 )
+b1111111111 :
+1$
+#2000
+0$
+#2010
+b11110 4
+b11111111110 7
+b11111111110 )
+b11111111110 :
+1$
+#2020
+0$
+#2030
+b11101 4
+b111111111100 7
+b111111111100 )
+b111111111100 :
+1$
+#2040
+0$
+#2050
+b11100 4
+b1111111111000 7
+b1111111111000 )
+b1111111111000 :
+1$
+#2060
+0$
+#2070
+b11011 4
+b11111111110000 7
+b11111111110000 )
+b11111111110000 :
+1$
+#2080
+0$
+#2090
+b11010 4
+b111111111100000 7
+b111111111100000 )
+b111111111100000 :
+1$
+#2100
+0$
+#2110
+b11001 4
+b1111111111000000 7
+b1111111111000000 )
+b1111111111000000 :
+1$
+#2120
+0$
+#2130
+b11000 4
+b11111111110000000 7
+b11111111110000000 )
+b11111111110000000 :
+1$
+#2140
+0$
+#2150
+b10111 4
+b111111111100000000 7
+b111111111100000000 )
+b111111111100000000 :
+1$
+#2160
+0$
+#2170
+b10110 4
+b1111111111000000000 7
+b1111111111000000000 )
+b1111111111000000000 :
+1$
+#2180
+0$
+#2190
+b10101 4
+b11111111110000000000 7
+b11111111110000000000 )
+b11111111110000000000 :
+1$
+#2200
+0$
+#2210
+b10100 4
+b111111111100000000000 7
+b111111111100000000000 )
+b111111111100000000000 :
+1$
+#2220
+0$
+#2230
+b10011 4
+b1111111111000000000000 7
+b1111111111000000000000 )
+b1111111111000000000000 :
+1$
+#2240
+0$
+#2250
+b10010 4
+b11111111110000000000000 7
+b11111111110000000000000 )
+b11111111110000000000000 :
+1$
+#2260
+0$
+#2270
+b10001 4
+b111111111100000000000000 7
+b111111111100000000000000 )
+b111111111100000000000000 :
+1$
+#2280
+0$
+#2290
+b10000 4
+b1111111111000000000000000 7
+b1111111111000000000000000 )
+b1111111111000000000000000 :
+1$
+#2300
+0$
+#2310
+b1111 4
+b11111111110000000000000000 7
+b11111111110000000000000000 )
+b11111111110000000000000000 :
+1$
+#2320
+0$
+#2330
+b1110 4
+b111111111100000000000000000 7
+b111111111100000000000000000 )
+b111111111100000000000000000 :
+1$
+#2340
+0$
+#2350
+b1101 4
+b1111111111000000000000000000 7
+b1111111111000000000000000000 )
+b1111111111000000000000000000 :
+1$
+#2360
+0$
+#2370
+b1100 4
+b11111111110000000000000000000 7
+b11111111110000000000000000000 )
+b11111111110000000000000000000 :
+1$
+#2380
+0$
+#2390
+b1011 4
+b111111111100000000000000000000 7
+b111111111100000000000000000000 )
+b111111111100000000000000000000 :
+1$
+#2400
+0$
+#2410
+b1010 4
+b1111111111000000000000000000000 7
+b1111111111000000000000000000000 )
+b1111111111000000000000000000000 :
+1$
+#2420
+0$
+#2430
+b111111111111111111111111111001111 .
+b11111111111111111111111111001111 0
+b11111111111111111111111111001111 @
+b1111 W$
+1a$
+1\$
+b1 T$
+b111111111111111111111111111001111 1
+b111111111111111111111111111001111 /
+b1 <
+b1001 4
+b11111111110000000000000000000000 7
+b11111111110000000000000000000000 )
+b11111111110000000000000000000000 :
+1$
+#2440
+0$
+#2450
+b1101 q
+1o
+0v$
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+1X$
+1t$
+0o$
+1s$
+b111111111111111111111111111010001 .
+b11111111111111111111111111010001 0
+b11111111111111111111111111010001 @
+b1 W$
+0h$
+1m$
+1l$
+b11111 Y$
+1f$
+1c$
+b11 T$
+b111111111111111111111111111010001 1
+b111111111111111111111111111010001 /
+b11 <
+b1000 4
+b11111111100000000000000000000000 7
+b11111111100000000000000000000000 )
+b11111111100000000000000000000000 :
+b1 8
+b1 -
+b1 ;
+1$
+#2460
+0$
+#2470
+b111111111111111111111111111010101 .
+b11111111111111111111111111010101 0
+b11111111111111111111111111010101 @
+b101 W$
+1o$
+1j$
+b111 T$
+b111111111111111111111111111010101 1
+b111111111111111111111111111010101 /
+b111 <
+b111 4
+b11111111000000000000000000000000 7
+b11111111000000000000000000000000 )
+b11111111000000000000000000000000 :
+b11 8
+b11 -
+b11 ;
+1$
+#2480
+0$
+#2490
+b111111111111111111111111111011101 .
+b11111111111111111111111111011101 0
+b11111111111111111111111111011101 @
+b1101 W$
+1v$
+1q$
+b1111 T$
+b111111111111111111111111111011101 1
+b111111111111111111111111111011101 /
+b1111 <
+b110 4
+b11111110000000000000000000000000 7
+b11111110000000000000000000000000 )
+b11111110000000000000000000000000 :
+b111 8
+b111 -
+b111 ;
+1$
+#2500
+0$
+#2510
+b111111111111111111111111111101101 .
+b11111111111111111111111111101101 0
+b11111111111111111111111111101101 @
+b1110 q
+b1110 n
+b1110 G
+b1110 N
+b1101 m
+b1101 E
+b1101 J
+1l
+1j
+b111111111111111111111111111101101 1
+b111111111111111111111111111101101 /
+b11111 <
+b101 4
+b11111100000000000000000000000000 7
+b11111100000000000000000000000000 )
+b11111100000000000000000000000000 :
+b1111 8
+b1111 -
+b1111 ;
+1$
+#2520
+0$
+#2530
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+b1101 .
+b1101 0
+b1101 @
+b10000 q
+1H
+1M
+b10000 n
+b0 G
+b0 N
+1K
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+1V
+b1 O
+b1101 1
+b1101 /
+b111111 <
+b100 4
+b11111000000000000000000000000000 7
+b11111000000000000000000000000000 )
+b11111000000000000000000000000000 :
+b11111 8
+b11111 -
+b11111 ;
+1$
+#2540
+0$
+#2550
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+b1110 q
+0H
+0M
+b1110 n
+b1110 G
+b1110 N
+0K
+b111111111111111111111111111101001 .
+b11111111111111111111111111101001 0
+b11111111111111111111111111101001 @
+b1001 W$
+0o$
+b1101 m
+b1101 E
+b1101 J
+b110 R
+0[
+0V
+0j$
+b0 O
+b1011 T$
+b111111111111111111111111111101001 1
+b111111111111111111111111111101001 /
+b11011 <
+b11 4
+b11110000000000000000000000000001 7
+b11110000000000000000000000000001 )
+b11110000000000000000000000000001 :
+b1101 8
+b1101 -
+b1101 ;
+1$
+#2560
+0$
+#2570
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+b10000 q
+1H
+1M
+b10000 n
+b0 G
+b0 N
+1K
+1o$
+b101 .
+b101 0
+b101 @
+b101 W$
+0v$
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+1V
+1j$
+0q$
+b1 O
+b111 T$
+b101 1
+b101 /
+b110111 <
+b10 4
+b11100000000000000000000000000010 7
+b11100000000000000000000000000010 )
+b11100000000000000000000000000010 :
+b11011 8
+b11011 -
+b11011 ;
+1$
+#2580
+0$
+#2590
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0o$
+b1001 W$
+1v$
+b111111111111111111111111111011001 .
+b11111111111111111111111111011001 0
+b11111111111111111111111111011001 @
+b1101 q
+0H
+0M
+b110 R
+0[
+b1101 n
+b1101 G
+b1101 N
+0K
+b1100 m
+b1100 E
+b1100 J
+0l
+0V
+0j$
+1q$
+0j
+b0 O
+b1011 T$
+b111111111111111111111111111011001 1
+b111111111111111111111111111011001 /
+b1011 <
+b1 4
+b11000000000000000000000000000101 7
+b11000000000000000000000000000101 )
+b11000000000000000000000000000101 :
+b101 8
+b101 -
+b101 ;
+1$
+#2600
+0$
+#2610
+1o$
+b101 W$
+0v$
+b111111111111111111111111111100101 .
+b11111111111111111111111111100101 0
+b11111111111111111111111111100101 @
+b1110 q
+b1110 n
+b1110 G
+b1110 N
+b1101 m
+b1101 E
+b1101 J
+1l
+1j$
+0q$
+1j
+b111 T$
+b111111111111111111111111111100101 1
+b111111111111111111111111111100101 /
+b10111 <
+b0 4
+b10000000000000000000000000001010 7
+b10000000000000000000000000001010 )
+b10000000000000000000000000001010 :
+b1011 8
+b1011 -
+b1011 ;
+1$
+#2620
+0$
+#2630
+0a$
+b1100 W$
+1v$
+b111111111111111111111111111111100 .
+b11111111111111111111111111111100 0
+b11111111111111111111111111111100 @
+b1111 q
+b111 R
+1[
+b1111 n
+b1111 G
+b1111 N
+b1110 m
+b1110 E
+b1110 J
+0l
+1V
+0\$
+1q$
+0j
+b1 O
+b1110 T$
+1,
+b111111111111111111111111111111100 1
+b111111111111111111111111111111100 /
+b101110 <
+b11111 4
+0#
+03
+b10100 7
+b10100 )
+b10100 :
+b10111 8
+b10111 -
+b10111 ;
+1$
+#2640
+0$
+#2650
+0o
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz0zzz A
+0X$
+0t$
+b1100 q
+0s$
+b1101 n
+b1101 G
+b1101 N
+1h$
+0m$
+1o$
+b111111111111111111111111111001110 .
+b11111111111111111111111111001110 0
+b11111111111111111111111111001110 @
+b1110 W$
+1v$
+b1100 m
+b1100 E
+b1100 J
+b110 R
+0[
+0l$
+b11 Y$
+0f$
+0V
+0c$
+0j$
+0q$
+b0 O
+b0 T$
+0,
+b111111111111111111111111111001110 1
+b111111111111111111111111111001110 /
+b0 <
+1#
+13
+b0 8
+b0 -
+b0 ;
+b1111111111 7
+b1111111111 )
+b1111111111 :
+1$
+#2660
+0$
+#2670
+b11110 4
+b11111111110 7
+b11111111110 )
+b11111111110 :
+1$
+#2680
+0$
+#2690
+b11101 4
+b111111111100 7
+b111111111100 )
+b111111111100 :
+1$
+#2700
+0$
+#2710
+b11100 4
+b1111111111000 7
+b1111111111000 )
+b1111111111000 :
+1$
+#2720
+0$
+#2730
+b11011 4
+b11111111110000 7
+b11111111110000 )
+b11111111110000 :
+1$
+#2740
+0$
+#2750
+b11010 4
+b111111111100000 7
+b111111111100000 )
+b111111111100000 :
+1$
+#2760
+0$
+#2770
+b11001 4
+b1111111111000000 7
+b1111111111000000 )
+b1111111111000000 :
+1$
+#2780
+0$
+#2790
+b11000 4
+b11111111110000000 7
+b11111111110000000 )
+b11111111110000000 :
+1$
+#2800
+0$
+#2810
+b10111 4
+b111111111100000000 7
+b111111111100000000 )
+b111111111100000000 :
+1$
+#2820
+0$
+#2830
+b10110 4
+b1111111111000000000 7
+b1111111111000000000 )
+b1111111111000000000 :
+1$
+#2840
+0$
+#2850
+b10101 4
+b11111111110000000000 7
+b11111111110000000000 )
+b11111111110000000000 :
+1$
+#2860
+0$
+#2870
+b10100 4
+b111111111100000000000 7
+b111111111100000000000 )
+b111111111100000000000 :
+1$
+#2880
+0$
+#2890
+b10011 4
+b1111111111000000000000 7
+b1111111111000000000000 )
+b1111111111000000000000 :
+1$
+#2900
+0$
+#2910
+b10010 4
+b11111111110000000000000 7
+b11111111110000000000000 )
+b11111111110000000000000 :
+1$
+#2920
+0$
+#2930
+b10001 4
+b111111111100000000000000 7
+b111111111100000000000000 )
+b111111111100000000000000 :
+1$
+#2940
+0$
+#2950
+b10000 4
+b1111111111000000000000000 7
+b1111111111000000000000000 )
+b1111111111000000000000000 :
+1$
+#2960
+0$
+#2970
+b1111 4
+b11111111110000000000000000 7
+b11111111110000000000000000 )
+b11111111110000000000000000 :
+1$
+#2980
+0$
+#2990
+b1110 4
+b111111111100000000000000000 7
+b111111111100000000000000000 )
+b111111111100000000000000000 :
+1$
+#3000
+0$
+#3010
+b1101 4
+b1111111111000000000000000000 7
+b1111111111000000000000000000 )
+b1111111111000000000000000000 :
+1$
+#3020
+0$
+#3030
+b1100 4
+b11111111110000000000000000000 7
+b11111111110000000000000000000 )
+b11111111110000000000000000000 :
+1$
+#3040
+0$
+#3050
+b1011 4
+b111111111100000000000000000000 7
+b111111111100000000000000000000 )
+b111111111100000000000000000000 :
+1$
+#3060
+0$
+#3070
+b1010 4
+b1111111111000000000000000000000 7
+b1111111111000000000000000000000 )
+b1111111111000000000000000000000 :
+1$
+#3080
+0$
+#3090
+b111111111111111111111111111001111 .
+b11111111111111111111111111001111 0
+b11111111111111111111111111001111 @
+b1111 W$
+1a$
+1\$
+b1 T$
+b111111111111111111111111111001111 1
+b111111111111111111111111111001111 /
+b1 <
+b1001 4
+b11111111110000000000000000000000 7
+b11111111110000000000000000000000 )
+b11111111110000000000000000000000 :
+1$
+#3100
+0$
+#3110
+b1101 q
+1o
+0v$
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+1X$
+1t$
+0o$
+1s$
+b111111111111111111111111111010001 .
+b11111111111111111111111111010001 0
+b11111111111111111111111111010001 @
+b1 W$
+0h$
+1m$
+1l$
+b11111 Y$
+1f$
+1c$
+b11 T$
+b111111111111111111111111111010001 1
+b111111111111111111111111111010001 /
+b11 <
+b1000 4
+b11111111100000000000000000000000 7
+b11111111100000000000000000000000 )
+b11111111100000000000000000000000 :
+b1 8
+b1 -
+b1 ;
+1$
+#3120
+0$
+#3130
+b111111111111111111111111111010101 .
+b11111111111111111111111111010101 0
+b11111111111111111111111111010101 @
+b101 W$
+1o$
+1j$
+b111 T$
+b111111111111111111111111111010101 1
+b111111111111111111111111111010101 /
+b111 <
+b111 4
+b11111111000000000000000000000000 7
+b11111111000000000000000000000000 )
+b11111111000000000000000000000000 :
+b11 8
+b11 -
+b11 ;
+1$
+#3140
+0$
+#3150
+b111111111111111111111111111011101 .
+b11111111111111111111111111011101 0
+b11111111111111111111111111011101 @
+b1101 W$
+1v$
+1q$
+b1111 T$
+b111111111111111111111111111011101 1
+b111111111111111111111111111011101 /
+b1111 <
+b110 4
+b11111110000000000000000000000000 7
+b11111110000000000000000000000000 )
+b11111110000000000000000000000000 :
+b111 8
+b111 -
+b111 ;
+1$
+#3160
+0$
+#3170
+b111111111111111111111111111101101 .
+b11111111111111111111111111101101 0
+b11111111111111111111111111101101 @
+b1110 q
+b1110 n
+b1110 G
+b1110 N
+b1101 m
+b1101 E
+b1101 J
+1l
+1j
+b111111111111111111111111111101101 1
+b111111111111111111111111111101101 /
+b11111 <
+b101 4
+b11111100000000000000000000000000 7
+b11111100000000000000000000000000 )
+b11111100000000000000000000000000 :
+b1111 8
+b1111 -
+b1111 ;
+1$
+#3180
+0$
+#3190
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+b1101 .
+b1101 0
+b1101 @
+b10000 q
+1H
+1M
+b10000 n
+b0 G
+b0 N
+1K
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+1V
+b1 O
+b1101 1
+b1101 /
+b111111 <
+b100 4
+b11111000000000000000000000000000 7
+b11111000000000000000000000000000 )
+b11111000000000000000000000000000 :
+b11111 8
+b11111 -
+b11111 ;
+1$
+#3200
+0$
+#3210
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+b1110 q
+0H
+0M
+b1110 n
+b1110 G
+b1110 N
+0K
+b111111111111111111111111111101001 .
+b11111111111111111111111111101001 0
+b11111111111111111111111111101001 @
+b1001 W$
+0o$
+b1101 m
+b1101 E
+b1101 J
+b110 R
+0[
+0V
+0j$
+b0 O
+b1011 T$
+b111111111111111111111111111101001 1
+b111111111111111111111111111101001 /
+b11011 <
+b11 4
+b11110000000000000000000000000001 7
+b11110000000000000000000000000001 )
+b11110000000000000000000000000001 :
+b1101 8
+b1101 -
+b1101 ;
+1$
+#3220
+0$
+#3230
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+b10000 q
+1H
+1M
+b10000 n
+b0 G
+b0 N
+1K
+1o$
+b101 .
+b101 0
+b101 @
+b101 W$
+0v$
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+1V
+1j$
+0q$
+b1 O
+b111 T$
+b101 1
+b101 /
+b110111 <
+b10 4
+b11100000000000000000000000000010 7
+b11100000000000000000000000000010 )
+b11100000000000000000000000000010 :
+b11011 8
+b11011 -
+b11011 ;
+1$
+#3240
+0$
+#3250
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0o$
+b1001 W$
+1v$
+b111111111111111111111111111011001 .
+b11111111111111111111111111011001 0
+b11111111111111111111111111011001 @
+b1101 q
+0H
+0M
+b110 R
+0[
+b1101 n
+b1101 G
+b1101 N
+0K
+b1100 m
+b1100 E
+b1100 J
+0l
+0V
+0j$
+1q$
+0j
+b0 O
+b1011 T$
+b111111111111111111111111111011001 1
+b111111111111111111111111111011001 /
+b1011 <
+b1 4
+b11000000000000000000000000000101 7
+b11000000000000000000000000000101 )
+b11000000000000000000000000000101 :
+b101 8
+b101 -
+b101 ;
+1$
+#3260
+0$
+#3270
+1o$
+b101 W$
+0v$
+b111111111111111111111111111100101 .
+b11111111111111111111111111100101 0
+b11111111111111111111111111100101 @
+b1110 q
+b1110 n
+b1110 G
+b1110 N
+b1101 m
+b1101 E
+b1101 J
+1l
+1j$
+0q$
+1j
+b111 T$
+b111111111111111111111111111100101 1
+b111111111111111111111111111100101 /
+b10111 <
+b0 4
+b10000000000000000000000000001010 7
+b10000000000000000000000000001010 )
+b10000000000000000000000000001010 :
+b1011 8
+b1011 -
+b1011 ;
+1$
+#3280
+0$
+#3290
+0a$
+b1100 W$
+1v$
+b111111111111111111111111111111100 .
+b11111111111111111111111111111100 0
+b11111111111111111111111111111100 @
+b1111 q
+b111 R
+1[
+b1111 n
+b1111 G
+b1111 N
+b1110 m
+b1110 E
+b1110 J
+0l
+1V
+0\$
+1q$
+0j
+b1 O
+b1110 T$
+1,
+b111111111111111111111111111111100 1
+b111111111111111111111111111111100 /
+b101110 <
+b11111 4
+0#
+03
+b10100 7
+b10100 )
+b10100 :
+b10111 8
+b10111 -
+b10111 ;
+1$
+#3300
+0$
+#3310
+0o
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz0zzz A
+0X$
+0t$
+b1100 q
+0s$
+b1101 n
+b1101 G
+b1101 N
+1h$
+0m$
+1o$
+b111111111111111111111111111001110 .
+b11111111111111111111111111001110 0
+b11111111111111111111111111001110 @
+b1110 W$
+1v$
+b1100 m
+b1100 E
+b1100 J
+b110 R
+0[
+0l$
+b11 Y$
+0f$
+0V
+0c$
+0j$
+0q$
+b0 O
+b0 T$
+0,
+b111111111111111111111111111001110 1
+b111111111111111111111111111001110 /
+b0 <
+1#
+13
+b0 8
+b0 -
+b0 ;
+b1111111111 7
+b1111111111 )
+b1111111111 :
+1$
+#3320
+0$
+#3330
+b11110 4
+b11111111110 7
+b11111111110 )
+b11111111110 :
+1$
+#3340
+0$
+#3350
+b11101 4
+b111111111100 7
+b111111111100 )
+b111111111100 :
+1$
+#3360
+0$
+#3370
+b11100 4
+b1111111111000 7
+b1111111111000 )
+b1111111111000 :
+1$
+#3380
+0$
+#3390
+b11011 4
+b11111111110000 7
+b11111111110000 )
+b11111111110000 :
+1$
+#3400
+0$
+#3410
+b11010 4
+b111111111100000 7
+b111111111100000 )
+b111111111100000 :
+1$
+#3420
+0$
+#3430
+b11001 4
+b1111111111000000 7
+b1111111111000000 )
+b1111111111000000 :
+1$
+#3440
+0$
+#3450
+b11000 4
+b11111111110000000 7
+b11111111110000000 )
+b11111111110000000 :
+1$
+#3460
+0$
+#3470
+b10111 4
+b111111111100000000 7
+b111111111100000000 )
+b111111111100000000 :
+1$
+#3480
+0$
+#3490
+b10110 4
+b1111111111000000000 7
+b1111111111000000000 )
+b1111111111000000000 :
+1$
+#3500
+0$
+#3510
+b10101 4
+b11111111110000000000 7
+b11111111110000000000 )
+b11111111110000000000 :
+1$
+#3520
+0$
+#3530
+b10100 4
+b111111111100000000000 7
+b111111111100000000000 )
+b111111111100000000000 :
+1$
+#3540
+0$
+#3550
+b10011 4
+b1111111111000000000000 7
+b1111111111000000000000 )
+b1111111111000000000000 :
+1$
+#3560
+0$
+#3570
+b10010 4
+b11111111110000000000000 7
+b11111111110000000000000 )
+b11111111110000000000000 :
+1$
+#3580
+0$
+#3590
+b10001 4
+b111111111100000000000000 7
+b111111111100000000000000 )
+b111111111100000000000000 :
+1$
+#3600
+0$
+#3610
+b10000 4
+b1111111111000000000000000 7
+b1111111111000000000000000 )
+b1111111111000000000000000 :
+1$
+#3620
+0$
+#3630
+b1111 4
+b11111111110000000000000000 7
+b11111111110000000000000000 )
+b11111111110000000000000000 :
+1$
+#3640
+0$
+#3650
+b1110 4
+b111111111100000000000000000 7
+b111111111100000000000000000 )
+b111111111100000000000000000 :
+1$
+#3660
+0$
+#3670
+b1101 4
+b1111111111000000000000000000 7
+b1111111111000000000000000000 )
+b1111111111000000000000000000 :
+1$
+#3680
+0$
+#3690
+b1100 4
+b11111111110000000000000000000 7
+b11111111110000000000000000000 )
+b11111111110000000000000000000 :
+1$
+#3700
+0$
+#3710
+b1011 4
+b111111111100000000000000000000 7
+b111111111100000000000000000000 )
+b111111111100000000000000000000 :
+1$
+#3720
+0$
+#3730
+b1010 4
+b1111111111000000000000000000000 7
+b1111111111000000000000000000000 )
+b1111111111000000000000000000000 :
+1$
+#3740
+0$
+#3750
+b111111111111111111111111111001111 .
+b11111111111111111111111111001111 0
+b11111111111111111111111111001111 @
+b1111 W$
+1a$
+1\$
+b1 T$
+b111111111111111111111111111001111 1
+b111111111111111111111111111001111 /
+b1 <
+b1001 4
+b11111111110000000000000000000000 7
+b11111111110000000000000000000000 )
+b11111111110000000000000000000000 :
+1$
+#3760
+0$
+#3770
+b1101 q
+1o
+0v$
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+1X$
+1t$
+0o$
+1s$
+b111111111111111111111111111010001 .
+b11111111111111111111111111010001 0
+b11111111111111111111111111010001 @
+b1 W$
+0h$
+1m$
+1l$
+b11111 Y$
+1f$
+1c$
+b11 T$
+b111111111111111111111111111010001 1
+b111111111111111111111111111010001 /
+b11 <
+b1000 4
+b11111111100000000000000000000000 7
+b11111111100000000000000000000000 )
+b11111111100000000000000000000000 :
+b1 8
+b1 -
+b1 ;
+1$
+#3780
+0$
+#3790
+b111111111111111111111111111010101 .
+b11111111111111111111111111010101 0
+b11111111111111111111111111010101 @
+b101 W$
+1o$
+1j$
+b111 T$
+b111111111111111111111111111010101 1
+b111111111111111111111111111010101 /
+b111 <
+b111 4
+b11111111000000000000000000000000 7
+b11111111000000000000000000000000 )
+b11111111000000000000000000000000 :
+b11 8
+b11 -
+b11 ;
+1$
+#3800
+0$
+#3810
+b111111111111111111111111111011101 .
+b11111111111111111111111111011101 0
+b11111111111111111111111111011101 @
+b1101 W$
+1v$
+1q$
+b1111 T$
+b111111111111111111111111111011101 1
+b111111111111111111111111111011101 /
+b1111 <
+b110 4
+b11111110000000000000000000000000 7
+b11111110000000000000000000000000 )
+b11111110000000000000000000000000 :
+b111 8
+b111 -
+b111 ;
+1$
+#3820
+0$
+#3830
+b111111111111111111111111111101101 .
+b11111111111111111111111111101101 0
+b11111111111111111111111111101101 @
+b1110 q
+b1110 n
+b1110 G
+b1110 N
+b1101 m
+b1101 E
+b1101 J
+1l
+1j
+b111111111111111111111111111101101 1
+b111111111111111111111111111101101 /
+b11111 <
+b101 4
+b11111100000000000000000000000000 7
+b11111100000000000000000000000000 )
+b11111100000000000000000000000000 :
+b1111 8
+b1111 -
+b1111 ;
+1$
+#3840
+0$
+#3850
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+b1101 .
+b1101 0
+b1101 @
+b10000 q
+1H
+1M
+b10000 n
+b0 G
+b0 N
+1K
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+1V
+b1 O
+b1101 1
+b1101 /
+b111111 <
+b100 4
+b11111000000000000000000000000000 7
+b11111000000000000000000000000000 )
+b11111000000000000000000000000000 :
+b11111 8
+b11111 -
+b11111 ;
+1$
+#3860
+0$
+#3870
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+b1110 q
+0H
+0M
+b1110 n
+b1110 G
+b1110 N
+0K
+b111111111111111111111111111101001 .
+b11111111111111111111111111101001 0
+b11111111111111111111111111101001 @
+b1001 W$
+0o$
+b1101 m
+b1101 E
+b1101 J
+b110 R
+0[
+0V
+0j$
+b0 O
+b1011 T$
+b111111111111111111111111111101001 1
+b111111111111111111111111111101001 /
+b11011 <
+b11 4
+b11110000000000000000000000000001 7
+b11110000000000000000000000000001 )
+b11110000000000000000000000000001 :
+b1101 8
+b1101 -
+b1101 ;
+1$
+#3880
+0$
+#3890
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+b10000 q
+1H
+1M
+b10000 n
+b0 G
+b0 N
+1K
+1o$
+b101 .
+b101 0
+b101 @
+b101 W$
+0v$
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+1V
+1j$
+0q$
+b1 O
+b111 T$
+b101 1
+b101 /
+b110111 <
+b10 4
+b11100000000000000000000000000010 7
+b11100000000000000000000000000010 )
+b11100000000000000000000000000010 :
+b11011 8
+b11011 -
+b11011 ;
+1$
+#3900
+0$
+#3910
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0o$
+b1001 W$
+1v$
+b111111111111111111111111111011001 .
+b11111111111111111111111111011001 0
+b11111111111111111111111111011001 @
+b1101 q
+0H
+0M
+b110 R
+0[
+b1101 n
+b1101 G
+b1101 N
+0K
+b1100 m
+b1100 E
+b1100 J
+0l
+0V
+0j$
+1q$
+0j
+b0 O
+b1011 T$
+b111111111111111111111111111011001 1
+b111111111111111111111111111011001 /
+b1011 <
+b1 4
+b11000000000000000000000000000101 7
+b11000000000000000000000000000101 )
+b11000000000000000000000000000101 :
+b101 8
+b101 -
+b101 ;
+1$
+#3920
+0$
+#3930
+1o$
+b101 W$
+0v$
+b111111111111111111111111111100101 .
+b11111111111111111111111111100101 0
+b11111111111111111111111111100101 @
+b1110 q
+b1110 n
+b1110 G
+b1110 N
+b1101 m
+b1101 E
+b1101 J
+1l
+1j$
+0q$
+1j
+b111 T$
+b111111111111111111111111111100101 1
+b111111111111111111111111111100101 /
+b10111 <
+b0 4
+b10000000000000000000000000001010 7
+b10000000000000000000000000001010 )
+b10000000000000000000000000001010 :
+b1011 8
+b1011 -
+b1011 ;
+1$
+#3940
+0$
+#3950
+0a$
+b1100 W$
+1v$
+b111111111111111111111111111111100 .
+b11111111111111111111111111111100 0
+b11111111111111111111111111111100 @
+b1111 q
+b111 R
+1[
+b1111 n
+b1111 G
+b1111 N
+b1110 m
+b1110 E
+b1110 J
+0l
+1V
+0\$
+1q$
+0j
+b1 O
+b1110 T$
+1,
+b111111111111111111111111111111100 1
+b111111111111111111111111111111100 /
+b101110 <
+b11111 4
+0#
+03
+b10100 7
+b10100 )
+b10100 :
+b10111 8
+b10111 -
+b10111 ;
+1$
+#3960
+0$
+#3970
+0o
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz0zzz A
+0X$
+0t$
+b1100 q
+0s$
+b1101 n
+b1101 G
+b1101 N
+1h$
+0m$
+1o$
+b111111111111111111111111111001110 .
+b11111111111111111111111111001110 0
+b11111111111111111111111111001110 @
+b1110 W$
+1v$
+b1100 m
+b1100 E
+b1100 J
+b110 R
+0[
+0l$
+b11 Y$
+0f$
+0V
+0c$
+0j$
+0q$
+b0 O
+b0 T$
+0,
+b111111111111111111111111111001110 1
+b111111111111111111111111111001110 /
+b0 <
+1#
+13
+b0 8
+b0 -
+b0 ;
+b1111111111 7
+b1111111111 )
+b1111111111 :
+1$
+#3980
+0$
+#3990
+b11110 4
+b11111111110 7
+b11111111110 )
+b11111111110 :
+1$
+#4000
+0$
+b1010000 '
+b1010000 +
+b11111010000 &
+b11111010000 *
+#4010
+b11101 4
+b111111111100 7
+b111111111100 )
+b111111111100 :
+1$
+#4020
+0$
+#4030
+b11100 4
+b1111111111000 7
+b1111111111000 )
+b1111111111000 :
+1$
+#4040
+0$
+#4050
+b11011 4
+b11111111110000 7
+b11111111110000 )
+b11111111110000 :
+1$
+#4060
+0$
+#4070
+b11010 4
+b111111111100000 7
+b111111111100000 )
+b111111111100000 :
+1$
+#4080
+0$
+#4090
+b11001 4
+b1111111111000000 7
+b1111111111000000 )
+b1111111111000000 :
+1$
+#4100
+0$
+#4110
+b11000 4
+b11111111110000000 7
+b11111111110000000 )
+b11111111110000000 :
+1$
+#4120
+0$
+#4130
+b10111 4
+b111111111100000000 7
+b111111111100000000 )
+b111111111100000000 :
+1$
+#4140
+0$
+#4150
+b10110 4
+b1111111111000000000 7
+b1111111111000000000 )
+b1111111111000000000 :
+1$
+#4160
+0$
+#4170
+b10101 4
+b11111111110000000000 7
+b11111111110000000000 )
+b11111111110000000000 :
+1$
+#4180
+0$
+#4190
+b10100 4
+b111111111100000000000 7
+b111111111100000000000 )
+b111111111100000000000 :
+1$
+#4200
+0$
+#4210
+b10011 4
+b1111111111000000000000 7
+b1111111111000000000000 )
+b1111111111000000000000 :
+1$
+#4220
+0$
+#4230
+b10010 4
+b11111111110000000000000 7
+b11111111110000000000000 )
+b11111111110000000000000 :
+1$
+#4240
+0$
+#4250
+b10001 4
+b111111111100000000000000 7
+b111111111100000000000000 )
+b111111111100000000000000 :
+1$
+#4260
+0$
+#4270
+b10000 4
+b1111111111000000000000000 7
+b1111111111000000000000000 )
+b1111111111000000000000000 :
+1$
+#4280
+0$
+#4290
+b1111 4
+b11111111110000000000000000 7
+b11111111110000000000000000 )
+b11111111110000000000000000 :
+1$
+#4300
+0$
+#4310
+b1110 4
+b111111111100000000000000000 7
+b111111111100000000000000000 )
+b111111111100000000000000000 :
+1$
+#4320
+0$
+#4330
+b1101 4
+b1111111111000000000000000000 7
+b1111111111000000000000000000 )
+b1111111111000000000000000000 :
+1$
+#4340
+0$
+#4350
+b1100 4
+b11111111110000000000000000000 7
+b11111111110000000000000000000 )
+b11111111110000000000000000000 :
+1$
+#4360
+0$
+#4370
+b1011 4
+b111111111100000000000000000000 7
+b111111111100000000000000000000 )
+b111111111100000000000000000000 :
+1$
+#4380
+0$
+#4390
+b1010 4
+b1111111111000000000000000000000 7
+b1111111111000000000000000000000 )
+b1111111111000000000000000000000 :
+1$
+#4400
+0$
+#4410
+b111111111111111111111111111001111 .
+b11111111111111111111111111001111 0
+b11111111111111111111111111001111 @
+b1111 W$
+1a$
+1\$
+b1 T$
+b111111111111111111111111111001111 1
+b111111111111111111111111111001111 /
+b1 <
+b1001 4
+b11111111110000000000000000000000 7
+b11111111110000000000000000000000 )
+b11111111110000000000000000000000 :
+1$
+#4420
+0$
+#4430
+b1101 q
+1o
+0v$
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+1X$
+1t$
+0o$
+1s$
+b111111111111111111111111111010001 .
+b11111111111111111111111111010001 0
+b11111111111111111111111111010001 @
+b1 W$
+0h$
+1m$
+1l$
+b11111 Y$
+1f$
+1c$
+b11 T$
+b111111111111111111111111111010001 1
+b111111111111111111111111111010001 /
+b11 <
+b1000 4
+b11111111100000000000000000000000 7
+b11111111100000000000000000000000 )
+b11111111100000000000000000000000 :
+b1 8
+b1 -
+b1 ;
+1$
+#4440
+0$
+#4450
+b111111111111111111111111111010101 .
+b11111111111111111111111111010101 0
+b11111111111111111111111111010101 @
+b101 W$
+1o$
+1j$
+b111 T$
+b111111111111111111111111111010101 1
+b111111111111111111111111111010101 /
+b111 <
+b111 4
+b11111111000000000000000000000000 7
+b11111111000000000000000000000000 )
+b11111111000000000000000000000000 :
+b11 8
+b11 -
+b11 ;
+1$
+#4460
+0$
+#4470
+b111111111111111111111111111011101 .
+b11111111111111111111111111011101 0
+b11111111111111111111111111011101 @
+b1101 W$
+1v$
+1q$
+b1111 T$
+b111111111111111111111111111011101 1
+b111111111111111111111111111011101 /
+b1111 <
+b110 4
+b11111110000000000000000000000000 7
+b11111110000000000000000000000000 )
+b11111110000000000000000000000000 :
+b111 8
+b111 -
+b111 ;
+1$
+#4480
+0$
+#4490
+b111111111111111111111111111101101 .
+b11111111111111111111111111101101 0
+b11111111111111111111111111101101 @
+b1110 q
+b1110 n
+b1110 G
+b1110 N
+b1101 m
+b1101 E
+b1101 J
+1l
+1j
+b111111111111111111111111111101101 1
+b111111111111111111111111111101101 /
+b11111 <
+b101 4
+b11111100000000000000000000000000 7
+b11111100000000000000000000000000 )
+b11111100000000000000000000000000 :
+b1111 8
+b1111 -
+b1111 ;
+1$
+#4500
+0$
+#4510
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+b1101 .
+b1101 0
+b1101 @
+b10000 q
+1H
+1M
+b10000 n
+b0 G
+b0 N
+1K
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+1V
+b1 O
+b1101 1
+b1101 /
+b111111 <
+b100 4
+b11111000000000000000000000000000 7
+b11111000000000000000000000000000 )
+b11111000000000000000000000000000 :
+b11111 8
+b11111 -
+b11111 ;
+1$
+#4520
+0$
+#4530
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+b1110 q
+0H
+0M
+b1110 n
+b1110 G
+b1110 N
+0K
+b111111111111111111111111111101001 .
+b11111111111111111111111111101001 0
+b11111111111111111111111111101001 @
+b1001 W$
+0o$
+b1101 m
+b1101 E
+b1101 J
+b110 R
+0[
+0V
+0j$
+b0 O
+b1011 T$
+b111111111111111111111111111101001 1
+b111111111111111111111111111101001 /
+b11011 <
+b11 4
+b11110000000000000000000000000001 7
+b11110000000000000000000000000001 )
+b11110000000000000000000000000001 :
+b1101 8
+b1101 -
+b1101 ;
+1$
+#4540
+0$
+#4550
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+b10000 q
+1H
+1M
+b10000 n
+b0 G
+b0 N
+1K
+1o$
+b101 .
+b101 0
+b101 @
+b101 W$
+0v$
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+1V
+1j$
+0q$
+b1 O
+b111 T$
+b101 1
+b101 /
+b110111 <
+b10 4
+b11100000000000000000000000000010 7
+b11100000000000000000000000000010 )
+b11100000000000000000000000000010 :
+b11011 8
+b11011 -
+b11011 ;
+1$
+#4560
+0$
+#4570
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0o$
+b1001 W$
+1v$
+b111111111111111111111111111011001 .
+b11111111111111111111111111011001 0
+b11111111111111111111111111011001 @
+b1101 q
+0H
+0M
+b110 R
+0[
+b1101 n
+b1101 G
+b1101 N
+0K
+b1100 m
+b1100 E
+b1100 J
+0l
+0V
+0j$
+1q$
+0j
+b0 O
+b1011 T$
+b111111111111111111111111111011001 1
+b111111111111111111111111111011001 /
+b1011 <
+b1 4
+b11000000000000000000000000000101 7
+b11000000000000000000000000000101 )
+b11000000000000000000000000000101 :
+b101 8
+b101 -
+b101 ;
+1$
+#4580
+0$
+#4590
+1o$
+b101 W$
+0v$
+b111111111111111111111111111100101 .
+b11111111111111111111111111100101 0
+b11111111111111111111111111100101 @
+b1110 q
+b1110 n
+b1110 G
+b1110 N
+b1101 m
+b1101 E
+b1101 J
+1l
+1j$
+0q$
+1j
+b111 T$
+b111111111111111111111111111100101 1
+b111111111111111111111111111100101 /
+b10111 <
+b0 4
+b10000000000000000000000000001010 7
+b10000000000000000000000000001010 )
+b10000000000000000000000000001010 :
+b1011 8
+b1011 -
+b1011 ;
+1$
+#4600
+0$
+#4610
+0a$
+b1100 W$
+1v$
+b111111111111111111111111111111100 .
+b11111111111111111111111111111100 0
+b11111111111111111111111111111100 @
+b1111 q
+b111 R
+1[
+b1111 n
+b1111 G
+b1111 N
+b1110 m
+b1110 E
+b1110 J
+0l
+1V
+0\$
+1q$
+0j
+b1 O
+b1110 T$
+1,
+b111111111111111111111111111111100 1
+b111111111111111111111111111111100 /
+b101110 <
+b11111 4
+0#
+03
+b10100 7
+b10100 )
+b10100 :
+b10111 8
+b10111 -
+b10111 ;
+1$
+#4620
+0$
+#4630
+b1011 q
+0o$
+b111111111111111111111111110110000 .
+b11111111111111111111111110110000 0
+b11111111111111111111111110110000 @
+b0 W$
+0v$
+0L
+b1011 n
+b1011 G
+b1011 N
+b1010 m
+b1010 E
+b1010 J
+b101 R
+0b
+0V
+0c$
+0j$
+0q$
+1W
+0^
+1d$
+b0 O
+b0 T$
+b101 P
+b1111 U$
+0,
+b0 <
+b111111111111111111111111110110000 /
+b11111111111111111111111110101111 =
+1#
+13
+b0 8
+b0 -
+b0 ;
+b111111111111111111111111110110000 1
+b1010000 5
+b11111010000 7
+b11111010000 )
+b11111010000 :
+1$
+#4640
+0$
+#4650
+b11110 4
+b111110100000 7
+b111110100000 )
+b111110100000 :
+1$
+#4660
+0$
+#4670
+b11101 4
+b1111101000000 7
+b1111101000000 )
+b1111101000000 :
+1$
+#4680
+0$
+#4690
+b11100 4
+b11111010000000 7
+b11111010000000 )
+b11111010000000 :
+1$
+#4700
+0$
+#4710
+b11011 4
+b111110100000000 7
+b111110100000000 )
+b111110100000000 :
+1$
+#4720
+0$
+#4730
+b11010 4
+b1111101000000000 7
+b1111101000000000 )
+b1111101000000000 :
+1$
+#4740
+0$
+#4750
+b11001 4
+b11111010000000000 7
+b11111010000000000 )
+b11111010000000000 :
+1$
+#4760
+0$
+#4770
+b11000 4
+b111110100000000000 7
+b111110100000000000 )
+b111110100000000000 :
+1$
+#4780
+0$
+#4790
+b10111 4
+b1111101000000000000 7
+b1111101000000000000 )
+b1111101000000000000 :
+1$
+#4800
+0$
+#4810
+b10110 4
+b11111010000000000000 7
+b11111010000000000000 )
+b11111010000000000000 :
+1$
+#4820
+0$
+#4830
+b10101 4
+b111110100000000000000 7
+b111110100000000000000 )
+b111110100000000000000 :
+1$
+#4840
+0$
+#4850
+b10100 4
+b1111101000000000000000 7
+b1111101000000000000000 )
+b1111101000000000000000 :
+1$
+#4860
+0$
+#4870
+b10011 4
+b11111010000000000000000 7
+b11111010000000000000000 )
+b11111010000000000000000 :
+1$
+#4880
+0$
+#4890
+b10010 4
+b111110100000000000000000 7
+b111110100000000000000000 )
+b111110100000000000000000 :
+1$
+#4900
+0$
+#4910
+b10001 4
+b1111101000000000000000000 7
+b1111101000000000000000000 )
+b1111101000000000000000000 :
+1$
+#4920
+0$
+#4930
+b10000 4
+b11111010000000000000000000 7
+b11111010000000000000000000 )
+b11111010000000000000000000 :
+1$
+#4940
+0$
+#4950
+b1111 4
+b111110100000000000000000000 7
+b111110100000000000000000000 )
+b111110100000000000000000000 :
+1$
+#4960
+0$
+#4970
+b1110 4
+b1111101000000000000000000000 7
+b1111101000000000000000000000 )
+b1111101000000000000000000000 :
+1$
+#4980
+0$
+#4990
+b1101 4
+b11111010000000000000000000000 7
+b11111010000000000000000000000 )
+b11111010000000000000000000000 :
+1$
+#5000
+0$
+#5010
+b1100 4
+b111110100000000000000000000000 7
+b111110100000000000000000000000 )
+b111110100000000000000000000000 :
+1$
+#5020
+0$
+#5030
+b1011 4
+b1111101000000000000000000000000 7
+b1111101000000000000000000000000 )
+b1111101000000000000000000000000 :
+1$
+#5040
+0$
+#5050
+b111111111111111111111111110110001 .
+b11111111111111111111111110110001 0
+b11111111111111111111111110110001 @
+b1 W$
+1a$
+1\$
+b1 T$
+b111111111111111111111111110110001 1
+b111111111111111111111111110110001 /
+b1 <
+b1010 4
+b11111010000000000000000000000000 7
+b11111010000000000000000000000000 )
+b11111010000000000000000000000000 :
+1$
+#5060
+0$
+#5070
+b111111111111111111111111110110011 .
+b11111111111111111111111110110011 0
+b11111111111111111111111110110011 @
+b11 W$
+1h$
+1c$
+b11 T$
+b111111111111111111111111110110011 1
+b111111111111111111111111110110011 /
+b11 <
+b1001 4
+b11110100000000000000000000000000 7
+b11110100000000000000000000000000 )
+b11110100000000000000000000000000 :
+b1 8
+b1 -
+b1 ;
+1$
+#5080
+0$
+#5090
+b111111111111111111111111110110111 .
+b11111111111111111111111110110111 0
+b11111111111111111111111110110111 @
+b111 W$
+1o$
+1j$
+b111 T$
+b111111111111111111111111110110111 1
+b111111111111111111111111110110111 /
+b111 <
+b1000 4
+b11101000000000000000000000000000 7
+b11101000000000000000000000000000 )
+b11101000000000000000000000000000 :
+b11 8
+b11 -
+b11 ;
+1$
+#5100
+0$
+#5110
+b111111111111111111111111110111111 .
+b11111111111111111111111110111111 0
+b11111111111111111111111110111111 @
+b1111 W$
+1v$
+1q$
+b1111 T$
+b111111111111111111111111110111111 1
+b111111111111111111111111110111111 /
+b1111 <
+b111 4
+b11010000000000000000000000000000 7
+b11010000000000000000000000000000 )
+b11010000000000000000000000000000 :
+b111 8
+b111 -
+b111 ;
+1$
+#5120
+0$
+#5130
+b111111111111111111111111111001111 .
+b11111111111111111111111111001111 0
+b11111111111111111111111111001111 @
+b1100 q
+b1100 n
+b1100 G
+b1100 N
+1K
+b1011 m
+b1011 E
+b1011 J
+1l
+1j
+b111111111111111111111111111001111 1
+b111111111111111111111111111001111 /
+b11111 <
+b110 4
+b10100000000000000000000000000000 7
+b10100000000000000000000000000000 )
+b10100000000000000000000000000000 :
+b1111 8
+b1111 -
+b1111 ;
+1$
+#5140
+0$
+#5150
+1L
+b1110 q
+b111111111111111111111111111101110 .
+b11111111111111111111111111101110 0
+b11111111111111111111111111101110 @
+b1110 W$
+0a$
+b1110 n
+b1110 G
+b1110 N
+0K
+1b
+b1101 m
+b1101 E
+b1101 J
+b110 R
+0[
+1_
+b10 S
+1Y
+0\$
+1V
+b1110 T$
+b1 O
+b111111111111111111111111111101110 1
+b111111111111111111111111111101110 /
+b111110 <
+b101 4
+b1000000000000000000000000000000 7
+b1000000000000000000000000000000 )
+b1000000000000000000000000000000 :
+b11111 8
+b11111 -
+b11111 ;
+1$
+#5160
+0$
+#5170
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+b10010 q
+0L
+b10 G
+b10 N
+b10010 n
+0i
+1F
+b10001 m
+b1 E
+b1 J
+b0 R
+0b
+1g
+1a$
+b101101 .
+b101101 0
+b101101 @
+b1101 W$
+0h$
+1f
+b1110 S
+1`
+1]
+1\$
+0c$
+b11 O
+b1101 T$
+b101101 1
+b101101 /
+b1111101 <
+b100 4
+b10000000000000000000000000000000 7
+b10000000000000000000000000000000 )
+b10000000000000000000000000000000 :
+b111110 8
+b111110 -
+b111110 ;
+1$
+#5180
+0$
+#5190
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+1H
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1L
+1i
+0F
+0g
+1M
+0f
+b10000 q
+1b
+0`
+b10000 n
+b0 G
+b0 N
+1K
+0a$
+1h$
+b1010 .
+b1010 0
+b1010 @
+b1010 W$
+0o$
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+0_
+b0 S
+0Y
+0V
+0\$
+1c$
+0j$
+b10 O
+b1010 T$
+b1010 1
+b1010 /
+b1011010 <
+b11 4
+b1 7
+b1 )
+b1 :
+b101101 8
+b101101 -
+b101101 ;
+1$
+#5200
+0$
+#5210
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0H
+b1100 q
+0L
+0M
+b1100 n
+b1100 G
+b1100 N
+0h$
+1o$
+b111111111111111111111111111000100 .
+b11111111111111111111111111000100 0
+b11111111111111111111111111000100 @
+b100 W$
+0v$
+b1011 m
+b1011 E
+b1011 J
+b101 R
+0b
+0]
+0c$
+1j$
+0q$
+b0 O
+b100 T$
+b111111111111111111111111111000100 1
+b111111111111111111111111111000100 /
+b10100 <
+b10 4
+b11 7
+b11 )
+b11 :
+b1010 8
+b1010 -
+b1010 ;
+1$
+#5220
+0$
+#5230
+1L
+1b
+0o$
+b1000 W$
+1v$
+b111111111111111111111111111011000 .
+b11111111111111111111111111011000 0
+b11111111111111111111111111011000 @
+b1101 q
+b110 R
+0[
+1_
+b1101 n
+b1101 G
+b1101 N
+0K
+b10 S
+1Y
+b1100 m
+b1100 E
+b1100 J
+0l
+1V
+0j$
+1q$
+0j
+b1 O
+b1000 T$
+b111111111111111111111111111011000 1
+b111111111111111111111111111011000 /
+b101000 <
+b1 4
+b110 7
+b110 )
+b110 :
+b10100 8
+b10100 -
+b10100 ;
+1$
+#5240
+0$
+#5250
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1M
+1L
+1H
+1i
+0F
+1K
+1b
+0g
+b0 W$
+0v$
+b0 .
+b0 0
+b0 @
+b10000 q
+b111 R
+1[
+0_
+0f
+b10000 n
+b0 G
+b0 N
+0Y
+b0 S
+0`
+b1111 m
+b1111 E
+b1111 J
+1l
+0V
+1]
+0q$
+1j
+b10 O
+b0 T$
+b0 1
+b0 /
+b1010000 <
+b0 4
+b1100 7
+b1100 )
+b1100 :
+b101000 8
+b101000 -
+b101000 ;
+1$
+#5260
+0$
+#5270
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0L
+b111111111111111111111111110110000 .
+b11111111111111111111111110110000 0
+b11111111111111111111111110110000 @
+b1011 q
+0H
+0M
+b101 R
+0b
+b1011 n
+b1011 G
+b1011 N
+0K
+b1010 m
+b1010 E
+b1010 J
+0l
+0]
+b0 !
+b0 9
+b11001 "
+b11001 6
+0j
+b0 O
+1,
+b111111111111111111111111110110000 1
+b111111111111111111111111110110000 /
+b0 <
+b11111 4
+0#
+03
+b11001 7
+b11001 )
+b11001 :
+b0 8
+b0 -
+b0 ;
+1$
+#5280
+0$
+#5290
+0,
+1#
+13
+b11111010000 7
+b11111010000 )
+b11111010000 :
+1$
+#5300
+0$
+#5310
+b11110 4
+b111110100000 7
+b111110100000 )
+b111110100000 :
+1$
+#5320
+0$
+#5330
+b11101 4
+b1111101000000 7
+b1111101000000 )
+b1111101000000 :
+1$
+#5340
+0$
+#5350
+b11100 4
+b11111010000000 7
+b11111010000000 )
+b11111010000000 :
+1$
+#5360
+0$
+#5370
+b11011 4
+b111110100000000 7
+b111110100000000 )
+b111110100000000 :
+1$
+#5380
+0$
+#5390
+b11010 4
+b1111101000000000 7
+b1111101000000000 )
+b1111101000000000 :
+1$
+#5400
+0$
+#5410
+b11001 4
+b11111010000000000 7
+b11111010000000000 )
+b11111010000000000 :
+1$
+#5420
+0$
+#5430
+b11000 4
+b111110100000000000 7
+b111110100000000000 )
+b111110100000000000 :
+1$
+#5440
+0$
+#5450
+b10111 4
+b1111101000000000000 7
+b1111101000000000000 )
+b1111101000000000000 :
+1$
+#5460
+0$
+#5470
+b10110 4
+b11111010000000000000 7
+b11111010000000000000 )
+b11111010000000000000 :
+1$
+#5480
+0$
+#5490
+b10101 4
+b111110100000000000000 7
+b111110100000000000000 )
+b111110100000000000000 :
+1$
+#5500
+0$
+#5510
+b10100 4
+b1111101000000000000000 7
+b1111101000000000000000 )
+b1111101000000000000000 :
+1$
+#5520
+0$
+#5530
+b10011 4
+b11111010000000000000000 7
+b11111010000000000000000 )
+b11111010000000000000000 :
+1$
+#5540
+0$
+#5550
+b10010 4
+b111110100000000000000000 7
+b111110100000000000000000 )
+b111110100000000000000000 :
+1$
+#5560
+0$
+#5570
+b10001 4
+b1111101000000000000000000 7
+b1111101000000000000000000 )
+b1111101000000000000000000 :
+1$
+#5580
+0$
+#5590
+b10000 4
+b11111010000000000000000000 7
+b11111010000000000000000000 )
+b11111010000000000000000000 :
+1$
+#5600
+0$
+#5610
+b1111 4
+b111110100000000000000000000 7
+b111110100000000000000000000 )
+b111110100000000000000000000 :
+1$
+#5620
+0$
+#5630
+b1110 4
+b1111101000000000000000000000 7
+b1111101000000000000000000000 )
+b1111101000000000000000000000 :
+1$
+#5640
+0$
+#5650
+b1101 4
+b11111010000000000000000000000 7
+b11111010000000000000000000000 )
+b11111010000000000000000000000 :
+1$
+#5660
+0$
+#5670
+b1100 4
+b111110100000000000000000000000 7
+b111110100000000000000000000000 )
+b111110100000000000000000000000 :
+1$
+#5680
+0$
+#5690
+b1011 4
+b1111101000000000000000000000000 7
+b1111101000000000000000000000000 )
+b1111101000000000000000000000000 :
+1$
+#5700
+0$
+#5710
+b111111111111111111111111110110001 .
+b11111111111111111111111110110001 0
+b11111111111111111111111110110001 @
+b1 W$
+1a$
+1\$
+b1 T$
+b111111111111111111111111110110001 1
+b111111111111111111111111110110001 /
+b1 <
+b1010 4
+b11111010000000000000000000000000 7
+b11111010000000000000000000000000 )
+b11111010000000000000000000000000 :
+1$
+#5720
+0$
+#5730
+b111111111111111111111111110110011 .
+b11111111111111111111111110110011 0
+b11111111111111111111111110110011 @
+b11 W$
+1h$
+1c$
+b11 T$
+b111111111111111111111111110110011 1
+b111111111111111111111111110110011 /
+b11 <
+b1001 4
+b11110100000000000000000000000000 7
+b11110100000000000000000000000000 )
+b11110100000000000000000000000000 :
+b1 8
+b1 -
+b1 ;
+1$
+#5740
+0$
+#5750
+b111111111111111111111111110110111 .
+b11111111111111111111111110110111 0
+b11111111111111111111111110110111 @
+b111 W$
+1o$
+1j$
+b111 T$
+b111111111111111111111111110110111 1
+b111111111111111111111111110110111 /
+b111 <
+b1000 4
+b11101000000000000000000000000000 7
+b11101000000000000000000000000000 )
+b11101000000000000000000000000000 :
+b11 8
+b11 -
+b11 ;
+1$
+#5760
+0$
+#5770
+b111111111111111111111111110111111 .
+b11111111111111111111111110111111 0
+b11111111111111111111111110111111 @
+b1111 W$
+1v$
+1q$
+b1111 T$
+b111111111111111111111111110111111 1
+b111111111111111111111111110111111 /
+b1111 <
+b111 4
+b11010000000000000000000000000000 7
+b11010000000000000000000000000000 )
+b11010000000000000000000000000000 :
+b111 8
+b111 -
+b111 ;
+1$
+#5780
+0$
+#5790
+b111111111111111111111111111001111 .
+b11111111111111111111111111001111 0
+b11111111111111111111111111001111 @
+b1100 q
+b1100 n
+b1100 G
+b1100 N
+1K
+b1011 m
+b1011 E
+b1011 J
+1l
+1j
+b111111111111111111111111111001111 1
+b111111111111111111111111111001111 /
+b11111 <
+b110 4
+b10100000000000000000000000000000 7
+b10100000000000000000000000000000 )
+b10100000000000000000000000000000 :
+b1111 8
+b1111 -
+b1111 ;
+1$
+#5800
+0$
+#5810
+1L
+b1110 q
+b111111111111111111111111111101110 .
+b11111111111111111111111111101110 0
+b11111111111111111111111111101110 @
+b1110 W$
+0a$
+b1110 n
+b1110 G
+b1110 N
+0K
+1b
+b1101 m
+b1101 E
+b1101 J
+b110 R
+0[
+1_
+b10 S
+1Y
+0\$
+1V
+b1110 T$
+b1 O
+b111111111111111111111111111101110 1
+b111111111111111111111111111101110 /
+b111110 <
+b101 4
+b1000000000000000000000000000000 7
+b1000000000000000000000000000000 )
+b1000000000000000000000000000000 :
+b11111 8
+b11111 -
+b11111 ;
+1$
+#5820
+0$
+#5830
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+b10010 q
+0L
+b10 G
+b10 N
+b10010 n
+0i
+1F
+b10001 m
+b1 E
+b1 J
+b0 R
+0b
+1g
+1a$
+b101101 .
+b101101 0
+b101101 @
+b1101 W$
+0h$
+1f
+b1110 S
+1`
+1]
+1\$
+0c$
+b11 O
+b1101 T$
+b101101 1
+b101101 /
+b1111101 <
+b100 4
+b10000000000000000000000000000000 7
+b10000000000000000000000000000000 )
+b10000000000000000000000000000000 :
+b111110 8
+b111110 -
+b111110 ;
+1$
+#5840
+0$
+#5850
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+1H
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1L
+1i
+0F
+0g
+1M
+0f
+b10000 q
+1b
+0`
+b10000 n
+b0 G
+b0 N
+1K
+0a$
+1h$
+b1010 .
+b1010 0
+b1010 @
+b1010 W$
+0o$
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+0_
+b0 S
+0Y
+0V
+0\$
+1c$
+0j$
+b10 O
+b1010 T$
+b1010 1
+b1010 /
+b1011010 <
+b11 4
+b1 7
+b1 )
+b1 :
+b101101 8
+b101101 -
+b101101 ;
+1$
+#5860
+0$
+#5870
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0H
+b1100 q
+0L
+0M
+b1100 n
+b1100 G
+b1100 N
+0h$
+1o$
+b111111111111111111111111111000100 .
+b11111111111111111111111111000100 0
+b11111111111111111111111111000100 @
+b100 W$
+0v$
+b1011 m
+b1011 E
+b1011 J
+b101 R
+0b
+0]
+0c$
+1j$
+0q$
+b0 O
+b100 T$
+b111111111111111111111111111000100 1
+b111111111111111111111111111000100 /
+b10100 <
+b10 4
+b11 7
+b11 )
+b11 :
+b1010 8
+b1010 -
+b1010 ;
+1$
+#5880
+0$
+#5890
+1L
+1b
+0o$
+b1000 W$
+1v$
+b111111111111111111111111111011000 .
+b11111111111111111111111111011000 0
+b11111111111111111111111111011000 @
+b1101 q
+b110 R
+0[
+1_
+b1101 n
+b1101 G
+b1101 N
+0K
+b10 S
+1Y
+b1100 m
+b1100 E
+b1100 J
+0l
+1V
+0j$
+1q$
+0j
+b1 O
+b1000 T$
+b111111111111111111111111111011000 1
+b111111111111111111111111111011000 /
+b101000 <
+b1 4
+b110 7
+b110 )
+b110 :
+b10100 8
+b10100 -
+b10100 ;
+1$
+#5900
+0$
+#5910
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1M
+1L
+1H
+1i
+0F
+1K
+1b
+0g
+b0 W$
+0v$
+b0 .
+b0 0
+b0 @
+b10000 q
+b111 R
+1[
+0_
+0f
+b10000 n
+b0 G
+b0 N
+0Y
+b0 S
+0`
+b1111 m
+b1111 E
+b1111 J
+1l
+0V
+1]
+0q$
+1j
+b10 O
+b0 T$
+b0 1
+b0 /
+b1010000 <
+b0 4
+b1100 7
+b1100 )
+b1100 :
+b101000 8
+b101000 -
+b101000 ;
+1$
+#5920
+0$
+#5930
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0L
+b111111111111111111111111110110000 .
+b11111111111111111111111110110000 0
+b11111111111111111111111110110000 @
+b1011 q
+0H
+0M
+b101 R
+0b
+b1011 n
+b1011 G
+b1011 N
+0K
+b1010 m
+b1010 E
+b1010 J
+0l
+0]
+0j
+b0 O
+1,
+b111111111111111111111111110110000 1
+b111111111111111111111111110110000 /
+b0 <
+b11111 4
+0#
+03
+b11001 7
+b11001 )
+b11001 :
+b0 8
+b0 -
+b0 ;
+1$
+#5940
+0$
+#5950
+0,
+1#
+13
+b11111010000 7
+b11111010000 )
+b11111010000 :
+1$
+#5960
+0$
+#5970
+b11110 4
+b111110100000 7
+b111110100000 )
+b111110100000 :
+1$
+#5980
+0$
+#5990
+b11101 4
+b1111101000000 7
+b1111101000000 )
+b1111101000000 :
+1$
+#6000
+0$
+#6010
+b11100 4
+b11111010000000 7
+b11111010000000 )
+b11111010000000 :
+1$
+#6020
+0$
+#6030
+b11011 4
+b111110100000000 7
+b111110100000000 )
+b111110100000000 :
+1$
+#6040
+0$
+#6050
+b11010 4
+b1111101000000000 7
+b1111101000000000 )
+b1111101000000000 :
+1$
+#6060
+0$
+#6070
+b11001 4
+b11111010000000000 7
+b11111010000000000 )
+b11111010000000000 :
+1$
+#6080
+0$
+#6090
+b11000 4
+b111110100000000000 7
+b111110100000000000 )
+b111110100000000000 :
+1$
+#6100
+0$
+#6110
+b10111 4
+b1111101000000000000 7
+b1111101000000000000 )
+b1111101000000000000 :
+1$
+#6120
+0$
+#6130
+b10110 4
+b11111010000000000000 7
+b11111010000000000000 )
+b11111010000000000000 :
+1$
+#6140
+0$
+#6150
+b10101 4
+b111110100000000000000 7
+b111110100000000000000 )
+b111110100000000000000 :
+1$
+#6160
+0$
+#6170
+b10100 4
+b1111101000000000000000 7
+b1111101000000000000000 )
+b1111101000000000000000 :
+1$
+#6180
+0$
+#6190
+b10011 4
+b11111010000000000000000 7
+b11111010000000000000000 )
+b11111010000000000000000 :
+1$
+#6200
+0$
+#6210
+b10010 4
+b111110100000000000000000 7
+b111110100000000000000000 )
+b111110100000000000000000 :
+1$
+#6220
+0$
+#6230
+b10001 4
+b1111101000000000000000000 7
+b1111101000000000000000000 )
+b1111101000000000000000000 :
+1$
+#6240
+0$
+#6250
+b10000 4
+b11111010000000000000000000 7
+b11111010000000000000000000 )
+b11111010000000000000000000 :
+1$
+#6260
+0$
+#6270
+b1111 4
+b111110100000000000000000000 7
+b111110100000000000000000000 )
+b111110100000000000000000000 :
+1$
+#6280
+0$
+#6290
+b1110 4
+b1111101000000000000000000000 7
+b1111101000000000000000000000 )
+b1111101000000000000000000000 :
+1$
+#6300
+0$
+#6310
+b1101 4
+b11111010000000000000000000000 7
+b11111010000000000000000000000 )
+b11111010000000000000000000000 :
+1$
+#6320
+0$
+#6330
+b1100 4
+b111110100000000000000000000000 7
+b111110100000000000000000000000 )
+b111110100000000000000000000000 :
+1$
+#6340
+0$
+#6350
+b1011 4
+b1111101000000000000000000000000 7
+b1111101000000000000000000000000 )
+b1111101000000000000000000000000 :
+1$
+#6360
+0$
+#6370
+b111111111111111111111111110110001 .
+b11111111111111111111111110110001 0
+b11111111111111111111111110110001 @
+b1 W$
+1a$
+1\$
+b1 T$
+b111111111111111111111111110110001 1
+b111111111111111111111111110110001 /
+b1 <
+b1010 4
+b11111010000000000000000000000000 7
+b11111010000000000000000000000000 )
+b11111010000000000000000000000000 :
+1$
+#6380
+0$
+#6390
+b111111111111111111111111110110011 .
+b11111111111111111111111110110011 0
+b11111111111111111111111110110011 @
+b11 W$
+1h$
+1c$
+b11 T$
+b111111111111111111111111110110011 1
+b111111111111111111111111110110011 /
+b11 <
+b1001 4
+b11110100000000000000000000000000 7
+b11110100000000000000000000000000 )
+b11110100000000000000000000000000 :
+b1 8
+b1 -
+b1 ;
+1$
+#6400
+0$
+#6410
+b111111111111111111111111110110111 .
+b11111111111111111111111110110111 0
+b11111111111111111111111110110111 @
+b111 W$
+1o$
+1j$
+b111 T$
+b111111111111111111111111110110111 1
+b111111111111111111111111110110111 /
+b111 <
+b1000 4
+b11101000000000000000000000000000 7
+b11101000000000000000000000000000 )
+b11101000000000000000000000000000 :
+b11 8
+b11 -
+b11 ;
+1$
+#6420
+0$
+#6430
+b111111111111111111111111110111111 .
+b11111111111111111111111110111111 0
+b11111111111111111111111110111111 @
+b1111 W$
+1v$
+1q$
+b1111 T$
+b111111111111111111111111110111111 1
+b111111111111111111111111110111111 /
+b1111 <
+b111 4
+b11010000000000000000000000000000 7
+b11010000000000000000000000000000 )
+b11010000000000000000000000000000 :
+b111 8
+b111 -
+b111 ;
+1$
+#6440
+0$
+#6450
+b111111111111111111111111111001111 .
+b11111111111111111111111111001111 0
+b11111111111111111111111111001111 @
+b1100 q
+b1100 n
+b1100 G
+b1100 N
+1K
+b1011 m
+b1011 E
+b1011 J
+1l
+1j
+b111111111111111111111111111001111 1
+b111111111111111111111111111001111 /
+b11111 <
+b110 4
+b10100000000000000000000000000000 7
+b10100000000000000000000000000000 )
+b10100000000000000000000000000000 :
+b1111 8
+b1111 -
+b1111 ;
+1$
+#6460
+0$
+#6470
+1L
+b1110 q
+b111111111111111111111111111101110 .
+b11111111111111111111111111101110 0
+b11111111111111111111111111101110 @
+b1110 W$
+0a$
+b1110 n
+b1110 G
+b1110 N
+0K
+1b
+b1101 m
+b1101 E
+b1101 J
+b110 R
+0[
+1_
+b10 S
+1Y
+0\$
+1V
+b1110 T$
+b1 O
+b111111111111111111111111111101110 1
+b111111111111111111111111111101110 /
+b111110 <
+b101 4
+b1000000000000000000000000000000 7
+b1000000000000000000000000000000 )
+b1000000000000000000000000000000 :
+b11111 8
+b11111 -
+b11111 ;
+1$
+#6480
+0$
+#6490
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+b10010 q
+0L
+b10 G
+b10 N
+b10010 n
+0i
+1F
+b10001 m
+b1 E
+b1 J
+b0 R
+0b
+1g
+1a$
+b101101 .
+b101101 0
+b101101 @
+b1101 W$
+0h$
+1f
+b1110 S
+1`
+1]
+1\$
+0c$
+b11 O
+b1101 T$
+b101101 1
+b101101 /
+b1111101 <
+b100 4
+b10000000000000000000000000000000 7
+b10000000000000000000000000000000 )
+b10000000000000000000000000000000 :
+b111110 8
+b111110 -
+b111110 ;
+1$
+#6500
+0$
+#6510
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+1H
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1L
+1i
+0F
+0g
+1M
+0f
+b10000 q
+1b
+0`
+b10000 n
+b0 G
+b0 N
+1K
+0a$
+1h$
+b1010 .
+b1010 0
+b1010 @
+b1010 W$
+0o$
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+0_
+b0 S
+0Y
+0V
+0\$
+1c$
+0j$
+b10 O
+b1010 T$
+b1010 1
+b1010 /
+b1011010 <
+b11 4
+b1 7
+b1 )
+b1 :
+b101101 8
+b101101 -
+b101101 ;
+1$
+#6520
+0$
+#6530
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0H
+b1100 q
+0L
+0M
+b1100 n
+b1100 G
+b1100 N
+0h$
+1o$
+b111111111111111111111111111000100 .
+b11111111111111111111111111000100 0
+b11111111111111111111111111000100 @
+b100 W$
+0v$
+b1011 m
+b1011 E
+b1011 J
+b101 R
+0b
+0]
+0c$
+1j$
+0q$
+b0 O
+b100 T$
+b111111111111111111111111111000100 1
+b111111111111111111111111111000100 /
+b10100 <
+b10 4
+b11 7
+b11 )
+b11 :
+b1010 8
+b1010 -
+b1010 ;
+1$
+#6540
+0$
+#6550
+1L
+1b
+0o$
+b1000 W$
+1v$
+b111111111111111111111111111011000 .
+b11111111111111111111111111011000 0
+b11111111111111111111111111011000 @
+b1101 q
+b110 R
+0[
+1_
+b1101 n
+b1101 G
+b1101 N
+0K
+b10 S
+1Y
+b1100 m
+b1100 E
+b1100 J
+0l
+1V
+0j$
+1q$
+0j
+b1 O
+b1000 T$
+b111111111111111111111111111011000 1
+b111111111111111111111111111011000 /
+b101000 <
+b1 4
+b110 7
+b110 )
+b110 :
+b10100 8
+b10100 -
+b10100 ;
+1$
+#6560
+0$
+#6570
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1M
+1L
+1H
+1i
+0F
+1K
+1b
+0g
+b0 W$
+0v$
+b0 .
+b0 0
+b0 @
+b10000 q
+b111 R
+1[
+0_
+0f
+b10000 n
+b0 G
+b0 N
+0Y
+b0 S
+0`
+b1111 m
+b1111 E
+b1111 J
+1l
+0V
+1]
+0q$
+1j
+b10 O
+b0 T$
+b0 1
+b0 /
+b1010000 <
+b0 4
+b1100 7
+b1100 )
+b1100 :
+b101000 8
+b101000 -
+b101000 ;
+1$
+#6580
+0$
+#6590
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0L
+b111111111111111111111111110110000 .
+b11111111111111111111111110110000 0
+b11111111111111111111111110110000 @
+b1011 q
+0H
+0M
+b101 R
+0b
+b1011 n
+b1011 G
+b1011 N
+0K
+b1010 m
+b1010 E
+b1010 J
+0l
+0]
+0j
+b0 O
+1,
+b111111111111111111111111110110000 1
+b111111111111111111111111110110000 /
+b0 <
+b11111 4
+0#
+03
+b11001 7
+b11001 )
+b11001 :
+b0 8
+b0 -
+b0 ;
+1$
+#6600
+0$
+#6610
+0,
+1#
+13
+b11111010000 7
+b11111010000 )
+b11111010000 :
+1$
+#6620
+0$
+#6630
+b11110 4
+b111110100000 7
+b111110100000 )
+b111110100000 :
+1$
+#6640
+0$
+#6650
+b11101 4
+b1111101000000 7
+b1111101000000 )
+b1111101000000 :
+1$
+#6660
+0$
+#6670
+b11100 4
+b11111010000000 7
+b11111010000000 )
+b11111010000000 :
+1$
+#6680
+0$
+#6690
+b11011 4
+b111110100000000 7
+b111110100000000 )
+b111110100000000 :
+1$
+#6700
+0$
+#6710
+b11010 4
+b1111101000000000 7
+b1111101000000000 )
+b1111101000000000 :
+1$
+#6720
+0$
+#6730
+b11001 4
+b11111010000000000 7
+b11111010000000000 )
+b11111010000000000 :
+1$
+#6740
+0$
+#6750
+b11000 4
+b111110100000000000 7
+b111110100000000000 )
+b111110100000000000 :
+1$
+#6760
+0$
+#6770
+b10111 4
+b1111101000000000000 7
+b1111101000000000000 )
+b1111101000000000000 :
+1$
+#6780
+0$
+#6790
+b10110 4
+b11111010000000000000 7
+b11111010000000000000 )
+b11111010000000000000 :
+1$
+#6800
+0$
+#6810
+b10101 4
+b111110100000000000000 7
+b111110100000000000000 )
+b111110100000000000000 :
+1$
+#6820
+0$
+#6830
+b10100 4
+b1111101000000000000000 7
+b1111101000000000000000 )
+b1111101000000000000000 :
+1$
+#6840
+0$
+#6850
+b10011 4
+b11111010000000000000000 7
+b11111010000000000000000 )
+b11111010000000000000000 :
+1$
+#6860
+0$
+#6870
+b10010 4
+b111110100000000000000000 7
+b111110100000000000000000 )
+b111110100000000000000000 :
+1$
+#6880
+0$
+#6890
+b10001 4
+b1111101000000000000000000 7
+b1111101000000000000000000 )
+b1111101000000000000000000 :
+1$
+#6900
+0$
+#6910
+b10000 4
+b11111010000000000000000000 7
+b11111010000000000000000000 )
+b11111010000000000000000000 :
+1$
+#6920
+0$
+#6930
+b1111 4
+b111110100000000000000000000 7
+b111110100000000000000000000 )
+b111110100000000000000000000 :
+1$
+#6940
+0$
+#6950
+b1110 4
+b1111101000000000000000000000 7
+b1111101000000000000000000000 )
+b1111101000000000000000000000 :
+1$
+#6960
+0$
+#6970
+b1101 4
+b11111010000000000000000000000 7
+b11111010000000000000000000000 )
+b11111010000000000000000000000 :
+1$
+#6980
+0$
+#6990
+b1100 4
+b111110100000000000000000000000 7
+b111110100000000000000000000000 )
+b111110100000000000000000000000 :
+1$
+#7000
+0$
+#7010
+b1011 4
+b1111101000000000000000000000000 7
+b1111101000000000000000000000000 )
+b1111101000000000000000000000000 :
+1$
+#7020
+0$
+#7030
+b111111111111111111111111110110001 .
+b11111111111111111111111110110001 0
+b11111111111111111111111110110001 @
+b1 W$
+1a$
+1\$
+b1 T$
+b111111111111111111111111110110001 1
+b111111111111111111111111110110001 /
+b1 <
+b1010 4
+b11111010000000000000000000000000 7
+b11111010000000000000000000000000 )
+b11111010000000000000000000000000 :
+1$
+#7040
+0$
+#7050
+b111111111111111111111111110110011 .
+b11111111111111111111111110110011 0
+b11111111111111111111111110110011 @
+b11 W$
+1h$
+1c$
+b11 T$
+b111111111111111111111111110110011 1
+b111111111111111111111111110110011 /
+b11 <
+b1001 4
+b11110100000000000000000000000000 7
+b11110100000000000000000000000000 )
+b11110100000000000000000000000000 :
+b1 8
+b1 -
+b1 ;
+1$
+#7060
+0$
+#7070
+b111111111111111111111111110110111 .
+b11111111111111111111111110110111 0
+b11111111111111111111111110110111 @
+b111 W$
+1o$
+1j$
+b111 T$
+b111111111111111111111111110110111 1
+b111111111111111111111111110110111 /
+b111 <
+b1000 4
+b11101000000000000000000000000000 7
+b11101000000000000000000000000000 )
+b11101000000000000000000000000000 :
+b11 8
+b11 -
+b11 ;
+1$
+#7080
+0$
+#7090
+b111111111111111111111111110111111 .
+b11111111111111111111111110111111 0
+b11111111111111111111111110111111 @
+b1111 W$
+1v$
+1q$
+b1111 T$
+b111111111111111111111111110111111 1
+b111111111111111111111111110111111 /
+b1111 <
+b111 4
+b11010000000000000000000000000000 7
+b11010000000000000000000000000000 )
+b11010000000000000000000000000000 :
+b111 8
+b111 -
+b111 ;
+1$
+#7100
+0$
+#7110
+b111111111111111111111111111001111 .
+b11111111111111111111111111001111 0
+b11111111111111111111111111001111 @
+b1100 q
+b1100 n
+b1100 G
+b1100 N
+1K
+b1011 m
+b1011 E
+b1011 J
+1l
+1j
+b111111111111111111111111111001111 1
+b111111111111111111111111111001111 /
+b11111 <
+b110 4
+b10100000000000000000000000000000 7
+b10100000000000000000000000000000 )
+b10100000000000000000000000000000 :
+b1111 8
+b1111 -
+b1111 ;
+1$
+#7120
+0$
+#7130
+1L
+b1110 q
+b111111111111111111111111111101110 .
+b11111111111111111111111111101110 0
+b11111111111111111111111111101110 @
+b1110 W$
+0a$
+b1110 n
+b1110 G
+b1110 N
+0K
+1b
+b1101 m
+b1101 E
+b1101 J
+b110 R
+0[
+1_
+b10 S
+1Y
+0\$
+1V
+b1110 T$
+b1 O
+b111111111111111111111111111101110 1
+b111111111111111111111111111101110 /
+b111110 <
+b101 4
+b1000000000000000000000000000000 7
+b1000000000000000000000000000000 )
+b1000000000000000000000000000000 :
+b11111 8
+b11111 -
+b11111 ;
+1$
+#7140
+0$
+#7150
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+b10010 q
+0L
+b10 G
+b10 N
+b10010 n
+0i
+1F
+b10001 m
+b1 E
+b1 J
+b0 R
+0b
+1g
+1a$
+b101101 .
+b101101 0
+b101101 @
+b1101 W$
+0h$
+1f
+b1110 S
+1`
+1]
+1\$
+0c$
+b11 O
+b1101 T$
+b101101 1
+b101101 /
+b1111101 <
+b100 4
+b10000000000000000000000000000000 7
+b10000000000000000000000000000000 )
+b10000000000000000000000000000000 :
+b111110 8
+b111110 -
+b111110 ;
+1$
+#7160
+0$
+#7170
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+1H
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1L
+1i
+0F
+0g
+1M
+0f
+b10000 q
+1b
+0`
+b10000 n
+b0 G
+b0 N
+1K
+0a$
+1h$
+b1010 .
+b1010 0
+b1010 @
+b1010 W$
+0o$
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+0_
+b0 S
+0Y
+0V
+0\$
+1c$
+0j$
+b10 O
+b1010 T$
+b1010 1
+b1010 /
+b1011010 <
+b11 4
+b1 7
+b1 )
+b1 :
+b101101 8
+b101101 -
+b101101 ;
+1$
+#7180
+0$
+#7190
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0H
+b1100 q
+0L
+0M
+b1100 n
+b1100 G
+b1100 N
+0h$
+1o$
+b111111111111111111111111111000100 .
+b11111111111111111111111111000100 0
+b11111111111111111111111111000100 @
+b100 W$
+0v$
+b1011 m
+b1011 E
+b1011 J
+b101 R
+0b
+0]
+0c$
+1j$
+0q$
+b0 O
+b100 T$
+b111111111111111111111111111000100 1
+b111111111111111111111111111000100 /
+b10100 <
+b10 4
+b11 7
+b11 )
+b11 :
+b1010 8
+b1010 -
+b1010 ;
+1$
+#7200
+0$
+#7210
+1L
+1b
+0o$
+b1000 W$
+1v$
+b111111111111111111111111111011000 .
+b11111111111111111111111111011000 0
+b11111111111111111111111111011000 @
+b1101 q
+b110 R
+0[
+1_
+b1101 n
+b1101 G
+b1101 N
+0K
+b10 S
+1Y
+b1100 m
+b1100 E
+b1100 J
+0l
+1V
+0j$
+1q$
+0j
+b1 O
+b1000 T$
+b111111111111111111111111111011000 1
+b111111111111111111111111111011000 /
+b101000 <
+b1 4
+b110 7
+b110 )
+b110 :
+b10100 8
+b10100 -
+b10100 ;
+1$
+#7220
+0$
+#7230
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1M
+1L
+1H
+1i
+0F
+1K
+1b
+0g
+b0 W$
+0v$
+b0 .
+b0 0
+b0 @
+b10000 q
+b111 R
+1[
+0_
+0f
+b10000 n
+b0 G
+b0 N
+0Y
+b0 S
+0`
+b1111 m
+b1111 E
+b1111 J
+1l
+0V
+1]
+0q$
+1j
+b10 O
+b0 T$
+b0 1
+b0 /
+b1010000 <
+b0 4
+b1100 7
+b1100 )
+b1100 :
+b101000 8
+b101000 -
+b101000 ;
+1$
+#7240
+0$
+#7250
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0L
+b111111111111111111111111110110000 .
+b11111111111111111111111110110000 0
+b11111111111111111111111110110000 @
+b1011 q
+0H
+0M
+b101 R
+0b
+b1011 n
+b1011 G
+b1011 N
+0K
+b1010 m
+b1010 E
+b1010 J
+0l
+0]
+0j
+b0 O
+1,
+b111111111111111111111111110110000 1
+b111111111111111111111111110110000 /
+b0 <
+b11111 4
+0#
+03
+b11001 7
+b11001 )
+b11001 :
+b0 8
+b0 -
+b0 ;
+1$
+#7260
+0$
+#7270
+0,
+1#
+13
+b11111010000 7
+b11111010000 )
+b11111010000 :
+1$
+#7280
+0$
+#7290
+b11110 4
+b111110100000 7
+b111110100000 )
+b111110100000 :
+1$
+#7300
+0$
+#7310
+b11101 4
+b1111101000000 7
+b1111101000000 )
+b1111101000000 :
+1$
+#7320
+0$
+#7330
+b11100 4
+b11111010000000 7
+b11111010000000 )
+b11111010000000 :
+1$
+#7340
+0$
+#7350
+b11011 4
+b111110100000000 7
+b111110100000000 )
+b111110100000000 :
+1$
+#7360
+0$
+#7370
+b11010 4
+b1111101000000000 7
+b1111101000000000 )
+b1111101000000000 :
+1$
+#7380
+0$
+#7390
+b11001 4
+b11111010000000000 7
+b11111010000000000 )
+b11111010000000000 :
+1$
+#7400
+0$
+#7410
+b11000 4
+b111110100000000000 7
+b111110100000000000 )
+b111110100000000000 :
+1$
+#7420
+0$
+#7430
+b10111 4
+b1111101000000000000 7
+b1111101000000000000 )
+b1111101000000000000 :
+1$
+#7440
+0$
+#7450
+b10110 4
+b11111010000000000000 7
+b11111010000000000000 )
+b11111010000000000000 :
+1$
+#7460
+0$
+#7470
+b10101 4
+b111110100000000000000 7
+b111110100000000000000 )
+b111110100000000000000 :
+1$
+#7480
+0$
+#7490
+b10100 4
+b1111101000000000000000 7
+b1111101000000000000000 )
+b1111101000000000000000 :
+1$
+#7500
+0$
+#7510
+b10011 4
+b11111010000000000000000 7
+b11111010000000000000000 )
+b11111010000000000000000 :
+1$
+#7520
+0$
+#7530
+b10010 4
+b111110100000000000000000 7
+b111110100000000000000000 )
+b111110100000000000000000 :
+1$
+#7540
+0$
+#7550
+b10001 4
+b1111101000000000000000000 7
+b1111101000000000000000000 )
+b1111101000000000000000000 :
+1$
+#7560
+0$
+#7570
+b10000 4
+b11111010000000000000000000 7
+b11111010000000000000000000 )
+b11111010000000000000000000 :
+1$
+#7580
+0$
+#7590
+b1111 4
+b111110100000000000000000000 7
+b111110100000000000000000000 )
+b111110100000000000000000000 :
+1$
+#7600
+0$
+#7610
+b1110 4
+b1111101000000000000000000000 7
+b1111101000000000000000000000 )
+b1111101000000000000000000000 :
+1$
+#7620
+0$
+#7630
+b1101 4
+b11111010000000000000000000000 7
+b11111010000000000000000000000 )
+b11111010000000000000000000000 :
+1$
+#7640
+0$
+#7650
+b1100 4
+b111110100000000000000000000000 7
+b111110100000000000000000000000 )
+b111110100000000000000000000000 :
+1$
+#7660
+0$
+#7670
+b1011 4
+b1111101000000000000000000000000 7
+b1111101000000000000000000000000 )
+b1111101000000000000000000000000 :
+1$
+#7680
+0$
+#7690
+b111111111111111111111111110110001 .
+b11111111111111111111111110110001 0
+b11111111111111111111111110110001 @
+b1 W$
+1a$
+1\$
+b1 T$
+b111111111111111111111111110110001 1
+b111111111111111111111111110110001 /
+b1 <
+b1010 4
+b11111010000000000000000000000000 7
+b11111010000000000000000000000000 )
+b11111010000000000000000000000000 :
+1$
+#7700
+0$
+#7710
+b111111111111111111111111110110011 .
+b11111111111111111111111110110011 0
+b11111111111111111111111110110011 @
+b11 W$
+1h$
+1c$
+b11 T$
+b111111111111111111111111110110011 1
+b111111111111111111111111110110011 /
+b11 <
+b1001 4
+b11110100000000000000000000000000 7
+b11110100000000000000000000000000 )
+b11110100000000000000000000000000 :
+b1 8
+b1 -
+b1 ;
+1$
+#7720
+0$
+#7730
+b111111111111111111111111110110111 .
+b11111111111111111111111110110111 0
+b11111111111111111111111110110111 @
+b111 W$
+1o$
+1j$
+b111 T$
+b111111111111111111111111110110111 1
+b111111111111111111111111110110111 /
+b111 <
+b1000 4
+b11101000000000000000000000000000 7
+b11101000000000000000000000000000 )
+b11101000000000000000000000000000 :
+b11 8
+b11 -
+b11 ;
+1$
+#7740
+0$
+#7750
+b111111111111111111111111110111111 .
+b11111111111111111111111110111111 0
+b11111111111111111111111110111111 @
+b1111 W$
+1v$
+1q$
+b1111 T$
+b111111111111111111111111110111111 1
+b111111111111111111111111110111111 /
+b1111 <
+b111 4
+b11010000000000000000000000000000 7
+b11010000000000000000000000000000 )
+b11010000000000000000000000000000 :
+b111 8
+b111 -
+b111 ;
+1$
+#7760
+0$
+#7770
+b111111111111111111111111111001111 .
+b11111111111111111111111111001111 0
+b11111111111111111111111111001111 @
+b1100 q
+b1100 n
+b1100 G
+b1100 N
+1K
+b1011 m
+b1011 E
+b1011 J
+1l
+1j
+b111111111111111111111111111001111 1
+b111111111111111111111111111001111 /
+b11111 <
+b110 4
+b10100000000000000000000000000000 7
+b10100000000000000000000000000000 )
+b10100000000000000000000000000000 :
+b1111 8
+b1111 -
+b1111 ;
+1$
+#7780
+0$
+#7790
+1L
+b1110 q
+b111111111111111111111111111101110 .
+b11111111111111111111111111101110 0
+b11111111111111111111111111101110 @
+b1110 W$
+0a$
+b1110 n
+b1110 G
+b1110 N
+0K
+1b
+b1101 m
+b1101 E
+b1101 J
+b110 R
+0[
+1_
+b10 S
+1Y
+0\$
+1V
+b1110 T$
+b1 O
+b111111111111111111111111111101110 1
+b111111111111111111111111111101110 /
+b111110 <
+b101 4
+b1000000000000000000000000000000 7
+b1000000000000000000000000000000 )
+b1000000000000000000000000000000 :
+b11111 8
+b11111 -
+b11111 ;
+1$
+#7800
+0$
+#7810
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+b10010 q
+0L
+b10 G
+b10 N
+b10010 n
+0i
+1F
+b10001 m
+b1 E
+b1 J
+b0 R
+0b
+1g
+1a$
+b101101 .
+b101101 0
+b101101 @
+b1101 W$
+0h$
+1f
+b1110 S
+1`
+1]
+1\$
+0c$
+b11 O
+b1101 T$
+b101101 1
+b101101 /
+b1111101 <
+b100 4
+b10000000000000000000000000000000 7
+b10000000000000000000000000000000 )
+b10000000000000000000000000000000 :
+b111110 8
+b111110 -
+b111110 ;
+1$
+#7820
+0$
+#7830
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+1H
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1L
+1i
+0F
+0g
+1M
+0f
+b10000 q
+1b
+0`
+b10000 n
+b0 G
+b0 N
+1K
+0a$
+1h$
+b1010 .
+b1010 0
+b1010 @
+b1010 W$
+0o$
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+0_
+b0 S
+0Y
+0V
+0\$
+1c$
+0j$
+b10 O
+b1010 T$
+b1010 1
+b1010 /
+b1011010 <
+b11 4
+b1 7
+b1 )
+b1 :
+b101101 8
+b101101 -
+b101101 ;
+1$
+#7840
+0$
+#7850
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0H
+b1100 q
+0L
+0M
+b1100 n
+b1100 G
+b1100 N
+0h$
+1o$
+b111111111111111111111111111000100 .
+b11111111111111111111111111000100 0
+b11111111111111111111111111000100 @
+b100 W$
+0v$
+b1011 m
+b1011 E
+b1011 J
+b101 R
+0b
+0]
+0c$
+1j$
+0q$
+b0 O
+b100 T$
+b111111111111111111111111111000100 1
+b111111111111111111111111111000100 /
+b10100 <
+b10 4
+b11 7
+b11 )
+b11 :
+b1010 8
+b1010 -
+b1010 ;
+1$
+#7860
+0$
+#7870
+1L
+1b
+0o$
+b1000 W$
+1v$
+b111111111111111111111111111011000 .
+b11111111111111111111111111011000 0
+b11111111111111111111111111011000 @
+b1101 q
+b110 R
+0[
+1_
+b1101 n
+b1101 G
+b1101 N
+0K
+b10 S
+1Y
+b1100 m
+b1100 E
+b1100 J
+0l
+1V
+0j$
+1q$
+0j
+b1 O
+b1000 T$
+b111111111111111111111111111011000 1
+b111111111111111111111111111011000 /
+b101000 <
+b1 4
+b110 7
+b110 )
+b110 :
+b10100 8
+b10100 -
+b10100 ;
+1$
+#7880
+0$
+#7890
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1M
+1L
+1H
+1i
+0F
+1K
+1b
+0g
+b0 W$
+0v$
+b0 .
+b0 0
+b0 @
+b10000 q
+b111 R
+1[
+0_
+0f
+b10000 n
+b0 G
+b0 N
+0Y
+b0 S
+0`
+b1111 m
+b1111 E
+b1111 J
+1l
+0V
+1]
+0q$
+1j
+b10 O
+b0 T$
+b0 1
+b0 /
+b1010000 <
+b0 4
+b1100 7
+b1100 )
+b1100 :
+b101000 8
+b101000 -
+b101000 ;
+1$
+#7900
+0$
+#7910
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0L
+b111111111111111111111111110110000 .
+b11111111111111111111111110110000 0
+b11111111111111111111111110110000 @
+b1011 q
+0H
+0M
+b101 R
+0b
+b1011 n
+b1011 G
+b1011 N
+0K
+b1010 m
+b1010 E
+b1010 J
+0l
+0]
+0j
+b0 O
+1,
+b111111111111111111111111110110000 1
+b111111111111111111111111110110000 /
+b0 <
+b11111 4
+0#
+03
+b11001 7
+b11001 )
+b11001 :
+b0 8
+b0 -
+b0 ;
+1$
+#7920
+0$
+#7930
+0,
+1#
+13
+b11111010000 7
+b11111010000 )
+b11111010000 :
+1$
+#7940
+0$
+#7950
+b11110 4
+b111110100000 7
+b111110100000 )
+b111110100000 :
+1$
+#7960
+0$
+#7970
+b11101 4
+b1111101000000 7
+b1111101000000 )
+b1111101000000 :
+1$
+#7980
+0$
+#7990
+b11100 4
+b11111010000000 7
+b11111010000000 )
+b11111010000000 :
+1$
+#8000
+0$
+b110010 '
+b110010 +
+b1011010101 &
+b1011010101 *
+#8010
+b11011 4
+b111110100000000 7
+b111110100000000 )
+b111110100000000 :
+1$
+#8020
+0$
+#8030
+b11010 4
+b1111101000000000 7
+b1111101000000000 )
+b1111101000000000 :
+1$
+#8040
+0$
+#8050
+b11001 4
+b11111010000000000 7
+b11111010000000000 )
+b11111010000000000 :
+1$
+#8060
+0$
+#8070
+b11000 4
+b111110100000000000 7
+b111110100000000000 )
+b111110100000000000 :
+1$
+#8080
+0$
+#8090
+b10111 4
+b1111101000000000000 7
+b1111101000000000000 )
+b1111101000000000000 :
+1$
+#8100
+0$
+#8110
+b10110 4
+b11111010000000000000 7
+b11111010000000000000 )
+b11111010000000000000 :
+1$
+#8120
+0$
+#8130
+b10101 4
+b111110100000000000000 7
+b111110100000000000000 )
+b111110100000000000000 :
+1$
+#8140
+0$
+#8150
+b10100 4
+b1111101000000000000000 7
+b1111101000000000000000 )
+b1111101000000000000000 :
+1$
+#8160
+0$
+#8170
+b10011 4
+b11111010000000000000000 7
+b11111010000000000000000 )
+b11111010000000000000000 :
+1$
+#8180
+0$
+#8190
+b10010 4
+b111110100000000000000000 7
+b111110100000000000000000 )
+b111110100000000000000000 :
+1$
+#8200
+0$
+#8210
+b10001 4
+b1111101000000000000000000 7
+b1111101000000000000000000 )
+b1111101000000000000000000 :
+1$
+#8220
+0$
+#8230
+b10000 4
+b11111010000000000000000000 7
+b11111010000000000000000000 )
+b11111010000000000000000000 :
+1$
+#8240
+0$
+#8250
+b1111 4
+b111110100000000000000000000 7
+b111110100000000000000000000 )
+b111110100000000000000000000 :
+1$
+#8260
+0$
+#8270
+b1110 4
+b1111101000000000000000000000 7
+b1111101000000000000000000000 )
+b1111101000000000000000000000 :
+1$
+#8280
+0$
+#8290
+b1101 4
+b11111010000000000000000000000 7
+b11111010000000000000000000000 )
+b11111010000000000000000000000 :
+1$
+#8300
+0$
+#8310
+b1100 4
+b111110100000000000000000000000 7
+b111110100000000000000000000000 )
+b111110100000000000000000000000 :
+1$
+#8320
+0$
+#8330
+b1011 4
+b1111101000000000000000000000000 7
+b1111101000000000000000000000000 )
+b1111101000000000000000000000000 :
+1$
+#8340
+0$
+#8350
+b111111111111111111111111110110001 .
+b11111111111111111111111110110001 0
+b11111111111111111111111110110001 @
+b1 W$
+1a$
+1\$
+b1 T$
+b111111111111111111111111110110001 1
+b111111111111111111111111110110001 /
+b1 <
+b1010 4
+b11111010000000000000000000000000 7
+b11111010000000000000000000000000 )
+b11111010000000000000000000000000 :
+1$
+#8360
+0$
+#8370
+b111111111111111111111111110110011 .
+b11111111111111111111111110110011 0
+b11111111111111111111111110110011 @
+b11 W$
+1h$
+1c$
+b11 T$
+b111111111111111111111111110110011 1
+b111111111111111111111111110110011 /
+b11 <
+b1001 4
+b11110100000000000000000000000000 7
+b11110100000000000000000000000000 )
+b11110100000000000000000000000000 :
+b1 8
+b1 -
+b1 ;
+1$
+#8380
+0$
+#8390
+b111111111111111111111111110110111 .
+b11111111111111111111111110110111 0
+b11111111111111111111111110110111 @
+b111 W$
+1o$
+1j$
+b111 T$
+b111111111111111111111111110110111 1
+b111111111111111111111111110110111 /
+b111 <
+b1000 4
+b11101000000000000000000000000000 7
+b11101000000000000000000000000000 )
+b11101000000000000000000000000000 :
+b11 8
+b11 -
+b11 ;
+1$
+#8400
+0$
+#8410
+b111111111111111111111111110111111 .
+b11111111111111111111111110111111 0
+b11111111111111111111111110111111 @
+b1111 W$
+1v$
+1q$
+b1111 T$
+b111111111111111111111111110111111 1
+b111111111111111111111111110111111 /
+b1111 <
+b111 4
+b11010000000000000000000000000000 7
+b11010000000000000000000000000000 )
+b11010000000000000000000000000000 :
+b111 8
+b111 -
+b111 ;
+1$
+#8420
+0$
+#8430
+b111111111111111111111111111001111 .
+b11111111111111111111111111001111 0
+b11111111111111111111111111001111 @
+b1100 q
+b1100 n
+b1100 G
+b1100 N
+1K
+b1011 m
+b1011 E
+b1011 J
+1l
+1j
+b111111111111111111111111111001111 1
+b111111111111111111111111111001111 /
+b11111 <
+b110 4
+b10100000000000000000000000000000 7
+b10100000000000000000000000000000 )
+b10100000000000000000000000000000 :
+b1111 8
+b1111 -
+b1111 ;
+1$
+#8440
+0$
+#8450
+1L
+b1110 q
+b111111111111111111111111111101110 .
+b11111111111111111111111111101110 0
+b11111111111111111111111111101110 @
+b1110 W$
+0a$
+b1110 n
+b1110 G
+b1110 N
+0K
+1b
+b1101 m
+b1101 E
+b1101 J
+b110 R
+0[
+1_
+b10 S
+1Y
+0\$
+1V
+b1110 T$
+b1 O
+b111111111111111111111111111101110 1
+b111111111111111111111111111101110 /
+b111110 <
+b101 4
+b1000000000000000000000000000000 7
+b1000000000000000000000000000000 )
+b1000000000000000000000000000000 :
+b11111 8
+b11111 -
+b11111 ;
+1$
+#8460
+0$
+#8470
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+b10010 q
+0L
+b10 G
+b10 N
+b10010 n
+0i
+1F
+b10001 m
+b1 E
+b1 J
+b0 R
+0b
+1g
+1a$
+b101101 .
+b101101 0
+b101101 @
+b1101 W$
+0h$
+1f
+b1110 S
+1`
+1]
+1\$
+0c$
+b11 O
+b1101 T$
+b101101 1
+b101101 /
+b1111101 <
+b100 4
+b10000000000000000000000000000000 7
+b10000000000000000000000000000000 )
+b10000000000000000000000000000000 :
+b111110 8
+b111110 -
+b111110 ;
+1$
+#8480
+0$
+#8490
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+1H
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1L
+1i
+0F
+0g
+1M
+0f
+b10000 q
+1b
+0`
+b10000 n
+b0 G
+b0 N
+1K
+0a$
+1h$
+b1010 .
+b1010 0
+b1010 @
+b1010 W$
+0o$
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+0_
+b0 S
+0Y
+0V
+0\$
+1c$
+0j$
+b10 O
+b1010 T$
+b1010 1
+b1010 /
+b1011010 <
+b11 4
+b1 7
+b1 )
+b1 :
+b101101 8
+b101101 -
+b101101 ;
+1$
+#8500
+0$
+#8510
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0H
+b1100 q
+0L
+0M
+b1100 n
+b1100 G
+b1100 N
+0h$
+1o$
+b111111111111111111111111111000100 .
+b11111111111111111111111111000100 0
+b11111111111111111111111111000100 @
+b100 W$
+0v$
+b1011 m
+b1011 E
+b1011 J
+b101 R
+0b
+0]
+0c$
+1j$
+0q$
+b0 O
+b100 T$
+b111111111111111111111111111000100 1
+b111111111111111111111111111000100 /
+b10100 <
+b10 4
+b11 7
+b11 )
+b11 :
+b1010 8
+b1010 -
+b1010 ;
+1$
+#8520
+0$
+#8530
+1L
+1b
+0o$
+b1000 W$
+1v$
+b111111111111111111111111111011000 .
+b11111111111111111111111111011000 0
+b11111111111111111111111111011000 @
+b1101 q
+b110 R
+0[
+1_
+b1101 n
+b1101 G
+b1101 N
+0K
+b10 S
+1Y
+b1100 m
+b1100 E
+b1100 J
+0l
+1V
+0j$
+1q$
+0j
+b1 O
+b1000 T$
+b111111111111111111111111111011000 1
+b111111111111111111111111111011000 /
+b101000 <
+b1 4
+b110 7
+b110 )
+b110 :
+b10100 8
+b10100 -
+b10100 ;
+1$
+#8540
+0$
+#8550
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1M
+1L
+1H
+1i
+0F
+1K
+1b
+0g
+b0 W$
+0v$
+b0 .
+b0 0
+b0 @
+b10000 q
+b111 R
+1[
+0_
+0f
+b10000 n
+b0 G
+b0 N
+0Y
+b0 S
+0`
+b1111 m
+b1111 E
+b1111 J
+1l
+0V
+1]
+0q$
+1j
+b10 O
+b0 T$
+b0 1
+b0 /
+b1010000 <
+b0 4
+b1100 7
+b1100 )
+b1100 :
+b101000 8
+b101000 -
+b101000 ;
+1$
+#8560
+0$
+#8570
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0L
+b111111111111111111111111110110000 .
+b11111111111111111111111110110000 0
+b11111111111111111111111110110000 @
+b1011 q
+0H
+0M
+b101 R
+0b
+b1011 n
+b1011 G
+b1011 N
+0K
+b1010 m
+b1010 E
+b1010 J
+0l
+0]
+0j
+b0 O
+1,
+b111111111111111111111111110110000 1
+b111111111111111111111111110110000 /
+b0 <
+b11111 4
+0#
+03
+b11001 7
+b11001 )
+b11001 :
+b0 8
+b0 -
+b0 ;
+1$
+#8580
+0$
+#8590
+0o
+1v$
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz0zzz A
+0X$
+0t$
+1o$
+0s$
+b1100 q
+0m$
+1L
+b1101 n
+b1101 G
+b1101 N
+b111111111111111111111111111001110 .
+b11111111111111111111111111001110 0
+b11111111111111111111111111001110 @
+b1110 W$
+1h$
+0l$
+0[
+b1100 m
+b1100 E
+b1100 J
+b110 R
+1b
+b11 Y$
+0f$
+0W
+1^
+0d$
+b110 P
+b1101 U$
+0,
+b111111111111111111111111111001110 /
+b11111111111111111111111111001101 =
+1#
+13
+b111111111111111111111111111001110 1
+b110010 5
+b1011010101 7
+b1011010101 )
+b1011010101 :
+1$
+#8600
+0$
+#8610
+b11110 4
+b10110101010 7
+b10110101010 )
+b10110101010 :
+1$
+#8620
+0$
+#8630
+b11101 4
+b101101010100 7
+b101101010100 )
+b101101010100 :
+1$
+#8640
+0$
+#8650
+b11100 4
+b1011010101000 7
+b1011010101000 )
+b1011010101000 :
+1$
+#8660
+0$
+#8670
+b11011 4
+b10110101010000 7
+b10110101010000 )
+b10110101010000 :
+1$
+#8680
+0$
+#8690
+b11010 4
+b101101010100000 7
+b101101010100000 )
+b101101010100000 :
+1$
+#8700
+0$
+#8710
+b11001 4
+b1011010101000000 7
+b1011010101000000 )
+b1011010101000000 :
+1$
+#8720
+0$
+#8730
+b11000 4
+b10110101010000000 7
+b10110101010000000 )
+b10110101010000000 :
+1$
+#8740
+0$
+#8750
+b10111 4
+b101101010100000000 7
+b101101010100000000 )
+b101101010100000000 :
+1$
+#8760
+0$
+#8770
+b10110 4
+b1011010101000000000 7
+b1011010101000000000 )
+b1011010101000000000 :
+1$
+#8780
+0$
+#8790
+b10101 4
+b10110101010000000000 7
+b10110101010000000000 )
+b10110101010000000000 :
+1$
+#8800
+0$
+#8810
+b10100 4
+b101101010100000000000 7
+b101101010100000000000 )
+b101101010100000000000 :
+1$
+#8820
+0$
+#8830
+b10011 4
+b1011010101000000000000 7
+b1011010101000000000000 )
+b1011010101000000000000 :
+1$
+#8840
+0$
+#8850
+b10010 4
+b10110101010000000000000 7
+b10110101010000000000000 )
+b10110101010000000000000 :
+1$
+#8860
+0$
+#8870
+b10001 4
+b101101010100000000000000 7
+b101101010100000000000000 )
+b101101010100000000000000 :
+1$
+#8880
+0$
+#8890
+b10000 4
+b1011010101000000000000000 7
+b1011010101000000000000000 )
+b1011010101000000000000000 :
+1$
+#8900
+0$
+#8910
+b1111 4
+b10110101010000000000000000 7
+b10110101010000000000000000 )
+b10110101010000000000000000 :
+1$
+#8920
+0$
+#8930
+b1110 4
+b101101010100000000000000000 7
+b101101010100000000000000000 )
+b101101010100000000000000000 :
+1$
+#8940
+0$
+#8950
+b1101 4
+b1011010101000000000000000000 7
+b1011010101000000000000000000 )
+b1011010101000000000000000000 :
+1$
+#8960
+0$
+#8970
+b1100 4
+b10110101010000000000000000000 7
+b10110101010000000000000000000 )
+b10110101010000000000000000000 :
+1$
+#8980
+0$
+#8990
+b1011 4
+b101101010100000000000000000000 7
+b101101010100000000000000000000 )
+b101101010100000000000000000000 :
+1$
+#9000
+0$
+#9010
+b1010 4
+b1011010101000000000000000000000 7
+b1011010101000000000000000000000 )
+b1011010101000000000000000000000 :
+1$
+#9020
+0$
+#9030
+b111111111111111111111111111001111 .
+b11111111111111111111111111001111 0
+b11111111111111111111111111001111 @
+b1111 W$
+1a$
+1\$
+b1 T$
+b111111111111111111111111111001111 1
+b111111111111111111111111111001111 /
+b1 <
+b1001 4
+b10110101010000000000000000000000 7
+b10110101010000000000000000000000 )
+b10110101010000000000000000000000 :
+1$
+#9040
+0$
+#9050
+b1101 q
+1o
+0v$
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+1X$
+1t$
+0o$
+1s$
+0a$
+b111111111111111111111111111010000 .
+b11111111111111111111111111010000 0
+b11111111111111111111111111010000 @
+b0 W$
+0h$
+1m$
+1l$
+b11111 Y$
+1f$
+0\$
+1c$
+b10 T$
+b111111111111111111111111111010000 1
+b111111111111111111111111111010000 /
+b10 <
+b1000 4
+b1101010100000000000000000000000 7
+b1101010100000000000000000000000 )
+b1101010100000000000000000000000 :
+b1 8
+b1 -
+b1 ;
+1$
+#9060
+0$
+#9070
+1a$
+b111111111111111111111111111010011 .
+b11111111111111111111111111010011 0
+b11111111111111111111111111010011 @
+b11 W$
+1h$
+0l$
+b11011 Y$
+0f$
+1\$
+0c$
+1j$
+b101 T$
+b111111111111111111111111111010011 1
+b111111111111111111111111111010011 /
+b101 <
+b111 4
+b11010101000000000000000000000000 7
+b11010101000000000000000000000000 )
+b11010101000000000000000000000000 :
+b10 8
+b10 -
+b10 ;
+1$
+#9080
+0$
+#9090
+1v$
+0h$
+1l$
+b111111111111111111111111111011001 .
+b11111111111111111111111111011001 0
+b11111111111111111111111111011001 @
+b1001 W$
+0o$
+1s$
+1f$
+b11111 Y$
+1m$
+1c$
+0j$
+1q$
+b1011 T$
+b111111111111111111111111111011001 1
+b111111111111111111111111111011001 /
+b1011 <
+b110 4
+b10101010000000000000000000000000 7
+b10101010000000000000000000000000 )
+b10101010000000000000000000000000 :
+b101 8
+b101 -
+b101 ;
+1$
+#9100
+0$
+#9110
+0a$
+1o$
+b100 W$
+0v$
+b111111111111111111111111111100100 .
+b11111111111111111111111111100100 0
+b11111111111111111111111111100100 @
+b1110 q
+b1110 n
+b1110 G
+b1110 N
+b1101 m
+b1101 E
+b1101 J
+1l
+0\$
+1j$
+0q$
+1j
+b110 T$
+b111111111111111111111111111100100 1
+b111111111111111111111111111100100 /
+b10110 <
+b101 4
+b1010100000000000000000000000000 7
+b1010100000000000000000000000000 )
+b1010100000000000000000000000000 :
+b1011 8
+b1011 -
+b1011 ;
+1$
+#9120
+0$
+#9130
+1a$
+1h$
+0o$
+b1011 W$
+1v$
+b111111111111111111111111111111011 .
+b11111111111111111111111111111011 0
+b11111111111111111111111111111011 @
+b1111 q
+b111 R
+1[
+0l$
+b1111 n
+b1111 G
+b1111 N
+b11011 Y$
+0f$
+b1110 m
+b1110 E
+b1110 J
+0l
+1V
+1\$
+0c$
+1q$
+0j
+b1 O
+b1101 T$
+b111111111111111111111111111111011 1
+b111111111111111111111111111111011 /
+b101101 <
+b100 4
+b10101000000000000000000000000000 7
+b10101000000000000000000000000000 )
+b10101000000000000000000000000000 :
+b10110 8
+b10110 -
+b10110 ;
+1$
+#9140
+0$
+#9150
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+0i
+1F
+0L
+1g
+0a$
+0h$
+1v$
+b10010 q
+0H
+0M
+0[
+b0 R
+0b
+1f
+1l$
+b101000 .
+b101000 0
+b101000 @
+b1000 W$
+0o$
+1s$
+b10010 n
+b10 G
+b10 N
+0K
+b1100 S
+1`
+1f$
+b11111 Y$
+1m$
+b10001 m
+b1 E
+b1 J
+1l
+0V
+1]
+0\$
+1c$
+0j$
+1j
+b10 O
+b1010 T$
+b101000 1
+b101000 /
+b1011010 <
+b11 4
+b1010000000000000000000000000000 7
+b1010000000000000000000000000000 )
+b1010000000000000000000000000000 :
+b101101 8
+b101101 -
+b101101 ;
+1$
+#9160
+0$
+#9170
+b10001 q
+0o
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz0zzz A
+0X$
+0t$
+1o$
+0s$
+1a$
+1h$
+0m$
+b11111 .
+b11111 0
+b11111 @
+b1111 W$
+1v$
+0l$
+b11 Y$
+0f$
+1\$
+0c$
+0q$
+b1 T$
+b11111 1
+b11111 /
+b1010001 <
+b10 4
+b10100000000000000000000000000001 7
+b10100000000000000000000000000001 )
+b10100000000000000000000000000001 :
+b101000 8
+b101000 -
+b101000 ;
+1$
+#9180
+0$
+#9190
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+1H
+1L
+1M
+1i
+0F
+1K
+b10000 n
+b0 G
+b0 N
+0g
+0a$
+0h$
+b10000 q
+1o
+1[
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1b
+0f
+1l$
+1o$
+1s$
+b1100 .
+b1100 0
+b1100 @
+b1100 W$
+1v$
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1X$
+b0 S
+0`
+1f$
+1m$
+b11111 Y$
+1t$
+1V
+0]
+0\$
+1c$
+1j$
+1q$
+b1 O
+b1110 T$
+b1100 1
+b1100 /
+b111110 <
+b1 4
+b1000000000000000000000000000011 7
+b1000000000000000000000000000011 )
+b1000000000000000000000000000011 :
+b11111 8
+b11111 -
+b11111 ;
+1$
+#9200
+0$
+#9210
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0v$
+b1110 q
+0H
+0M
+0s$
+b1110 n
+b1110 G
+b1110 N
+0K
+1a$
+1h$
+0m$
+b111111111111111111111111111100111 .
+b11111111111111111111111111100111 0
+b11111111111111111111111111100111 @
+b111 W$
+1o$
+b1101 m
+b1101 E
+b1101 J
+b110 R
+0[
+0l$
+b10011 Y$
+0f$
+0V
+1\$
+0c$
+0j$
+b0 O
+b1001 T$
+b111111111111111111111111111100111 1
+b111111111111111111111111111100111 /
+b11001 <
+b0 4
+b10000000000000000000000000000111 7
+b10000000000000000000000000000111 )
+b10000000000000000000000000000111 :
+b1100 8
+b1100 -
+b1100 ;
+1$
+#9220
+0$
+#9230
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+1H
+1M
+0o$
+1s$
+b10000 n
+b0 G
+b0 N
+1K
+0a$
+0h$
+1m$
+b10000 q
+1o
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+1l$
+b0 .
+b0 0
+b0 @
+b0 W$
+0v$
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1X$
+1f$
+b11111 Y$
+1t$
+1V
+0\$
+1c$
+0q$
+b11001 !
+b11001 9
+b1110 "
+b1110 6
+b1 O
+b10 T$
+1,
+b0 1
+b0 /
+b110010 <
+b11111 4
+0#
+03
+b1110 7
+b1110 )
+b1110 :
+b11001 8
+b11001 -
+b11001 ;
+1$
+#9240
+0$
+#9250
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+0o
+1v$
+0X$
+b1111 &"
+0t$
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz0zzz A
+1o$
+0s$
+b1110 W$
+1h$
+0m$
+b111111111111111111111111111001110 .
+b11111111111111111111111111001110 0
+b11111111111111111111111111001110 @
+b1100 q
+0H
+0M
+b110 R
+0[
+0l$
+b1101 n
+b1101 G
+b1101 N
+0K
+b11 Y$
+0f$
+b1100 m
+b1100 E
+b1100 J
+0l
+0V
+0c$
+0j
+b0 O
+b0 T$
+0,
+b111111111111111111111111111001110 1
+b111111111111111111111111111001110 /
+b0 <
+1#
+13
+b0 8
+b0 -
+b0 ;
+b1011010101 7
+b1011010101 )
+b1011010101 :
+1$
+#9260
+0$
+#9270
+b11110 4
+b10110101010 7
+b10110101010 )
+b10110101010 :
+1$
+#9280
+0$
+#9290
+b11101 4
+b101101010100 7
+b101101010100 )
+b101101010100 :
+1$
+#9300
+0$
+#9310
+b11100 4
+b1011010101000 7
+b1011010101000 )
+b1011010101000 :
+1$
+#9320
+0$
+#9330
+b11011 4
+b10110101010000 7
+b10110101010000 )
+b10110101010000 :
+1$
+#9340
+0$
+#9350
+b11010 4
+b101101010100000 7
+b101101010100000 )
+b101101010100000 :
+1$
+#9360
+0$
+#9370
+b11001 4
+b1011010101000000 7
+b1011010101000000 )
+b1011010101000000 :
+1$
+#9380
+0$
+#9390
+b11000 4
+b10110101010000000 7
+b10110101010000000 )
+b10110101010000000 :
+1$
+#9400
+0$
+#9410
+b10111 4
+b101101010100000000 7
+b101101010100000000 )
+b101101010100000000 :
+1$
+#9420
+0$
+#9430
+b10110 4
+b1011010101000000000 7
+b1011010101000000000 )
+b1011010101000000000 :
+1$
+#9440
+0$
+#9450
+b10101 4
+b10110101010000000000 7
+b10110101010000000000 )
+b10110101010000000000 :
+1$
+#9460
+0$
+#9470
+b10100 4
+b101101010100000000000 7
+b101101010100000000000 )
+b101101010100000000000 :
+1$
+#9480
+0$
+#9490
+b10011 4
+b1011010101000000000000 7
+b1011010101000000000000 )
+b1011010101000000000000 :
+1$
+#9500
+0$
+#9510
+b10010 4
+b10110101010000000000000 7
+b10110101010000000000000 )
+b10110101010000000000000 :
+1$
+#9520
+0$
+#9530
+b10001 4
+b101101010100000000000000 7
+b101101010100000000000000 )
+b101101010100000000000000 :
+1$
+#9540
+0$
+#9550
+b10000 4
+b1011010101000000000000000 7
+b1011010101000000000000000 )
+b1011010101000000000000000 :
+1$
+#9560
+0$
+#9570
+b1111 4
+b10110101010000000000000000 7
+b10110101010000000000000000 )
+b10110101010000000000000000 :
+1$
+#9580
+0$
+#9590
+b1110 4
+b101101010100000000000000000 7
+b101101010100000000000000000 )
+b101101010100000000000000000 :
+1$
+#9600
+0$
+#9610
+b1101 4
+b1011010101000000000000000000 7
+b1011010101000000000000000000 )
+b1011010101000000000000000000 :
+1$
+#9620
+0$
+#9630
+b1100 4
+b10110101010000000000000000000 7
+b10110101010000000000000000000 )
+b10110101010000000000000000000 :
+1$
+#9640
+0$
+#9650
+b1011 4
+b101101010100000000000000000000 7
+b101101010100000000000000000000 )
+b101101010100000000000000000000 :
+1$
+#9660
+0$
+#9670
+b1010 4
+b1011010101000000000000000000000 7
+b1011010101000000000000000000000 )
+b1011010101000000000000000000000 :
+1$
+#9680
+0$
+#9690
+b111111111111111111111111111001111 .
+b11111111111111111111111111001111 0
+b11111111111111111111111111001111 @
+b1111 W$
+1a$
+1\$
+b1 T$
+b111111111111111111111111111001111 1
+b111111111111111111111111111001111 /
+b1 <
+b1001 4
+b10110101010000000000000000000000 7
+b10110101010000000000000000000000 )
+b10110101010000000000000000000000 :
+1$
+#9700
+0$
+#9710
+b1101 q
+1o
+0v$
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+1X$
+1t$
+0o$
+1s$
+0a$
+b111111111111111111111111111010000 .
+b11111111111111111111111111010000 0
+b11111111111111111111111111010000 @
+b0 W$
+0h$
+1m$
+1l$
+b11111 Y$
+1f$
+0\$
+1c$
+b10 T$
+b111111111111111111111111111010000 1
+b111111111111111111111111111010000 /
+b10 <
+b1000 4
+b1101010100000000000000000000000 7
+b1101010100000000000000000000000 )
+b1101010100000000000000000000000 :
+b1 8
+b1 -
+b1 ;
+1$
+#9720
+0$
+#9730
+1a$
+b111111111111111111111111111010011 .
+b11111111111111111111111111010011 0
+b11111111111111111111111111010011 @
+b11 W$
+1h$
+0l$
+b11011 Y$
+0f$
+1\$
+0c$
+1j$
+b101 T$
+b111111111111111111111111111010011 1
+b111111111111111111111111111010011 /
+b101 <
+b111 4
+b11010101000000000000000000000000 7
+b11010101000000000000000000000000 )
+b11010101000000000000000000000000 :
+b10 8
+b10 -
+b10 ;
+1$
+#9740
+0$
+#9750
+1v$
+0h$
+1l$
+b111111111111111111111111111011001 .
+b11111111111111111111111111011001 0
+b11111111111111111111111111011001 @
+b1001 W$
+0o$
+1s$
+1f$
+b11111 Y$
+1m$
+1c$
+0j$
+1q$
+b1011 T$
+b111111111111111111111111111011001 1
+b111111111111111111111111111011001 /
+b1011 <
+b110 4
+b10101010000000000000000000000000 7
+b10101010000000000000000000000000 )
+b10101010000000000000000000000000 :
+b101 8
+b101 -
+b101 ;
+1$
+#9760
+0$
+#9770
+0a$
+1o$
+b100 W$
+0v$
+b111111111111111111111111111100100 .
+b11111111111111111111111111100100 0
+b11111111111111111111111111100100 @
+b1110 q
+b1110 n
+b1110 G
+b1110 N
+b1101 m
+b1101 E
+b1101 J
+1l
+0\$
+1j$
+0q$
+1j
+b110 T$
+b111111111111111111111111111100100 1
+b111111111111111111111111111100100 /
+b10110 <
+b101 4
+b1010100000000000000000000000000 7
+b1010100000000000000000000000000 )
+b1010100000000000000000000000000 :
+b1011 8
+b1011 -
+b1011 ;
+1$
+#9780
+0$
+#9790
+1a$
+1h$
+0o$
+b1011 W$
+1v$
+b111111111111111111111111111111011 .
+b11111111111111111111111111111011 0
+b11111111111111111111111111111011 @
+b1111 q
+b111 R
+1[
+0l$
+b1111 n
+b1111 G
+b1111 N
+b11011 Y$
+0f$
+b1110 m
+b1110 E
+b1110 J
+0l
+1V
+1\$
+0c$
+1q$
+0j
+b1 O
+b1101 T$
+b111111111111111111111111111111011 1
+b111111111111111111111111111111011 /
+b101101 <
+b100 4
+b10101000000000000000000000000000 7
+b10101000000000000000000000000000 )
+b10101000000000000000000000000000 :
+b10110 8
+b10110 -
+b10110 ;
+1$
+#9800
+0$
+#9810
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+0i
+1F
+0L
+1g
+0a$
+0h$
+1v$
+b10010 q
+0H
+0M
+0[
+b0 R
+0b
+1f
+1l$
+b101000 .
+b101000 0
+b101000 @
+b1000 W$
+0o$
+1s$
+b10010 n
+b10 G
+b10 N
+0K
+b1100 S
+1`
+1f$
+b11111 Y$
+1m$
+b10001 m
+b1 E
+b1 J
+1l
+0V
+1]
+0\$
+1c$
+0j$
+1j
+b10 O
+b1010 T$
+b101000 1
+b101000 /
+b1011010 <
+b11 4
+b1010000000000000000000000000000 7
+b1010000000000000000000000000000 )
+b1010000000000000000000000000000 :
+b101101 8
+b101101 -
+b101101 ;
+1$
+#9820
+0$
+#9830
+b10001 q
+0o
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz0zzz A
+0X$
+0t$
+1o$
+0s$
+1a$
+1h$
+0m$
+b11111 .
+b11111 0
+b11111 @
+b1111 W$
+1v$
+0l$
+b11 Y$
+0f$
+1\$
+0c$
+0q$
+b1 T$
+b11111 1
+b11111 /
+b1010001 <
+b10 4
+b10100000000000000000000000000001 7
+b10100000000000000000000000000001 )
+b10100000000000000000000000000001 :
+b101000 8
+b101000 -
+b101000 ;
+1$
+#9840
+0$
+#9850
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+1H
+1L
+1M
+1i
+0F
+1K
+b10000 n
+b0 G
+b0 N
+0g
+0a$
+0h$
+b10000 q
+1o
+1[
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1b
+0f
+1l$
+1o$
+1s$
+b1100 .
+b1100 0
+b1100 @
+b1100 W$
+1v$
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1X$
+b0 S
+0`
+1f$
+1m$
+b11111 Y$
+1t$
+1V
+0]
+0\$
+1c$
+1j$
+1q$
+b1 O
+b1110 T$
+b1100 1
+b1100 /
+b111110 <
+b1 4
+b1000000000000000000000000000011 7
+b1000000000000000000000000000011 )
+b1000000000000000000000000000011 :
+b11111 8
+b11111 -
+b11111 ;
+1$
+#9860
+0$
+#9870
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0v$
+b1110 q
+0H
+0M
+0s$
+b1110 n
+b1110 G
+b1110 N
+0K
+1a$
+1h$
+0m$
+b111111111111111111111111111100111 .
+b11111111111111111111111111100111 0
+b11111111111111111111111111100111 @
+b111 W$
+1o$
+b1101 m
+b1101 E
+b1101 J
+b110 R
+0[
+0l$
+b10011 Y$
+0f$
+0V
+1\$
+0c$
+0j$
+b0 O
+b1001 T$
+b111111111111111111111111111100111 1
+b111111111111111111111111111100111 /
+b11001 <
+b0 4
+b10000000000000000000000000000111 7
+b10000000000000000000000000000111 )
+b10000000000000000000000000000111 :
+b1100 8
+b1100 -
+b1100 ;
+1$
+#9880
+0$
+#9890
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+1H
+1M
+0o$
+1s$
+b10000 n
+b0 G
+b0 N
+1K
+0a$
+0h$
+1m$
+b10000 q
+1o
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+1l$
+b0 .
+b0 0
+b0 @
+b0 W$
+0v$
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1X$
+1f$
+b11111 Y$
+1t$
+1V
+0\$
+1c$
+0q$
+b1 O
+b10 T$
+1,
+b0 1
+b0 /
+b110010 <
+b11111 4
+0#
+03
+b1110 7
+b1110 )
+b1110 :
+b11001 8
+b11001 -
+b11001 ;
+1$
+#9900
+0$
+#9910
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+0o
+1v$
+0X$
+b1111 &"
+0t$
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz0zzz A
+1o$
+0s$
+b1110 W$
+1h$
+0m$
+b111111111111111111111111111001110 .
+b11111111111111111111111111001110 0
+b11111111111111111111111111001110 @
+b1100 q
+0H
+0M
+b110 R
+0[
+0l$
+b1101 n
+b1101 G
+b1101 N
+0K
+b11 Y$
+0f$
+b1100 m
+b1100 E
+b1100 J
+0l
+0V
+0c$
+0j
+b0 O
+b0 T$
+0,
+b111111111111111111111111111001110 1
+b111111111111111111111111111001110 /
+b0 <
+1#
+13
+b0 8
+b0 -
+b0 ;
+b1011010101 7
+b1011010101 )
+b1011010101 :
+1$
+#9920
+0$
+#9930
+b11110 4
+b10110101010 7
+b10110101010 )
+b10110101010 :
+1$
+#9940
+0$
+#9950
+b11101 4
+b101101010100 7
+b101101010100 )
+b101101010100 :
+1$
+#9960
+0$
+#9970
+b11100 4
+b1011010101000 7
+b1011010101000 )
+b1011010101000 :
+1$
+#9980
+0$
+#9990
+b11011 4
+b10110101010000 7
+b10110101010000 )
+b10110101010000 :
+1$
+#10000
+0$
+#10010
+b11010 4
+b101101010100000 7
+b101101010100000 )
+b101101010100000 :
+1$
+#10020
+0$
+#10030
+b11001 4
+b1011010101000000 7
+b1011010101000000 )
+b1011010101000000 :
+1$
+#10040
+0$
+#10050
+b11000 4
+b10110101010000000 7
+b10110101010000000 )
+b10110101010000000 :
+1$
+#10060
+0$
+#10070
+b10111 4
+b101101010100000000 7
+b101101010100000000 )
+b101101010100000000 :
+1$
+#10080
+0$
+#10090
+b10110 4
+b1011010101000000000 7
+b1011010101000000000 )
+b1011010101000000000 :
+1$
+#10100
+0$
+#10110
+b10101 4
+b10110101010000000000 7
+b10110101010000000000 )
+b10110101010000000000 :
+1$
+#10120
+0$
+#10130
+b10100 4
+b101101010100000000000 7
+b101101010100000000000 )
+b101101010100000000000 :
+1$
+#10140
+0$
+#10150
+b10011 4
+b1011010101000000000000 7
+b1011010101000000000000 )
+b1011010101000000000000 :
+1$
+#10160
+0$
+#10170
+b10010 4
+b10110101010000000000000 7
+b10110101010000000000000 )
+b10110101010000000000000 :
+1$
+#10180
+0$
+#10190
+b10001 4
+b101101010100000000000000 7
+b101101010100000000000000 )
+b101101010100000000000000 :
+1$
+#10200
+0$
+#10210
+b10000 4
+b1011010101000000000000000 7
+b1011010101000000000000000 )
+b1011010101000000000000000 :
+1$
+#10220
+0$
+#10230
+b1111 4
+b10110101010000000000000000 7
+b10110101010000000000000000 )
+b10110101010000000000000000 :
+1$
+#10240
+0$
+#10250
+b1110 4
+b101101010100000000000000000 7
+b101101010100000000000000000 )
+b101101010100000000000000000 :
+1$
+#10260
+0$
+#10270
+b1101 4
+b1011010101000000000000000000 7
+b1011010101000000000000000000 )
+b1011010101000000000000000000 :
+1$
+#10280
+0$
+#10290
+b1100 4
+b10110101010000000000000000000 7
+b10110101010000000000000000000 )
+b10110101010000000000000000000 :
+1$
+#10300
+0$
+#10310
+b1011 4
+b101101010100000000000000000000 7
+b101101010100000000000000000000 )
+b101101010100000000000000000000 :
+1$
+#10320
+0$
+#10330
+b1010 4
+b1011010101000000000000000000000 7
+b1011010101000000000000000000000 )
+b1011010101000000000000000000000 :
+1$
+#10340
+0$
+#10350
+b111111111111111111111111111001111 .
+b11111111111111111111111111001111 0
+b11111111111111111111111111001111 @
+b1111 W$
+1a$
+1\$
+b1 T$
+b111111111111111111111111111001111 1
+b111111111111111111111111111001111 /
+b1 <
+b1001 4
+b10110101010000000000000000000000 7
+b10110101010000000000000000000000 )
+b10110101010000000000000000000000 :
+1$
+#10360
+0$
+#10370
+b1101 q
+1o
+0v$
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+1X$
+1t$
+0o$
+1s$
+0a$
+b111111111111111111111111111010000 .
+b11111111111111111111111111010000 0
+b11111111111111111111111111010000 @
+b0 W$
+0h$
+1m$
+1l$
+b11111 Y$
+1f$
+0\$
+1c$
+b10 T$
+b111111111111111111111111111010000 1
+b111111111111111111111111111010000 /
+b10 <
+b1000 4
+b1101010100000000000000000000000 7
+b1101010100000000000000000000000 )
+b1101010100000000000000000000000 :
+b1 8
+b1 -
+b1 ;
+1$
+#10380
+0$
+#10390
+1a$
+b111111111111111111111111111010011 .
+b11111111111111111111111111010011 0
+b11111111111111111111111111010011 @
+b11 W$
+1h$
+0l$
+b11011 Y$
+0f$
+1\$
+0c$
+1j$
+b101 T$
+b111111111111111111111111111010011 1
+b111111111111111111111111111010011 /
+b101 <
+b111 4
+b11010101000000000000000000000000 7
+b11010101000000000000000000000000 )
+b11010101000000000000000000000000 :
+b10 8
+b10 -
+b10 ;
+1$
+#10400
+0$
+#10410
+1v$
+0h$
+1l$
+b111111111111111111111111111011001 .
+b11111111111111111111111111011001 0
+b11111111111111111111111111011001 @
+b1001 W$
+0o$
+1s$
+1f$
+b11111 Y$
+1m$
+1c$
+0j$
+1q$
+b1011 T$
+b111111111111111111111111111011001 1
+b111111111111111111111111111011001 /
+b1011 <
+b110 4
+b10101010000000000000000000000000 7
+b10101010000000000000000000000000 )
+b10101010000000000000000000000000 :
+b101 8
+b101 -
+b101 ;
+1$
+#10420
+0$
+#10430
+0a$
+1o$
+b100 W$
+0v$
+b111111111111111111111111111100100 .
+b11111111111111111111111111100100 0
+b11111111111111111111111111100100 @
+b1110 q
+b1110 n
+b1110 G
+b1110 N
+b1101 m
+b1101 E
+b1101 J
+1l
+0\$
+1j$
+0q$
+1j
+b110 T$
+b111111111111111111111111111100100 1
+b111111111111111111111111111100100 /
+b10110 <
+b101 4
+b1010100000000000000000000000000 7
+b1010100000000000000000000000000 )
+b1010100000000000000000000000000 :
+b1011 8
+b1011 -
+b1011 ;
+1$
+#10440
+0$
+#10450
+1a$
+1h$
+0o$
+b1011 W$
+1v$
+b111111111111111111111111111111011 .
+b11111111111111111111111111111011 0
+b11111111111111111111111111111011 @
+b1111 q
+b111 R
+1[
+0l$
+b1111 n
+b1111 G
+b1111 N
+b11011 Y$
+0f$
+b1110 m
+b1110 E
+b1110 J
+0l
+1V
+1\$
+0c$
+1q$
+0j
+b1 O
+b1101 T$
+b111111111111111111111111111111011 1
+b111111111111111111111111111111011 /
+b101101 <
+b100 4
+b10101000000000000000000000000000 7
+b10101000000000000000000000000000 )
+b10101000000000000000000000000000 :
+b10110 8
+b10110 -
+b10110 ;
+1$
+#10460
+0$
+#10470
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+0i
+1F
+0L
+1g
+0a$
+0h$
+1v$
+b10010 q
+0H
+0M
+0[
+b0 R
+0b
+1f
+1l$
+b101000 .
+b101000 0
+b101000 @
+b1000 W$
+0o$
+1s$
+b10010 n
+b10 G
+b10 N
+0K
+b1100 S
+1`
+1f$
+b11111 Y$
+1m$
+b10001 m
+b1 E
+b1 J
+1l
+0V
+1]
+0\$
+1c$
+0j$
+1j
+b10 O
+b1010 T$
+b101000 1
+b101000 /
+b1011010 <
+b11 4
+b1010000000000000000000000000000 7
+b1010000000000000000000000000000 )
+b1010000000000000000000000000000 :
+b101101 8
+b101101 -
+b101101 ;
+1$
+#10480
+0$
+#10490
+b10001 q
+0o
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz0zzz A
+0X$
+0t$
+1o$
+0s$
+1a$
+1h$
+0m$
+b11111 .
+b11111 0
+b11111 @
+b1111 W$
+1v$
+0l$
+b11 Y$
+0f$
+1\$
+0c$
+0q$
+b1 T$
+b11111 1
+b11111 /
+b1010001 <
+b10 4
+b10100000000000000000000000000001 7
+b10100000000000000000000000000001 )
+b10100000000000000000000000000001 :
+b101000 8
+b101000 -
+b101000 ;
+1$
+#10500
+0$
+#10510
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+1H
+1L
+1M
+1i
+0F
+1K
+b10000 n
+b0 G
+b0 N
+0g
+0a$
+0h$
+b10000 q
+1o
+1[
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1b
+0f
+1l$
+1o$
+1s$
+b1100 .
+b1100 0
+b1100 @
+b1100 W$
+1v$
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1X$
+b0 S
+0`
+1f$
+1m$
+b11111 Y$
+1t$
+1V
+0]
+0\$
+1c$
+1j$
+1q$
+b1 O
+b1110 T$
+b1100 1
+b1100 /
+b111110 <
+b1 4
+b1000000000000000000000000000011 7
+b1000000000000000000000000000011 )
+b1000000000000000000000000000011 :
+b11111 8
+b11111 -
+b11111 ;
+1$
+#10520
+0$
+#10530
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0v$
+b1110 q
+0H
+0M
+0s$
+b1110 n
+b1110 G
+b1110 N
+0K
+1a$
+1h$
+0m$
+b111111111111111111111111111100111 .
+b11111111111111111111111111100111 0
+b11111111111111111111111111100111 @
+b111 W$
+1o$
+b1101 m
+b1101 E
+b1101 J
+b110 R
+0[
+0l$
+b10011 Y$
+0f$
+0V
+1\$
+0c$
+0j$
+b0 O
+b1001 T$
+b111111111111111111111111111100111 1
+b111111111111111111111111111100111 /
+b11001 <
+b0 4
+b10000000000000000000000000000111 7
+b10000000000000000000000000000111 )
+b10000000000000000000000000000111 :
+b1100 8
+b1100 -
+b1100 ;
+1$
+#10540
+0$
+#10550
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+1H
+1M
+0o$
+1s$
+b10000 n
+b0 G
+b0 N
+1K
+0a$
+0h$
+1m$
+b10000 q
+1o
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+1l$
+b0 .
+b0 0
+b0 @
+b0 W$
+0v$
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1X$
+1f$
+b11111 Y$
+1t$
+1V
+0\$
+1c$
+0q$
+b1 O
+b10 T$
+1,
+b0 1
+b0 /
+b110010 <
+b11111 4
+0#
+03
+b1110 7
+b1110 )
+b1110 :
+b11001 8
+b11001 -
+b11001 ;
+1$
+#10560
+0$
+#10570
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+0o
+1v$
+0X$
+b1111 &"
+0t$
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz0zzz A
+1o$
+0s$
+b1110 W$
+1h$
+0m$
+b111111111111111111111111111001110 .
+b11111111111111111111111111001110 0
+b11111111111111111111111111001110 @
+b1100 q
+0H
+0M
+b110 R
+0[
+0l$
+b1101 n
+b1101 G
+b1101 N
+0K
+b11 Y$
+0f$
+b1100 m
+b1100 E
+b1100 J
+0l
+0V
+0c$
+0j
+b0 O
+b0 T$
+0,
+b111111111111111111111111111001110 1
+b111111111111111111111111111001110 /
+b0 <
+1#
+13
+b0 8
+b0 -
+b0 ;
+b1011010101 7
+b1011010101 )
+b1011010101 :
+1$
+#10580
+0$
+#10590
+b11110 4
+b10110101010 7
+b10110101010 )
+b10110101010 :
+1$
+#10600
+0$
+#10610
+b11101 4
+b101101010100 7
+b101101010100 )
+b101101010100 :
+1$
+#10620
+0$
+#10630
+b11100 4
+b1011010101000 7
+b1011010101000 )
+b1011010101000 :
+1$
+#10640
+0$
+#10650
+b11011 4
+b10110101010000 7
+b10110101010000 )
+b10110101010000 :
+1$
+#10660
+0$
+#10670
+b11010 4
+b101101010100000 7
+b101101010100000 )
+b101101010100000 :
+1$
+#10680
+0$
+#10690
+b11001 4
+b1011010101000000 7
+b1011010101000000 )
+b1011010101000000 :
+1$
+#10700
+0$
+#10710
+b11000 4
+b10110101010000000 7
+b10110101010000000 )
+b10110101010000000 :
+1$
+#10720
+0$
+#10730
+b10111 4
+b101101010100000000 7
+b101101010100000000 )
+b101101010100000000 :
+1$
+#10740
+0$
+#10750
+b10110 4
+b1011010101000000000 7
+b1011010101000000000 )
+b1011010101000000000 :
+1$
+#10760
+0$
+#10770
+b10101 4
+b10110101010000000000 7
+b10110101010000000000 )
+b10110101010000000000 :
+1$
+#10780
+0$
+#10790
+b10100 4
+b101101010100000000000 7
+b101101010100000000000 )
+b101101010100000000000 :
+1$
+#10800
+0$
+#10810
+b10011 4
+b1011010101000000000000 7
+b1011010101000000000000 )
+b1011010101000000000000 :
+1$
+#10820
+0$
+#10830
+b10010 4
+b10110101010000000000000 7
+b10110101010000000000000 )
+b10110101010000000000000 :
+1$
+#10840
+0$
+#10850
+b10001 4
+b101101010100000000000000 7
+b101101010100000000000000 )
+b101101010100000000000000 :
+1$
+#10860
+0$
+#10870
+b10000 4
+b1011010101000000000000000 7
+b1011010101000000000000000 )
+b1011010101000000000000000 :
+1$
+#10880
+0$
+#10890
+b1111 4
+b10110101010000000000000000 7
+b10110101010000000000000000 )
+b10110101010000000000000000 :
+1$
+#10900
+0$
+#10910
+b1110 4
+b101101010100000000000000000 7
+b101101010100000000000000000 )
+b101101010100000000000000000 :
+1$
+#10920
+0$
+#10930
+b1101 4
+b1011010101000000000000000000 7
+b1011010101000000000000000000 )
+b1011010101000000000000000000 :
+1$
+#10940
+0$
+#10950
+b1100 4
+b10110101010000000000000000000 7
+b10110101010000000000000000000 )
+b10110101010000000000000000000 :
+1$
+#10960
+0$
+#10970
+b1011 4
+b101101010100000000000000000000 7
+b101101010100000000000000000000 )
+b101101010100000000000000000000 :
+1$
+#10980
+0$
+#10990
+b1010 4
+b1011010101000000000000000000000 7
+b1011010101000000000000000000000 )
+b1011010101000000000000000000000 :
+1$
+#11000
+0$
+#11010
+b111111111111111111111111111001111 .
+b11111111111111111111111111001111 0
+b11111111111111111111111111001111 @
+b1111 W$
+1a$
+1\$
+b1 T$
+b111111111111111111111111111001111 1
+b111111111111111111111111111001111 /
+b1 <
+b1001 4
+b10110101010000000000000000000000 7
+b10110101010000000000000000000000 )
+b10110101010000000000000000000000 :
+1$
+#11020
+0$
+#11030
+b1101 q
+1o
+0v$
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+1X$
+1t$
+0o$
+1s$
+0a$
+b111111111111111111111111111010000 .
+b11111111111111111111111111010000 0
+b11111111111111111111111111010000 @
+b0 W$
+0h$
+1m$
+1l$
+b11111 Y$
+1f$
+0\$
+1c$
+b10 T$
+b111111111111111111111111111010000 1
+b111111111111111111111111111010000 /
+b10 <
+b1000 4
+b1101010100000000000000000000000 7
+b1101010100000000000000000000000 )
+b1101010100000000000000000000000 :
+b1 8
+b1 -
+b1 ;
+1$
+#11040
+0$
+#11050
+1a$
+b111111111111111111111111111010011 .
+b11111111111111111111111111010011 0
+b11111111111111111111111111010011 @
+b11 W$
+1h$
+0l$
+b11011 Y$
+0f$
+1\$
+0c$
+1j$
+b101 T$
+b111111111111111111111111111010011 1
+b111111111111111111111111111010011 /
+b101 <
+b111 4
+b11010101000000000000000000000000 7
+b11010101000000000000000000000000 )
+b11010101000000000000000000000000 :
+b10 8
+b10 -
+b10 ;
+1$
+#11060
+0$
+#11070
+1v$
+0h$
+1l$
+b111111111111111111111111111011001 .
+b11111111111111111111111111011001 0
+b11111111111111111111111111011001 @
+b1001 W$
+0o$
+1s$
+1f$
+b11111 Y$
+1m$
+1c$
+0j$
+1q$
+b1011 T$
+b111111111111111111111111111011001 1
+b111111111111111111111111111011001 /
+b1011 <
+b110 4
+b10101010000000000000000000000000 7
+b10101010000000000000000000000000 )
+b10101010000000000000000000000000 :
+b101 8
+b101 -
+b101 ;
+1$
+#11080
+0$
+#11090
+0a$
+1o$
+b100 W$
+0v$
+b111111111111111111111111111100100 .
+b11111111111111111111111111100100 0
+b11111111111111111111111111100100 @
+b1110 q
+b1110 n
+b1110 G
+b1110 N
+b1101 m
+b1101 E
+b1101 J
+1l
+0\$
+1j$
+0q$
+1j
+b110 T$
+b111111111111111111111111111100100 1
+b111111111111111111111111111100100 /
+b10110 <
+b101 4
+b1010100000000000000000000000000 7
+b1010100000000000000000000000000 )
+b1010100000000000000000000000000 :
+b1011 8
+b1011 -
+b1011 ;
+1$
+#11100
+0$
+#11110
+1a$
+1h$
+0o$
+b1011 W$
+1v$
+b111111111111111111111111111111011 .
+b11111111111111111111111111111011 0
+b11111111111111111111111111111011 @
+b1111 q
+b111 R
+1[
+0l$
+b1111 n
+b1111 G
+b1111 N
+b11011 Y$
+0f$
+b1110 m
+b1110 E
+b1110 J
+0l
+1V
+1\$
+0c$
+1q$
+0j
+b1 O
+b1101 T$
+b111111111111111111111111111111011 1
+b111111111111111111111111111111011 /
+b101101 <
+b100 4
+b10101000000000000000000000000000 7
+b10101000000000000000000000000000 )
+b10101000000000000000000000000000 :
+b10110 8
+b10110 -
+b10110 ;
+1$
+#11120
+0$
+#11130
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+0i
+1F
+0L
+1g
+0a$
+0h$
+1v$
+b10010 q
+0H
+0M
+0[
+b0 R
+0b
+1f
+1l$
+b101000 .
+b101000 0
+b101000 @
+b1000 W$
+0o$
+1s$
+b10010 n
+b10 G
+b10 N
+0K
+b1100 S
+1`
+1f$
+b11111 Y$
+1m$
+b10001 m
+b1 E
+b1 J
+1l
+0V
+1]
+0\$
+1c$
+0j$
+1j
+b10 O
+b1010 T$
+b101000 1
+b101000 /
+b1011010 <
+b11 4
+b1010000000000000000000000000000 7
+b1010000000000000000000000000000 )
+b1010000000000000000000000000000 :
+b101101 8
+b101101 -
+b101101 ;
+1$
+#11140
+0$
+#11150
+b10001 q
+0o
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz0zzz A
+0X$
+0t$
+1o$
+0s$
+1a$
+1h$
+0m$
+b11111 .
+b11111 0
+b11111 @
+b1111 W$
+1v$
+0l$
+b11 Y$
+0f$
+1\$
+0c$
+0q$
+b1 T$
+b11111 1
+b11111 /
+b1010001 <
+b10 4
+b10100000000000000000000000000001 7
+b10100000000000000000000000000001 )
+b10100000000000000000000000000001 :
+b101000 8
+b101000 -
+b101000 ;
+1$
+#11160
+0$
+#11170
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+1H
+1L
+1M
+1i
+0F
+1K
+b10000 n
+b0 G
+b0 N
+0g
+0a$
+0h$
+b10000 q
+1o
+1[
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1b
+0f
+1l$
+1o$
+1s$
+b1100 .
+b1100 0
+b1100 @
+b1100 W$
+1v$
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1X$
+b0 S
+0`
+1f$
+1m$
+b11111 Y$
+1t$
+1V
+0]
+0\$
+1c$
+1j$
+1q$
+b1 O
+b1110 T$
+b1100 1
+b1100 /
+b111110 <
+b1 4
+b1000000000000000000000000000011 7
+b1000000000000000000000000000011 )
+b1000000000000000000000000000011 :
+b11111 8
+b11111 -
+b11111 ;
+1$
+#11180
+0$
+#11190
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0v$
+b1110 q
+0H
+0M
+0s$
+b1110 n
+b1110 G
+b1110 N
+0K
+1a$
+1h$
+0m$
+b111111111111111111111111111100111 .
+b11111111111111111111111111100111 0
+b11111111111111111111111111100111 @
+b111 W$
+1o$
+b1101 m
+b1101 E
+b1101 J
+b110 R
+0[
+0l$
+b10011 Y$
+0f$
+0V
+1\$
+0c$
+0j$
+b0 O
+b1001 T$
+b111111111111111111111111111100111 1
+b111111111111111111111111111100111 /
+b11001 <
+b0 4
+b10000000000000000000000000000111 7
+b10000000000000000000000000000111 )
+b10000000000000000000000000000111 :
+b1100 8
+b1100 -
+b1100 ;
+1$
+#11200
+0$
+#11210
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+1H
+1M
+0o$
+1s$
+b10000 n
+b0 G
+b0 N
+1K
+0a$
+0h$
+1m$
+b10000 q
+1o
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+1l$
+b0 .
+b0 0
+b0 @
+b0 W$
+0v$
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1X$
+1f$
+b11111 Y$
+1t$
+1V
+0\$
+1c$
+0q$
+b1 O
+b10 T$
+1,
+b0 1
+b0 /
+b110010 <
+b11111 4
+0#
+03
+b1110 7
+b1110 )
+b1110 :
+b11001 8
+b11001 -
+b11001 ;
+1$
+#11220
+0$
+#11230
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+0o
+1v$
+0X$
+b1111 &"
+0t$
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz0zzz A
+1o$
+0s$
+b1110 W$
+1h$
+0m$
+b111111111111111111111111111001110 .
+b11111111111111111111111111001110 0
+b11111111111111111111111111001110 @
+b1100 q
+0H
+0M
+b110 R
+0[
+0l$
+b1101 n
+b1101 G
+b1101 N
+0K
+b11 Y$
+0f$
+b1100 m
+b1100 E
+b1100 J
+0l
+0V
+0c$
+0j
+b0 O
+b0 T$
+0,
+b111111111111111111111111111001110 1
+b111111111111111111111111111001110 /
+b0 <
+1#
+13
+b0 8
+b0 -
+b0 ;
+b1011010101 7
+b1011010101 )
+b1011010101 :
+1$
+#11240
+0$
+#11250
+b11110 4
+b10110101010 7
+b10110101010 )
+b10110101010 :
+1$
+#11260
+0$
+#11270
+b11101 4
+b101101010100 7
+b101101010100 )
+b101101010100 :
+1$
+#11280
+0$
+#11290
+b11100 4
+b1011010101000 7
+b1011010101000 )
+b1011010101000 :
+1$
+#11300
+0$
+#11310
+b11011 4
+b10110101010000 7
+b10110101010000 )
+b10110101010000 :
+1$
+#11320
+0$
+#11330
+b11010 4
+b101101010100000 7
+b101101010100000 )
+b101101010100000 :
+1$
+#11340
+0$
+#11350
+b11001 4
+b1011010101000000 7
+b1011010101000000 )
+b1011010101000000 :
+1$
+#11360
+0$
+#11370
+b11000 4
+b10110101010000000 7
+b10110101010000000 )
+b10110101010000000 :
+1$
+#11380
+0$
+#11390
+b10111 4
+b101101010100000000 7
+b101101010100000000 )
+b101101010100000000 :
+1$
+#11400
+0$
+#11410
+b10110 4
+b1011010101000000000 7
+b1011010101000000000 )
+b1011010101000000000 :
+1$
+#11420
+0$
+#11430
+b10101 4
+b10110101010000000000 7
+b10110101010000000000 )
+b10110101010000000000 :
+1$
+#11440
+0$
+#11450
+b10100 4
+b101101010100000000000 7
+b101101010100000000000 )
+b101101010100000000000 :
+1$
+#11460
+0$
+#11470
+b10011 4
+b1011010101000000000000 7
+b1011010101000000000000 )
+b1011010101000000000000 :
+1$
+#11480
+0$
+#11490
+b10010 4
+b10110101010000000000000 7
+b10110101010000000000000 )
+b10110101010000000000000 :
+1$
+#11500
+0$
+#11510
+b10001 4
+b101101010100000000000000 7
+b101101010100000000000000 )
+b101101010100000000000000 :
+1$
+#11520
+0$
+#11530
+b10000 4
+b1011010101000000000000000 7
+b1011010101000000000000000 )
+b1011010101000000000000000 :
+1$
+#11540
+0$
+#11550
+b1111 4
+b10110101010000000000000000 7
+b10110101010000000000000000 )
+b10110101010000000000000000 :
+1$
+#11560
+0$
+#11570
+b1110 4
+b101101010100000000000000000 7
+b101101010100000000000000000 )
+b101101010100000000000000000 :
+1$
+#11580
+0$
+#11590
+b1101 4
+b1011010101000000000000000000 7
+b1011010101000000000000000000 )
+b1011010101000000000000000000 :
+1$
+#11600
+0$
+#11610
+b1100 4
+b10110101010000000000000000000 7
+b10110101010000000000000000000 )
+b10110101010000000000000000000 :
+1$
+#11620
+0$
+#11630
+b1011 4
+b101101010100000000000000000000 7
+b101101010100000000000000000000 )
+b101101010100000000000000000000 :
+1$
+#11640
+0$
+#11650
+b1010 4
+b1011010101000000000000000000000 7
+b1011010101000000000000000000000 )
+b1011010101000000000000000000000 :
+1$
+#11660
+0$
+#11670
+b111111111111111111111111111001111 .
+b11111111111111111111111111001111 0
+b11111111111111111111111111001111 @
+b1111 W$
+1a$
+1\$
+b1 T$
+b111111111111111111111111111001111 1
+b111111111111111111111111111001111 /
+b1 <
+b1001 4
+b10110101010000000000000000000000 7
+b10110101010000000000000000000000 )
+b10110101010000000000000000000000 :
+1$
+#11680
+0$
+#11690
+b1101 q
+1o
+0v$
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+1X$
+1t$
+0o$
+1s$
+0a$
+b111111111111111111111111111010000 .
+b11111111111111111111111111010000 0
+b11111111111111111111111111010000 @
+b0 W$
+0h$
+1m$
+1l$
+b11111 Y$
+1f$
+0\$
+1c$
+b10 T$
+b111111111111111111111111111010000 1
+b111111111111111111111111111010000 /
+b10 <
+b1000 4
+b1101010100000000000000000000000 7
+b1101010100000000000000000000000 )
+b1101010100000000000000000000000 :
+b1 8
+b1 -
+b1 ;
+1$
+#11700
+0$
+#11710
+1a$
+b111111111111111111111111111010011 .
+b11111111111111111111111111010011 0
+b11111111111111111111111111010011 @
+b11 W$
+1h$
+0l$
+b11011 Y$
+0f$
+1\$
+0c$
+1j$
+b101 T$
+b111111111111111111111111111010011 1
+b111111111111111111111111111010011 /
+b101 <
+b111 4
+b11010101000000000000000000000000 7
+b11010101000000000000000000000000 )
+b11010101000000000000000000000000 :
+b10 8
+b10 -
+b10 ;
+1$
+#11720
+0$
+#11730
+1v$
+0h$
+1l$
+b111111111111111111111111111011001 .
+b11111111111111111111111111011001 0
+b11111111111111111111111111011001 @
+b1001 W$
+0o$
+1s$
+1f$
+b11111 Y$
+1m$
+1c$
+0j$
+1q$
+b1011 T$
+b111111111111111111111111111011001 1
+b111111111111111111111111111011001 /
+b1011 <
+b110 4
+b10101010000000000000000000000000 7
+b10101010000000000000000000000000 )
+b10101010000000000000000000000000 :
+b101 8
+b101 -
+b101 ;
+1$
+#11740
+0$
+#11750
+0a$
+1o$
+b100 W$
+0v$
+b111111111111111111111111111100100 .
+b11111111111111111111111111100100 0
+b11111111111111111111111111100100 @
+b1110 q
+b1110 n
+b1110 G
+b1110 N
+b1101 m
+b1101 E
+b1101 J
+1l
+0\$
+1j$
+0q$
+1j
+b110 T$
+b111111111111111111111111111100100 1
+b111111111111111111111111111100100 /
+b10110 <
+b101 4
+b1010100000000000000000000000000 7
+b1010100000000000000000000000000 )
+b1010100000000000000000000000000 :
+b1011 8
+b1011 -
+b1011 ;
+1$
+#11760
+0$
+#11770
+1a$
+1h$
+0o$
+b1011 W$
+1v$
+b111111111111111111111111111111011 .
+b11111111111111111111111111111011 0
+b11111111111111111111111111111011 @
+b1111 q
+b111 R
+1[
+0l$
+b1111 n
+b1111 G
+b1111 N
+b11011 Y$
+0f$
+b1110 m
+b1110 E
+b1110 J
+0l
+1V
+1\$
+0c$
+1q$
+0j
+b1 O
+b1101 T$
+b111111111111111111111111111111011 1
+b111111111111111111111111111111011 /
+b101101 <
+b100 4
+b10101000000000000000000000000000 7
+b10101000000000000000000000000000 )
+b10101000000000000000000000000000 :
+b10110 8
+b10110 -
+b10110 ;
+1$
+#11780
+0$
+#11790
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+0i
+1F
+0L
+1g
+0a$
+0h$
+1v$
+b10010 q
+0H
+0M
+0[
+b0 R
+0b
+1f
+1l$
+b101000 .
+b101000 0
+b101000 @
+b1000 W$
+0o$
+1s$
+b10010 n
+b10 G
+b10 N
+0K
+b1100 S
+1`
+1f$
+b11111 Y$
+1m$
+b10001 m
+b1 E
+b1 J
+1l
+0V
+1]
+0\$
+1c$
+0j$
+1j
+b10 O
+b1010 T$
+b101000 1
+b101000 /
+b1011010 <
+b11 4
+b1010000000000000000000000000000 7
+b1010000000000000000000000000000 )
+b1010000000000000000000000000000 :
+b101101 8
+b101101 -
+b101101 ;
+1$
+#11800
+0$
+#11810
+b10001 q
+0o
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz0zzz A
+0X$
+0t$
+1o$
+0s$
+1a$
+1h$
+0m$
+b11111 .
+b11111 0
+b11111 @
+b1111 W$
+1v$
+0l$
+b11 Y$
+0f$
+1\$
+0c$
+0q$
+b1 T$
+b11111 1
+b11111 /
+b1010001 <
+b10 4
+b10100000000000000000000000000001 7
+b10100000000000000000000000000001 )
+b10100000000000000000000000000001 :
+b101000 8
+b101000 -
+b101000 ;
+1$
+#11820
+0$
+#11830
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+1H
+1L
+1M
+1i
+0F
+1K
+b10000 n
+b0 G
+b0 N
+0g
+0a$
+0h$
+b10000 q
+1o
+1[
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1b
+0f
+1l$
+1o$
+1s$
+b1100 .
+b1100 0
+b1100 @
+b1100 W$
+1v$
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1X$
+b0 S
+0`
+1f$
+1m$
+b11111 Y$
+1t$
+1V
+0]
+0\$
+1c$
+1j$
+1q$
+b1 O
+b1110 T$
+b1100 1
+b1100 /
+b111110 <
+b1 4
+b1000000000000000000000000000011 7
+b1000000000000000000000000000011 )
+b1000000000000000000000000000011 :
+b11111 8
+b11111 -
+b11111 ;
+1$
+#11840
+0$
+#11850
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+b1111 &"
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz1zzz A
+0v$
+b1110 q
+0H
+0M
+0s$
+b1110 n
+b1110 G
+b1110 N
+0K
+1a$
+1h$
+0m$
+b111111111111111111111111111100111 .
+b11111111111111111111111111100111 0
+b11111111111111111111111111100111 @
+b111 W$
+1o$
+b1101 m
+b1101 E
+b1101 J
+b110 R
+0[
+0l$
+b10011 Y$
+0f$
+0V
+1\$
+0c$
+0j$
+b0 O
+b1001 T$
+b111111111111111111111111111100111 1
+b111111111111111111111111111100111 /
+b11001 <
+b0 4
+b10000000000000000000000000000111 7
+b10000000000000000000000000000111 )
+b10000000000000000000000000000111 :
+b1100 8
+b1100 -
+b1100 ;
+1$
+#11860
+0$
+#11870
+12
+b10000 <$
+1:$
+b10000 p#
+1n#
+b10000 F#
+1D#
+b10000 z"
+1x"
+b10000 P"
+1N"
+b10000 &"
+1$"
+1H
+1M
+0o$
+1s$
+b10000 n
+b0 G
+b0 N
+1K
+0a$
+0h$
+1m$
+b10000 q
+1o
+b1111 m
+b1111 E
+b1111 J
+b111 R
+1[
+1l$
+b0 .
+b0 0
+b0 @
+b0 W$
+0v$
+b1zzz1zzz1zzz1zzz1zzz1zzz1zzz1zzz A
+1X$
+1f$
+b11111 Y$
+1t$
+1V
+0\$
+1c$
+0q$
+b1 O
+b10 T$
+1,
+b0 1
+b0 /
+b110010 <
+b11111 4
+0#
+03
+b1110 7
+b1110 )
+b1110 :
+b11001 8
+b11001 -
+b11001 ;
+1$
+#11880
+0$
+#11890
+02
+b1111 <$
+0:$
+b1111 p#
+0n#
+b1111 F#
+0D#
+b1111 z"
+0x"
+b1111 P"
+0N"
+0o
+1v$
+0X$
+b1111 &"
+0t$
+0$"
+b0zzz0zzz0zzz0zzz0zzz0zzz0zzz0zzz A
+1o$
+0s$
+b1110 W$
+1h$
+0m$
+b111111111111111111111111111001110 .
+b11111111111111111111111111001110 0
+b11111111111111111111111111001110 @
+b1100 q
+0H
+0M
+b110 R
+0[
+0l$
+b1101 n
+b1101 G
+b1101 N
+0K
+b11 Y$
+0f$
+b1100 m
+b1100 E
+b1100 J
+0l
+0V
+0c$
+0j
+b0 O
+b0 T$
+0,
+b111111111111111111111111111001110 1
+b111111111111111111111111111001110 /
+b0 <
+1#
+13
+b0 8
+b0 -
+b0 ;
+b1011010101 7
+b1011010101 )
+b1011010101 :
+1$
+#11900
+0$
+#11910
+b11110 4
+b10110101010 7
+b10110101010 )
+b10110101010 :
+1$
+#11920
+0$
+#11930
+b11101 4
+b101101010100 7
+b101101010100 )
+b101101010100 :
+1$
+#11940
+0$
+#11950
+b11100 4
+b1011010101000 7
+b1011010101000 )
+b1011010101000 :
+1$
+#11960
+0$
+#11970
+b11011 4
+b10110101010000 7
+b10110101010000 )
+b10110101010000 :
+1$
+#11980
+0$
+#11990
+b11010 4
+b101101010100000 7
+b101101010100000 )
+b101101010100000 :
+1$
+#12000
+0$
