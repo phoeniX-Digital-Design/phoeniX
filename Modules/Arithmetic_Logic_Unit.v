@@ -36,7 +36,9 @@
 */
 
 // *** Include your header files and modules here ***
+// ---------------------------------------------------------------------------------
 `include "../Approximate_Arithmetic_Units/Approximate_Accuracy_Controlable_Adder.v"
+// ---------------------------------------------------------------------------------
 // *** End of including header files and modules ***
 
 `ifndef OPCODES
