@@ -3,10 +3,83 @@ module Approximate_Accuracy_Controlable_Multiplier (
     input enable,
 
     input [6 : 0] Er,
+    input [31 : 0] Operand_1,
+    input [31 : 0] Operand_2,
+
+    output [63 : 0] Result,
+    output Ready
+);
+    
+    wire [31 : 0] Partial_Product [0 : 3];
+    wire Partial_Ready [0 : 3];
+
+    Approximate_Accuracy_Controlable_Multiplier_16bit multiplier_LOWxLOW
+    (
+        .CLK(CLK),
+        .enable(enable),
+
+        .Er(Er),
+        .Operand_1(Operand_1[15 : 0]),
+        .Operand_2(Operand_2[15 : 0]),
+
+        .Result(Partial_Product[0]),
+        .Ready(Partial_Ready[0])
+    );
+
+    Approximate_Accuracy_Controlable_Multiplier_16bit multiplier_HIGHxLOW
+    (
+        .CLK(CLK),
+        .enable(enable),
+
+        .Er({7{1'b1}}),
+        .Operand_1(Operand_1[31 : 16]),
+        .Operand_2(Operand_2[15 :  0]),
+
+        .Result(Partial_Product[1]),
+        .Ready(Partial_Ready[1])
+    );
+
+    Approximate_Accuracy_Controlable_Multiplier_16bit multiplier_LOWxHIGH
+    (
+        .CLK(CLK),
+        .enable(enable),
+
+        .Er({7{1'b1}}),
+        .Operand_1(Operand_1[15 :  0]),
+        .Operand_2(Operand_2[31 : 16]),
+
+        .Result(Partial_Product[2]),
+        .Ready(Partial_Ready[2])
+    );
+
+    Approximate_Accuracy_Controlable_Multiplier_16bit multiplier_HIGHxHIGH
+    (
+        .CLK(CLK),
+        .enable(enable),
+
+        .Er({7{1'b1}}),
+        .Operand_1(Operand_1[31 : 16]),
+        .Operand_2(Operand_2[31 : 16]),
+
+        .Result(Partial_Product[3]),
+        .Ready(Partial_Ready[3])
+    );
+
+    assign Result = {32'b0, Partial_Product[0]} + {16'b0, Partial_Product[1], 16'b0} + {16'b0, Partial_Product[2], 16'b0} + {Partial_Product[3], 32'b0};
+    assign Ready = &{Partial_Ready[0], Partial_Ready[1], Partial_Ready[2], Partial_Ready[3]};
+endmodule
+
+module Approximate_Accuracy_Controlable_Multiplier_16bit 
+(
+    input CLK,
+    input enable,
+
+    input [6 : 0] Er,
     input [15 : 0] Operand_1,
     input [15 : 0] Operand_2,
 
-    output reg [31 : 0] Result
+    output reg [31 : 0] Result,
+    output reg Ready
 );
 
     reg     [ 7 : 0] mul_input_1;
@@ -34,8 +107,11 @@ module Approximate_Accuracy_Controlable_Multiplier (
 
     always @(posedge CLK) 
     begin
-        if (~enable)    
+        if (~enable)   
+        begin 
             state <= reset;
+            Ready <= 1'b0;
+        end
         else
             state <= next_state;
     end
@@ -45,14 +121,14 @@ module Approximate_Accuracy_Controlable_Multiplier (
         next_state = 'bx;
 
         case (state)
-            3'b000 : next_state <= 3'b001;
+            3'b000 : begin next_state <= 3'b001; Ready <= 1'b0; end
             3'b001 : begin mul_input_1 <= Operand_1[ 7 : 0]; mul_input_2 <= Operand_2[ 7 : 0]; next_state <= 3'b010; end
             3'b010 : begin mul_input_1 <= Operand_1[15 : 8]; mul_input_2 <= Operand_2[ 7 : 0]; next_state <= 3'b011; end
             3'b011 : begin mul_input_1 <= Operand_1[ 7 : 0]; mul_input_2 <= Operand_2[15 : 8]; mul_result_1 <= mul_result; next_state <= 3'b100; end
             3'b100 : begin mul_input_1 <= Operand_1[15 : 8]; mul_input_2 <= Operand_2[15 : 8]; mul_result_2 <= mul_result; next_state <= 3'b101; end
             3'b101 : begin mul_result_3 <= mul_result; next_state = 3'b110; end
             3'b110 : begin mul_result_4 <= mul_result; next_state = 3'b111; end
-            3'b111 : begin Result = {16'b0, mul_result_1} + {8'b0, mul_result_2, 8'b0} + {8'b0, mul_result_3, 8'b0} + {mul_result_4, 16'b0}; end
+            3'b111 : begin Result = {16'b0, mul_result_1} + {8'b0, mul_result_2, 8'b0} + {8'b0, mul_result_3, 8'b0} + {mul_result_4, 16'b0}; Ready = 1'b1; end
         endcase 
     end
 endmodule
