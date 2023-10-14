@@ -2,27 +2,24 @@
 
 module Divider_Unit_TB;
 
-    parameter DIV_X_EXTENISION = 1;
-    parameter DIV_USER_DESIGN  = 1; // Change to 1 for testing if statement in module -> test passed
-    parameter DIV_APX_ACC_CONTROL = 1;
     reg CLK = 0;
-    reg [6:0] opcode;
-    reg [6:0] funct7;
-    reg [2:0] funct3;
-    reg [7:0] accuracy_level;
-    reg [31:0] rs1;
-    reg [31:0] rs2;
+    reg [6  : 0] opcode;
+    reg [6  : 0] funct7;
+    reg [2  : 0] funct3;
+    reg [31  : 0] accuracy_control;
+    reg [31 : 0] rs1;
+    reg [31 : 0] rs2;
 
+    wire [31 : 0] div_output;
     wire div_unit_busy;
-    wire [31:0] div_output;
 
-    Divider_Unit #(DIV_X_EXTENISION, DIV_USER_DESIGN, DIV_APX_ACC_CONTROL) uut 
+    Divider_Unit uut 
     (
         .CLK(CLK),
         .opcode(opcode),
         .funct7(funct7),
         .funct3(funct3),
-        .accuracy_level(accuracy_level),
+        .accuracy_control(accuracy_control),
         .rs1(rs1),
         .rs2(rs2),
         .div_unit_busy(div_unit_busy),
@@ -32,34 +29,47 @@ module Divider_Unit_TB;
     always #10 CLK = ~CLK;
 
     initial begin
-        $dumpfile("DIV.vcd");
+        $dumpfile("Divider_Unit.vcd");
         $dumpvars(0, Divider_Unit_TB);
 
         opcode = 7'b0110011;
         funct7 = 7'b0000001;
         funct3 = 3'b100;
 
-        accuracy_level = 8'b00000000;
+        // Case 1 : Accurate DIV
+        accuracy_control = 32'b11111111_001;
         rs1 = 32'd400;
         rs2 = 32'd20;
+        #4000;
+        $display("ACC Divider output = %d", div_output);
+        $display("Divider unit busy = %d", div_unit_busy);
 
-        #20;
-        $display("Divider output: %d", div_output);
-        $display("Divider busy: %d", div_unit_busy);
-
-        accuracy_level = 8'b00000001;
+        // Case 2 : Approximate DIV
+        accuracy_control = 32'b11111000_001;
         rs1 = 32'd100;
         rs2 = 32'd20;
-        #20;
-        $display("Divider output: %d", div_output);
-        $display("Divider busy: %d", div_unit_busy);
+        #4000;
+        $display("APX Divider output = %d", div_output);
+        $display("Divider unit busy = %d", div_unit_busy);
 
-        accuracy_level = 8'b00000010;
-        rs1 = 32'd500;
+        // Case 3 : Accurate REM
+        opcode = 7'b0110011;
+        funct7 = 7'b0000001;
+        funct3 = 3'b111;
+        accuracy_control = 32'b11111111_001;
+        rs1 = 32'd535;
         rs2 = 32'd20;
-        #20;
-        $display("Divider output: %d", div_output);
-        $display("Divider busy: %d", div_unit_busy);
+        #4000;
+        $display("ACC Remainder output = %d", div_output);
+        $display("Divider unit busy = %d", div_unit_busy);
+
+        // Case 4 : Approximate REM
+        accuracy_control = 32'b11111000_001;
+        rs1 = 32'd535;
+        rs2 = 32'd500;
+        #4000;
+        $display("APX Remainder output = %d", div_output);
+        $display("Divider unit busy = %d", div_unit_busy);
 
         $finish;
     end
