@@ -1,4 +1,63 @@
-module Approximate_Accuracy_Controlable_Multiplier 
+module Approximate_Accuracy_Controlable_Multiplier (
+    input CLK,
+    input enable,
+
+    input [6 : 0] Er,
+    input [15 : 0] Operand_1,
+    input [15 : 0] Operand_2,
+
+    output reg [31 : 0] Result
+);
+
+    reg     [ 7 : 0] mul_input_1;
+    reg     [ 7 : 0] mul_input_2;
+    
+    wire    [15 : 0] mul_result;
+    reg     [15 : 0] mul_result_1;
+    reg     [15 : 0] mul_result_2;
+    reg     [15 : 0] mul_result_3;
+    reg     [15 : 0] mul_result_4;
+
+    Approximate_Accuracy_Controlable_Multiplier_8bit mul
+    (
+        .CLK(CLK),
+        .Er(Er),
+        .Operand_1(mul_input_1),
+        .Operand_2(mul_input_2),
+        .Result(mul_result)
+    );
+
+    reg [2 : 0] state;
+    reg [2 : 0] next_state;
+
+    localparam reset = 3'b000;
+
+    always @(posedge CLK) 
+    begin
+        if (~enable)    
+            state <= reset;
+        else
+            state <= next_state;
+    end
+
+    always @(*) 
+    begin
+        next_state = 'bx;
+
+        case (state)
+            3'b000 : next_state <= 3'b001;
+            3'b001 : begin mul_input_1 <= Operand_1[ 7 : 0]; mul_input_2 <= Operand_2[ 7 : 0]; next_state <= 3'b010; end
+            3'b010 : begin mul_input_1 <= Operand_1[15 : 8]; mul_input_2 <= Operand_2[ 7 : 0]; next_state <= 3'b011; end
+            3'b011 : begin mul_input_1 <= Operand_1[ 7 : 0]; mul_input_2 <= Operand_2[15 : 8]; mul_result_1 <= mul_result; next_state <= 3'b100; end
+            3'b100 : begin mul_input_1 <= Operand_1[15 : 8]; mul_input_2 <= Operand_2[15 : 8]; mul_result_2 <= mul_result; next_state <= 3'b101; end
+            3'b101 : begin mul_result_3 <= mul_result; next_state = 3'b110; end
+            3'b110 : begin mul_result_4 <= mul_result; next_state = 3'b111; end
+            3'b111 : begin Result = {16'b0, mul_result_1} + {8'b0, mul_result_2, 8'b0} + {8'b0, mul_result_3, 8'b0} + {mul_result_4, 16'b0}; end
+        endcase 
+    end
+endmodule
+
+module Approximate_Accuracy_Controlable_Multiplier_8bit
 (
     input CLK,
 
