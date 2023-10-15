@@ -18,10 +18,12 @@
         CSR [31 : 3] : APPROXIMATION_ERROR_CONTROL
     - PLEASE DO NOT REMOVE ANY OF THE COMMENTS IN THIS FILE
     - Input and Output paramaters:
+        Input:  CLK = Source clock signal
         Input:  error_control = {accuracy_control[USER_ERROR_LEN:3], accuracy_control[2:1] (module select), accuracy_control[0]}
-        Input:  mul_input_1   = First operand of your module
-        Input:  mul_input_2   = Second operand of your module
-        Output: mul_result    = Module output
+        Input:  input_1       = First operand of your module
+        Input:  input_2       = Second operand of your module
+        Output: result        = Module division output
+        Output: busy          = Module busy signal
     ==========================================================================================================================
 */
 
@@ -32,6 +34,8 @@
 module Multiplier_Unit
 (
     input CLK,                          // Source Clock Signal
+
+    input enable,
 
     input [6 : 0] opcode,               // ALU Operation
     input [6 : 0] funct7,               // ALU Operation
@@ -47,46 +51,20 @@ module Multiplier_Unit
 );
 
     // Data forwarding will be considered in the core file (top = phoeniX.v)
-    reg  [31 : 0] operand_1; 
-    reg  [31 : 0] operand_2;
-    reg  [31 : 0] input_1;
-    reg  [31 : 0] input_2;
-    reg  [31 : 0] accuracy;
-    wire [31 : 0] result;
+    reg  [31 : 0] operand_1;            // Bus RS1 latch
+    reg  [31 : 0] operand_2;            // Bus RS2 latch
 
-    // Latching operands coming from data bus
-    always @(*) begin
-        operand_1 = rs1;
-        operand_2 = rs2;
-        // Checking if the module is accuracy controlable or not
-        if (MUL_X_EXTENISION == 0 && MUL_USER_DESIGN == 1 && MUL_APX_ACC_CONTROL == 0)
-        begin
-            accuracy = 32'bz; // Module is not approximate and accuracy controlable but is user designed -> input signal = Z
-        end
-        else if (MUL_X_EXTENISION == 0 && MUL_USER_DESIGN == 0 && MUL_APX_ACC_CONTROL == 0)
-        begin
-            accuracy = 32'bz; // Module is not approximate,accuracy controlable and user designed -> input signal = Z
-        end
-        else if (MUL_X_EXTENISION == 0 && MUL_USER_DESIGN == 0 && MUL_APX_ACC_CONTROL == 1)
-        begin
-            accuracy = 32'bz; // Module is not approximate and accuracy controlable -> input signal = Z
-        end
-        else if (MUL_X_EXTENISION == 1 && MUL_USER_DESIGN == 1 && MUL_APX_ACC_CONTROL == 0)
-        begin
-            accuracy = 32'bz; // Module is approximate but not accuracy controlable -> input signal = Z
-        end
-        else if (MUL_X_EXTENISION == 1 && MUL_USER_DESIGN == 1 && MUL_APX_ACC_CONTROL == 1)
-        begin
-            accuracy = accuracy_level; // Module is  approximate and accuracy controlable
-        end
-        // If the module is accuracy controlable, the accuarcy will be extracted from CSRs.
-        // The extracted accuracy level will be directly give to `accuracy_level` and `accuracy`
-    end
+    reg  [31 : 0] input_1;              // Module input 1
+    reg  [31 : 0] input_2;              // Module input 2
+
+    wire [63 : 0] result;               // Multiplier 64-bit result
 
     always @(*) 
     begin
-        mul_output = result;
-        mul_unit_busy = busy;
+        operand_1 = rs1;
+        operand_2 = rs2;
+        mul_output = result;        // Low-word (32-bit) of 64-bit result
+        mul_unit_busy = ~n_busy;    // NOT [Ready] = Unit Busy
         casex ({funct7, funct3, opcode})
             17'b0000001_000_0110011 : begin  // MUL
                 input_1 = $signed(operand_1);
@@ -111,19 +89,20 @@ module Multiplier_Unit
         endcase
     end
 
-    // *** Instantiate your adder circuit here ***
-    // Please instantiate your adder module according to the guidelines and naming conventions of phoeniX
-    // --------------------------------------------------------------------------------------------------
-    Sample_Multiplier mul 
+    // *** Instantiate your multiplier circuit here ***
+    // Please instantiate your multiplier module according to the guidelines and naming conventions of phoeniX
+    // -------------------------------------------------------------------------------------------------------
+    Approximate_Accuracy_Controlable_Multiplier multiplier 
     (
-        CLK, 
-        input_1, 
-        input_2, 
-        accuracy, 
-        busy, 
-        result
+        .CLK(CLK),
+        .enable(enable),
+        .Er(accuracy_control[9 : 3] | {7{~accuracy_control[0]}}),
+        .Operand_1(input_1), 
+        .Operand_2(input_2),  
+        .Result(result),
+        .Ready(n_busy)
     );
-    // --------------------------------------------------------------------------------------------------
-    // *** End of adder module instantiation ***
+    // -------------------------------------------------------------------------------------------------------
+    // *** End of multiplier module instantiation ***
 
 endmodule

@@ -1,4 +1,5 @@
-module Approximate_Accuracy_Controlable_Multiplier (
+module Approximate_Accuracy_Controlable_Multiplier 
+(
     input CLK,
     input enable,
 
