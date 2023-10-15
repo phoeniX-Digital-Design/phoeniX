@@ -20,11 +20,9 @@ module Approximate_Accuracy_Controlable_Divider
     reg [31 : 0] denom;         // Second operand (operand_2)  
     reg [31 : 0] work;          // remunning remainder
 
-    wire [32 : 0] sub_test;
-    //wire [32 : 0] sub = {work[30 : 0], result[31]} - denom;
     wire c_out;
-    //wire [32 : 0] sub_prim = {work[30 : 0], result[31]} + ~denom + 1'b1;
-    wire [31 : 0] sub_module; 
+    wire [31 : 0] sub_module;
+    wire [32 : 0] sub;
 
     // Calculate the current digit
     Approximate_Accuracy_Controlable_Adder 
@@ -41,7 +39,7 @@ module Approximate_Accuracy_Controlable_Divider
         .Sum(sub_module),
         .Cout(c_out)
     );
-    assign sub_test = {sub_module[31], sub_module}; // sign-extend
+    assign sub = {sub_module[31], sub_module}; // sign-extend
 
     wire [31 : 0] div_result;
     wire [31 : 0] rem_result;
@@ -50,8 +48,6 @@ module Approximate_Accuracy_Controlable_Divider
     
     always @(*) 
     begin
-        //$display("operand 1 = %b | operand 2 = %b", {work[30 : 0], result[31]}, denom);
-        //$display("SUB_Normal = %d | SUB_Prim = %b | SUB_Module = %b \n" , sub, sub_prim, sub_test);
         if ((output_ready == 1) && (busy == 0))
         begin
             assign latched_div_result = div_result;  
@@ -77,9 +73,9 @@ module Approximate_Accuracy_Controlable_Divider
             if (active) 
             begin  
                 // remun an iteration of the divide.  
-                if (sub_test[32] == 0) 
+                if (sub[32] == 0) 
                 begin  
-                    work  <= sub_test[31 : 0];
+                    work  <= sub[31 : 0];
                     result <= {result[30 : 0], 1'b1};
                 end  
                 else 
