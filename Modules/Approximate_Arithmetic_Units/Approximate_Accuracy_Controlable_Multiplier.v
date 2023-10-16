@@ -67,7 +67,7 @@ module Approximate_Accuracy_Controlable_Multiplier
     );
 
     assign Result = {32'b0, Partial_Product[0]} + {16'b0, Partial_Product[1], 16'b0} + {16'b0, Partial_Product[2], 16'b0} + {Partial_Product[3], 32'b0};
-    assign Ready = &{Partial_Ready[0], Partial_Ready[1], Partial_Ready[2], Partial_Ready[3]};
+    assign Ready  = &{Partial_Ready[0], Partial_Ready[1], Partial_Ready[2], Partial_Ready[3]};
 endmodule
 
 module Approximate_Accuracy_Controlable_Multiplier_16bit 

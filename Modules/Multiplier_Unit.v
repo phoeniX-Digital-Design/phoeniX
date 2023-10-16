@@ -35,7 +35,7 @@ module Multiplier_Unit
 (
     input CLK,                          // Source Clock Signal
 
-    input enable,
+    // input enable,
 
     input [6 : 0] opcode,               // ALU Operation
     input [6 : 0] funct7,               // ALU Operation
@@ -51,6 +51,8 @@ module Multiplier_Unit
 );
 
     // Data forwarding will be considered in the core file (top = phoeniX.v)
+    reg  enable;
+
     reg  [31 : 0] operand_1;            // Bus RS1 latch
     reg  [31 : 0] operand_2;            // Bus RS2 latch
 
@@ -67,26 +69,31 @@ module Multiplier_Unit
         mul_unit_busy = ~n_busy;    // NOT [Ready] = Unit Busy
         casex ({funct7, funct3, opcode})
             17'b0000001_000_0110011 : begin  // MUL
+                enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = $signed(operand_2);
             end
             17'b0000001_001_0110011 : begin  // MULH
+                enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = $signed(operand_2);
                 mul_output = mul_output >>> 32;
             end
             17'b0000001_010_0110011 : begin  // MULHSU
+                enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = operand_2;
                 mul_output = mul_output >>> 32;
             end
             17'b0000001_011_0110011 : begin  // MULHU
+                enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = operand_2;
                 mul_output = mul_output >> 32;
             end
-            default: begin mul_output = 32'bz; mul_unit_busy = 1'bz; end // Wrong opcode                
+            default: begin enable  = 1'b0; mul_output = 32'bz; mul_unit_busy = 1'bz; end // Wrong opcode             
         endcase
+        if (multiplier.Ready == 1'b1) begin enable = 1'b0; end
     end
 
     // *** Instantiate your multiplier circuit here ***
