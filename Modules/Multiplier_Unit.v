@@ -31,11 +31,47 @@
 `include "../Approximate_Arithmetic_Units/Approximate_Accuracy_Controlable_Multiplier.v"
 // *** End of including headers and modules ***
 
+`ifndef OPCODES
+    `define LOAD        7'b00_000_11
+    `define LOAD_FP     7'b00_001_11
+    `define custom_0    7'b00_010_11
+    `define MISC_MEM    7'b00_011_11
+    `define OP_IMM      7'b00_100_11
+    `define AUIPC       7'b00_101_11
+    `define OP_IMM_32   7'b00_110_11
+
+    `define STORE       7'b01_000_11
+    `define STORE_FP    7'b01_001_11
+    `define custom_1    7'b01_010_11
+    `define AMO         7'b01_011_11
+    `define OP          7'b01_100_11
+    `define LUI         7'b01_101_11
+    `define OP_32       7'b01_110_11
+
+    `define MADD        7'b10_000_11
+    `define MSUB        7'b10_001_11
+    `define NMSUB       7'b10_010_11
+    `define NMADD       7'b10_011_11
+    `define OP_FP       7'b10_100_11
+    `define custom_2    7'b10_110_11
+
+    `define BRANCH      7'b11_000_11
+    `define JALR        7'b11_001_11
+    `define JAL         7'b11_011_11
+    `define SYSTEM      7'b11_100_11
+    `define custom_3    7'b11_110_11
+`endif
+
+`define MUL     3'b000
+`define MULH    3'b001
+`define MULHSU  3'b010
+`define MULHU   3'b011 
+
+`define MULDIV  7'b0000001
+
 module Multiplier_Unit
 (
     input CLK,                          // Source Clock Signal
-
-    // input enable,
 
     input [6 : 0] opcode,               // ALU Operation
     input [6 : 0] funct7,               // ALU Operation
@@ -46,7 +82,7 @@ module Multiplier_Unit
     input [31 : 0] rs1,                 // Register Source 1
     input [31 : 0] rs2,                 // Register Source 2
 
-    output reg mul_unit_busy,           // For Multiplier Unit Condition Checking
+    output mul_unit_busy,               // For Multiplier Unit Condition Checking
     output reg [31 : 0] mul_output      // Multiplier Unit Result
 );
 
@@ -65,36 +101,37 @@ module Multiplier_Unit
     begin
         operand_1 = rs1;
         operand_2 = rs2;
-        mul_output = result;        // Low-word (32-bit) of 64-bit result
-        mul_unit_busy = ~n_busy;    // NOT [Ready] = Unit Busy
+        mul_output = result;            // Low-word (32-bit) of 64-bit result
+        // mul_unit_busy = ~n_busy;        // NOT [Ready] = Unit Busy
         casex ({funct7, funct3, opcode})
-            17'b0000001_000_0110011 : begin  // MUL
+            {`MULDIV, `MUL, `OP} : begin  // MUL
                 enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = $signed(operand_2);
             end
-            17'b0000001_001_0110011 : begin  // MULH
+            {`MULDIV, `MULH, `OP} : begin  // MULH
                 enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = $signed(operand_2);
                 mul_output = mul_output >>> 32;
             end
-            17'b0000001_010_0110011 : begin  // MULHSU
+            {`MULDIV, `MULHSU, `OP} : begin  // MULHSU
                 enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = operand_2;
                 mul_output = mul_output >>> 32;
             end
-            17'b0000001_011_0110011 : begin  // MULHU
+            {`MULDIV, `MULHU, `OP} : begin  // MULHU
                 enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = operand_2;
                 mul_output = mul_output >> 32;
             end
-            default: begin enable  = 1'b0; mul_output = 32'bz; mul_unit_busy = 1'bz; end // Wrong opcode             
+            default: begin enable = 1'b0; mul_output = 32'bz; end             
         endcase
-        if (multiplier.Ready == 1'b1) begin enable = 1'b0; end
     end
+
+    always @(negedge mul_unit_busy) enable <= 1'b0;
 
     // *** Instantiate your multiplier circuit here ***
     // Please instantiate your multiplier module according to the guidelines and naming conventions of phoeniX
@@ -107,7 +144,7 @@ module Multiplier_Unit
         .Operand_1(input_1), 
         .Operand_2(input_2),  
         .Result(result),
-        .Ready(n_busy)
+        .Busy(mul_unit_busy)
     );
     // -------------------------------------------------------------------------------------------------------
     // *** End of multiplier module instantiation ***
