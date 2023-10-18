@@ -7,6 +7,7 @@
 `include "Address_Generator.v"
 `include "Load_Store_Unit.v"
 `include "Hazard_Forward_Unit.v"
+`include "Control_Status_Unit.v"
 `include "Defines.vh"
 
 `ifndef NOP_INSTRUCTION
@@ -119,10 +120,15 @@ module phoeniX
     wire [ 4 : 0] read_index_1_decode_wire;
     wire [ 4 : 0] read_index_2_decode_wire;
     wire [ 4 : 0] write_index_decode_wire;
+    wire [11 : 0] csr_index_decode_wire;
+
     wire [31 : 0] immediate_decode_wire;
     wire read_enable_1_decode_wire;
     wire read_enable_2_decode_wire;
     wire write_enable_decode_wire;
+
+    wire read_enable_csr_decode_wire;
+    wire write_enable_csr_decode_wire;
 
     // ---------------------------------
     // Instruction Decoder Instantiation
@@ -138,9 +144,12 @@ module phoeniX
         .read_index_1(read_index_1_decode_wire),
         .read_index_2(read_index_2_decode_wire),
         .write_index(write_index_decode_wire),
+        .csr_index(csr_index_decode_wire),
         .read_enable_1(read_enable_1_decode_wire),
         .read_enable_2(read_enable_2_decode_wire),
-        .write_enable(write_enable_decode_wire)
+        .write_enable(write_enable_decode_wire),
+        .read_enable_csr(read_enable_csr_decode_wire),
+        .write_enable_csr(write_enable_csr_decode_wire)
     );
 
     // ---------------------------------
@@ -164,6 +173,11 @@ module phoeniX
     
     wire FW_enable_1;
     wire FW_enable_2;
+
+    // ---------------------------------------------------
+    // Wire Declaration for Reading From CSR Register File
+    // ---------------------------------------------------
+    wire [31 : 0] csr_data_decode_wire;
 
     // -----------------------------------------------
     // Wire Declaration for inputs to source bus 1 & 2
@@ -191,10 +205,14 @@ module phoeniX
     reg [31 : 0] immediate_execute_reg;
     reg [ 2 : 0] instruction_type_execute_reg;
     reg [ 4 : 0] write_index_execute_reg;
+    reg [11 : 0] csr_index_execute_reg;
+
     reg write_enable_execute_reg;
+    reg write_enable_csr_execute_reg;
     
     reg [31 : 0] bus_rs1;
     reg [31 : 0] bus_rs2;
+    reg [31 : 0] csr_data_execute_reg;
 
     ////////////////////////////////////////
     //    DECODE TO EXECUTE TRANSITION    //
@@ -234,6 +252,11 @@ module phoeniX
         
         bus_rs1 <= bus_rs1_decode_wire;
         bus_rs2 <= bus_rs2_decode_wire;
+
+        write_enable_csr_execute_reg <= write_enable_csr_decode_wire;
+        csr_index_execute_reg <= csr_index_decode_wire;
+        csr_data_execute_reg <= csr_data_decode_wire;
+        read_index_1_execute_reg <= read_index_1_decode_wire;
     end
 
     // ------------------------------------
@@ -242,6 +265,26 @@ module phoeniX
     wire [31 : 0] alu_output_execute_wire;
     wire [31 : 0] address_execute_wire;
     wire jump_branch_enable_execute_wire;
+
+    wire [31 : 0] csr_rd_execute_wire;
+    wire [31 : 0] csr_data_out_execute_wire;
+
+    // ---------------------------------
+    // Control Status Unit Instantiation
+    // ---------------------------------
+    Control_Status_Unit control_status_unit
+    (
+        .CLK(CLK),
+        .opcode(opcode_execute_reg),
+        .funct3(funct3_execute_reg),
+
+        .CSR_in(csr_data_execute_reg),
+        .rs1(bus_rs1),
+        .unsigned_immediate(read_index_1_execute_reg),
+
+        .rd(csr_rd_execute_wire),
+        .CSR_out(csr_data_out_execute_wire)
+    );
 
     // -----------------------------------
     // Arithmetic Logic Unit Instantiation
@@ -536,4 +579,31 @@ module phoeniX
             PC_stall_address = 32'bz; 
         end
     end
+
+    ///////////////////////////////////////////////////////
+    //    Control Status Register File Instantiation     //
+    ///////////////////////////////////////////////////////
+    Register_File 
+    #(
+        .WIDTH(32),
+        .DEPTH(12)
+    )
+    control_status_register_file
+    (
+        .CLK(CLK),
+        .reset(reset),
+
+        .read_enable_1(read_enable_csr_decode_wire),
+        .read_enable_2(1'bz),
+        .write_enable(write_enable_csr_execute_reg),
+
+        .read_index_1(csr_index_decode_wire),
+        .read_index_2(12'bz),
+        .write_index(csr_index_execute_reg),
+
+        .write_data(csr_data_out_execute_wire),
+        .read_data_1(csr_data_decode_wire),
+        .read_data_2(32'bz)
+    );
+
 endmodule
