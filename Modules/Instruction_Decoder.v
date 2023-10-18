@@ -53,9 +53,9 @@ module Instruction_Decoder
 
     output [2 : 0] instruction_type,
 
-    output [6 : 0] opcode,
-    output [2 : 0] funct3,
-    output [6 : 0] funct7,
+    output [ 6 : 0] opcode,
+    output [ 2 : 0] funct3,
+    output [ 6 : 0] funct7,
     output [11 : 0] funct12,
 
     output [4 : 0] read_index_1,
