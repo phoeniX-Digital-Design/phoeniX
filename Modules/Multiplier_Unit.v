@@ -101,8 +101,7 @@ module Multiplier_Unit
     begin
         operand_1 = rs1;
         operand_2 = rs2;
-        mul_output = result;            // Low-word (32-bit) of 64-bit result
-        // mul_unit_busy = ~n_busy;        // NOT [Ready] = Unit Busy
+        mul_output = result;                // Low-word (32-bit) of 64-bit result
         casex ({funct7, funct3, opcode})
             {`MULDIV, `MUL, `OP} : begin  // MUL
                 enable  = 1'b1;
