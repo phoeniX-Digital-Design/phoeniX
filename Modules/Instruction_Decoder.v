@@ -38,6 +38,15 @@
     `define J_TYPE 5
 `endif
 
+`ifndef CSR_INSTRUCTIONS
+    `define CSRRW  3'b001
+    `define CSRRS  3'b010
+    `define CSRRC  3'b011
+    `define CSRRWI 3'b101
+    `define CSRRSI 3'b110
+    `define CSRRCI 3'b111
+`endif
+
 module Instruction_Decoder 
 (
     input [31 : 0] instruction,
@@ -52,10 +61,14 @@ module Instruction_Decoder
     output [4 : 0] read_index_1,
     output [4 : 0] read_index_2,
     output [4 : 0] write_index,
+    output [11 : 0] csr_index,
 
     output reg read_enable_1,
     output reg read_enable_2,
-    output reg write_enable
+    output reg write_enable,
+
+    output reg read_enable_csr,
+    output reg write_enable_csr
 );
 
     assign opcode = instruction [6 : 0];
@@ -64,7 +77,8 @@ module Instruction_Decoder
                                 opcode == `LOAD_FP      ||
                                 opcode == `OP_IMM       ||
                                 opcode == `OP_IMM_32    ||
-                                opcode == `JALR;
+                                opcode == `JALR         ||
+                                opcode == `SYSTEM;        
         
     assign instruction_type_b = opcode == `BRANCH;
 
@@ -87,13 +101,14 @@ module Instruction_Decoder
                                 (instruction_type_j) ? `J_TYPE :
                                 1'bz; // Default value
 
-    assign funct7 = instruction[31 : 25];
-    assign funct3 = instruction[14 : 12];
+    assign funct7  = instruction[31 : 25];
+    assign funct3  = instruction[14 : 12];
     assign funct12 = instruction[31 : 20];
     
     assign read_index_1 = instruction[19 : 15];
     assign read_index_2 = instruction[24 : 20];
     assign write_index  = instruction[11 :  7];
+    assign csr_index = instruction[31 : 20];
 
     always @(*) 
     begin
@@ -112,4 +127,19 @@ module Instruction_Decoder
         if (write_index == 5'b00000)
             write_enable <= 1'b0;
     end
+
+    always @(*) 
+    begin
+        // CSR register file read/write enable signals evaluation
+        case ({funct3, opcode})
+            {`CSRRW,  `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1; end // CSRRW
+            {`CSRRS,  `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1; end // CSRRS
+            {`CSRRC,  `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1; end // CSRRC
+            {`CSRRWI, `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1; end // CSRRWI
+            {`CSRRSI, `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1; end // CSRRSI
+            {`CSRRCI, `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1; end // CSRRCI
+            default : begin read_enable_csr = 1'b0; write_enable_csr = 1'b0; end
+        endcase  
+    end
+
 endmodule

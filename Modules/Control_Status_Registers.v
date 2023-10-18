@@ -30,7 +30,7 @@
 `endif
 
 
-module Control_Status_Register 
+module Control_Status_Unit 
 (
     input  CLK,
 
