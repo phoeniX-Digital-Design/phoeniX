@@ -14,7 +14,7 @@ module Approximate_Accuracy_Controlable_Multiplier_TB;
     reg  [len - 1 : 0] Multiplicand;
     reg  [len - 1 : 0] Multiplier;
     wire [2 * len - 1 : 0] Product;
-    wire Ready;
+    wire Busy;
     reg [2 * len - 1 : 0] Accurate_Result;
 
     reg [6 : 0] Er = 7'b111_1111;
@@ -29,9 +29,11 @@ module Approximate_Accuracy_Controlable_Multiplier_TB;
         Multiplicand,
         Multiplier,
         Product,
-        Ready
+        Busy
     );
 
+    always @(negedge Busy) enable <= 1'b0;
+    
     initial 
     begin
         $dumpfile("Approximate_Accuracy_Controlable_Multiplier.vcd");
@@ -47,9 +49,8 @@ module Approximate_Accuracy_Controlable_Multiplier_TB;
         //     // #40;
         // end
         // #(3*T_CLK)
-        #(55)
+        #(60)
         enable = 1'b1;
-        #(5)
         
         // Multiplicand = $random;
         // Multiplier = $random;
@@ -58,7 +59,7 @@ module Approximate_Accuracy_Controlable_Multiplier_TB;
         Multiplier = 32'b00010101000101010001010100010101;
 
         Accurate_Result = Multiplicand * Multiplier;
-        #(6 * T_CLK);
+        #(8 * T_CLK);
         $display("A = %d \t B = %d \t Result = %d -- Accurate = %d --> %b\n", Multiplicand, Multiplier, Product, Accurate_Result, Product == Multiplicand * Multiplier);
         #40;
         $finish;
