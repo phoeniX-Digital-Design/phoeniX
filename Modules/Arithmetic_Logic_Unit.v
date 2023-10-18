@@ -172,14 +172,16 @@ module Arithmetic_Logic_Unit
     // Arithmetical Instructions: ADDI, ADD, SUB //
     // ----------------------------------------- //
 
+    reg enable; // In case of need for different designs
+
     // *** Implement the control systems required for your circuit ***
     always @(*) 
     begin
         casex ({funct7, funct3, opcode})
-            {7'bx_xxx_xxx, 3'b000, `OP_IMM} : begin adder_input_1 = operand_1; adder_input_2 = operand_2; adder_Cin = 1'b0;  alu_output = adder_result; end // ADDI
-            {7'b0_000_000, 3'b000, `OP}     : begin adder_input_1 = operand_1; adder_input_2 = operand_2; adder_Cin = 1'b0;  alu_output = adder_result; end // ADD
-            {7'b0_100_000, 3'b000, `OP}     : begin adder_input_1 = operand_1; adder_input_2 = ~operand_2; adder_Cin = 1'b1; alu_output = adder_result; end // SUB
-            default: alu_output = 32'bz; 
+            {7'bx_xxx_xxx, 3'b000, `OP_IMM} : begin enable = 1'b1; adder_input_1 = operand_1; adder_input_2 = operand_2; adder_Cin = 1'b0;  alu_output = adder_result; end // ADDI
+            {7'b0_000_000, 3'b000, `OP}     : begin enable = 1'b1; adder_input_1 = operand_1; adder_input_2 = operand_2; adder_Cin = 1'b0;  alu_output = adder_result; end // ADD
+            {7'b0_100_000, 3'b000, `OP}     : begin enable = 1'b1; adder_input_1 = operand_1; adder_input_2 = ~operand_2; adder_Cin = 1'b1; alu_output = adder_result; end // SUB
+            default: begin enable = 1'b0; alu_output = 32'bz; end
         endcase    
     end
     

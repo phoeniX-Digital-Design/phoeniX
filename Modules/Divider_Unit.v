@@ -57,10 +57,14 @@ module Divider_Unit
 );
 
     // Data forwarding will be considered in the core file (phoeniX.v)
+    reg  enable;
+
     reg  [31 : 0] operand_1; 
     reg  [31 : 0] operand_2;
+    
     reg  [31 : 0] input_1;
     reg  [31 : 0] input_2;
+    
     wire [31 : 0] result;
     wire [31 : 0] remainder;
     wire busy;
@@ -72,28 +76,34 @@ module Divider_Unit
         div_unit_busy = busy;
         casex ({funct7, funct3, opcode})
             17'b0000001_100_0110011 : begin  // DIV
+                enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = $signed(operand_2);
                 div_output = result;
             end
             17'b0000001_101_0110011 : begin  // DIVU
+                enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = operand_2;
                 div_output = result;
             end
             17'b0000001_110_0110011 : begin  // REM
+                enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = $signed(operand_2);
                 div_output = remainder;
             end
             17'b0000001_111_0110011 : begin  // REMU
+                enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = operand_2;
                 div_output = $signed(remainder);
             end
-            default: begin div_output = 32'bz; div_unit_busy = 1'bz; end // Wrong opcode                
+            default: begin div_output = 32'bz; div_unit_busy = 1'bz; enable = 1'b0; end // Wrong opcode                
         endcase
     end
+
+    always @(negedge div_unit_busy) enable <= 1'b0;
 
     // *** Instantiate your divider here ***
     // Please instantiate your divider module according to the guidelines and naming conventions of phoeniX
