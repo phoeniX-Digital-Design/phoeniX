@@ -3,7 +3,7 @@
 ![AssembleX Test](https://img.shields.io/badge/AssembleX_V2.0_tests-in_progress-red)
 ![Pipeline](https://img.shields.io/badge/pipeline-5_stages-dark_green)
 ![Version](https://img.shields.io/badge/Version-0.2-blue)
-![ISA](https://img.shields.io/badge/RV32-IMX_extension-blue)
+![ISA](https://img.shields.io/badge/RV32-IEMX_extension-blue)
 
 <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoenix_full_logotype_bb.png" width="530" height="150" style="vertical-align:middle">
@@ -12,7 +12,7 @@
 
 <div align="justify">
  
-**phoeniX** RISC-V processor is designed in Verilog HDL based on the 32-bit Base Instrcution Set of [RISC-V Instruction Set Architecture](http://riscv.org/) and can execute `RV32IM` instructions, with special features supported for **approximate computing** techniques, which we shall call it `RV32X` extension. Support for other extensions will be covered in the upcoming updates. 
+**phoeniX** RISC-V processor is designed in Verilog HDL based on the 32-bit Base Instrcution Set of [RISC-V Instruction Set Architecture](http://riscv.org/) and can execute `RV32IEM` instructions (user have options to choose between `I` and `E`, and also to activate/deactivate `M` extensions), with special features supported for **approximate computing** techniques, which we shall call it `RV32X` extension. Support for other extensions will be covered in the upcoming updates. 
 
 You can find a full list of RISC-V assembly instructions in the [ISA Specifications Documents](https://riscv.org/technical/specifications/).
 
@@ -119,6 +119,7 @@ repository/
     ├── phoeniX.vvp
     ├── phoeniX.vcd
     ├── phoeniX.gtkw
+    ├── AssembleX.py
     └── Makefile
 </pre>
 
@@ -148,7 +149,7 @@ Each modules was designed with concepts of modularity and distributed-control in
 The `phoeniX.v` contains the main phoeniX RISC-V core and is included in the top directory of this repo:
 | Module                        | Description                                                                  |
 | ----------------------------- | ---------------------------------------------------------------------------- |
-| `phoeniX`                     | phoeniX 32 bit RISC-V core (RV32I) top Verilog module                        |
+| `phoeniX`                     | phoeniX 32 bit RISC-V core (RV32IEM) top Verilog module                      |
 | `phoeniX_Testbench`           | phoeniX testbench module including main core, memory and interface logic     |
 
 ## phoeniX Memory Interface
