@@ -8,6 +8,8 @@
 `include "Load_Store_Unit.v"
 `include "Hazard_Forward_Unit.v"
 `include "Control_Status_Unit.v"
+`include "Divider_Unit.v"
+`include "Multiplier_Unit.v"
 `include "Defines.vh"
 
 `ifndef NOP_INSTRUCTION
@@ -23,7 +25,9 @@
 
 module phoeniX 
 #(
-    parameter RESET_ADDRESS = 32'hFFFFFFFC
+    parameter RESET_ADDRESS = 32'hFFFFFFFC,
+    parameter M_EXTENSION   = 0,
+    parameter E_EXTENSION   = 0,
 ) 
 (
     input CLK,
@@ -294,7 +298,7 @@ module phoeniX
         .opcode(opcode_execute_reg),
         .funct3(funct3_execute_reg),
         .funct7(funct7_execute_reg),
-
+        //.accuracy_control(alu_csr),    // Approximation Control Register
         .PC(PC_execute_reg),
         .rs1(bus_rs1),
         .rs2(bus_rs2),
@@ -492,28 +496,57 @@ module phoeniX
     ////////////////////////////////////////
     //    Register File Instantiation     //
     ////////////////////////////////////////
-    Register_File 
-    #(
-        .WIDTH(32),
-        .DEPTH(5)
-    )
-    register_file
-    (
-        .CLK(CLK),
-        .reset(reset),
+    generate if (E_EXTENSION == 1'b0)
+    begin
+        Register_File 
+        #(
+            .WIDTH(32),
+            .DEPTH(5)
+        )
+        register_file
+        (
+            .CLK(CLK),
+            .reset(reset),
 
-        .read_enable_1(read_enable_1_decode_wire),
-        .read_enable_2(read_enable_2_decode_wire),
-        .write_enable(write_enable),
+            .read_enable_1(read_enable_1_decode_wire),
+            .read_enable_2(read_enable_2_decode_wire),
+            .write_enable(write_enable),
 
-        .read_index_1(read_index_1_decode_wire),
-        .read_index_2(read_index_2_decode_wire),
-        .write_index(write_index),
+            .read_index_1(read_index_1_decode_wire),
+            .read_index_2(read_index_2_decode_wire),
+            .write_index(write_index),
 
-        .write_data(write_data),
-        .read_data_1(RF_source_1),
-        .read_data_2(RF_source_2)
-    );
+            .write_data(write_data),
+            .read_data_1(RF_source_1),
+            .read_data_2(RF_source_2)
+        );
+	end 
+    else if (E_EXTENSION == 1'b1) 
+    begin
+        Register_File 
+        #(
+            .WIDTH(32),
+            .DEPTH(4)
+        )
+        register_file
+        (
+            .CLK(CLK),
+            .reset(reset),
+
+            .read_enable_1(read_enable_1_decode_wire),
+            .read_enable_2(read_enable_2_decode_wire),
+            .write_enable(write_enable),
+
+            .read_index_1(read_index_1_decode_wire),
+            .read_index_2(read_index_2_decode_wire),
+            .write_index(write_index),
+
+            .write_data(write_data),
+            .read_data_1(RF_source_1),
+            .read_data_2(RF_source_2)
+        );
+	end 
+    endgenerate
 
     ////////////////////////////////////////
     //     Hazard Detection Units         //
