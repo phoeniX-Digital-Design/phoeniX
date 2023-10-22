@@ -267,6 +267,12 @@ module phoeniX
     // Wire Declaration for Execution Units
     // ------------------------------------
     wire [31 : 0] alu_output_execute_wire;
+    wire [31 : 0] mul_output_execute_wire;
+    wire [31 : 0] div_output_execute_wire;
+
+    wire [31 : 0] mul_busy_execute_wire;
+    wire [31 : 0] div_busy_execute_wire;
+
     wire [31 : 0] address_execute_wire;
     wire jump_branch_enable_execute_wire;
 
@@ -306,6 +312,38 @@ module phoeniX
         .alu_output(alu_output_execute_wire)
     );
 
+    // -------------------------------------
+    // Multiplier/Divider Unit Instantiation
+    // -------------------------------------
+    generate if (M_EXTENSION == 1'b1)
+    begin
+        Multiplier_Unit multiplier_unit
+        (
+            .CLK(CLK),
+            .opcode(opcode_execute_reg),
+            .funct3(funct3_execute_reg),
+            .funct7(funct7_execute_reg),
+            //.accuracy_control(mul_csr),    // Approximation Control Register
+            .rs1(bus_rs1),
+            .rs2(bus_rs2),
+            .mul_unit_busy(mul_busy_execute_wire),
+            .mul_output(mul_output_execute_wire)
+        );
+        Divider_Unit divider_unit
+        (
+            .CLK(CLK),
+            .opcode(opcode_execute_reg),
+            .funct3(funct3_execute_reg),
+            .funct7(funct7_execute_reg),
+            //.accuracy_control(div_csr),    // Approximation Control Register
+            .rs1(bus_rs1),
+            .rs2(bus_rs2),
+            .div_unit_busy(div_busy_execute_wire),
+            .div_output(div_output_execute_wire)
+        );
+    end
+    endgenerate
+
     // ------------------------------------
     // Address Generator Unit Instantiation
     // ------------------------------------
@@ -337,9 +375,20 @@ module phoeniX
     wire [31 : 0] result_execute_wire;
 
     // ----------------------------------------------------------
-    // assigning result to alu output or mul output or fpu output
+    // assigning result to alu output / mul output / div output
     // ----------------------------------------------------------
-    assign result_execute_wire = alu_output_execute_wire;
+    /*
+    always @(*) 
+    begin
+        case (param)
+            xxxx:
+            xxxx:
+            xxxx: 
+            default:  assign result_execute_wire = alu_output_execute_wire; // **** MUX MUST BE ADDED ****
+        endcase
+    end
+    */
+    default:  assign result_execute_wire = alu_output_execute_wire; // **** MUX MUST BE ADDED ****
 
     // --------------------------------
     // Reg Declarations for Memory Stage
