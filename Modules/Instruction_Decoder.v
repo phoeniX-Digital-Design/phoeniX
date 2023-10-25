@@ -132,12 +132,12 @@ module Instruction_Decoder
     begin
         // CSR register file read/write enable signals evaluation
         case ({funct3, opcode})
-            {`CSRRW,  `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1; end // CSRRW
-            {`CSRRS,  `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1; end // CSRRS
-            {`CSRRC,  `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1; end // CSRRC
-            {`CSRRWI, `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1; end // CSRRWI
-            {`CSRRSI, `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1; end // CSRRSI
-            {`CSRRCI, `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1; end // CSRRCI
+            {`CSRRW,  `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1 & csr_index[11] & csr_index[10]; end // CSRRW
+            {`CSRRS,  `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1 & csr_index[11] & csr_index[10]; end // CSRRS
+            {`CSRRC,  `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1 & csr_index[11] & csr_index[10]; end // CSRRC
+            {`CSRRWI, `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1 & csr_index[11] & csr_index[10]; end // CSRRWI
+            {`CSRRSI, `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1 & csr_index[11] & csr_index[10]; end // CSRRSI
+            {`CSRRCI, `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1 & csr_index[11] & csr_index[10]; end // CSRRCI
             default : begin read_enable_csr = 1'b0; write_enable_csr = 1'b0; end
         endcase  
     end
