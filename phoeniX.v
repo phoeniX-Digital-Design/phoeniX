@@ -379,18 +379,28 @@ module phoeniX
     // ----------------------------------------------------------
     //  Assigning result to alu output / mul output / div output
     // ----------------------------------------------------------
-    Execution_Stage_Mux execution_stage_mux
-    (
-        .opcode(opcode_execute_reg),
-        .funct3(funct3_execute_reg),
-        .funct7(funct7_execute_reg),
+    always @(*) 
+    begin
+        case ({funct7_execute_reg, funct3_execute_reg, opcode_execute_reg})
+            {7'bx_xxx_xxx, 3'bxxx, `OP_IMM} : result_execute_wire = alu_output_execute_wire;
+            {7'b0_000_000, 3'bxxx, `OP}     : result_execute_wire = alu_output_execute_wire;
+            {7'b0_100_000, 3'b101, `OP}     : result_execute_wire = alu_output_execute_wire;
+            {7'bx_xxx_xxx, 3'bxxx, `JAL}    : result_execute_wire = alu_output_execute_wire;
+            {7'bx_xxx_xxx, 3'b000, `JALR}   : result_execute_wire = alu_output_execute_wire;
+            {7'bx_xxx_xxx, 3'bxxx, `AUIPC}  : result_execute_wire = alu_output_execute_wire;
 
-        .alu_output(alu_output_execute_wire),
-        .mul_output(mul_output_execute_wire),
-        .div_output(div_output_execute_wire),
+            {`MULDIV, `MUL,    `OP} : result_execute_wire = mul_output_execute_wire;
+            {`MULDIV, `MULH,   `OP} : result_execute_wire = mul_output_execute_wire;
+            {`MULDIV, `MULHSU, `OP} : result_execute_wire = mul_output_execute_wire;
+            {`MULDIV, `MULHU,  `OP} : result_execute_wire = mul_output_execute_wire;
 
-        .result_execute(result_execute_wire)
-    );
+            {`MULDIV, `DIV,    `OP} : result_execute_wire = div_output_execute_wire;
+            {`MULDIV, `DIVU,   `OP} : result_execute_wire = div_output_execute_wire;
+            {`MULDIV, `REM,    `OP} : result_execute_wire = div_output_execute_wire;
+            {`MULDIV, `REMU,   `OP} : result_execute_wire = div_output_execute_wire;
+            default: result_execute_wire = `SELECT_ALU;    
+        endcase 
+    end
 
     // --------------------------------
     // Reg Declarations for Memory Stage
