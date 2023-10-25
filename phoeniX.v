@@ -8,8 +8,10 @@
 `include "Load_Store_Unit.v"
 `include "Hazard_Forward_Unit.v"
 `include "Control_Status_Unit.v"
+`include "Control_Status_Register_File.v"
 `include "Divider_Unit.v"
 `include "Multiplier_Unit.v"
+`include "Execution_Stage_Mux.v"
 `include "Defines.vh"
 
 `ifndef NOP_INSTRUCTION
@@ -26,8 +28,8 @@
 module phoeniX 
 #(
     parameter RESET_ADDRESS = 32'hFFFFFFFC,
-    parameter M_EXTENSION   = 0,
-    parameter E_EXTENSION   = 0,
+    parameter M_EXTENSION   = 1'b0,
+    parameter E_EXTENSION   = 1'b0
 ) 
 (
     input CLK,
@@ -375,20 +377,20 @@ module phoeniX
     wire [31 : 0] result_execute_wire;
 
     // ----------------------------------------------------------
-    // assigning result to alu output / mul output / div output
+    //  Assigning result to alu output / mul output / div output
     // ----------------------------------------------------------
-    /*
-    always @(*) 
-    begin
-        case (param)
-            xxxx:
-            xxxx:
-            xxxx: 
-            default:  assign result_execute_wire = alu_output_execute_wire; // **** MUX MUST BE ADDED ****
-        endcase
-    end
-    */
-    default:  assign result_execute_wire = alu_output_execute_wire; // **** MUX MUST BE ADDED ****
+    Execution_Stage_Mux execution_stage_mux
+    (
+        .opcode(opcode_execute_reg),
+        .funct3(funct3_execute_reg),
+        .funct7(funct7_execute_reg),
+
+        .alu_output(alu_output_execute_wire),
+        .mul_output(mul_output_execute_wire),
+        .div_output(div_output_execute_wire),
+
+        .result_execute(result_execute_wire)
+    );
 
     // --------------------------------
     // Reg Declarations for Memory Stage
@@ -665,27 +667,19 @@ module phoeniX
     ///////////////////////////////////////////////////////
     //    Control Status Register File Instantiation     //
     ///////////////////////////////////////////////////////
-    Register_File 
-    #(
-        .WIDTH(32),
-        .DEPTH(12)
-    )
-    control_status_register_file
-    (
+    Control_Status_Register_File csr_register_file
+    {
         .CLK(CLK),
         .reset(reset),
 
-        .read_enable_1(read_enable_csr_decode_wire),
-        .read_enable_2(1'bz),
-        .write_enable(write_enable_csr_execute_reg),
+        .read_enable_csr(read_enable_csr_decode_wire),
+        .write_enable_csr(write_enable_csr_execute_reg),
 
-        .read_index_1(csr_index_decode_wire),
-        .read_index_2(12'bz),
-        .write_index(csr_index_execute_reg),
+        .csr_read_index(csr_index_decode_wire),
+        .csr_write_index(csr_index_execute_reg),
 
-        .write_data(csr_data_out_execute_wire),
-        .read_data_1(csr_data_decode_wire),
-        .read_data_2(32'bz)
-    );
+        .csr_write_data(csr_data_out_execute_wire),
+        .csr_read_data(csr_data_decode_wire)
+    };
 
 endmodule
