@@ -2,7 +2,7 @@
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-	`define FIRMWARE
+	`define FIRMWARE "Software\\Sample_Assembly_Codes\\sum1to100_approximate\\sum1to100_approximate_firmware.hex"
 `endif /*FIRMWARE*/
 
 module phoeniX_Testbench;
@@ -36,7 +36,13 @@ module phoeniX_Testbench;
     reg  [31 : 0] data_memory_interface_data_reg;
     assign data_memory_interface_data = data_memory_interface_data_reg;
 
-    phoeniX uut
+    phoeniX 
+    #(
+        .RESET_ADDRESS(32'hFFFFFFFC),
+        .M_EXTENSION(1'b1),
+        .E_EXTENSION(1'b0)
+    ) 
+    uut
     (
         .CLK(CLK),
         .reset(reset),
@@ -88,6 +94,8 @@ module phoeniX_Testbench;
         wire [31 : 0] x29_t4 	= uut.register_file.Registers[29];
         wire [31 : 0] x30_t5 	= uut.register_file.Registers[30];
         wire [31 : 0] x31_t6 	= uut.register_file.Registers[31];
+        wire [31 : 0] alu_csr   = uut.control_status_register_file.alu_csr;
+        wire [31 : 0] mul_csr   = uut.control_status_register_file.mul_csr;
     `endif
 
     ///////////////////////////////////

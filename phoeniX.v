@@ -11,8 +11,11 @@
 `include "Control_Status_Register_File.v"
 `include "Divider_Unit.v"
 `include "Multiplier_Unit.v"
-`include "Execution_Stage_Mux.v"
 `include "Defines.vh"
+
+// `include "Approximate_Arithmetic_Units/Approximate_Accuracy_Controlable_Adder.v"
+// `include "Approximate_Arithmetic_Units/Approximate_Accuracy_Controlable_Multiplier.v"
+// `include "Approximate_Arithmetic_Units/Approximate_Accuracy_Controlable_Divider.v"
 
 `ifndef NOP_INSTRUCTION
     `define NOP                     32'h0000_0013
@@ -211,6 +214,7 @@ module phoeniX
     reg [31 : 0] immediate_execute_reg;
     reg [ 2 : 0] instruction_type_execute_reg;
     reg [ 4 : 0] write_index_execute_reg;
+    reg [ 4 : 0] read_index_1_execute_reg;
     reg [11 : 0] csr_index_execute_reg;
 
     reg write_enable_execute_reg;
@@ -272,8 +276,8 @@ module phoeniX
     wire [31 : 0] mul_output_execute_wire;
     wire [31 : 0] div_output_execute_wire;
 
-    wire [31 : 0] mul_busy_execute_wire;
-    wire [31 : 0] div_busy_execute_wire;
+    wire mul_busy_execute_wire;
+    wire div_busy_execute_wire;
 
     wire [31 : 0] address_execute_wire;
     wire jump_branch_enable_execute_wire;
@@ -306,7 +310,7 @@ module phoeniX
         .opcode(opcode_execute_reg),
         .funct3(funct3_execute_reg),
         .funct7(funct7_execute_reg),
-        //.accuracy_control(alu_csr),    // Approximation Control Register
+        .accuracy_control(control_status_register_file.alu_csr),    
         .PC(PC_execute_reg),
         .rs1(bus_rs1),
         .rs2(bus_rs2),
@@ -325,19 +329,20 @@ module phoeniX
             .opcode(opcode_execute_reg),
             .funct3(funct3_execute_reg),
             .funct7(funct7_execute_reg),
-            //.accuracy_control(mul_csr),    // Approximation Control Register
+            .accuracy_control(control_status_register_file.mul_csr),    
             .rs1(bus_rs1),
             .rs2(bus_rs2),
             .mul_unit_busy(mul_busy_execute_wire),
             .mul_output(mul_output_execute_wire)
         );
+
         Divider_Unit divider_unit
         (
             .CLK(CLK),
             .opcode(opcode_execute_reg),
             .funct3(funct3_execute_reg),
             .funct7(funct7_execute_reg),
-            //.accuracy_control(div_csr),    // Approximation Control Register
+            .accuracy_control(control_status_register_file.div_csr),    
             .rs1(bus_rs1),
             .rs2(bus_rs2),
             .div_unit_busy(div_busy_execute_wire),
@@ -372,33 +377,29 @@ module phoeniX
     );
 
     // ----------------------------------------
-    // Wire Declaration for result of execution
+    // Reg Declaration for result of execution
     // ----------------------------------------
-    wire [31 : 0] result_execute_wire;
+    reg [31 : 0] result_execute_reg;
 
     // ----------------------------------------------------------
     //  Assigning result to alu output / mul output / div output
     // ----------------------------------------------------------
     always @(*) 
     begin
-        case ({funct7_execute_reg, funct3_execute_reg, opcode_execute_reg})
-            {7'bx_xxx_xxx, 3'bxxx, `OP_IMM} : result_execute_wire = alu_output_execute_wire;
-            {7'b0_000_000, 3'bxxx, `OP}     : result_execute_wire = alu_output_execute_wire;
-            {7'b0_100_000, 3'b101, `OP}     : result_execute_wire = alu_output_execute_wire;
-            {7'bx_xxx_xxx, 3'bxxx, `JAL}    : result_execute_wire = alu_output_execute_wire;
-            {7'bx_xxx_xxx, 3'b000, `JALR}   : result_execute_wire = alu_output_execute_wire;
-            {7'bx_xxx_xxx, 3'bxxx, `AUIPC}  : result_execute_wire = alu_output_execute_wire;
+        casex ({funct7_execute_reg, funct3_execute_reg, opcode_execute_reg})
 
-            {`MULDIV, `MUL,    `OP} : result_execute_wire = mul_output_execute_wire;
-            {`MULDIV, `MULH,   `OP} : result_execute_wire = mul_output_execute_wire;
-            {`MULDIV, `MULHSU, `OP} : result_execute_wire = mul_output_execute_wire;
-            {`MULDIV, `MULHU,  `OP} : result_execute_wire = mul_output_execute_wire;
+            // MUL and DIV Instructions
+            {`MULDIV, `MUL,    `OP} : result_execute_reg = mul_output_execute_wire;
+            {`MULDIV, `MULH,   `OP} : result_execute_reg = mul_output_execute_wire;
+            {`MULDIV, `MULHSU, `OP} : result_execute_reg = mul_output_execute_wire;
+            {`MULDIV, `MULHU,  `OP} : result_execute_reg = mul_output_execute_wire;
 
-            {`MULDIV, `DIV,    `OP} : result_execute_wire = div_output_execute_wire;
-            {`MULDIV, `DIVU,   `OP} : result_execute_wire = div_output_execute_wire;
-            {`MULDIV, `REM,    `OP} : result_execute_wire = div_output_execute_wire;
-            {`MULDIV, `REMU,   `OP} : result_execute_wire = div_output_execute_wire;
-            default: result_execute_wire = `SELECT_ALU;    
+            {`MULDIV, `DIV,    `OP} : result_execute_reg = div_output_execute_wire;
+            {`MULDIV, `DIVU,   `OP} : result_execute_reg = div_output_execute_wire;
+            {`MULDIV, `REM,    `OP} : result_execute_reg = div_output_execute_wire;
+            {`MULDIV, `REMU,   `OP} : result_execute_reg = div_output_execute_wire;
+
+            default: result_execute_reg = alu_output_execute_wire;    
         endcase 
     end
 
@@ -444,9 +445,9 @@ module phoeniX
 
         address_memory_reg <= address_execute_wire;
         bus_rs2_memory_reg <= bus_rs2;
-        result_memory_reg <= result_execute_wire;
+        result_memory_reg <= result_execute_reg;
 
-        result_memory_reg <= result_execute_wire;
+        result_memory_reg <= result_execute_reg;
 
         jump_branch_enable_memory_reg <= jump_branch_enable_execute_wire;
     end
@@ -557,57 +558,82 @@ module phoeniX
     ////////////////////////////////////////
     //    Register File Instantiation     //
     ////////////////////////////////////////
-    generate if (E_EXTENSION == 1'b0)
-    begin
-        Register_File 
-        #(
-            .WIDTH(32),
-            .DEPTH(5)
-        )
-        register_file
-        (
-            .CLK(CLK),
-            .reset(reset),
 
-            .read_enable_1(read_enable_1_decode_wire),
-            .read_enable_2(read_enable_2_decode_wire),
-            .write_enable(write_enable),
+    Register_File 
+    #(
+        .WIDTH(32),
+        .DEPTH(E_EXTENSION ? 4 : 5)
+    )
+    register_file
+    (
+        .CLK(CLK),
+        .reset(reset),
 
-            .read_index_1(read_index_1_decode_wire),
-            .read_index_2(read_index_2_decode_wire),
-            .write_index(write_index),
+        .read_enable_1(read_enable_1_decode_wire),
+        .read_enable_2(read_enable_2_decode_wire),
+        .write_enable(write_enable),
 
-            .write_data(write_data),
-            .read_data_1(RF_source_1),
-            .read_data_2(RF_source_2)
-        );
-	end 
-    else if (E_EXTENSION == 1'b1) 
-    begin
-        Register_File 
-        #(
-            .WIDTH(32),
-            .DEPTH(4)
-        )
-        register_file
-        (
-            .CLK(CLK),
-            .reset(reset),
+        .read_index_1(read_index_1_decode_wire),
+        .read_index_2(read_index_2_decode_wire),
+        .write_index(write_index),
 
-            .read_enable_1(read_enable_1_decode_wire),
-            .read_enable_2(read_enable_2_decode_wire),
-            .write_enable(write_enable),
+        .write_data(write_data),
+        .read_data_1(RF_source_1),
+        .read_data_2(RF_source_2)
+    );
 
-            .read_index_1(read_index_1_decode_wire),
-            .read_index_2(read_index_2_decode_wire),
-            .write_index(write_index),
 
-            .write_data(write_data),
-            .read_data_1(RF_source_1),
-            .read_data_2(RF_source_2)
-        );
-	end 
-    endgenerate
+    // generate if (E_EXTENSION == 1'b0)
+    // begin
+    //     Register_File 
+    //     #(
+    //         .WIDTH(32),
+    //         .DEPTH(5)
+    //     )
+    //     register_file
+    //     (
+    //         .CLK(CLK),
+    //         .reset(reset),
+
+    //         .read_enable_1(read_enable_1_decode_wire),
+    //         .read_enable_2(read_enable_2_decode_wire),
+    //         .write_enable(write_enable),
+
+    //         .read_index_1(read_index_1_decode_wire),
+    //         .read_index_2(read_index_2_decode_wire),
+    //         .write_index(write_index),
+
+    //         .write_data(write_data),
+    //         .read_data_1(RF_source_1),
+    //         .read_data_2(RF_source_2)
+    //     );
+	// end 
+    // else if (E_EXTENSION == 1'b1) 
+    // begin
+    //     Register_File 
+    //     #(
+    //         .WIDTH(32),
+    //         .DEPTH(4)
+    //     )
+    //     register_file
+    //     (
+    //         .CLK(CLK),
+    //         .reset(reset),
+
+    //         .read_enable_1(read_enable_1_decode_wire),
+    //         .read_enable_2(read_enable_2_decode_wire),
+    //         .write_enable(write_enable),
+
+    //         .read_index_1(read_index_1_decode_wire),
+    //         .read_index_2(read_index_2_decode_wire),
+    //         .write_index(write_index),
+
+    //         .write_data(write_data),
+    //         .read_data_1(RF_source_1),
+    //         .read_data_2(RF_source_2)
+    //     );
+	// end 
+    // endgenerate
 
     ////////////////////////////////////////
     //     Hazard Detection Units         //
@@ -620,7 +646,7 @@ module phoeniX
         .destination_index_2(write_index_memory_reg),
         .destination_index_3(write_index_writeback_reg),
 
-        .data_1(opcode_execute_reg == `LUI ? immediate_execute_reg : result_execute_wire),
+        .data_1(opcode_execute_reg == `LUI ? immediate_execute_reg : result_execute_reg),
         .data_2(opcode_memory_reg == `LOAD ? load_data_memory_wire : result_memory_reg),
         .data_3(write_data_writeback_reg),
 
@@ -640,7 +666,7 @@ module phoeniX
         .destination_index_2(write_index_memory_reg),
         .destination_index_3(write_index_writeback_reg),
 
-        .data_1(opcode_execute_reg == `LUI ? immediate_execute_reg : result_execute_wire),
+        .data_1(opcode_execute_reg == `LUI ? immediate_execute_reg : result_execute_reg),
         .data_2(opcode_memory_reg == `LOAD ? load_data_memory_wire : result_memory_reg),
         .data_3(write_data_writeback_reg),
 
@@ -661,8 +687,8 @@ module phoeniX
     always @(*) 
     begin
         if  (opcode_execute_reg == `LOAD & write_enable_execute_reg &
-            (((write_index_execute_reg == read_index_1_decode_wire) & read_enable_1_decode_wire) || 
-             ((write_index_execute_reg == read_index_2_decode_wire) & read_enable_2_decode_wire)))
+            (((write_index_execute_reg == read_index_1_decode_wire) & read_enable_1_decode_wire)  || 
+             ((write_index_execute_reg == read_index_2_decode_wire) & read_enable_2_decode_wire)) || (mul_busy_execute_wire)) 
         begin
             stall = 1'b1;
             PC_stall_address = PC_decode_reg;
@@ -677,8 +703,8 @@ module phoeniX
     ///////////////////////////////////////////////////////
     //    Control Status Register File Instantiation     //
     ///////////////////////////////////////////////////////
-    Control_Status_Register_File csr_register_file
-    {
+    Control_Status_Register_File control_status_register_file
+    (
         .CLK(CLK),
         .reset(reset),
 
@@ -690,6 +716,6 @@ module phoeniX
 
         .csr_write_data(csr_data_out_execute_wire),
         .csr_read_data(csr_data_decode_wire)
-    };
+    );
 
 endmodule
