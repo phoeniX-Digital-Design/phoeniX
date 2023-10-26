@@ -1,4 +1,4 @@
-`include "../Approximate_Arithmetic_Units/Approximate_Accuracy_Controlable_Adder.v" 
+`include "Approximate_Arithmetic_Units/Approximate_Accuracy_Controlable_Adder.v" 
  
 module Approximate_Accuracy_Controlable_Divider
 (  
@@ -54,7 +54,9 @@ module Approximate_Accuracy_Controlable_Divider
             assign latched_rem_result = rem_result;
         end
     end
-    always @(*) begin
+    
+    always @(*) 
+    begin
         if ((output_ready == 1) && (busy == 0))
         begin
             div = latched_div_result;
@@ -69,7 +71,8 @@ module Approximate_Accuracy_Controlable_Divider
     assign busy = active;
 
     // The state machine  
-    always @(posedge CLK) begin  
+    always @(posedge CLK) 
+    begin  
             if (active) 
             begin  
                 // remun an iteration of the divide.  
@@ -86,7 +89,8 @@ module Approximate_Accuracy_Controlable_Divider
                 if (cycle == 0) begin active <= 0; end  
                 cycle <= cycle - 5'd1;  
             end
-            else begin  
+            else 
+            begin  
                 // Set up for an unsigned divide.  
                 cycle  <= 5'd31;  
                 result <= operand_1;  
@@ -95,5 +99,4 @@ module Approximate_Accuracy_Controlable_Divider
                 active <= 1;  
             end  
         end  
-
 endmodule   
