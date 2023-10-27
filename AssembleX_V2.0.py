@@ -86,6 +86,21 @@ with open(file_path, 'a') as file:
     file.write('\n' + ebreak)
     print(">> ebreak 00100073 added to hex file")
 
+with open(file_path, "r") as file:
+    lines = file.readlines()
+modified_lines = []
+for line in lines:
+    modified_line = ""
+    for char in line:
+        if char.islower():
+            modified_line += char.upper()
+        else:
+            modified_line += char
+    modified_lines.append(modified_line)
+with open(file_path, "w") as file:
+    file.writelines(modified_lines)
+print(">> Conversion completed. Modified hex codes saved to", output_file)
+
 def change_file_format(file_path, new_format):
     directory, base_name = os.path.split(file_path)
     name, old_format = os.path.splitext(base_name)
