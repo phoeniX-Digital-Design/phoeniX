@@ -329,7 +329,7 @@ module phoeniX
             .opcode(opcode_execute_reg),
             .funct3(funct3_execute_reg),
             .funct7(funct7_execute_reg),
-            .accuracy_control(control_status_register_file.mul_csr),    
+            .mul_csr(control_status_register_file.mul_csr),    
             .rs1(bus_rs1),
             .rs2(bus_rs2),
             .mul_unit_busy(mul_busy_execute_wire),
@@ -386,9 +386,7 @@ module phoeniX
     // ----------------------------------------------------------
     always @(*) 
     begin
-        casex ({funct7_execute_reg, funct3_execute_reg, opcode_execute_reg})
-
-            // MUL and DIV Instructions
+        case ({funct7_execute_reg, funct3_execute_reg, opcode_execute_reg})
             {`MULDIV, `MUL,    `OP} : result_execute_reg = mul_output_execute_wire;
             {`MULDIV, `MULH,   `OP} : result_execute_reg = mul_output_execute_wire;
             {`MULDIV, `MULHSU, `OP} : result_execute_reg = mul_output_execute_wire;
@@ -688,11 +686,16 @@ module phoeniX
     begin
         if  (opcode_execute_reg == `LOAD & write_enable_execute_reg &
             (((write_index_execute_reg == read_index_1_decode_wire) & read_enable_1_decode_wire)  || 
-             ((write_index_execute_reg == read_index_2_decode_wire) & read_enable_2_decode_wire)) || (mul_busy_execute_wire)) 
+             ((write_index_execute_reg == read_index_2_decode_wire) & read_enable_2_decode_wire))) 
         begin
             stall = 1'b1;
             PC_stall_address = PC_decode_reg;
         end   
+        else if (mul_busy_execute_wire)
+        begin
+            stall = 1'b1;
+            PC_stall_address = PC_decode_reg;
+        end
         else
         begin
             stall = 1'b0; 

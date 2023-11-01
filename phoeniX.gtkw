@@ -1,23 +1,28 @@
 [*]
-[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
-[*] Sun Sep  3 09:08:58 2023
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Wed Nov 01 10:44:17 2023
 [*]
-[dumpfile] "/home/faraz/git/PHOENIX-CORE/phoeniX.vcd"
-[dumpfile_mtime] "Sun Sep  3 08:53:11 2023"
-[dumpfile_size] 661923
-[savefile] "/home/faraz/git/PHOENIX-CORE/phoeniX.gtkw"
-[timestart] 5370
-[size] 1680 1013
+[dumpfile] "D:\GitHub\RV32-Core\phoeniX.vcd"
+[dumpfile_mtime] "Wed Nov 01 10:43:25 2023"
+[dumpfile_size] 218986
+[savefile] "D:\GitHub\RV32-Core\phoeniX.gtkw"
+[timestart] 0
+[size] 1920 1009
 [pos] -1 -1
-*-7.736956 6156 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-4.705056 50 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] phoeniX_Testbench.
 [treeopen] phoeniX_Testbench.uut.
 [treeopen] phoeniX_Testbench.uut.fetch_unit.
+[treeopen] phoeniX_Testbench.uut.genblk1.
 [treeopen] phoeniX_Testbench.uut.load_store_unit.
-[sst_width] 48
-[signals_width] 310
-[sst_expanded] 0
+[sst_width] 376
+[signals_width] 529
+[sst_expanded] 1
 [sst_vpaned_height] 257
+@22
+phoeniX_Testbench.uut.control_status_register_file.mul_csr[31:0]
+@200
+-
 @28
 phoeniX_Testbench.reset
 phoeniX_Testbench.uut.fetch_unit.enable
@@ -106,18 +111,6 @@ phoeniX_Testbench.uut.bus_rs1_decode_wire[31:0]
 phoeniX_Testbench.uut.bus_rs2_decode_wire[31:0]
 @200
 -
-@24
-phoeniX_Testbench.uut.write_index_execute_reg[4:0]
-phoeniX_Testbench.uut.write_index_memory_reg[4:0]
-phoeniX_Testbench.uut.write_index_writeback_reg[4:0]
-@200
--
-@28
-phoeniX_Testbench.uut.write_enable_execute_reg
-phoeniX_Testbench.uut.write_enable_memory_reg
-phoeniX_Testbench.uut.write_enable_writeback_reg
-@200
--
 -DECODE -> EXECUTE
 -
 @28
@@ -164,23 +157,43 @@ phoeniX_Testbench.uut.write_enable_execute_reg
 phoeniX_Testbench.uut.address_execute_wire[31:0]
 @420
 [color] 7
-phoeniX_Testbench.uut.alu_output_execute_wire[31:0]
-[color] 7
 phoeniX_Testbench.uut.jump_branch_enable_execute_wire
 @200
 -
-@28
-phoeniX_Testbench.uut.jump_branch_unit.branch_enable
-phoeniX_Testbench.uut.jump_branch_unit.jump_enable
-phoeniX_Testbench.uut.jump_branch_unit.instruction_type[2:0]
+@420
+[color] 7
+phoeniX_Testbench.uut.alu_output_execute_wire[31:0]
+@22
+[color] 7
+phoeniX_Testbench.uut.mul_output_execute_wire[31:0]
+[color] 7
+phoeniX_Testbench.uut.div_output_execute_wire[31:0]
+[color] 7
+phoeniX_Testbench.uut.result_execute_reg[31:0]
 @200
 -
 @28
+[color] 7
 phoeniX_Testbench.uut.stall
 @22
+[color] 7
 phoeniX_Testbench.uut.PC_stall_address[31:0]
 @200
 -
+@22
+[color] 7
+phoeniX_Testbench.uut.csr_data_execute_reg[31:0]
+[color] 7
+phoeniX_Testbench.uut.csr_rd_execute_wire[31:0]
+[color] 7
+phoeniX_Testbench.uut.csr_data_out_execute_wire[31:0]
+[color] 7
+phoeniX_Testbench.uut.read_index_1_execute_reg[4:0]
+@200
+-
+@22
+phoeniX_Testbench.uut.genblk1.multiplier_unit.result[63:0]
+@200
 -EXECUTE -> MEMORY
 -
 @28
@@ -224,7 +237,7 @@ phoeniX_Testbench.uut.write_enable_memory_reg
 phoeniX_Testbench.uut.write_index_memory_reg[4:0]
 @200
 -
-@29
+@28
 phoeniX_Testbench.uut.data_memory_interface_enable
 @22
 [color] 4
