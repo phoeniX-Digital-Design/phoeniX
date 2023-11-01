@@ -19,7 +19,7 @@
 
 `ifndef NOP_INSTRUCTION
     `define NOP                     32'h0000_0013
-    `define NOP_OPCODE              `OP_IMM
+    `define NOP_opcode              `OP_IMM
     `define NOP_funct12             12'h000
     `define NOP_funct7              7'b000_0000
     `define NOP_funct3              3'b000
@@ -236,7 +236,7 @@ module phoeniX
             instruction_execute_reg <= `NOP;
             write_enable_execute_reg <= 1'b0;  
 
-            opcode_execute_reg <= `NOP_OPCODE;
+            opcode_execute_reg <= `NOP_opcode;
             funct3_execute_reg <= `NOP_funct3;
             funct7_execute_reg <= `NOP_funct7;
             funct12_execute_reg <= `NOP_funct12;
