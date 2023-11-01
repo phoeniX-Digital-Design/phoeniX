@@ -193,7 +193,7 @@ module Arithmetic_Logic_Unit
         .LEN(32),
         .APX_LEN(8)
     )
-    AC_APX_Adder 
+    approximate_accuracy_controlable_adder 
     (
         .Er(accuracy_control[10 : 3] | {8{~accuracy_control[0]}}), 
         .A(adder_input_1),
