@@ -86,13 +86,13 @@ module Multiplier_Unit
     output reg [31 : 0] mul_output      // Multiplier Unit Result
 );
 
-    // Data forwarding will be considered in the core file (top = phoeniX.v)
     reg  enable;
     
     reg  [31 : 0] operand_1;              // Module operand 1
     reg  [31 : 0] operand_2;              // Module operand 2
 
     reg  latched_enable = 1'b0;
+    reg  [ 2 : 0] latched_funct3;
     reg  [ 6 : 0] latched_error;
     reg  [31 : 0] latched_operand_1;      // Latched Module operand 1
     reg  [31 : 0] latched_operand_2;      // Latched Module operand 2
@@ -107,28 +107,24 @@ module Multiplier_Unit
                 enable  = 1'b1;
                 operand_1 = $signed(rs1);
                 operand_2 = $signed(rs2);
-                mul_output = result[31 : 0];
             end
             {`MULDIV, `MULH, `OP} : 
             begin
                 enable  = 1'b1;
                 operand_1 = $signed(rs1);
                 operand_2 = $signed(rs2);
-                mul_output = result >>> 32;
             end
             {`MULDIV, `MULHSU, `OP} : 
             begin 
                 enable  = 1'b1;
                 operand_1 = $signed(rs1);
                 operand_2 = rs2;
-                mul_output = result >>> 32;
             end
             {`MULDIV, `MULHU, `OP} : 
             begin 
                 enable  = 1'b1;
                 operand_1 = rs1;
                 operand_2 = rs2;
-                mul_output = result >> 32;
             end
             default: 
             begin 
@@ -142,12 +138,22 @@ module Multiplier_Unit
     always @(posedge enable)
     begin
         latched_enable <= enable;
+        latched_funct3 <= funct3;
         latched_error <= mul_csr[ 9 : 3] | {7{~mul_csr[0]}};
         latched_operand_1 <= operand_1;
         latched_operand_2 <= operand_2;
     end
     
-    always @(negedge mul_unit_busy) latched_enable <= 1'b0;
+    always @(negedge mul_unit_busy) 
+    begin
+       latched_enable <= 1'b0;
+        case (latched_funct3)
+            `MUL    : mul_output = result[31 :  0];  
+            `MULH   : mul_output = result[63 : 32]; 
+            `MULHSU : mul_output = result[63 : 32]; 
+            `MULHU  : mul_output = result[63 : 32]; 
+        endcase 
+    end
 
     // *** Instantiate your multiplier circuit here ***
     // Please instantiate your multiplier module according to the guidelines and naming conventions of phoeniX
