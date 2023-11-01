@@ -77,7 +77,7 @@ module Multiplier_Unit
     input [6 : 0] funct7,               // ALU Operation
     input [2 : 0] funct3,               // ALU Operation
 
-    input [31 : 0] accuracy_control,    // Approximation Control Register
+    input [31 : 0] mul_csr,             // Approximation Control Register
 
     input [31 : 0] rs1,                 // Register Source 1
     input [31 : 0] rs2,                 // Register Source 2
@@ -88,58 +88,66 @@ module Multiplier_Unit
 
     // Data forwarding will be considered in the core file (top = phoeniX.v)
     reg  enable;
-    reg  multiplier_enable;
+    
+    reg  [31 : 0] operand_1;              // Module operand 1
+    reg  [31 : 0] operand_2;              // Module operand 2
 
-    reg  [31 : 0] operand_1;            // Bus RS1 latch
-    reg  [31 : 0] operand_2;            // Bus RS2 latch
-
-    reg  [31 : 0] input_1;              // Module input 1
-    reg  [31 : 0] input_2;              // Module input 2
-
-    reg  [ 6 : 0] multiplier_accuracy;
-    reg  [31 : 0] multiplier_input_1;              // Latched Module input 1
-    reg  [31 : 0] multiplier_input_2;              // Latched Module input 2
+    reg  latched_enable = 1'b0;
+    reg  [ 6 : 0] latched_error;
+    reg  [31 : 0] latched_operand_1;      // Latched Module operand 1
+    reg  [31 : 0] latched_operand_2;      // Latched Module operand 2
 
     wire [63 : 0] result;               // Multiplier 64-bit result
 
     always @(*) 
     begin
-        operand_1 = rs1;
-        operand_2 = rs2;
         case ({funct7, funct3, opcode})
-            {`MULDIV, `MUL, `OP} : begin  // MUL
+            {`MULDIV, `MUL, `OP} : 
+            begin  
                 enable  = 1'b1;
-                input_1 = $signed(operand_1);
-                input_2 = $signed(operand_2);
+                operand_1 = $signed(rs1);
+                operand_2 = $signed(rs2);
                 mul_output = result[31 : 0];
             end
-            {`MULDIV, `MULH, `OP} : begin  // MULH
+            {`MULDIV, `MULH, `OP} : 
+            begin
                 enable  = 1'b1;
-                input_1 = $signed(operand_1);
-                input_2 = $signed(operand_2);
+                operand_1 = $signed(rs1);
+                operand_2 = $signed(rs2);
                 mul_output = result >>> 32;
             end
-            {`MULDIV, `MULHSU, `OP} : begin  // MULHSU
+            {`MULDIV, `MULHSU, `OP} : 
+            begin 
                 enable  = 1'b1;
-                input_1 = $signed(operand_1);
-                input_2 = operand_2;
+                operand_1 = $signed(rs1);
+                operand_2 = rs2;
                 mul_output = result >>> 32;
             end
-            {`MULDIV, `MULHU, `OP} : begin  // MULHU
+            {`MULDIV, `MULHU, `OP} : 
+            begin 
                 enable  = 1'b1;
-                input_1 = operand_1;
-                input_2 = operand_2;
+                operand_1 = rs1;
+                operand_2 = rs2;
                 mul_output = result >> 32;
             end
-            default: begin enable = 1'b0; mul_output = 32'bz; end             
+            default: 
+            begin 
+                enable = 1'b0; 
+                operand_1 = 32'bz; 
+                operand_2 = 32'bz; 
+            end             
         endcase
     end
 
-    // always @(posedge enable) multiplier_enable <= enable;
-    // always @(posedge enable) multiplier_input_1 <= input_1;
-    // always @(posedge enable) multiplier_input_2 <= input_2;
-    // always @(posedge enable) multiplier_accuracy <= accuracy_control[9 : 3] | {7{~accuracy_control[0]}};
-    always @(negedge mul_unit_busy) multiplier_enable <= 1'b0;
+    always @(posedge enable)
+    begin
+        latched_enable <= enable;
+        latched_error <= mul_csr[ 9 : 3] | {7{~mul_csr[0]}};
+        latched_operand_1 <= operand_1;
+        latched_operand_2 <= operand_2;
+    end
+    
+    always @(negedge mul_unit_busy) latched_enable <= 1'b0;
 
     // *** Instantiate your multiplier circuit here ***
     // Please instantiate your multiplier module according to the guidelines and naming conventions of phoeniX
@@ -147,10 +155,10 @@ module Multiplier_Unit
     Approximate_Accuracy_Controlable_Multiplier multiplier 
     (
         .CLK(CLK),
-        .enable(multiplier_enable),
-        .Er(multiplier_accuracy),
-        .Operand_1(multiplier_input_1), 
-        .Operand_2(multiplier_input_2),  
+        .enable(latched_enable),
+        .Er(latched_error),
+        .Operand_1(latched_operand_1), 
+        .Operand_2(latched_operand_2),  
         .Result(result),
         .Busy(mul_unit_busy)
     );
