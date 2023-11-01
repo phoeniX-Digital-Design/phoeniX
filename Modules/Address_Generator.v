@@ -42,26 +42,23 @@
 module Address_Generator
 (
     input [6 : 0] opcode, 
-    input [31 : 0] rs1,            // to be connected to bus_rs1
+    input [31 : 0] rs1,            
     input [31 : 0] PC,
     input [31 : 0] immediate,
 
     output reg [31 : 0] address
 );
-    reg  [31 : 0] value;
     
     always @(*) 
     begin
         // Address Type evaluation (for Address Generator module)
         case (opcode)
-            `STORE   : value = rs1;    //  Store  -> bus_rs1 + immediate
-            `LOAD    : value = rs1;    //  Load   -> bus_rs1 + immediate
-            `JAL     : value = PC;     //  JAL    ->    PC   + immediate
-            `JALR    : value = rs1;    //  JALR   -> bus_rs1 + immediate
-            `BRANCH  : value = PC;     //  Branch ->    PC   + immediate
-            default  : value = 1'bz;
+            `STORE   : address = rs1 + immediate;    //  Store  -> bus_rs1 + immediate
+            `LOAD    : address = rs1 + immediate;    //  Load   -> bus_rs1 + immediate
+            `JAL     : address = PC + immediate;     //  JAL    ->    PC   + immediate
+            `JALR    : address = rs1 + immediate;    //  JALR   -> bus_rs1 + immediate
+            `BRANCH  : address = PC + immediate;     //  Branch ->    PC   + immediate
+            default  : address = 32'bz;
         endcase 
-        
-        address = value + immediate;
     end
 endmodule
