@@ -55,8 +55,8 @@ module Approximate_Accuracy_Controlable_Multiplier_TB;
         // Multiplicand = $random;
         // Multiplier = $random;
 
-        Multiplicand = 32'b00001101000011010000110100001101;
-        Multiplier = 32'b00010101000101010001010100010101;
+        Multiplicand    = 32'b00001101000011010000110100001101;
+        Multiplier      = 32'b00010101000101010001010100010101;
 
         Accurate_Result = Multiplicand * Multiplier;
         #(8 * T_CLK);
