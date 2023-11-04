@@ -289,7 +289,6 @@ module Approximate_Accuracy_Controlable_Multiplier_16bit
         begin
             state <= next_state;
         end
-            
     end
 
     always @(*) 
@@ -302,8 +301,8 @@ module Approximate_Accuracy_Controlable_Multiplier_16bit
             3'b010 : begin mul_input_1 <= Operand_1[15 : 8]; mul_input_2 <= Operand_2[ 7 : 0]; next_state <= 3'b011; end
             3'b011 : begin mul_input_1 <= Operand_1[ 7 : 0]; mul_input_2 <= Operand_2[15 : 8]; mul_result_1 <= mul_result; next_state <= 3'b100; end
             3'b100 : begin mul_input_1 <= Operand_1[15 : 8]; mul_input_2 <= Operand_2[15 : 8]; mul_result_2 <= mul_result; next_state <= 3'b101; end
-            3'b101 : begin mul_result_3 <= mul_result; next_state = 3'b110; end
-            3'b110 : begin mul_result_4 <= mul_result; next_state = 3'b111; end
+            3'b101 : begin mul_result_3 <= mul_result; next_state <= 3'b110; end
+            3'b110 : begin mul_result_4 <= mul_result; next_state <= 3'b111; end
             3'b111 : begin Result = {16'b0, mul_result_1} + {8'b0, mul_result_2, 8'b0} + {8'b0, mul_result_3, 8'b0} + {mul_result_4, 16'b0}; next_state <= 3'b000; end
         endcase 
     end
