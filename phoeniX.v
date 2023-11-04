@@ -72,7 +72,7 @@ module phoeniX
     // ------------------------
     Fetch_Unit fetch_unit
     (
-        .enable(!reset),              // TBD : to be changed to fetch control state with control
+        .enable(!reset && !stall),              // TBD : to be changed to fetch control state with control
         .PC(PC_fetch_reg),
         .address(address_execute_wire),
         .jump_branch_enable(jump_branch_enable_execute_wire),
@@ -227,7 +227,7 @@ module phoeniX
     ////////////////////////////////////////
     //    DECODE TO EXECUTE TRANSITION    //
     ////////////////////////////////////////
-    always @(posedge CLK) 
+    always @(posedge (CLK)) 
     begin
         PC_execute_reg <= PC_decode_reg;
 
@@ -401,6 +401,7 @@ module phoeniX
         endcase 
     end
 
+    // always @(negedge mul_busy_execute_wire) 
     // --------------------------------
     // Reg Declarations for Memory Stage
     // --------------------------------
