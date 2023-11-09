@@ -6,3 +6,4 @@ LOOP:
         addi    x13,    x13,    1
         blt     x13,    x12,    LOOP
         sw      x14,    100(x0)
+        ebreak

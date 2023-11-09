@@ -2,19 +2,18 @@
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-	`define FIRMWARE "Software\\Sample_C_Codes\\sum1ton\\sum1ton_firmware.hex"
+	`define FIRMWARE "Software\\Sample_Assembly_Codes\\sum1to100_approximate\\factorial_approximate_firmware.hex"
 `endif /*FIRMWARE*/
 
 module phoeniX_Testbench;
 
-    initial #10000 $finish;
-
     //////////////////////
     // Clock Generation //
     //////////////////////
-    parameter T_CLK = 4;
+    parameter CLK_PERIOD = 4;
     reg CLK = 1'b1;
-    always #(T_CLK/2) CLK = ~CLK;
+    initial begin forever #(CLK_PERIOD/2) CLK = ~CLK; end
+    initial #(1000 * CLK_PERIOD) $finish;
 
     reg reset = 1'b1;
     
