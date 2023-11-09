@@ -101,7 +101,10 @@ module phoeniX
     ////////////////////////////////////////
     always @(posedge CLK) 
     begin
-        if (!(|stall_condition[1 : 3]))
+        if (jump_branch_enable_execute_wire)
+            instruction_decode_reg <= `NOP;
+
+        else if (!(|stall_condition[1 : 3]))
         begin
             PC_decode_reg <= PC_fetch_reg;
             instruction_decode_reg <= instruction_memory_interface_data;
