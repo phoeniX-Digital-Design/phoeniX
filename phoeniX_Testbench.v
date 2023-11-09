@@ -2,16 +2,19 @@
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-	`define FIRMWARE "Software\\Sample_Assembly_Codes\\sum1to100_approximate\\sum1to100_approximate_firmware.hex"
+	`define FIRMWARE "Software\\Sample_C_Codes\\sum1ton\\sum1ton_firmware.hex"
 `endif /*FIRMWARE*/
 
 module phoeniX_Testbench;
 
-    // initial #10000 $finish;
+    initial #10000 $finish;
 
-    // Clock Generation
+    //////////////////////
+    // Clock Generation //
+    //////////////////////
+    parameter T_CLK = 4;
     reg CLK = 1'b1;
-    always #2 CLK = ~CLK;
+    always #(T_CLK/2) CLK = ~CLK;
 
     reg reset = 1'b1;
     
@@ -139,8 +142,7 @@ module phoeniX_Testbench;
                 if (data_memory_interface_frame_mask[1]) Memory[data_memory_interface_address >> 2][23 : 16] <= data_memory_interface_data[23 : 16];
                 if (data_memory_interface_frame_mask[0]) Memory[data_memory_interface_address >> 2][31 : 24] <= data_memory_interface_data[31 : 24];
             end 
-            if (data_memory_interface_state == READ)
-                data_memory_interface_data_reg <= Memory[data_memory_interface_address >> 2];
+            if (data_memory_interface_state == READ) data_memory_interface_data_reg <= Memory[data_memory_interface_address >> 2];
         end   
         
         ////////////////////////////////////
