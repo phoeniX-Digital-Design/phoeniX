@@ -17,14 +17,12 @@ module Control_Status_Register_File
     reg [31 : 0] mul_csr;       // Multiplier Unit Aproximation Control Register
     reg [31 : 0] div_csr;       // Divider Unit Aproximation Control Register
 
-/*
     always @(posedge reset)
     begin
         alu_csr = 32'b0;
         mul_csr = 32'b0;
         div_csr = 32'b0;
     end
-*/
 
     always @(*) 
     begin
@@ -49,5 +47,4 @@ module Control_Status_Register_File
             endcase
         end  
     end
-
 endmodule
