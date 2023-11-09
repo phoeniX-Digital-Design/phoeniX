@@ -74,7 +74,7 @@ module Divider_Unit
         operand_1 = rs1;
         operand_2 = rs2;
         div_unit_busy = busy;
-        casex ({funct7, funct3, opcode})
+        case ({funct7, funct3, opcode})
             17'b0000001_100_0110011 : begin  // DIV
                 enable  = 1'b1;
                 input_1 = operand_1;
@@ -99,7 +99,7 @@ module Divider_Unit
                 input_2 = operand_2;
                 div_output = $signed(remainder);
             end
-            default: begin div_output = 32'bz; div_unit_busy = 1'bz; enable = 1'b0; end // Wrong opcode                
+            default: begin div_output = 32'bz; div_unit_busy = 1'b0; enable = 1'b0; end // Wrong opcode                
         endcase
     end
 
