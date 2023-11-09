@@ -2,7 +2,7 @@
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-	`define FIRMWARE "Software\\Sample_Assembly_Codes\\sum1to100\\sum1to100_firmware.hex"
+	`define FIRMWARE "Software\\Sample_Assembly_Codes\\sum1to100_approximate\\factorial_approximate_firmware.hex"
 `endif /*FIRMWARE*/
 
 module phoeniX_Testbench;
