@@ -45,14 +45,13 @@ module Address_Generator
 
     always @(*) 
     begin
-        assign address = adder_result;
-        // Address Type evaluation (for Address Generator module)
         case (opcode)
-            `STORE   : begin adder_input_1 = rs1; adder_input_2 = immediate; end    //  Store  -> bus_rs1 + immediate
-            `LOAD    : begin adder_input_1 = rs1; adder_input_2 = immediate; end    //  Load   -> bus_rs1 + immediate
-            `JAL     : begin adder_input_1 = pc;  adder_input_2 = immediate; end    //  JAL    ->    pc   + immediate
-            `JALR    : begin adder_input_1 = rs1; adder_input_2 = immediate; end    //  JALR   -> bus_rs1 + immediate
-            `BRANCH  : begin adder_input_1 = pc;  adder_input_2 = immediate; end    //  Branch ->    pc   + immediate
+            `STORE   : begin adder_input_1 = rs1; adder_input_2 = immediate; address = adder_result; end    //  Store  ->   rs1  + immediate
+            `LOAD    : begin adder_input_1 = rs1; adder_input_2 = immediate; address = adder_result; end    //  Load   ->   rs1  + immediate
+            `JALR    : begin adder_input_1 = rs1; adder_input_2 = immediate; address = adder_result; end    //  JALR   ->   rs1  + immediate
+            `JAL     : begin adder_input_1 = pc;  adder_input_2 = immediate; address = adder_result; end    //  JAL    ->    pc  + immediate
+            `AUIPC   : begin adder_input_1 = pc;  adder_input_2 = immediate; address = adder_result; end    //  AUIPC  ->    pc  + immediate
+            `BRANCH  : begin adder_input_1 = pc;  adder_input_2 = immediate; address = adder_result; end    //  Branch ->    pc  + immediate
             default  : address = 32'bz;
         endcase 
     end
@@ -111,7 +110,6 @@ module Kogge_Stone_Adder
     kogge_stone_cell_5 s5(c4, p4, g4, ps3, c5, p5, g5, ps4);
     kogge_stone_cell_6 s6(c5, p5, g5, ps4, c6, p6, g6);
     kogge_stone_cell_7 s7(c6, p6, g6, sum, carry_out);
-
 endmodule
 
 module kogge_stone_cell_7
@@ -122,11 +120,9 @@ module kogge_stone_cell_7
     output wire [31 : 0] o_s,
     output wire          o_carry
 );
-
     assign o_carry     = i_gk[31];
     assign o_s[0]      = i_c0 ^ i_pk[0];
     assign o_s[31 : 1] = i_gk[30 : 0] ^ i_pk[31 : 1];
-
 endmodule
 
 module kogge_stone_cell_6
@@ -160,7 +156,6 @@ module kogge_stone_cell_6
         );
     end
     endgenerate
-
 endmodule
 
 module kogge_stone_cell_5
@@ -212,7 +207,6 @@ module kogge_stone_cell_5
         );
     end
     endgenerate
-
 endmodule
 
 module kogge_stone_cell_4
@@ -264,7 +258,6 @@ module kogge_stone_cell_4
         );
     end
     endgenerate
-
 endmodule
 
 module kogge_stone_cell_3
@@ -306,7 +299,6 @@ module kogge_stone_cell_3
         );
     end
     endgenerate
-
 endmodule
 
 module kogge_stone_cell_2
@@ -345,7 +337,6 @@ module kogge_stone_cell_2
         );
     end
     endgenerate
-
 endmodule
 
 module kogge_stone_cell_1
@@ -373,7 +364,6 @@ module kogge_stone_cell_1
         );
     end
     endgenerate
-
 endmodule
 
 module PG
