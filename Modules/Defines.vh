@@ -55,20 +55,23 @@
     `define ECALL   12'b000000000000
     `define EBREAK  12'b000000000001
 
-`define MUL     3'b000
-`define MULH    3'b001
-`define MULHSU  3'b010
-`define MULHU   3'b011 
+`define CSR_INSTRUCTIONS
+    `define CSRRW  3'b001
+    `define CSRRS  3'b010
+    `define CSRRC  3'b011
+    `define CSRRWI 3'b101
+    `define CSRRSI 3'b110
+    `define CSRRCI 3'b111
 
-`define DIV     3'b100
-`define DIVU    3'b101
-`define REM     3'b110
-`define REMU    3'b111
+`define MUL_DIV_INSTRCUTIONS
+    `define MUL     3'b000
+    `define MULH    3'b001
+    `define MULHSU  3'b010
+    `define MULHU   3'b011 
 
-`define MULDIV  7'b0000001
+    `define DIV     3'b100
+    `define DIVU    3'b101
+    `define REM     3'b110
+    `define REMU    3'b111
 
-`define EXECUTION_MUX_STATES
-    `define SELECT_ALU 2'b00
-    `define SELECT_MUL 2'b01
-    `define SELECT_DIV 2'b10
-    `define SELECT_FPU 2'b11
+    `define MULDIV  7'b0000001

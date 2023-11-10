@@ -5,16 +5,17 @@
     `define B_TYPE 3
     `define U_TYPE 4
     `define J_TYPE 5
-`endif
+`endif /*INSTRUCTION_TYPES*/
 
 module Immediate_Generator 
 (
 	input [31 : 0] instruction,
-	input [2 : 0] instruction_type,
+	input [ 2 : 0] instruction_type,
 
 	output reg [31 : 0] immediate
 );
-    always @(*) begin
+    always @(*)
+    begin
         case (instruction_type)
             `I_TYPE : immediate = { {21{instruction[31]}}, instruction[30 : 20] };
             `S_TYPE : immediate = { {21{instruction[31]}}, instruction[30 : 25], instruction[11 : 7] };

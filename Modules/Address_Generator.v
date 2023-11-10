@@ -1,11 +1,3 @@
-/*
-    Address Generator:
-    There are 3 types of addresses generated in this module:
-    1. Branch Address
-    2. Jump and Link Address
-    3. Load/Store Address
-*/
-
 `ifndef OPCODES
     `define LOAD        7'b00_000_11
     `define LOAD_FP     7'b00_001_11
@@ -35,13 +27,13 @@
     `define JAL         7'b11_011_11
     `define SYSTEM      7'b11_100_11
     `define custom_3    7'b11_110_11
-`endif 
+`endif /*OPCODES*/
 
 module Address_Generator
 (
-    input [6 : 0] opcode, 
+    input [ 6 : 0] opcode, 
     input [31 : 0] rs1,            
-    input [31 : 0] PC,
+    input [31 : 0] pc,
     input [31 : 0] immediate,
 
     output reg [31 : 0] address
@@ -58,9 +50,9 @@ module Address_Generator
         case (opcode)
             `STORE   : begin adder_input_1 = rs1; adder_input_2 = immediate; end    //  Store  -> bus_rs1 + immediate
             `LOAD    : begin adder_input_1 = rs1; adder_input_2 = immediate; end    //  Load   -> bus_rs1 + immediate
-            `JAL     : begin adder_input_1 = PC;  adder_input_2 = immediate; end    //  JAL    ->    PC   + immediate
+            `JAL     : begin adder_input_1 = pc;  adder_input_2 = immediate; end    //  JAL    ->    pc   + immediate
             `JALR    : begin adder_input_1 = rs1; adder_input_2 = immediate; end    //  JALR   -> bus_rs1 + immediate
-            `BRANCH  : begin adder_input_1 = PC;  adder_input_2 = immediate; end    //  Branch ->    PC   + immediate
+            `BRANCH  : begin adder_input_1 = pc;  adder_input_2 = immediate; end    //  Branch ->    pc   + immediate
             default  : address = 32'bz;
         endcase 
     end

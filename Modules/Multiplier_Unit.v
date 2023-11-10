@@ -18,7 +18,7 @@
         CSR [31 : 3] : APPROXIMATION_ERROR_CONTROL
     - PLEASE DO NOT REMOVE ANY OF THE COMMENTS IN THIS FILE
     - Input and Output paramaters:
-        Input:  CLK = Source clock signal
+        Input:  clk = Source clock signal
         Input:  error_control = {accuracy_control[USER_ERROR_LEN:3], accuracy_control[2:1] (module select), accuracy_control[0]}
         Input:  input_1       = First operand of your module
         Input:  input_2       = Second operand of your module
@@ -60,7 +60,7 @@
     `define JAL         7'b11_011_11
     `define SYSTEM      7'b11_100_11
     `define custom_3    7'b11_110_11
-`endif
+`endif /*OPCODES*/
 
 `define MUL     3'b000
 `define MULH    3'b001
@@ -71,7 +71,7 @@
 
 module Multiplier_Unit
 (
-    input CLK,                          // Source Clock Signal
+    input clk,                          // Source Clock Signal
 
     input [6 : 0] opcode,               // ALU Operation
     input [6 : 0] funct7,               // ALU Operation
@@ -153,7 +153,7 @@ module Multiplier_Unit
     // -------------------------------------------------------------------------------------------------------
     Approximate_Accuracy_Controlable_Multiplier multiplier 
     (
-        .CLK(CLK),
+        .clk(clk),
         .enable(multiplier_enable),
         .Er(multiplier_accuracy),
         .Operand_1(multiplier_input_1), 
@@ -171,7 +171,7 @@ endmodule
 // --------------------------------------------------------------------------------------------------------
 module Approximate_Accuracy_Controlable_Multiplier 
 (
-    input CLK,
+    input clk,
     input enable,
 
     input [6 : 0] Er,
@@ -187,7 +187,7 @@ module Approximate_Accuracy_Controlable_Multiplier
 
     Approximate_Accuracy_Controlable_Multiplier_16bit multiplier_LOWxLOW
     (
-        .CLK(CLK),
+        .clk(clk),
         .enable(enable),
 
         .Er(Er),
@@ -200,7 +200,7 @@ module Approximate_Accuracy_Controlable_Multiplier
 
     Approximate_Accuracy_Controlable_Multiplier_16bit multiplier_HIGHxLOW
     (
-        .CLK(CLK),
+        .clk(clk),
         .enable(enable),
 
         .Er({7{1'b1}}),
@@ -213,7 +213,7 @@ module Approximate_Accuracy_Controlable_Multiplier
 
     Approximate_Accuracy_Controlable_Multiplier_16bit multiplier_LOWxHIGH
     (
-        .CLK(CLK),
+        .clk(clk),
         .enable(enable),
 
         .Er({7{1'b1}}),
@@ -226,7 +226,7 @@ module Approximate_Accuracy_Controlable_Multiplier
 
     Approximate_Accuracy_Controlable_Multiplier_16bit multiplier_HIGHxHIGH
     (
-        .CLK(CLK),
+        .clk(clk),
         .enable(enable),
 
         .Er({7{1'b1}}),
@@ -243,7 +243,7 @@ endmodule
 
 module Approximate_Accuracy_Controlable_Multiplier_16bit 
 (
-    input CLK,
+    input clk,
     input enable,
 
     input [6 : 0] Er,
@@ -265,7 +265,7 @@ module Approximate_Accuracy_Controlable_Multiplier_16bit
 
     Approximate_Accuracy_Controlable_Multiplier_8bit mul
     (
-        .CLK(CLK),
+        .clk(clk),
         .Er(Er),
         .Operand_1(mul_input_1),
         .Operand_2(mul_input_2),
@@ -275,7 +275,7 @@ module Approximate_Accuracy_Controlable_Multiplier_16bit
     reg [2 : 0] state;
     reg [2 : 0] next_state;
 
-    always @(posedge CLK) 
+    always @(posedge clk) 
     begin
         if (~enable)   
         begin 
@@ -307,7 +307,7 @@ endmodule
 
 module Approximate_Accuracy_Controlable_Multiplier_8bit
 (
-    input CLK,
+    input clk,
 
     input [6 : 0] Er,
     input [7 : 0] Operand_1,
@@ -341,7 +341,7 @@ module Approximate_Accuracy_Controlable_Multiplier_8bit
     reg [14 : 0] V1_Stage_2;
     reg [14 : 0] V2_Stage_2;
 
-    always @(posedge CLK)
+    always @(posedge clk)
     begin
         P5_Stage_2 <= P5_Stage_1;
         P6_Stage_2 <= P6_Stage_1;
@@ -370,7 +370,7 @@ module Approximate_Accuracy_Controlable_Multiplier_8bit
     reg [14 : 0] SumSignal_Stage_3;
     reg [14 : 0] CarrySignal_Stage_3;
 
-    always @(posedge CLK) 
+    always @(posedge clk) 
     begin
         SumSignal_Stage_3 <= SumSignal_Stage_2;
         CarrySignal_Stage_3 <= CarrySignal_Stage_2;
