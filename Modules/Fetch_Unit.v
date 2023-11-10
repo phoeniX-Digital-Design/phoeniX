@@ -1,16 +1,13 @@
 module Fetch_Unit
 (
-	input enable,                    // Memory interface enable pin
+	input enable,                    
 
-    input [31 : 0] PC,
+    input [31 : 0] pc,
 
 	input [31 : 0] jump_branch_address,         
 	input jump_branch_enable,       
     
-    // input [31 : 0] stall_address,
-    // input stall_enable,
-
-    output reg [31 : 0] next_PC,    // next instruction PC output
+    output reg [31 : 0] next_pc,  
     
     //////////////////////////////
     // Memory Interface Signals //
@@ -29,13 +26,12 @@ module Fetch_Unit
         memory_interface_enable = enable;
         memory_interface_state = READ;
         memory_interface_frame_mask = 4'b1111;
-        memory_interface_address = PC;  
+        memory_interface_address = pc;  
     end
 
     always @(*)
     begin
-        if (jump_branch_enable) next_PC <= jump_branch_address;
-        // else if (stall_enable)  next_PC <= stall_address;
-        else                    next_PC <= PC + 32'd4;
+        if (jump_branch_enable) next_pc <= jump_branch_address;
+        else                    next_pc <= pc + 32'd4;
     end
 endmodule
