@@ -290,7 +290,6 @@ module phoeniX
         .funct3(funct3_execute_reg),
         .funct7(funct7_execute_reg),
         .accuracy_control(control_status_register_file.alu_csr),    
-        .pc(pc_execute_reg),
         .rs1(rs1_execute_reg),
         .rs2(rs2_execute_reg),
         .immediate(immediate_execute_reg),
@@ -495,6 +494,7 @@ module phoeniX
     reg [ 6 : 0] funct7_writeback_reg;
     reg [11 : 0] funct12_writeback_reg;
 
+    reg [31 : 0] address_writeback_reg;
     reg [31 : 0] immediate_writeback_reg;
     reg [ 2 : 0] instruction_type_writeback_reg;
     reg [ 4 : 0] write_index_writeback_reg;
@@ -532,6 +532,7 @@ module phoeniX
             funct7_writeback_reg <= funct7_memory_reg;
             funct12_writeback_reg <= funct12_memory_reg;
 
+            address_writeback_reg <= address_memory_reg;
             immediate_writeback_reg <= immediate_memory_reg;
             instruction_type_writeback_reg <= instruction_type_memory_reg;
             write_index_writeback_reg <= write_index_memory_reg;
@@ -553,7 +554,7 @@ module phoeniX
             `OP     : write_data_writeback_reg = result_writeback_reg;
             `JAL    : write_data_writeback_reg = next_pc_writeback_reg;
             `JALR   : write_data_writeback_reg = next_pc_writeback_reg;
-            `AUIPC  : write_data_writeback_reg = result_writeback_reg;
+            `AUIPC  : write_data_writeback_reg = address_writeback_reg;
             `LOAD   : write_data_writeback_reg = load_data_writeback_reg;
             `LUI    : write_data_writeback_reg = immediate_writeback_reg;
         endcase
