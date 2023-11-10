@@ -32,14 +32,8 @@
         I-TYPE : ADDI - SLTI - SLTIU            R-TYPE : ADD  - SUB  - SLL           
                  XORI - ORI  - ANDI                      SLT  - SLTU - XOR                         
                  SLLI - SRLI - SRAI                      SRL  - SRA  - OR  - AND
-        J-TYPE : JAL  - JALR                    U-TYPE : AUIPC         
+        U-TYPE : AUIPC         
 */
-
-// *** Include your header files and modules here ***
-// ---------------------------------------------------------------------------------
-// `include "Approximate_Arithmetic_Units/Approximate_Accuracy_Controlable_Adder.v"
-// ---------------------------------------------------------------------------------
-// *** End of including header files and modules ***
 
 `ifndef OPCODES
     `define LOAD        7'b00_000_11
@@ -70,7 +64,7 @@
     `define JAL         7'b11_011_11
     `define SYSTEM      7'b11_100_11
     `define custom_3    7'b11_110_11
-`endif
+`endif /*OPCODES*/
 
 module Arithmetic_Logic_Unit
 (
@@ -98,21 +92,18 @@ module Arithmetic_Logic_Unit
     
     wire [31 : 0] adder_result;
 
-    // ALU multiplexers signals evaluation
     always @(*) 
     begin
         case (opcode)
         `OP     : begin operand_1 = rs1; operand_2 = rs2;       end // R-TYPE 
         `OP_IMM : begin operand_1 = rs1; operand_2 = immediate; end // I-TYPE 
-        `JALR   : begin operand_1 = PC;  operand_2 = 32'd4;     end // JALR   
-        `JAL    : begin operand_1 = PC;  operand_2 = 32'd4;     end // JAL    
         `AUIPC  : begin operand_1 = PC;  operand_2 = immediate; end // AUIPC
         endcase        
     end
 
-    // ----------------------------------------- //
-    // Logical, Jump and PC Control Instrcutions //
-    // ----------------------------------------- //
+    // ----------------------------------- //
+    // Main R-type and I-type Instrcutions //
+    // ----------------------------------- //
     always @(*)
     begin
         casex ({funct7, funct3, opcode})
@@ -138,10 +129,6 @@ module Arithmetic_Logic_Unit
             {7'b0_100_000, 3'b101, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 >> $signed(operand_2);                    end     // SRA
             {7'b0_000_000, 3'b110, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 | operand_2;                              end     // OR
             {7'b0_000_000, 3'b111, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 & operand_2;                              end     // AND
-
-            // JAL and JALR Instructions
-            {7'bz_zzz_zzz, 3'bzzz, `JAL}    : begin alu_enable = 1'b1; alu_output = operand_1 + operand_2;                              end     // JAL
-            {7'bz_zzz_zzz, 3'b000, `JALR}   : begin alu_enable = 1'b1; alu_output = operand_1 + operand_2;                              end     // JALR
             
             // AUIPC Instruction
             {7'bz_zzz_zzz, 3'bzzz, `AUIPC}  : begin alu_enable = 1'b1; alu_output = operand_1 + operand_2; end   // AUIPC
