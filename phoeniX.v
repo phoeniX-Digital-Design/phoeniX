@@ -95,6 +95,7 @@ module phoeniX
     // --------------------------------------
     reg [31 : 0] instruction_decode_reg;
     reg [31 : 0] pc_decode_reg; 
+    reg [31 : 0] next_pc_decode_reg;
 
     ////////////////////////////////////////
     //     FETCH TO DECODE TRANSITION     //
@@ -107,6 +108,7 @@ module phoeniX
         else if (!(|stall_condition[1 : 3]))
         begin
             pc_decode_reg <= pc_fetch_reg;
+            next_pc_decode_reg <= next_pc_fetch_wire;
             instruction_decode_reg <= instruction_memory_interface_data;
         end    
     end
@@ -199,6 +201,7 @@ module phoeniX
     // Reg Declarations for Execute Stage
     // ----------------------------------
     reg [31 : 0] pc_execute_reg;
+    reg [31 : 0] next_pc_execute_reg;
 
     reg [ 6 : 0] opcode_execute_reg;
     reg [ 2 : 0] funct3_execute_reg;
@@ -240,6 +243,7 @@ module phoeniX
         else if (!(|stall_condition[1 : 3]))
         begin
             pc_execute_reg <= pc_decode_reg;
+            next_pc_execute_reg <= next_pc_decode_reg;
             write_enable_execute_reg <= write_enable_decode_wire;
             
             opcode_execute_reg <= opcode_decode_wire;
@@ -296,7 +300,7 @@ module phoeniX
     // -------------------------------------
     // Multiplier/Divider Unit Instantiation
     // -------------------------------------
-    generate if (M_EXTENSION == 1'b1)
+    generate if (M_EXTENSION)
     begin
         Multiplier_Unit multiplier_unit
         (
@@ -396,6 +400,7 @@ module phoeniX
     // Reg Declarations for Memory Stage
     // --------------------------------
     reg [31 : 0] pc_memory_reg;
+    reg [31 : 0] next_pc_memory_reg;
 
     reg [ 6 : 0] opcode_memory_reg;
     reg [ 2 : 0] funct3_memory_reg;
@@ -435,6 +440,7 @@ module phoeniX
         else if (!(|stall_condition[1 : 3]))
         begin
             pc_memory_reg <= pc_execute_reg;
+            next_pc_memory_reg <= next_pc_execute_reg;
 
             opcode_memory_reg <= opcode_execute_reg;
             funct3_memory_reg <= funct3_execute_reg;
@@ -482,6 +488,7 @@ module phoeniX
     // Reg Declarations for Write-Back Stage
     // -------------------------------------
     reg [31 : 0] pc_writeback_reg;
+    reg [31 : 0] next_pc_writeback_reg;
 
     reg [ 6 : 0] opcode_writeback_reg;
     reg [ 2 : 0] funct3_writeback_reg;
@@ -518,6 +525,7 @@ module phoeniX
         if (!(|stall_condition[1 : 3]))
         begin
             pc_writeback_reg <= pc_memory_reg;
+            next_pc_writeback_reg <= next_pc_memory_reg;
             
             opcode_writeback_reg <= opcode_memory_reg;
             funct3_writeback_reg <= funct3_memory_reg;
@@ -543,8 +551,8 @@ module phoeniX
         case (opcode_writeback_reg)
             `OP_IMM : write_data_writeback_reg = result_writeback_reg;
             `OP     : write_data_writeback_reg = result_writeback_reg;
-            `JAL    : write_data_writeback_reg = result_writeback_reg;
-            `JALR   : write_data_writeback_reg = result_writeback_reg;
+            `JAL    : write_data_writeback_reg = next_pc_writeback_reg;
+            `JALR   : write_data_writeback_reg = next_pc_writeback_reg;
             `AUIPC  : write_data_writeback_reg = result_writeback_reg;
             `LOAD   : write_data_writeback_reg = load_data_writeback_reg;
             `LUI    : write_data_writeback_reg = immediate_writeback_reg;
