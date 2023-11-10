@@ -74,7 +74,6 @@ module Arithmetic_Logic_Unit
 
     input [31 : 0] accuracy_control,    // Approximation Control Register
 
-    input [31 : 0] PC,                  // Program Counter Register
     input [31 : 0] rs1,                 // Register Source 1
     input [31 : 0] rs2,                 // Register Source 2
     input [31 : 0] immediate,           // Immediate Source
@@ -97,7 +96,6 @@ module Arithmetic_Logic_Unit
         case (opcode)
         `OP     : begin operand_1 = rs1; operand_2 = rs2;       end // R-TYPE 
         `OP_IMM : begin operand_1 = rs1; operand_2 = immediate; end // I-TYPE 
-        `AUIPC  : begin operand_1 = PC;  operand_2 = immediate; end // AUIPC
         endcase        
     end
 
@@ -130,9 +128,6 @@ module Arithmetic_Logic_Unit
             {7'b0_000_000, 3'b110, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 | operand_2;                              end     // OR
             {7'b0_000_000, 3'b111, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 & operand_2;                              end     // AND
             
-            // AUIPC Instruction
-            {7'bz_zzz_zzz, 3'bzzz, `AUIPC}  : begin alu_enable = 1'b1; alu_output = operand_1 + operand_2; end   // AUIPC
-
             default: begin alu_enable = 1'b0; alu_output = 32'bz; end
         endcase
     end
