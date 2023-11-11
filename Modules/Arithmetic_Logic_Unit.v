@@ -96,6 +96,11 @@ module Arithmetic_Logic_Unit
     
     wire [31 : 0] adder_result;
 
+    reg  [31 : 0] shifter_input;
+    reg  [4  : 0] shifter_amount;
+    reg           shift_direction;
+    wire [31 : 0] shifter_result;
+
     always @(*) 
     begin
         case (opcode)
@@ -112,7 +117,8 @@ module Arithmetic_Logic_Unit
         casex ({funct7, funct3, opcode})
             // I-TYPE Intructions
             {7'bz_zzz_zzz, 3'b000, `OP_IMM} : alu_output = adder_result;
-            {7'b0_000_000, 3'b001, `OP_IMM} : begin alu_enable = 1'b1; alu_output = operand_1 << operand_2 [4 : 0];                     end     // SLLI
+            {7'b0_000_000, 3'b001, `OP_IMM} : 
+            begin alu_enable = 1'b1; alu_output = operand_1 << operand_2 [4 : 0];                     end     // SLLI
             {7'bz_zzz_zzz, 3'b010, `OP_IMM} : begin alu_enable = 1'b1; alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;    end     // SLTI
             {7'bz_zzz_zzz, 3'b011, `OP_IMM} : begin alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0;                      end     // SLTIU
             {7'bz_zzz_zzz, 3'b100, `OP_IMM} : begin alu_enable = 1'b1; alu_output = operand_1 ^ operand_2;                              end     // XORI
@@ -156,6 +162,17 @@ module Arithmetic_Logic_Unit
         endcase    
     end
 
+    Barrel_Shifter
+    #(
+        .WIDTH(32)
+    )
+    arithmetic_logic_unit_shifter_circuit
+    (
+        .value(shifter_input),
+        .shift_amount(shifter_amount),
+        .direction(shift_direction),
+        .result(shifter_result)
+    );
     
     // *** Instantiate your adder circuit here ***
     // Please instantiate your adder module according to the guidelines and naming conventions of phoeniX
@@ -180,8 +197,8 @@ endmodule
 
 module Barrel_Shifter #(parameter WIDTH = 32)
 (
-    input  [WIDTH - 1      : 0]   value,
-    input  [$clog2(WIDTH)  : 0]   shift_amount,
+    input  [WIDTH - 1         : 0]   value,
+    input  [$clog2(WIDTH) - 1 : 0]   shift_amount,
     input                         direction,
     output reg [WIDTH - 1  : 0]   result
 );
