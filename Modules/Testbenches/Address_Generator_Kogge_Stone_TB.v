@@ -4,7 +4,7 @@ module Address_Generator_Testbench;
 
     reg [6  : 0] opcode;
     reg [31 : 0] rs1;
-    reg [31 : 0] PC;
+    reg [31 : 0] pc;
     reg [31 : 0] immediate;
 
     wire [31 : 0] address;
@@ -14,7 +14,7 @@ module Address_Generator_Testbench;
     (
         .opcode(opcode),
         .rs1(rs1),
-        .PC(PC),
+        .pc(pc),
         .immediate(immediate),
         .address(address)
     );
@@ -23,7 +23,7 @@ module Address_Generator_Testbench;
     initial begin
         opcode = `LOAD;
         rs1 = 32'd12345;
-        PC  = 32'd00000;
+        pc  = 32'd00000;
         immediate = 32'd4;
         #5;
 
@@ -32,7 +32,7 @@ module Address_Generator_Testbench;
         #10;
         opcode = `BRANCH;
         rs1 = 32'd54321;
-        PC = 32'd9;
+        pc = 32'd9;
         immediate = 32'h8;
         #5;
         $display("Address: %d", address);

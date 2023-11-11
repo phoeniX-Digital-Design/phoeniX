@@ -27,7 +27,7 @@
     `define JAL         7'b11_011_11
     `define SYSTEM      7'b11_100_11
     `define custom_3    7'b11_110_11
-`endif
+`endif /*OPCODES*/
 
 `ifndef CSR_INSTRUCTIONS
     `define CSRRW  3'b001
@@ -36,14 +36,12 @@
     `define CSRRWI 3'b101
     `define CSRRSI 3'b110
     `define CSRRCI 3'b111
-`endif
+`endif /*CSR_INSTRUCTIONS*/
 
 module Control_Status_Unit 
 (
-    input  CLK,
-
-    input  [6 : 0] opcode,
-    input  [2 : 0] funct3,
+    input  [ 6 : 0] opcode,
+    input  [ 2 : 0] funct3,
 
     input  [31 : 0] CSR_in,
     input  [31 : 0] rs1,

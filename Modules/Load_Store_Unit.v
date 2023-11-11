@@ -27,7 +27,7 @@
     `define JAL         7'b11_011_11
     `define SYSTEM      7'b11_100_11
     `define custom_3    7'b11_110_11
-`endif 
+`endif /*OPCODES*/
 
 `define BYTE                3'b000
 `define HALFWORD            3'b001
@@ -50,10 +50,9 @@ module Load_Store_Unit
 
     output  reg  memory_interface_enable,
     output  reg  memory_interface_state,
-    output  reg  [31 : 0]   memory_interface_address,
-    output  reg  [3 : 0]    memory_interface_frame_mask,
-
-    inout   [31 : 0] memory_interface_data
+    output  reg  [31 : 0] memory_interface_address,
+    output  reg  [ 3 : 0] memory_interface_frame_mask,
+    inout        [31 : 0] memory_interface_data
 );
     localparam  READ    = 1'b0;
     localparam  WRITE   = 1'b1;

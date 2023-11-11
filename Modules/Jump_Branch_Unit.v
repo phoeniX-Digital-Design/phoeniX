@@ -27,7 +27,7 @@
     `define JAL         7'b11_011_11
     `define SYSTEM      7'b11_100_11
     `define custom_3    7'b11_110_11
-`endif
+`endif /*OPCODES*/
 
 `ifndef INSTRUCTION_TYPES
     `define R_TYPE 0
@@ -36,7 +36,7 @@
     `define B_TYPE 3
     `define U_TYPE 4
     `define J_TYPE 5
-`endif
+`endif /*INSTRUCTION_TYPES*/
 
 `define BEQ  3'b000
 `define BNE  3'b001
@@ -54,7 +54,7 @@ module Jump_Branch_Unit
     input [31 : 0] rs1,
     input [31 : 0] rs2,
       
-    output jump_branch_enable     // Goes to Fetch_Unit
+    output jump_branch_enable     
 );
 
     reg branch_enable;
@@ -62,21 +62,15 @@ module Jump_Branch_Unit
 
     always @(*) 
     begin
-            if (instruction_type == `B_TYPE)  // B-TYPE Instructions
+            if (instruction_type == `B_TYPE)  
                 casex ({funct3})
-                {`BEQ} :    if ($signed(rs1) == $signed(rs2))   branch_enable = 1'b1; 
-
-                {`BNE} :    if ($signed(rs1) != $signed(rs2))   branch_enable = 1'b1;
-                
-                {`BLT} :    if ($signed(rs1) < $signed(rs2))    branch_enable = 1'b1;
-                
-                {`BGE} :    if ($signed(rs1) >= $signed(rs2))   branch_enable = 1'b1;
-                
-                {`BLTU} :   if (rs1 < rs2)                      branch_enable = 1'b1;
-                
-                {`BGEU} :   if (rs1 >= rs2)                     branch_enable = 1'b1;
-                
-                default:    branch_enable = 1'b0;
+                    `BEQ  : if ($signed(rs1) == $signed(rs2))   branch_enable = 1'b1; 
+                    `BNE  : if ($signed(rs1) != $signed(rs2))   branch_enable = 1'b1;                    
+                    `BLT  : if ($signed(rs1) < $signed(rs2))    branch_enable = 1'b1;                    
+                    `BGE  : if ($signed(rs1) >= $signed(rs2))   branch_enable = 1'b1;                    
+                    `BLTU : if (rs1 < rs2)                      branch_enable = 1'b1;
+                    `BGEU : if (rs1 >= rs2)                     branch_enable = 1'b1;                    
+                    default:    branch_enable = 1'b0;
                 endcase
             else
                 branch_enable = 1'b0;

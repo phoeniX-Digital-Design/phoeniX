@@ -18,7 +18,7 @@
         CSR [31 : 3] : APPROXIMATION_ERROR_CONTROL
     - PLEASE DO NOT REMOVE ANY OF THE COMMENTS IN THIS FILE
     - Input and Output paramaters:
-        Input:  CLK = Source clock signal
+        Input:  clk = Source clock signal
         Input:  error_control = {accuracy_control[USER_ERROR_LEN:3], accuracy_control[2:1] (module select), accuracy_control[0]}
         Input:  input_1       = First operand of your module
         Input:  input_2       = Second operand of your module
@@ -68,7 +68,7 @@
     `define JAL         7'b11_011_11
     `define SYSTEM      7'b11_100_11
     `define custom_3    7'b11_110_11
-`endif
+`endif /*OPCODES*/
 
 `define DIV     3'b000
 `define DIVU    3'b001
@@ -79,7 +79,7 @@
 
 module Divider_Unit
 (
-    input CLK,                          // Sourcee clock signal
+    input clk,                          // Source clock signal
 
     input [6 : 0] opcode,               // DIV Operation
     input [6 : 0] funct7,               // DIV Operation
@@ -148,7 +148,7 @@ module Divider_Unit
     // ----------------------------------------------------------------------------------------------------
     Approximate_Accuracy_Controlable_Divider divider 
     (
-        .CLK(CLK),
+        .clk(clk),
         .Er(accuracy_control[10 : 3] | {8{~accuracy_control[0]}}),
         .operand_1(input_1),  
         .operand_2(input_2),  
@@ -166,7 +166,7 @@ endmodule
 // ----------------------------------------------------------------------------------------------------
 module Approximate_Accuracy_Controlable_Divider
 (  
-    input  CLK,                 // Clock signal
+    input  clk,                 // Clock signal
 
     input  [7  : 0] Er,         // Error rate
 
@@ -218,7 +218,8 @@ module Approximate_Accuracy_Controlable_Divider
             assign latched_rem_result = rem_result;
         end
     end
-    always @(*) begin
+    always @(*) 
+    begin
         if ((output_ready == 1) && (busy == 0))
         begin
             div = latched_div_result;
@@ -233,33 +234,34 @@ module Approximate_Accuracy_Controlable_Divider
     assign busy = active;
 
     // The state machine  
-    always @(posedge CLK) begin  
-            if (active) 
+    always @(posedge clk) 
+    begin  
+        if (active) 
+        begin  
+            // remun an iteration of the divide.  
+            if (sub[32] == 0) 
             begin  
-                // remun an iteration of the divide.  
-                if (sub[32] == 0) 
-                begin  
-                    work  <= sub[31 : 0];
-                    result <= {result[30 : 0], 1'b1};
-                end  
-                else 
-                begin  
-                    work <= {work[30 : 0], result[31]};
-                    result <= {result[30 : 0], 1'b0};
-                end  
-                if (cycle == 0) begin active <= 0; end  
-                cycle <= cycle - 5'd1;  
-            end
-            else begin  
-                // Set up for an unsigned divide.  
-                cycle  <= 5'd31;  
-                result <= operand_1;  
-                denom  <= operand_2;  
-                work   <= 32'b0;  
-                active <= 1;  
+                work  <= sub[31 : 0];
+                result <= {result[30 : 0], 1'b1};
             end  
+            else 
+            begin  
+                work <= {work[30 : 0], result[31]};
+                result <= {result[30 : 0], 1'b0};
+            end  
+            if (cycle == 0) begin active <= 0; end  
+            cycle <= cycle - 5'd1;  
+        end
+        else
+        begin  
+            // Set up for an unsigned divide.  
+            cycle  <= 5'd31;  
+            result <= operand_1;  
+            denom  <= operand_2;  
+            work   <= 32'b0;  
+            active <= 1;  
         end  
-
+    end  
 endmodule
 
 module Approximate_Accuracy_Controlable_Adder_Div 

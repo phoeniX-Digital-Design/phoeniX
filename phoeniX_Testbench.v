@@ -2,7 +2,7 @@
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-	`define FIRMWARE "Software\\Sample_Assembly_Codes\\sum1to100_approximate\\factorial_approximate_firmware.hex"
+	`define FIRMWARE "Software\\Sample_Assembly_Codes\\factorial_approximate\\factorial_approximate_firmware.hex"
 `endif /*FIRMWARE*/
 
 module phoeniX_Testbench;
@@ -11,8 +11,8 @@ module phoeniX_Testbench;
     // Clock Generation //
     //////////////////////
     parameter CLK_PERIOD = 4;
-    reg CLK = 1'b1;
-    initial begin forever #(CLK_PERIOD/2) CLK = ~CLK; end
+    reg clk = 1'b1;
+    initial begin forever #(CLK_PERIOD/2) clk = ~clk; end
     initial #(1000 * CLK_PERIOD) $finish;
 
     reg reset = 1'b1;
@@ -46,7 +46,7 @@ module phoeniX_Testbench;
     ) 
     uut
     (
-        .CLK(CLK),
+        .clk(clk),
         .reset(reset),
 
         .instruction_memory_interface_enable(instruction_memory_interface_enable),
@@ -113,12 +113,12 @@ module phoeniX_Testbench;
         $dumpfile("phoeniX.vcd");
         $dumpvars(0, phoeniX_Testbench);
         // Reset
-        repeat (5) @(posedge CLK);
+        repeat (5) @(posedge clk);
 		reset <= 1'b0;
     end
 
     // Instruction Memory Interface Behaviour
-    always @(negedge CLK)
+    always @(negedge clk)
     begin
         if (!instruction_memory_interface_enable) instruction_memory_interface_data <= 32'bz;
         else
@@ -129,7 +129,7 @@ module phoeniX_Testbench;
     end
 
     // Data Memory Interface Behaviour
-    always @(negedge CLK)
+    always @(negedge clk)
     begin
         if (!data_memory_interface_enable) data_memory_interface_data_reg <= 32'bz;
         else
@@ -153,7 +153,7 @@ module phoeniX_Testbench;
         // end 
 
     end
-    always @(posedge CLK) 
+    always @(posedge clk) 
     begin
         data_memory_interface_data_reg <= 32'bz;    
     end
@@ -163,7 +163,7 @@ module phoeniX_Testbench;
         if (uut.opcode_writeback_reg == `SYSTEM && uut.funct12_writeback_reg == `EBREAK) 
         begin
             reset <= 1'b1;
-            repeat (5) @(posedge CLK);
+            repeat (5) @(posedge clk);
             $display("--> EXECUTION FINISHED <--");
             $dumpoff;
             $finish;

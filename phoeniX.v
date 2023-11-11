@@ -31,7 +31,7 @@ module phoeniX
     parameter E_EXTENSION   = 1'b0
 ) 
 (
-    input CLK,
+    input clk,
     input reset,
 
     //////////////////////////////////////////
@@ -55,12 +55,12 @@ module phoeniX
     // ---------------------------------
     // Wire Declarations for Fetch Stage
     // ---------------------------------
-    wire [31 : 0] next_PC_fetch_wire;
+    wire [31 : 0] next_pc_fetch_wire;
     
     // --------------------------------
     // Reg Declarations for Fetch Stage
     // --------------------------------
-    reg [31 : 0] PC_fetch_reg;
+    reg [31 : 0] pc_fetch_reg;
 
     // ------------------------
     // Fetch Unit Instantiation
@@ -68,10 +68,10 @@ module phoeniX
     Fetch_Unit fetch_unit
     (
         .enable(!reset && !(|stall_condition[1 : 3])),              
-        .PC(PC_fetch_reg),
+        .pc(pc_fetch_reg),
         .jump_branch_address(address_execute_wire),
         .jump_branch_enable(jump_branch_enable_execute_wire),
-        .next_PC(next_PC_fetch_wire),
+        .next_pc(next_pc_fetch_wire),
 
         .memory_interface_enable(instruction_memory_interface_enable),
         .memory_interface_state(instruction_memory_interface_state),
@@ -82,31 +82,33 @@ module phoeniX
     // ------------------------
     // Program Counter Register 
     // ------------------------
-    always @(posedge CLK)
+    always @(posedge clk)
     begin
         if (reset)
-            PC_fetch_reg <= RESET_ADDRESS;
+            pc_fetch_reg <= RESET_ADDRESS;
         else if (!(|stall_condition[1 : 3]))
-            PC_fetch_reg <= next_PC_fetch_wire; 
+            pc_fetch_reg <= next_pc_fetch_wire; 
     end
     
     // --------------------------------------
     // Register Declarations for Decode Stage
     // --------------------------------------
     reg [31 : 0] instruction_decode_reg;
-    reg [31 : 0] PC_decode_reg; 
+    reg [31 : 0] pc_decode_reg; 
+    reg [31 : 0] next_pc_decode_reg;
 
     ////////////////////////////////////////
     //     FETCH TO DECODE TRANSITION     //
     ////////////////////////////////////////
-    always @(posedge CLK) 
+    always @(posedge clk) 
     begin
         if (jump_branch_enable_execute_wire)
             instruction_decode_reg <= `NOP;
 
         else if (!(|stall_condition[1 : 3]))
         begin
-            PC_decode_reg <= PC_fetch_reg;
+            pc_decode_reg <= pc_fetch_reg;
+            next_pc_decode_reg <= next_pc_fetch_wire;
             instruction_decode_reg <= instruction_memory_interface_data;
         end    
     end
@@ -198,7 +200,8 @@ module phoeniX
     // ----------------------------------
     // Reg Declarations for Execute Stage
     // ----------------------------------
-    reg [31 : 0] PC_execute_reg;
+    reg [31 : 0] pc_execute_reg;
+    reg [31 : 0] next_pc_execute_reg;
 
     reg [ 6 : 0] opcode_execute_reg;
     reg [ 2 : 0] funct3_execute_reg;
@@ -221,7 +224,7 @@ module phoeniX
     ////////////////////////////////////////
     //    DECODE TO EXECUTE TRANSITION    //
     ////////////////////////////////////////
-    always @(posedge (CLK)) 
+    always @(posedge (clk)) 
     begin
         if (jump_branch_enable_execute_wire || stall_condition[2])
         begin
@@ -239,7 +242,8 @@ module phoeniX
 
         else if (!(|stall_condition[1 : 3]))
         begin
-            PC_execute_reg <= PC_decode_reg;
+            pc_execute_reg <= pc_decode_reg;
+            next_pc_execute_reg <= next_pc_decode_reg;
             write_enable_execute_reg <= write_enable_decode_wire;
             
             opcode_execute_reg <= opcode_decode_wire;
@@ -286,7 +290,6 @@ module phoeniX
         .funct3(funct3_execute_reg),
         .funct7(funct7_execute_reg),
         .accuracy_control(control_status_register_file.alu_csr),    
-        .PC(PC_execute_reg),
         .rs1(rs1_execute_reg),
         .rs2(rs2_execute_reg),
         .immediate(immediate_execute_reg),
@@ -296,11 +299,11 @@ module phoeniX
     // -------------------------------------
     // Multiplier/Divider Unit Instantiation
     // -------------------------------------
-    generate if (M_EXTENSION == 1'b1)
+    generate if (M_EXTENSION)
     begin
         Multiplier_Unit multiplier_unit
         (
-            .CLK(CLK),
+            .clk(clk),
             .opcode(opcode_execute_reg),
             .funct3(funct3_execute_reg),
             .funct7(funct7_execute_reg),
@@ -313,7 +316,7 @@ module phoeniX
 
         Divider_Unit divider_unit
         (
-            .CLK(CLK),
+            .clk(clk),
             .opcode(opcode_execute_reg),
             .funct3(funct3_execute_reg),
             .funct7(funct7_execute_reg),
@@ -333,7 +336,7 @@ module phoeniX
     (
         .opcode(opcode_execute_reg),
         .rs1(rs1_execute_reg),
-        .PC(PC_execute_reg),
+        .pc(pc_execute_reg),
         .immediate(immediate_execute_reg),
         .address(address_execute_wire)
     );
@@ -356,7 +359,6 @@ module phoeniX
     // ---------------------------------
     Control_Status_Unit control_status_unit
     (
-        .CLK(CLK),
         .opcode(opcode_execute_reg),
         .funct3(funct3_execute_reg),
 
@@ -396,7 +398,8 @@ module phoeniX
     // --------------------------------
     // Reg Declarations for Memory Stage
     // --------------------------------
-    reg [31 : 0] PC_memory_reg;
+    reg [31 : 0] pc_memory_reg;
+    reg [31 : 0] next_pc_memory_reg;
 
     reg [ 6 : 0] opcode_memory_reg;
     reg [ 2 : 0] funct3_memory_reg;
@@ -417,7 +420,7 @@ module phoeniX
     ////////////////////////////////////////
     //    EXECUTE TO MEMORY TRANSITION    //
     ////////////////////////////////////////
-    always @(posedge CLK) 
+    always @(posedge clk) 
     begin
         if (stall_condition[1])
         begin
@@ -435,7 +438,8 @@ module phoeniX
 
         else if (!(|stall_condition[1 : 3]))
         begin
-            PC_memory_reg <= PC_execute_reg;
+            pc_memory_reg <= pc_execute_reg;
+            next_pc_memory_reg <= next_pc_execute_reg;
 
             opcode_memory_reg <= opcode_execute_reg;
             funct3_memory_reg <= funct3_execute_reg;
@@ -482,13 +486,15 @@ module phoeniX
     // -------------------------------------
     // Reg Declarations for Write-Back Stage
     // -------------------------------------
-    reg [31 : 0] PC_writeback_reg;
+    reg [31 : 0] pc_writeback_reg;
+    reg [31 : 0] next_pc_writeback_reg;
 
     reg [ 6 : 0] opcode_writeback_reg;
     reg [ 2 : 0] funct3_writeback_reg;
     reg [ 6 : 0] funct7_writeback_reg;
     reg [11 : 0] funct12_writeback_reg;
 
+    reg [31 : 0] address_writeback_reg;
     reg [31 : 0] immediate_writeback_reg;
     reg [ 2 : 0] instruction_type_writeback_reg;
     reg [ 4 : 0] write_index_writeback_reg;
@@ -500,7 +506,7 @@ module phoeniX
     ////////////////////////////////////////
     //   MEMORY TO WRITEBACK TRANSITION   //
     ////////////////////////////////////////
-    always @(posedge CLK) 
+    always @(posedge clk) 
     begin
         if (stall_condition[3])
         begin
@@ -518,13 +524,15 @@ module phoeniX
 
         if (!(|stall_condition[1 : 3]))
         begin
-            PC_writeback_reg <= PC_memory_reg;
+            pc_writeback_reg <= pc_memory_reg;
+            next_pc_writeback_reg <= next_pc_memory_reg;
             
             opcode_writeback_reg <= opcode_memory_reg;
             funct3_writeback_reg <= funct3_memory_reg;
             funct7_writeback_reg <= funct7_memory_reg;
             funct12_writeback_reg <= funct12_memory_reg;
 
+            address_writeback_reg <= address_memory_reg;
             immediate_writeback_reg <= immediate_memory_reg;
             instruction_type_writeback_reg <= instruction_type_memory_reg;
             write_index_writeback_reg <= write_index_memory_reg;
@@ -544,9 +552,9 @@ module phoeniX
         case (opcode_writeback_reg)
             `OP_IMM : write_data_writeback_reg = result_writeback_reg;
             `OP     : write_data_writeback_reg = result_writeback_reg;
-            `JAL    : write_data_writeback_reg = result_writeback_reg;
-            `JALR   : write_data_writeback_reg = result_writeback_reg;
-            `AUIPC  : write_data_writeback_reg = result_writeback_reg;
+            `JAL    : write_data_writeback_reg = next_pc_writeback_reg;
+            `JALR   : write_data_writeback_reg = next_pc_writeback_reg;
+            `AUIPC  : write_data_writeback_reg = address_writeback_reg;
             `LOAD   : write_data_writeback_reg = load_data_writeback_reg;
             `LUI    : write_data_writeback_reg = immediate_writeback_reg;
         endcase
@@ -657,7 +665,7 @@ module phoeniX
     )
     register_file
     (
-        .CLK(CLK),
+        .clk(clk),
         .reset(reset),
 
         .read_enable_1(read_enable_1_decode_wire),
@@ -678,7 +686,7 @@ module phoeniX
     ///////////////////////////////////////////////////////
     Control_Status_Register_File control_status_register_file
     (
-        .CLK(CLK),
+        .clk(clk),
         .reset(reset),
 
         .read_enable_csr(read_enable_csr_decode_wire),

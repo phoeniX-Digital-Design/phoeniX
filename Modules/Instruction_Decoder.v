@@ -27,7 +27,7 @@
     `define JAL         7'b11_011_11
     `define SYSTEM      7'b11_100_11
     `define custom_3    7'b11_110_11
-`endif
+`endif /*OPCODES*/
 
 `ifndef INSTRUCTION_TYPES
     `define R_TYPE 0
@@ -36,7 +36,7 @@
     `define B_TYPE 3
     `define U_TYPE 4
     `define J_TYPE 5
-`endif
+`endif /*INSTRUCTION_TYPES*/
 
 `ifndef CSR_INSTRUCTIONS
     `define CSRRW  3'b001
@@ -45,22 +45,22 @@
     `define CSRRWI 3'b101
     `define CSRRSI 3'b110
     `define CSRRCI 3'b111
-`endif
+`endif /*CSR_INSTRUCTIONS*/
 
 module Instruction_Decoder 
 (
-    input [31 : 0] instruction,
+    input  [31 : 0] instruction,
 
-    output [2 : 0] instruction_type,
+    output [ 2 : 0] instruction_type,
 
     output [ 6 : 0] opcode,
     output [ 2 : 0] funct3,
     output [ 6 : 0] funct7,
     output [11 : 0] funct12,
 
-    output [4 : 0] read_index_1,
-    output [4 : 0] read_index_2,
-    output [4 : 0] write_index,
+    output [ 4 : 0] read_index_1,
+    output [ 4 : 0] read_index_2,
+    output [ 4 : 0] write_index,
     output [11 : 0] csr_index,
 
     output reg read_enable_1,
@@ -141,5 +141,4 @@ module Instruction_Decoder
             default : begin read_enable_csr = 1'b0; write_enable_csr = 1'b0; end
         endcase  
     end
-
 endmodule
