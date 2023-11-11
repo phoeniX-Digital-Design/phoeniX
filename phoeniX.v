@@ -67,7 +67,9 @@ module phoeniX
     // ------------------------
     Fetch_Unit fetch_unit
     (
-        .enable(!reset && !(|stall_condition[1 : 3])),              
+        .enable(!reset && 
+                !(|stall_condition[1 : 3])
+                ),              
         .pc(pc_fetch_reg),
         .jump_branch_address(address_execute_wire),
         .jump_branch_enable(jump_branch_enable_execute_wire),
@@ -436,7 +438,7 @@ module phoeniX
             write_index_memory_reg <= `NOP_write_index;            
         end
 
-        else if (!(|stall_condition[1 : 3]))
+        else //if (!(|stall_condition[1 : 3]))
         begin
             pc_memory_reg <= pc_execute_reg;
             next_pc_memory_reg <= next_pc_execute_reg;
