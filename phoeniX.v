@@ -560,28 +560,6 @@ module phoeniX
             default : write_data_writeback_reg = 32'bz;
         endcase
     end
-
-    reg write_enable;
-    reg [ 4 : 0] write_index;
-    reg [31 : 0] write_data;
-
-    always @(*)
-    begin
-        case (opcode_execute_reg)
-            `LUI :
-            begin
-                write_enable = write_enable_execute_reg;
-                write_index = write_index_execute_reg;
-                write_data = immediate_execute_reg;  
-            end
-            default : 
-            begin
-                write_enable = write_enable_writeback_reg;
-                write_index = write_index_writeback_reg;
-                write_data = write_data_writeback_reg;
-            end
-        endcase
-    end
     
     //////////////////////////////////////
     //     Hazard Detection Units       //
@@ -671,13 +649,13 @@ module phoeniX
 
         .read_enable_1(read_enable_1_decode_wire),
         .read_enable_2(read_enable_2_decode_wire),
-        .write_enable(write_enable),
+        .write_enable(write_enable_writeback_reg),
 
         .read_index_1(read_index_1_decode_wire),
         .read_index_2(read_index_2_decode_wire),
-        .write_index(write_index),
+        .write_index(write_index_writeback_reg),
 
-        .write_data(write_data),
+        .write_data(write_data_writeback_reg),
         .read_data_1(RF_source_1),
         .read_data_2(RF_source_2)
     );
