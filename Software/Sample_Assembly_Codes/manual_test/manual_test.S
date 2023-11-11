@@ -7,4 +7,5 @@ nop
 nop
 nop
 lw x16, 0(sp)
+addi x17, x16, 1
 ebreak
