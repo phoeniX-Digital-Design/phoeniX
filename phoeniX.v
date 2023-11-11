@@ -3,7 +3,7 @@
 `include "Instruction_Decoder.v"
 `include "Immediate_Generator.v"
 `include "Register_File.v"
-`include "Arithmetic_Logic_Unit.v"
+`include "Arithmetic_Logic_Unit___.v"
 `include "Jump_Branch_Unit.v"
 `include "Address_Generator.v"
 `include "Load_Store_Unit.v"

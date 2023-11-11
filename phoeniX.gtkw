@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Wed Nov 01 10:44:17 2023
+[*] Sat Nov 11 12:38:26 2023
 [*]
-[dumpfile] "D:\GitHub\RV32-Core\phoeniX.vcd"
-[dumpfile_mtime] "Wed Nov 01 10:43:25 2023"
-[dumpfile_size] 218986
-[savefile] "D:\GitHub\RV32-Core\phoeniX.gtkw"
-[timestart] 0
+[dumpfile] "D:\GitHub\phoeniX-Digital-Design\phoeniX\phoeniX.vcd"
+[dumpfile_mtime] "Sat Nov 11 12:32:45 2023"
+[dumpfile_size] 194333
+[savefile] "D:\GitHub\phoeniX-Digital-Design\phoeniX\phoeniX.gtkw"
+[timestart] 24
 [size] 1920 1009
-[pos] -1 -1
-*-4.705056 50 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -9 -9
+*-2.552643 37 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] phoeniX_Testbench.
 [treeopen] phoeniX_Testbench.uut.
 [treeopen] phoeniX_Testbench.uut.fetch_unit.
@@ -19,8 +19,6 @@
 [signals_width] 529
 [sst_expanded] 1
 [sst_vpaned_height] 257
-@22
-phoeniX_Testbench.uut.control_status_register_file.mul_csr[31:0]
 @200
 -
 @28
@@ -29,20 +27,22 @@ phoeniX_Testbench.uut.fetch_unit.enable
 @200
 -
 @28
-phoeniX_Testbench.CLK
+phoeniX_Testbench.uut.clk
 @22
-phoeniX_Testbench.uut.PC_fetch_reg[31:0]
-phoeniX_Testbench.uut.next_PC_wire[31:0]
+phoeniX_Testbench.uut.pc_fetch_reg[31:0]
+phoeniX_Testbench.uut.next_pc_fetch_wire[31:0]
 @200
 -
 -FETCH -> DECODE
 -
-@28
-[color] 2
-phoeniX_Testbench.CLK
 @22
 [color] 2
-phoeniX_Testbench.uut.PC_decode_reg[31:0]
+phoeniX_Testbench.uut.pc_decode_reg[31:0]
+[color] 2
+phoeniX_Testbench.uut.next_pc_decode_reg[31:0]
+@200
+-
+@22
 [color] 2
 phoeniX_Testbench.uut.instruction_decode_reg[31:0]
 @28
@@ -104,23 +104,15 @@ phoeniX_Testbench.uut.FW_source_2[31:0]
 phoeniX_Testbench.uut.FW_enable_2
 @200
 -
-@420
+@23
 [color] 2
-phoeniX_Testbench.uut.bus_rs1_decode_wire[31:0]
+phoeniX_Testbench.uut.csr_index_decode_wire[11:0]
 [color] 2
-phoeniX_Testbench.uut.bus_rs2_decode_wire[31:0]
+phoeniX_Testbench.uut.csr_data_decode_wire[31:0]
 @200
 -
 -DECODE -> EXECUTE
 -
-@28
-[color] 7
-phoeniX_Testbench.CLK
-@22
-[color] 7
-phoeniX_Testbench.uut.PC_execute_reg[31:0]
-[color] 7
-phoeniX_Testbench.uut.instruction_execute_reg[31:0]
 @28
 [color] 7
 phoeniX_Testbench.uut.instruction_type_execute_reg[2:0]
@@ -136,10 +128,6 @@ phoeniX_Testbench.uut.funct7_execute_reg[6:0]
 @200
 -
 @420
-[color] 7
-phoeniX_Testbench.uut.bus_rs1[31:0]
-[color] 7
-phoeniX_Testbench.uut.bus_rs2[31:0]
 [color] 7
 phoeniX_Testbench.uut.immediate_execute_reg[31:0]
 @200
@@ -172,13 +160,6 @@ phoeniX_Testbench.uut.div_output_execute_wire[31:0]
 phoeniX_Testbench.uut.result_execute_reg[31:0]
 @200
 -
-@28
-[color] 7
-phoeniX_Testbench.uut.stall
-@22
-[color] 7
-phoeniX_Testbench.uut.PC_stall_address[31:0]
-@200
 -
 @22
 [color] 7
@@ -198,14 +179,6 @@ phoeniX_Testbench.uut.genblk1.multiplier_unit.result[63:0]
 -
 @28
 [color] 4
-phoeniX_Testbench.CLK
-@22
-[color] 4
-phoeniX_Testbench.uut.PC_memory_reg[31:0]
-[color] 4
-phoeniX_Testbench.uut.instruction_memory_reg[31:0]
-@28
-[color] 4
 phoeniX_Testbench.uut.instruction_type_memory_reg[2:0]
 @200
 -
@@ -219,8 +192,6 @@ phoeniX_Testbench.uut.funct7_memory_reg[6:0]
 @200
 -
 @420
-[color] 4
-phoeniX_Testbench.uut.bus_rs2_memory_reg[31:0]
 [color] 4
 phoeniX_Testbench.uut.result_memory_reg[31:0]
 [color] 4
@@ -253,14 +224,6 @@ phoeniX_Testbench.uut.data_memory_interface_data[31:0]
 -
 -MEMORY -> WRITEBACK
 -
-@28
-[color] 3
-phoeniX_Testbench.uut.CLK
-@22
-[color] 3
-phoeniX_Testbench.uut.PC_writeback_reg[31:0]
-[color] 3
-phoeniX_Testbench.uut.instruction_writeback_reg[31:0]
 @28
 [color] 3
 phoeniX_Testbench.uut.instruction_type_writeback_reg[2:0]
@@ -310,7 +273,9 @@ phoeniX_Testbench.x11_a1[31:0]
 phoeniX_Testbench.x12_a2[31:0]
 phoeniX_Testbench.x13_a3[31:0]
 phoeniX_Testbench.x14_a4[31:0]
+@22
 phoeniX_Testbench.x15_a5[31:0]
+@420
 phoeniX_Testbench.x16_a6[31:0]
 phoeniX_Testbench.x17_a7[31:0]
 phoeniX_Testbench.x18_s2[31:0]
@@ -329,5 +294,9 @@ phoeniX_Testbench.x30_t5[31:0]
 phoeniX_Testbench.x31_t6[31:0]
 @200
 -
+@22
+phoeniX_Testbench.uut.control_status_register_file.alu_csr[31:0]
+phoeniX_Testbench.uut.control_status_register_file.mul_csr[31:0]
+phoeniX_Testbench.uut.control_status_register_file.div_csr[31:0]
 [pattern_trace] 1
 [pattern_trace] 0

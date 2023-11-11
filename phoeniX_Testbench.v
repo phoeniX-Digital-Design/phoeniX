@@ -2,7 +2,7 @@
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-	`define FIRMWARE "Software\\Sample_Assembly_Codes\\factorial_approximate\\factorial_approximate_firmware.hex"
+	`define FIRMWARE "Software\\Sample_Assembly_Codes\\manual_test\\manual_test_firmware.hex"
 `endif /*FIRMWARE*/
 
 module phoeniX_Testbench;
@@ -40,7 +40,7 @@ module phoeniX_Testbench;
 
     phoeniX 
     #(
-        .RESET_ADDRESS(32'hFFFFFFFC),
+        .RESET_ADDRESS(32'h0000_0000),
         .M_EXTENSION(1'b1),
         .E_EXTENSION(1'b0)
     ) 
