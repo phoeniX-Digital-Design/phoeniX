@@ -68,17 +68,17 @@
 
 module Arithmetic_Logic_Unit
 (
-    input [6 : 0] opcode,               // ALU Operation
-    input [2 : 0] funct3,               // ALU Operation
-    input [6 : 0] funct7,               // ALU Operation
+    input [6 : 0] opcode,               
+    input [2 : 0] funct3,               
+    input [6 : 0] funct7,               
 
-    input [31 : 0] accuracy_control,    // Approximation Control Register
+    input [31 : 0] accuracy_control,    
 
-    input [31 : 0] rs1,                 // Register Source 1
-    input [31 : 0] rs2,                 // Register Source 2
-    input [31 : 0] immediate,           // Immediate Source
+    input [31 : 0] rs1,                 
+    input [31 : 0] rs2,                 
+    input [31 : 0] immediate,           
 
-    output reg [31 : 0] alu_output      // ALU Result
+    output reg [31 : 0] alu_output      
 );
     reg alu_enable;
 
@@ -96,6 +96,7 @@ module Arithmetic_Logic_Unit
         case (opcode)
         `OP     : begin operand_1 = rs1; operand_2 = rs2;       end // R-TYPE 
         `OP_IMM : begin operand_1 = rs1; operand_2 = immediate; end // I-TYPE 
+        default : begin operand_1 = 32'bz; operand_2 = 32'bz;   end
         endcase        
     end
 
@@ -104,31 +105,32 @@ module Arithmetic_Logic_Unit
     // ----------------------------------- //
     always @(*)
     begin
-        casex ({funct7, funct3, opcode})
+        $display("%t : Deciding ... ", $time);
+        casez ({funct7, funct3, opcode})
             // I-TYPE Intructions
-            {7'bz_zzz_zzz, 3'b000, `OP_IMM} : alu_output = adder_result;
-            {7'b0_000_000, 3'b001, `OP_IMM} : begin alu_enable = 1'b1; alu_output = operand_1 << operand_2 [4 : 0];                     end     // SLLI
-            {7'bz_zzz_zzz, 3'b010, `OP_IMM} : begin alu_enable = 1'b1; alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;    end     // SLTI
-            {7'bz_zzz_zzz, 3'b011, `OP_IMM} : begin alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0;                      end     // SLTIU
-            {7'bz_zzz_zzz, 3'b100, `OP_IMM} : begin alu_enable = 1'b1; alu_output = operand_1 ^ operand_2;                              end     // XORI
-            {7'b0_000_000, 3'b101, `OP_IMM} : begin alu_enable = 1'b1; alu_output = operand_1 >> operand_2 [4 : 0];                     end     // SRLI
-            {7'b0_100_000, 3'b101, `OP_IMM} : begin alu_enable = 1'b1; alu_output = operand_1 >> $signed(operand_2 [4 : 0]);            end     // SRAI
-            {7'bz_zzz_zzz, 3'b110, `OP_IMM} : begin alu_enable = 1'b1; alu_output = operand_1 | operand_2;                              end     // ORI
-            {7'bz_zzz_zzz, 3'b111, `OP_IMM} : begin alu_enable = 1'b1; alu_output = operand_1 & operand_2;                              end     // ANDI
+            {7'bz_zzz_zzz, 3'b000, `OP_IMM} : begin $display("ADDI %t", $time);alu_enable = 1'b1; alu_output = adder_result; end
+            {7'b0_000_000, 3'b001, `OP_IMM} : begin $display("SLLI %t", $time);alu_enable = 1'b1; alu_output = operand_1 << operand_2 [4 : 0];                     end     // SLLI
+            {7'bz_zzz_zzz, 3'b010, `OP_IMM} : begin $display("SLTI %t", $time);alu_enable = 1'b1; alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;    end     // SLTI
+            {7'bz_zzz_zzz, 3'b011, `OP_IMM} : begin $display("SLTIU %t", $time);alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0;                      end     // SLTIU
+            {7'bz_zzz_zzz, 3'b100, `OP_IMM} : begin $display("XORI %t", $time);alu_enable = 1'b1; alu_output = operand_1 ^ operand_2;                              end     // XORI
+            {7'b0_000_000, 3'b101, `OP_IMM} : begin $display("SRLI %t", $time);alu_enable = 1'b1; alu_output = operand_1 >> operand_2 [4 : 0];                     end     // SRLI
+            {7'b0_100_000, 3'b101, `OP_IMM} : begin $display("SRAI %t", $time);alu_enable = 1'b1; alu_output = operand_1 >> $signed(operand_2 [4 : 0]);            end     // SRAI
+            {7'bz_zzz_zzz, 3'b110, `OP_IMM} : begin $display("ORI %t", $time);alu_enable = 1'b1; alu_output = operand_1 | operand_2;                              end     // ORI
+            {7'bz_zzz_zzz, 3'b111, `OP_IMM} : begin $display("ANDI %t", $time);alu_enable = 1'b1; alu_output = operand_1 & operand_2;                              end     // ANDI
             
             // R-TYPE Instructions
-            {7'b0_000_000, 3'b000, `OP}     : alu_output = adder_result;
-            {7'b0_100_000, 3'b000, `OP}     : alu_output = adder_result;
-            {7'b0_000_000, 3'b001, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 << operand_2;                             end     // SLL
-            {7'b0_000_000, 3'b010, `OP}     : begin alu_enable = 1'b1; alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;    end     // SLT
-            {7'b0_000_000, 3'b011, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0;                      end     // SLTU
-            {7'b0_000_000, 3'b100, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 ^ operand_2;                              end     // XOR
-            {7'b0_000_000, 3'b101, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 >> operand_2;                             end     // SRL
-            {7'b0_100_000, 3'b101, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 >> $signed(operand_2);                    end     // SRA
-            {7'b0_000_000, 3'b110, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 | operand_2;                              end     // OR
-            {7'b0_000_000, 3'b111, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 & operand_2;                              end     // AND
+            {7'b0_000_000, 3'b000, `OP}     : begin $display("ADD %t", $time); alu_enable = 1'b1; alu_output = adder_result; end
+            {7'b0_100_000, 3'b000, `OP}     : begin $display("SUB %t", $time); alu_enable = 1'b1; alu_output = adder_result; end
+            {7'b0_000_000, 3'b001, `OP}     : begin $display("SLL %t", $time); alu_enable = 1'b1; alu_output = operand_1 << operand_2;                             end     // SLL
+            {7'b0_000_000, 3'b010, `OP}     : begin $display("SLT %t", $time); alu_enable = 1'b1; alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;    end     // SLT
+            {7'b0_000_000, 3'b011, `OP}     : begin $display("SLTU %t", $time); alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0;                      end     // SLTU
+            {7'b0_000_000, 3'b100, `OP}     : begin $display("XOR %t", $time); alu_enable = 1'b1; alu_output = operand_1 ^ operand_2;                              end     // XOR
+            {7'b0_000_000, 3'b101, `OP}     : begin $display("SRL %t", $time); alu_enable = 1'b1; alu_output = operand_1 >> operand_2;                             end     // SRL
+            {7'b0_100_000, 3'b101, `OP}     : begin $display("SRA %t", $time); alu_enable = 1'b1; alu_output = operand_1 >> $signed(operand_2);                    end     // SRA
+            {7'b0_000_000, 3'b110, `OP}     : begin $display("OR %t", $time); alu_enable = 1'b1; alu_output = operand_1 | operand_2;                              end     // OR
+            {7'b0_000_000, 3'b111, `OP}     : begin $display("AND %t", $time); alu_enable = 1'b1; alu_output = operand_1 & operand_2;                              end     // AND
             
-            default: begin alu_enable = 1'b0; alu_output = 32'bz; end
+            default: begin $display("default case @ %t", $time);alu_enable = 1'b0; alu_output = 32'bz; end
         endcase
     end
 
@@ -140,7 +142,7 @@ module Arithmetic_Logic_Unit
     // *** Implement the control systems required for your circuit ***
     always @(*) 
     begin
-        casex ({funct7, funct3, opcode})
+        casez ({funct7, funct3, opcode})
             {7'bz_zzz_zzz, 3'b000, `OP_IMM} :
             begin adder_enable = 1'b1; adder_input_1 = operand_1; adder_input_2 = operand_2; adder_Cin = 1'b0;  end // ADDI
             {7'b0_000_000, 3'b000, `OP}     : 
