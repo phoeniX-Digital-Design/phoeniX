@@ -132,44 +132,43 @@ module Arithmetic_Logic_Unit
     // ----------------------------------- //
     always @(*)
     begin
-        $display("%t : Deciding ... ", $time);
         case ({funct3, opcode})
             // I-TYPE Intructions
-            {`ADDI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = adder_result; $display("ADDI %t", $time); end
-            {`SLLI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = operand_1 << operand_2 [4 : 0]; $display("SLLI %t", $time); end 
+            {`ADDI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = adder_result;                     end
+            {`SLLI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = operand_1 << operand_2 [4 : 0];   end 
 
-            {`SLTI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0; $display("SLTI %t", $time); end
-            {`SLTIU, `OP_IMM} : begin alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0; $display("SLTIU %t", $time); end
+            {`SLTI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;  end
+            {`SLTIU, `OP_IMM} : begin alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0;                    end
 
-            {`XORI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = operand_1 ^ operand_2; $display("XORI %t", $time); end
-            {`ORI, `OP_IMM}   : begin alu_enable = 1'b1; alu_output = operand_1 | operand_2; $display("ORI %t", $time); end
-            {`ANDI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = operand_1 & operand_2; $display("ANDI %t", $time); end
+            {`XORI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = operand_1 ^ operand_2;    end
+            {`ORI, `OP_IMM}   : begin alu_enable = 1'b1; alu_output = operand_1 | operand_2;    end
+            {`ANDI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = operand_1 & operand_2;    end
             
             {`SRI, `OP_IMM}   : 
             begin
                 case (funct7)
-                    `LOGICAL    : begin alu_enable = 1'b1; alu_output = operand_1 >> operand_2 [4 : 0]; $display("SRLI %t", $time); end    
-                    `ARITHMETIC : begin alu_enable = 1'b1; alu_output = operand_1 >> $signed(operand_2 [4 : 0]);$display("SRAI %t", $time); end     
+                    `LOGICAL    : begin alu_enable = 1'b1; alu_output = operand_1 >> operand_2 [4 : 0];             end    
+                    `ARITHMETIC : begin alu_enable = 1'b1; alu_output = operand_1 >> $signed(operand_2 [4 : 0]);    end     
                 endcase
             end
         
             // R-TYPE Instructions
-            {`ADDSUB, `OP}  : begin alu_enable = 1'b1; alu_output = adder_result; $display("ADDSUB %t", $time); end  
-            {`SLL, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 << operand_2; $display("SLL %t", $time); end
-            {`SLT, `OP}     : begin alu_enable = 1'b1; alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0; $display("SLT %t", $time); end
-            {`SLTU, `OP}    : begin alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0; $display("SLTU %t", $time); end
-            {`XOR, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 ^ operand_2; $display("XOR %t", $time); end
-            {`OR, `OP}      : begin alu_enable = 1'b1; alu_output = operand_1 | operand_2; $display("OR %t", $time); end
-            {`AND, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 & operand_2;  $display("AND %t", $time); end
+            {`ADDSUB, `OP}  : begin alu_enable = 1'b1; alu_output = adder_result;               end  
+            {`SLL, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 << operand_2;     end
+            {`SLT, `OP}     : begin alu_enable = 1'b1; alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;    end
+            {`SLTU, `OP}    : begin alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0; ;                    end
+            {`XOR, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 ^ operand_2;  end
+            {`OR, `OP}      : begin alu_enable = 1'b1; alu_output = operand_1 | operand_2;  end
+            {`AND, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 & operand_2;  end
             {`SR, `OP}      :
             begin
                 case (funct7)
-                    `LOGICAL    : begin alu_enable = 1'b1; alu_output = operand_1 >> operand_2; $display("SRL %t", $time); end
-                    `ARITHMETIC : begin alu_enable = 1'b1; alu_output = operand_1 >> $signed(operand_2); $display("SRA %t", $time); end
+                    `LOGICAL    : begin alu_enable = 1'b1; alu_output = operand_1 >> operand_2;             end
+                    `ARITHMETIC : begin alu_enable = 1'b1; alu_output = operand_1 >> $signed(operand_2);    end
                 endcase
             end           
 
-            default: begin alu_enable = 1'b0; alu_output = 32'bz; $display("default case %t", $time); end
+            default: begin alu_enable = 1'b0; alu_output = 32'bz; end
         endcase
     end
 
