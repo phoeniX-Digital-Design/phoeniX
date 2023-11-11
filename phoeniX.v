@@ -557,6 +557,7 @@ module phoeniX
             `AUIPC  : write_data_writeback_reg = address_writeback_reg;
             `LOAD   : write_data_writeback_reg = load_data_writeback_reg;
             `LUI    : write_data_writeback_reg = immediate_writeback_reg;
+            default : write_data_writeback_reg = 32'bz;
         endcase
     end
 
