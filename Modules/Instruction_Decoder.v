@@ -30,12 +30,12 @@
 `endif /*OPCODES*/
 
 `ifndef INSTRUCTION_TYPES
-    `define R_TYPE 0
-    `define I_TYPE 1
-    `define S_TYPE 2
-    `define B_TYPE 3
-    `define U_TYPE 4
-    `define J_TYPE 5
+    `define R_TYPE 3'b000
+    `define I_TYPE 3'b001
+    `define S_TYPE 3'b010
+    `define B_TYPE 3'b011
+    `define U_TYPE 3'b100
+    `define J_TYPE 3'b101
 `endif /*INSTRUCTION_TYPES*/
 
 `ifndef CSR_INSTRUCTIONS
@@ -51,8 +51,6 @@ module Instruction_Decoder
 (
     input  [31 : 0] instruction,
 
-    output [ 2 : 0] instruction_type,
-
     output [ 6 : 0] opcode,
     output [ 2 : 0] funct3,
     output [ 6 : 0] funct7,
@@ -63,6 +61,7 @@ module Instruction_Decoder
     output [ 4 : 0] write_index,
     output [11 : 0] csr_index,
 
+    output reg [2 : 0] instruction_type,
     output reg read_enable_1,
     output reg read_enable_2,
     output reg write_enable,
@@ -72,35 +71,6 @@ module Instruction_Decoder
 );
 
     assign opcode = instruction [6 : 0];
-
-    assign instruction_type_i = opcode == `LOAD         ||
-                                opcode == `LOAD_FP      ||
-                                opcode == `OP_IMM       ||
-                                opcode == `OP_IMM_32    ||
-                                opcode == `JALR         ||
-                                opcode == `SYSTEM;        
-        
-    assign instruction_type_b = opcode == `BRANCH;
-
-    assign instruction_type_r = opcode == `OP ||
-                                opcode == `OP_FP;
-
-    assign instruction_type_s = opcode == `STORE ||
-                                opcode == `STORE_FP;
-
-    assign instruction_type_u = opcode == `AUIPC ||
-                                opcode == `LUI;
-
-    assign instruction_type_j = opcode == `JAL;
-
-    assign instruction_type =   (instruction_type_r) ? `R_TYPE :
-                                (instruction_type_i) ? `I_TYPE : 
-                                (instruction_type_s) ? `S_TYPE :
-                                (instruction_type_b) ? `B_TYPE :
-                                (instruction_type_u) ? `U_TYPE : 
-                                (instruction_type_j) ? `J_TYPE :
-                                1'bz; // Default value
-
     assign funct7  = instruction[31 : 25];
     assign funct3  = instruction[14 : 12];
     assign funct12 = instruction[31 : 20];
@@ -108,19 +78,45 @@ module Instruction_Decoder
     assign read_index_1 = instruction[19 : 15];
     assign read_index_2 = instruction[24 : 20];
     assign write_index  = instruction[11 :  7];
-    assign csr_index = instruction[31 : 20];
+    assign csr_index    = instruction[31 : 20];
+    
+    always @(*)
+    begin
+        case (opcode)
+            `OP         : instruction_type <= `R_TYPE;
+            `OP_FP      : instruction_type <= `R_TYPE;
+
+            `LOAD       : instruction_type <= `I_TYPE;
+            `LOAD_FP    : instruction_type <= `I_TYPE;
+            `OP_IMM     : instruction_type <= `I_TYPE;
+            `OP_IMM_32  : instruction_type <= `I_TYPE;
+            `JALR       : instruction_type <= `I_TYPE;
+            `SYSTEM     : instruction_type <= `I_TYPE; 
+
+            `STORE      : instruction_type <= `S_TYPE;
+            `STORE_FP   : instruction_type <= `S_TYPE;
+
+            `BRANCH     : instruction_type <= `B_TYPE;
+
+            `AUIPC      : instruction_type <= `U_TYPE;
+            `LUI        : instruction_type <= `U_TYPE;
+
+            `JAL        : instruction_type <= `J_TYPE;
+            default     : instruction_type <= 3'bz;
+        endcase
+    end
 
     always @(*) 
     begin
         // Register File read/write enable signals evaluation
         case (instruction_type)
+            `R_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b1; write_enable = 1'b1; end
             `I_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b0; write_enable = 1'b1; end
-            `B_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b1; write_enable = 1'b0; end
             `S_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b1; write_enable = 1'b0; end
+            `B_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b1; write_enable = 1'b0; end
             `U_TYPE : begin read_enable_1 = 1'b0; read_enable_2 = 1'b0; write_enable = 1'b1; end
             `J_TYPE : begin read_enable_1 = 1'b0; read_enable_2 = 1'b0; write_enable = 1'b1; end 
-            `R_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b1; write_enable = 1'b1; end
-            default : begin end // Raise Exception
+            default : begin read_enable_1 = 1'b0; read_enable_2 = 1'b0; write_enable = 1'b0; end // Raise Exception
         endcase    
 
         // Disable Write Signal when destination is x0
