@@ -141,7 +141,7 @@ module phoeniX
     // ---------------------------------
     // Instruction Decoder Instantiation
     // ---------------------------------
-    Instruction_Decoder Instruction_Decoder
+    Instruction_Decoder instruction_decoder
     (
         .instruction(instruction_decode_reg),
         .instruction_type(instruction_type_decode_wire),
@@ -438,7 +438,7 @@ module phoeniX
             write_index_memory_reg <= `NOP_write_index;            
         end
 
-        else //if (!(|stall_condition[1 : 3]))
+        else if (!(|stall_condition[1 : 3]) || stall_condition[2])
         begin
             pc_memory_reg <= pc_execute_reg;
             next_pc_memory_reg <= next_pc_execute_reg;
