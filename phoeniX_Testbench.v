@@ -151,7 +151,6 @@ module phoeniX_Testbench;
         // begin
         //     $write("%c", data_memory_interface_data[7 : 0]);
         // end 
-
     end
     always @(posedge clk) 
     begin
