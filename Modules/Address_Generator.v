@@ -49,9 +49,9 @@ module Address_Generator
             `STORE   : begin adder_input_1 = rs1; adder_input_2 = immediate; address = adder_result; end    //  Store  ->   rs1  + immediate
             `LOAD    : begin adder_input_1 = rs1; adder_input_2 = immediate; address = adder_result; end    //  Load   ->   rs1  + immediate
             `JALR    : begin adder_input_1 = rs1; adder_input_2 = immediate; address = adder_result; end    //  JALR   ->   rs1  + immediate
-            `JAL     : begin adder_input_1 = pc;  adder_input_2 = immediate; address = adder_result; end    //  JAL    ->    pc  + immediate
-            `AUIPC   : begin adder_input_1 = pc;  adder_input_2 = immediate; address = adder_result; end    //  AUIPC  ->    pc  + immediate
-            `BRANCH  : begin adder_input_1 = pc;  adder_input_2 = immediate; address = adder_result; end    //  Branch ->    pc  + immediate
+            `JAL     : begin adder_input_1 = pc;  adder_input_2 = immediate; address = adder_result; end    //  JAL    ->   pc   + immediate
+            `AUIPC   : begin adder_input_1 = pc;  adder_input_2 = immediate; address = adder_result; end    //  AUIPC  ->   pc   + immediate
+            `BRANCH  : begin adder_input_1 = pc;  adder_input_2 = immediate; address = adder_result; end    //  Branch ->   pc   + immediate
             default  : address = 32'bz;
         endcase 
     end
