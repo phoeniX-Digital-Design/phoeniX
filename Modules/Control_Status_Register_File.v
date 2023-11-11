@@ -38,9 +38,10 @@ module Control_Status_Register_File
                 `ALU_CSR : csr_read_data <= alu_csr;
                 `MUL_CSR : csr_read_data <= mul_csr;
                 `DIV_CSR : csr_read_data <= div_csr;
-                default: csr_read_data <= 32'bz;
+                default  : csr_read_data <= 32'bz;
             endcase
         end
+        else csr_read_data <= 32'bz;
     end    
     always @(negedge clk) 
     begin   
