@@ -115,8 +115,12 @@ module Arithmetic_Logic_Unit
     reg adder_Cin;
     reg  [31 : 0] adder_input_1;
     reg  [31 : 0] adder_input_2;
-    
     wire [31 : 0] adder_result;
+
+    reg  [31 : 0] shifter_input;
+    reg  [4  : 0] shifter_amount;
+    reg           shift_direction;
+    wire [31 : 0] shifter_result;
 
     always @(*) 
     begin
@@ -194,6 +198,18 @@ module Arithmetic_Logic_Unit
             default: begin adder_enable = 1'b0; end
         endcase    
     end
+
+     Barrel_Shifter
+    #(
+        .WIDTH(32)
+    )
+    arithmetic_logic_unit_shifter_circuit
+    (
+        .value(shifter_input),
+        .shift_amount(shifter_amount),
+        .direction(shift_direction),
+        .result(shifter_result)
+    );
     
     // *** Instantiate your adder circuit here ***
     // Please instantiate your adder module according to the guidelines and naming conventions of phoeniX
@@ -216,6 +232,45 @@ module Arithmetic_Logic_Unit
 
 endmodule
 
+module Barrel_Shifter #(parameter WIDTH = 32)
+(
+    input  [WIDTH - 1         : 0]   value,
+    input  [$clog2(WIDTH) - 1 : 0]   shift_amount,
+    input                         direction,
+    output reg [WIDTH - 1  : 0]   result
+);
+
+    reg [WIDTH - 1 : 0] shifted;
+
+    always @(*)
+    begin
+        // Right shift
+        if (direction)
+        begin
+            shifted = value;
+            for (integer i = 0 ; i < WIDTH ; i = i + 1)
+            begin
+                if (i < WIDTH - shift_amount)
+                    result[i] = shifted[i + shift_amount];
+                else
+                    result[i] = 0;
+            end
+        end 
+        // Left shift
+        if (!direction)
+        begin
+            shifted = value;
+            for (integer i = 0 ; i < WIDTH ; i = i + 1)
+            begin
+                if (i < shift_amount)
+                    result[i] = 0;
+                else
+                    result[i] = shifted[i - shift_amount];
+            end
+        end 
+    end
+
+endmodule
 
 // Add your custom adder circuit here ***
 // Please create your adder module according to the guidelines and naming conventions of phoeniX
@@ -369,12 +424,12 @@ module Basic_Unit
     output C0
 );
 
-    assign B[1] =  ~A[0];
+    assign B[1] = ~A[0];
     assign B[2] = A[1] ^ A[0];
-    wire C1 = A[1] & A[0];
-    wire C2 = A[2] & A[3];
-    wire C0 = C1 & C2;
-    wire C3 = C1 & A[2];
+    wire   C1   = A[1] & A[0];
+    wire   C2   = A[2] & A[3];
+    wire   C0   = C1 & C2;
+    wire   C3   = C1 & A[2];
     assign B[3] = A[2] ^ C1;
     assign B[4] = A[3] ^ C3;
 
