@@ -1,0 +1,940 @@
+$date
+	Sun Nov 12 19:26:30 2023
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module Incrementer_Testbench $end
+$var wire 30 ! B [29:0] $end
+$var parameter 32 " WIDTH $end
+$var reg 30 # A [29:0] $end
+$scope module uut $end
+$var wire 30 $ operand_1 [29:0] $end
+$var wire 30 % result [29:0] $end
+$var wire 9 & carry_chain [8:0] $end
+$scope begin genblk1[0] $end
+$var parameter 2 ' i $end
+$scope module incrementer_4bit $end
+$var wire 4 ( A [3:0] $end
+$var wire 4 ) B [3:0] $end
+$var wire 1 * Carry_in $end
+$var wire 4 + G [3:0] $end
+$var wire 4 , P [3:0] $end
+$var wire 4 - Sum [3:0] $end
+$var wire 1 . Carry_out $end
+$var wire 5 / CarryX [4:0] $end
+$var wire 5 0 Carry [4:0] $end
+$var parameter 32 1 LEN $end
+$scope begin genblk1[1] $end
+$var parameter 2 2 i $end
+$upscope $end
+$scope begin genblk1[2] $end
+$var parameter 3 3 i $end
+$upscope $end
+$scope begin genblk1[3] $end
+$var parameter 3 4 i $end
+$upscope $end
+$scope begin genblk1[4] $end
+$var parameter 4 5 i $end
+$upscope $end
+$scope begin genblk2[0] $end
+$var parameter 2 6 i $end
+$scope module FA $end
+$var wire 1 7 A $end
+$var wire 1 8 B $end
+$var wire 1 9 Carry_in $end
+$var wire 1 : Carry_out $end
+$var wire 1 ; Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[1] $end
+$var parameter 2 < i $end
+$scope module FA $end
+$var wire 1 = A $end
+$var wire 1 > B $end
+$var wire 1 ? Carry_in $end
+$var wire 1 @ Carry_out $end
+$var wire 1 A Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[2] $end
+$var parameter 3 B i $end
+$scope module FA $end
+$var wire 1 C A $end
+$var wire 1 D B $end
+$var wire 1 E Carry_in $end
+$var wire 1 F Carry_out $end
+$var wire 1 G Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[3] $end
+$var parameter 3 H i $end
+$scope module FA $end
+$var wire 1 I A $end
+$var wire 1 J B $end
+$var wire 1 K Carry_in $end
+$var wire 1 L Carry_out $end
+$var wire 1 M Sum $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[1] $end
+$var parameter 2 N i $end
+$scope module incrementer_4bit $end
+$var wire 4 O A [3:0] $end
+$var wire 4 P B [3:0] $end
+$var wire 1 Q Carry_in $end
+$var wire 4 R G [3:0] $end
+$var wire 4 S P [3:0] $end
+$var wire 4 T Sum [3:0] $end
+$var wire 1 U Carry_out $end
+$var wire 5 V CarryX [4:0] $end
+$var wire 5 W Carry [4:0] $end
+$var parameter 32 X LEN $end
+$scope begin genblk1[1] $end
+$var parameter 2 Y i $end
+$upscope $end
+$scope begin genblk1[2] $end
+$var parameter 3 Z i $end
+$upscope $end
+$scope begin genblk1[3] $end
+$var parameter 3 [ i $end
+$upscope $end
+$scope begin genblk1[4] $end
+$var parameter 4 \ i $end
+$upscope $end
+$scope begin genblk2[0] $end
+$var parameter 2 ] i $end
+$scope module FA $end
+$var wire 1 ^ A $end
+$var wire 1 _ B $end
+$var wire 1 ` Carry_in $end
+$var wire 1 a Carry_out $end
+$var wire 1 b Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[1] $end
+$var parameter 2 c i $end
+$scope module FA $end
+$var wire 1 d A $end
+$var wire 1 e B $end
+$var wire 1 f Carry_in $end
+$var wire 1 g Carry_out $end
+$var wire 1 h Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[2] $end
+$var parameter 3 i i $end
+$scope module FA $end
+$var wire 1 j A $end
+$var wire 1 k B $end
+$var wire 1 l Carry_in $end
+$var wire 1 m Carry_out $end
+$var wire 1 n Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[3] $end
+$var parameter 3 o i $end
+$scope module FA $end
+$var wire 1 p A $end
+$var wire 1 q B $end
+$var wire 1 r Carry_in $end
+$var wire 1 s Carry_out $end
+$var wire 1 t Sum $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[2] $end
+$var parameter 3 u i $end
+$scope module incrementer_4bit $end
+$var wire 4 v A [3:0] $end
+$var wire 4 w B [3:0] $end
+$var wire 1 x Carry_in $end
+$var wire 4 y G [3:0] $end
+$var wire 4 z P [3:0] $end
+$var wire 4 { Sum [3:0] $end
+$var wire 1 | Carry_out $end
+$var wire 5 } CarryX [4:0] $end
+$var wire 5 ~ Carry [4:0] $end
+$var parameter 32 !" LEN $end
+$scope begin genblk1[1] $end
+$var parameter 2 "" i $end
+$upscope $end
+$scope begin genblk1[2] $end
+$var parameter 3 #" i $end
+$upscope $end
+$scope begin genblk1[3] $end
+$var parameter 3 $" i $end
+$upscope $end
+$scope begin genblk1[4] $end
+$var parameter 4 %" i $end
+$upscope $end
+$scope begin genblk2[0] $end
+$var parameter 2 &" i $end
+$scope module FA $end
+$var wire 1 '" A $end
+$var wire 1 (" B $end
+$var wire 1 )" Carry_in $end
+$var wire 1 *" Carry_out $end
+$var wire 1 +" Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[1] $end
+$var parameter 2 ," i $end
+$scope module FA $end
+$var wire 1 -" A $end
+$var wire 1 ." B $end
+$var wire 1 /" Carry_in $end
+$var wire 1 0" Carry_out $end
+$var wire 1 1" Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[2] $end
+$var parameter 3 2" i $end
+$scope module FA $end
+$var wire 1 3" A $end
+$var wire 1 4" B $end
+$var wire 1 5" Carry_in $end
+$var wire 1 6" Carry_out $end
+$var wire 1 7" Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[3] $end
+$var parameter 3 8" i $end
+$scope module FA $end
+$var wire 1 9" A $end
+$var wire 1 :" B $end
+$var wire 1 ;" Carry_in $end
+$var wire 1 <" Carry_out $end
+$var wire 1 =" Sum $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[3] $end
+$var parameter 3 >" i $end
+$scope module incrementer_4bit $end
+$var wire 4 ?" A [3:0] $end
+$var wire 4 @" B [3:0] $end
+$var wire 1 A" Carry_in $end
+$var wire 4 B" G [3:0] $end
+$var wire 4 C" P [3:0] $end
+$var wire 4 D" Sum [3:0] $end
+$var wire 1 E" Carry_out $end
+$var wire 5 F" CarryX [4:0] $end
+$var wire 5 G" Carry [4:0] $end
+$var parameter 32 H" LEN $end
+$scope begin genblk1[1] $end
+$var parameter 2 I" i $end
+$upscope $end
+$scope begin genblk1[2] $end
+$var parameter 3 J" i $end
+$upscope $end
+$scope begin genblk1[3] $end
+$var parameter 3 K" i $end
+$upscope $end
+$scope begin genblk1[4] $end
+$var parameter 4 L" i $end
+$upscope $end
+$scope begin genblk2[0] $end
+$var parameter 2 M" i $end
+$scope module FA $end
+$var wire 1 N" A $end
+$var wire 1 O" B $end
+$var wire 1 P" Carry_in $end
+$var wire 1 Q" Carry_out $end
+$var wire 1 R" Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[1] $end
+$var parameter 2 S" i $end
+$scope module FA $end
+$var wire 1 T" A $end
+$var wire 1 U" B $end
+$var wire 1 V" Carry_in $end
+$var wire 1 W" Carry_out $end
+$var wire 1 X" Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[2] $end
+$var parameter 3 Y" i $end
+$scope module FA $end
+$var wire 1 Z" A $end
+$var wire 1 [" B $end
+$var wire 1 \" Carry_in $end
+$var wire 1 ]" Carry_out $end
+$var wire 1 ^" Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[3] $end
+$var parameter 3 _" i $end
+$scope module FA $end
+$var wire 1 `" A $end
+$var wire 1 a" B $end
+$var wire 1 b" Carry_in $end
+$var wire 1 c" Carry_out $end
+$var wire 1 d" Sum $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[4] $end
+$var parameter 4 e" i $end
+$scope module incrementer_4bit $end
+$var wire 4 f" A [3:0] $end
+$var wire 4 g" B [3:0] $end
+$var wire 1 h" Carry_in $end
+$var wire 4 i" G [3:0] $end
+$var wire 4 j" P [3:0] $end
+$var wire 4 k" Sum [3:0] $end
+$var wire 1 l" Carry_out $end
+$var wire 5 m" CarryX [4:0] $end
+$var wire 5 n" Carry [4:0] $end
+$var parameter 32 o" LEN $end
+$scope begin genblk1[1] $end
+$var parameter 2 p" i $end
+$upscope $end
+$scope begin genblk1[2] $end
+$var parameter 3 q" i $end
+$upscope $end
+$scope begin genblk1[3] $end
+$var parameter 3 r" i $end
+$upscope $end
+$scope begin genblk1[4] $end
+$var parameter 4 s" i $end
+$upscope $end
+$scope begin genblk2[0] $end
+$var parameter 2 t" i $end
+$scope module FA $end
+$var wire 1 u" A $end
+$var wire 1 v" B $end
+$var wire 1 w" Carry_in $end
+$var wire 1 x" Carry_out $end
+$var wire 1 y" Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[1] $end
+$var parameter 2 z" i $end
+$scope module FA $end
+$var wire 1 {" A $end
+$var wire 1 |" B $end
+$var wire 1 }" Carry_in $end
+$var wire 1 ~" Carry_out $end
+$var wire 1 !# Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[2] $end
+$var parameter 3 "# i $end
+$scope module FA $end
+$var wire 1 ## A $end
+$var wire 1 $# B $end
+$var wire 1 %# Carry_in $end
+$var wire 1 &# Carry_out $end
+$var wire 1 '# Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[3] $end
+$var parameter 3 (# i $end
+$scope module FA $end
+$var wire 1 )# A $end
+$var wire 1 *# B $end
+$var wire 1 +# Carry_in $end
+$var wire 1 ,# Carry_out $end
+$var wire 1 -# Sum $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[5] $end
+$var parameter 4 .# i $end
+$scope module incrementer_4bit $end
+$var wire 4 /# A [3:0] $end
+$var wire 4 0# B [3:0] $end
+$var wire 1 1# Carry_in $end
+$var wire 4 2# G [3:0] $end
+$var wire 4 3# P [3:0] $end
+$var wire 4 4# Sum [3:0] $end
+$var wire 1 5# Carry_out $end
+$var wire 5 6# CarryX [4:0] $end
+$var wire 5 7# Carry [4:0] $end
+$var parameter 32 8# LEN $end
+$scope begin genblk1[1] $end
+$var parameter 2 9# i $end
+$upscope $end
+$scope begin genblk1[2] $end
+$var parameter 3 :# i $end
+$upscope $end
+$scope begin genblk1[3] $end
+$var parameter 3 ;# i $end
+$upscope $end
+$scope begin genblk1[4] $end
+$var parameter 4 <# i $end
+$upscope $end
+$scope begin genblk2[0] $end
+$var parameter 2 =# i $end
+$scope module FA $end
+$var wire 1 ># A $end
+$var wire 1 ?# B $end
+$var wire 1 @# Carry_in $end
+$var wire 1 A# Carry_out $end
+$var wire 1 B# Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[1] $end
+$var parameter 2 C# i $end
+$scope module FA $end
+$var wire 1 D# A $end
+$var wire 1 E# B $end
+$var wire 1 F# Carry_in $end
+$var wire 1 G# Carry_out $end
+$var wire 1 H# Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[2] $end
+$var parameter 3 I# i $end
+$scope module FA $end
+$var wire 1 J# A $end
+$var wire 1 K# B $end
+$var wire 1 L# Carry_in $end
+$var wire 1 M# Carry_out $end
+$var wire 1 N# Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[3] $end
+$var parameter 3 O# i $end
+$scope module FA $end
+$var wire 1 P# A $end
+$var wire 1 Q# B $end
+$var wire 1 R# Carry_in $end
+$var wire 1 S# Carry_out $end
+$var wire 1 T# Sum $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope begin genblk1[6] $end
+$var parameter 4 U# i $end
+$scope module incrementer_4bit $end
+$var wire 4 V# A [3:0] $end
+$var wire 4 W# B [3:0] $end
+$var wire 1 X# Carry_in $end
+$var wire 4 Y# G [3:0] $end
+$var wire 4 Z# P [3:0] $end
+$var wire 4 [# Sum [3:0] $end
+$var wire 1 \# Carry_out $end
+$var wire 5 ]# CarryX [4:0] $end
+$var wire 5 ^# Carry [4:0] $end
+$var parameter 32 _# LEN $end
+$scope begin genblk1[1] $end
+$var parameter 2 `# i $end
+$upscope $end
+$scope begin genblk1[2] $end
+$var parameter 3 a# i $end
+$upscope $end
+$scope begin genblk1[3] $end
+$var parameter 3 b# i $end
+$upscope $end
+$scope begin genblk1[4] $end
+$var parameter 4 c# i $end
+$upscope $end
+$scope begin genblk2[0] $end
+$var parameter 2 d# i $end
+$scope module FA $end
+$var wire 1 e# A $end
+$var wire 1 f# B $end
+$var wire 1 g# Carry_in $end
+$var wire 1 h# Carry_out $end
+$var wire 1 i# Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[1] $end
+$var parameter 2 j# i $end
+$scope module FA $end
+$var wire 1 k# A $end
+$var wire 1 l# B $end
+$var wire 1 m# Carry_in $end
+$var wire 1 n# Carry_out $end
+$var wire 1 o# Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[2] $end
+$var parameter 3 p# i $end
+$scope module FA $end
+$var wire 1 q# A $end
+$var wire 1 r# B $end
+$var wire 1 s# Carry_in $end
+$var wire 1 t# Carry_out $end
+$var wire 1 u# Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[3] $end
+$var parameter 3 v# i $end
+$scope module FA $end
+$var wire 1 w# A $end
+$var wire 1 x# B $end
+$var wire 1 y# Carry_in $end
+$var wire 1 z# Carry_out $end
+$var wire 1 {# Sum $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module incrementer_2bit $end
+$var wire 2 |# A [1:0] $end
+$var wire 2 }# B [1:0] $end
+$var wire 1 ~# Carry_in $end
+$var wire 2 !$ G [1:0] $end
+$var wire 2 "$ P [1:0] $end
+$var wire 2 #$ Sum [1:0] $end
+$var wire 1 $$ Carry_out $end
+$var wire 3 %$ CarryX [2:0] $end
+$var wire 3 &$ Carry [2:0] $end
+$var parameter 32 '$ LEN $end
+$scope begin genblk1[1] $end
+$var parameter 2 ($ i $end
+$upscope $end
+$scope begin genblk1[2] $end
+$var parameter 3 )$ i $end
+$upscope $end
+$scope begin genblk2[0] $end
+$var parameter 2 *$ i $end
+$scope module FA $end
+$var wire 1 +$ A $end
+$var wire 1 ,$ B $end
+$var wire 1 -$ Carry_in $end
+$var wire 1 .$ Carry_out $end
+$var wire 1 /$ Sum $end
+$upscope $end
+$upscope $end
+$scope begin genblk2[1] $end
+$var parameter 2 0$ i $end
+$scope module FA $end
+$var wire 1 1$ A $end
+$var wire 1 2$ B $end
+$var wire 1 3$ Carry_in $end
+$var wire 1 4$ Carry_out $end
+$var wire 1 5$ Sum $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b1 0$
+b0 *$
+b10 )$
+b1 ($
+b10 '$
+b11 v#
+b10 p#
+b1 j#
+b0 d#
+b100 c#
+b11 b#
+b10 a#
+b1 `#
+b100 _#
+b110 U#
+b11 O#
+b10 I#
+b1 C#
+b0 =#
+b100 <#
+b11 ;#
+b10 :#
+b1 9#
+b100 8#
+b101 .#
+b11 (#
+b10 "#
+b1 z"
+b0 t"
+b100 s"
+b11 r"
+b10 q"
+b1 p"
+b100 o"
+b100 e"
+b11 _"
+b10 Y"
+b1 S"
+b0 M"
+b100 L"
+b11 K"
+b10 J"
+b1 I"
+b100 H"
+b11 >"
+b11 8"
+b10 2"
+b1 ,"
+b0 &"
+b100 %"
+b11 $"
+b10 #"
+b1 ""
+b100 !"
+b10 u
+b11 o
+b10 i
+b1 c
+b0 ]
+b100 \
+b11 [
+b10 Z
+b1 Y
+b100 X
+b1 N
+b11 H
+b10 B
+b1 <
+b0 6
+b100 5
+b11 4
+b10 3
+b1 2
+b100 1
+b0 '
+b11110 "
+$end
+#0
+$dumpvars
+05$
+04$
+03$
+02$
+01$
+1/$
+0.$
+0-$
+0,$
+1+$
+b0 &$
+b0z %$
+0$$
+b1 #$
+b1 "$
+b0 !$
+0~#
+b0 }#
+b1 |#
+0{#
+0z#
+0y#
+0x#
+0w#
+0u#
+0t#
+0s#
+0r#
+0q#
+1o#
+0n#
+0m#
+0l#
+1k#
+0i#
+0h#
+0g#
+0f#
+0e#
+b0 ^#
+b0z ]#
+0\#
+b10 [#
+b10 Z#
+b0 Y#
+0X#
+b0 W#
+b10 V#
+0T#
+0S#
+0R#
+0Q#
+0P#
+0N#
+0M#
+0L#
+0K#
+0J#
+0H#
+0G#
+0F#
+0E#
+0D#
+1B#
+0A#
+0@#
+0?#
+1>#
+b0 7#
+b0z 6#
+05#
+b1 4#
+b1 3#
+b0 2#
+01#
+b0 0#
+b1 /#
+0-#
+0,#
+0+#
+0*#
+0)#
+1'#
+0&#
+0%#
+0$#
+1##
+0!#
+0~"
+0}"
+0|"
+0{"
+1y"
+0x"
+0w"
+0v"
+1u"
+b0 n"
+b0z m"
+0l"
+b101 k"
+b101 j"
+b0 i"
+0h"
+b0 g"
+b101 f"
+0d"
+0c"
+0b"
+0a"
+0`"
+0^"
+0]"
+0\"
+0["
+0Z"
+1X"
+0W"
+0V"
+0U"
+1T"
+1R"
+0Q"
+0P"
+0O"
+1N"
+b0 G"
+b0z F"
+0E"
+b11 D"
+b11 C"
+b0 B"
+0A"
+b0 @"
+b11 ?"
+0="
+0<"
+0;"
+0:"
+09"
+17"
+06"
+05"
+04"
+13"
+01"
+00"
+0/"
+0."
+0-"
+1+"
+0*"
+0)"
+0("
+1'"
+b0 ~
+b0z }
+0|
+b101 {
+b101 z
+b0 y
+0x
+b0 w
+b101 v
+0t
+0s
+0r
+0q
+0p
+0n
+0m
+0l
+0k
+0j
+1h
+0g
+0f
+0e
+1d
+0b
+0a
+0`
+0_
+0^
+b0 W
+b0z V
+0U
+b10 T
+b10 S
+b0 R
+0Q
+b0 P
+b10 O
+0M
+0L
+0K
+0J
+0I
+1G
+0F
+0E
+0D
+1C
+0A
+0@
+0?
+0>
+0=
+1;
+0:
+19
+08
+07
+b1 0
+b0z /
+0.
+b101 -
+b100 ,
+b0 +
+1*
+b0 )
+b100 (
+b1 &
+b10010000101010011010100100101 %
+b10010000101010011010100100100 $
+b10010000101010011010100100100 #
+b10010000101010011010100100101 !
+$end
+#20
+1A
+1?
+b11 0
+b1z /
+1:
+0;
+b10 -
+0G
+0h
+b1000 T
+1t
+0+"
+11"
+b1110 {
+1="
+0X"
+b101 D"
+1^"
+0'#
+b1001 k"
+1-#
+0B#
+b1000 4#
+1T#
+b0 [#
+0o#
+b100010010101111010000010 !
+b100010010101111010000010 %
+b0 #$
+0/$
+b1 ,
+17
+0C
+b1000 S
+0d
+1p
+b1110 z
+0'"
+1-"
+19"
+b101 C"
+0T"
+1Z"
+b1001 j"
+0##
+1)#
+b1000 3#
+0>#
+1P#
+b0 Z#
+0k#
+b0 "$
+0+$
+b1 (
+b1000 O
+b1110 v
+b101 ?"
+b1001 f"
+b1000 /#
+b0 V#
+b0 |#
+b100010010101111010000001 #
+b100010010101111010000001 $
+#40
+b1010 -
+1M
+b0 T
+0t
+b110 {
+0="
+b1101 D"
+1d"
+0y"
+1'#
+b100 k"
+0-#
+b100100001001101011000001010 !
+b100100001001101011000001010 %
+b100 [#
+1u#
+b1001 ,
+1I
+b0 S
+0p
+b110 z
+09"
+b1101 C"
+1`"
+b100 j"
+0u"
+1##
+0)#
+b100 Z#
+1q#
+b1001 (
+b0 O
+b110 v
+b1101 ?"
+b100 f"
+b100 V#
+b100100001001101011000001001 #
+b100100001001101011000001001 $
+#60
