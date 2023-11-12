@@ -212,7 +212,6 @@ module Arithmetic_Logic_Unit
     );
     // --------------------------------------------------------------------------------------------------
     // *** End of adder module instantiation ***
-
 endmodule
 
 

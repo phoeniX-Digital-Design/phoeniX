@@ -158,7 +158,6 @@ module Divider_Unit
     );
     // ----------------------------------------------------------------------------------------------------
     // *** End of divider instantiation ***
-
 endmodule
 
 // Add your custom divider circuit here ***
