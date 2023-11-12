@@ -163,7 +163,6 @@ module Multiplier_Unit
     );
     // -------------------------------------------------------------------------------------------------------
     // *** End of multiplier module instantiation ***
-
 endmodule
 
 // Add your custom multilpier circuit here ***

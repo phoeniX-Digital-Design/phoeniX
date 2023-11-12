@@ -63,7 +63,6 @@ module Address_Generator
         .input_B(adder_input_2),
         .sum(adder_result)
     );
-    
 endmodule
 
 module Kogge_Stone_Adder

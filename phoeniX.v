@@ -104,7 +104,13 @@ module phoeniX
     ////////////////////////////////////////
     always @(posedge clk) 
     begin
-        if (jump_branch_enable_execute_wire)
+        if (reset)
+        begin
+            pc_decode_reg <= 32'bz;
+            next_pc_decode_reg <= 32'bz;
+            instruction_decode_reg <= 32'bz;
+        end
+        else if (jump_branch_enable_execute_wire)
             instruction_decode_reg <= `NOP;
 
         else if (!(|stall_condition[1 : 3]))
@@ -231,6 +237,7 @@ module phoeniX
         if (jump_branch_enable_execute_wire || stall_condition[2])
         begin
             write_enable_execute_reg <= 1'b0;  
+            rs1_execute_reg <= 32'b0;
 
             opcode_execute_reg <= `NOP_opcode;
             funct3_execute_reg <= `NOP_funct3;
@@ -524,7 +531,7 @@ module phoeniX
             write_index_writeback_reg <= `NOP_write_index; 
         end
 
-        if (!(|stall_condition[1 : 3]))
+        if (!(|stall_condition[1 : 3]) || stall_condition[2])
         begin
             pc_writeback_reg <= pc_memory_reg;
             next_pc_writeback_reg <= next_pc_memory_reg;

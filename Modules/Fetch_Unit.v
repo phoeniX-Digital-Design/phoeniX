@@ -41,7 +41,6 @@ module Fetch_Unit
         .operand_1(pc[31 : 2]),
         .result(incrementer_result)
     );
-
 endmodule
 
 module Incrementer

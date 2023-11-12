@@ -51,16 +51,16 @@ module Control_Status_Unit
     output reg [31 : 0] CSR_out
 );
 
-always @(*) 
-begin
-    case ({funct3, opcode})
-        {`CSRRW,  `SYSTEM} : begin rd <= CSR_in; CSR_out <= rs1; end                                        
-        {`CSRRS,  `SYSTEM} : begin rd <= CSR_in; CSR_out <= CSR_in | rs1; end                               
-        {`CSRRC,  `SYSTEM} : begin rd <= CSR_in; CSR_out <= CSR_in & ~rs1; end                              
-        {`CSRRWI, `SYSTEM} : begin rd <= CSR_in; CSR_out <= {27'b0, unsigned_immediate}; end                
-        {`CSRRSI, `SYSTEM} : begin rd <= CSR_in; CSR_out <= CSR_in | {27'b0, unsigned_immediate}; end       
-        {`CSRRCI, `SYSTEM} : begin rd <= CSR_in; CSR_out <= CSR_in & ~{27'b0, unsigned_immediate}; end      
-        default : begin rd <= 32'bz; CSR_out <= 32'bz; end
-    endcase
-end
+    always @(*) 
+    begin
+        case ({funct3, opcode})
+            {`CSRRW,  `SYSTEM} : begin rd <= CSR_in; CSR_out <= rs1; end                                        
+            {`CSRRS,  `SYSTEM} : begin rd <= CSR_in; CSR_out <= CSR_in | rs1; end                               
+            {`CSRRC,  `SYSTEM} : begin rd <= CSR_in; CSR_out <= CSR_in & ~rs1; end                              
+            {`CSRRWI, `SYSTEM} : begin rd <= CSR_in; CSR_out <= {27'b0, unsigned_immediate}; end                
+            {`CSRRSI, `SYSTEM} : begin rd <= CSR_in; CSR_out <= CSR_in | {27'b0, unsigned_immediate}; end       
+            {`CSRRCI, `SYSTEM} : begin rd <= CSR_in; CSR_out <= CSR_in & ~{27'b0, unsigned_immediate}; end      
+            default : begin rd <= 32'bz; CSR_out <= 32'bz; end
+        endcase
+    end
 endmodule

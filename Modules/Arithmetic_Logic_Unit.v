@@ -35,11 +35,6 @@
         U-TYPE : AUIPC         
 */
 
-`ifndef DIRECTION
-    `define RIGHT 1'b1
-    `define LEFT  1'b0
-`endif 
-
 `ifndef OPCODES
     `define LOAD        7'b00_000_11
     `define LOAD_FP     7'b00_001_11
@@ -71,6 +66,33 @@
     `define custom_3    7'b11_110_11
 `endif /*OPCODES*/
 
+`ifndef I_INSTRUCTIONS
+    `define ADDI    3'b000
+    `define SLTI    3'b010
+    `define SLTIU   3'b011
+    `define XORI    3'b100
+    `define ORI     3'b110
+    `define ANDI    3'b111
+    `define SLLI    3'b001      // Shift Left Immediate -> Logical
+    `define SRI     3'b101      // Shift Right Immediate -> Logical & Arithmetic
+`endif /*I_INSTRUCTIONS*/
+
+`ifndef R_INSTRUCTIONS
+    `define ADDSUB  3'b000
+    `define SLL     3'b001      // Shift Left -> Logical   
+    `define SLT     3'b010
+    `define SLTU    3'b011    
+    `define XOR     3'b100    
+    `define SR      3'b101      // Shift Right -> Logical & Arithmetic   
+    `define OR      3'b110    
+    `define AND     3'b111
+`endif /*R_INSTRUCTIONS*/
+
+`define LOGICAL     7'b000_0000
+`define ARITHMETIC  7'b010_0000
+`define ADD         7'b000_0000     
+`define SUB         7'b010_0000
+
 module Arithmetic_Logic_Unit
 (
     input [6 : 0] opcode,               
@@ -93,13 +115,7 @@ module Arithmetic_Logic_Unit
     reg adder_Cin;
     reg  [31 : 0] adder_input_1;
     reg  [31 : 0] adder_input_2;
-    
     wire [31 : 0] adder_result;
-
-    reg  [31 : 0] shifter_input;
-    reg  [4  : 0] shifter_amount;
-    reg           shift_direction;
-    wire [31 : 0] shifter_result;
 
     always @(*) 
     begin
@@ -115,61 +131,45 @@ module Arithmetic_Logic_Unit
     // ----------------------------------- //
     always @(*)
     begin
-        $display("%t : Deciding ... ", $time);
-        casez ({funct7, funct3, opcode})
+        case ({funct3, opcode})
             // I-TYPE Intructions
-            {7'bz_zzz_zzz, 3'b000, `OP_IMM} : begin $display("ADDI %t", $time);alu_enable = 1'b1; alu_output = adder_result; end
-            {7'b0_000_000, 3'b001, `OP_IMM} : begin $display("SLLI %t", $time);alu_enable = 1'b1; alu_output = operand_1 << operand_2 [4 : 0];                     end     // SLLI
-            {7'bz_zzz_zzz, 3'b010, `OP_IMM} : begin $display("SLTI %t", $time);alu_enable = 1'b1; alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;    end     // SLTI
-            {7'bz_zzz_zzz, 3'b011, `OP_IMM} : begin $display("SLTIU %t", $time);alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0;                      end     // SLTIU
-            {7'bz_zzz_zzz, 3'b100, `OP_IMM} : begin $display("XORI %t", $time);alu_enable = 1'b1; alu_output = operand_1 ^ operand_2;                              end     // XORI
-            {7'b0_000_000, 3'b101, `OP_IMM} : begin $display("SRLI %t", $time);alu_enable = 1'b1; alu_output = operand_1 >> operand_2 [4 : 0];                     end     // SRLI
-            {7'b0_100_000, 3'b101, `OP_IMM} : begin $display("SRAI %t", $time);alu_enable = 1'b1; alu_output = operand_1 >> $signed(operand_2 [4 : 0]);            end     // SRAI
-            {7'bz_zzz_zzz, 3'b110, `OP_IMM} : begin $display("ORI %t", $time);alu_enable = 1'b1; alu_output = operand_1 | operand_2;                              end     // ORI
-            {7'bz_zzz_zzz, 3'b111, `OP_IMM} : begin $display("ANDI %t", $time);alu_enable = 1'b1; alu_output = operand_1 & operand_2;                              end     // ANDI
-            {7'bz_zzz_zzz, 3'b000, `OP_IMM} : alu_output = adder_result;
-            {7'b0_000_000, 3'b001, `OP_IMM} : 
-            begin shifter_input = operand_1; shifter_amount = operand_2 [4 : 0]; shift_direction = `LEFT; alu_output = shifter_result;  end     // SLLI
-            {7'bz_zzz_zzz, 3'b010, `OP_IMM} : begin alu_enable = 1'b1; alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;    end     // SLTI
-            {7'bz_zzz_zzz, 3'b011, `OP_IMM} : begin alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0;                      end     // SLTIU
-            {7'bz_zzz_zzz, 3'b100, `OP_IMM} : begin alu_enable = 1'b1; alu_output = operand_1 ^ operand_2;                              end     // XORI
-            {7'b0_000_000, 3'b101, `OP_IMM} : 
-            begin shifter_input = operand_1; shifter_amount = operand_2 [4 : 0]; shift_direction = `RIGHT; alu_output = shifter_result; end     // SRLI
-            {7'b0_100_000, 3'b101, `OP_IMM} :                                                                                                   // SRAI
-            begin shifter_input = operand_1; shifter_amount = $signed(operand_2 [4 : 0]); shift_direction = `RIGHT; alu_output = shifter_result; end 
-            {7'bz_zzz_zzz, 3'b110, `OP_IMM} : begin alu_enable = 1'b1; alu_output = operand_1 | operand_2;                              end     // ORI
-            {7'bz_zzz_zzz, 3'b111, `OP_IMM} : begin alu_enable = 1'b1; alu_output = operand_1 & operand_2;                              end     // ANDI
+            {`ADDI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = adder_result;                     end
+            {`SLLI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = operand_1 << operand_2 [4 : 0];   end 
+
+            {`SLTI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;  end
+            {`SLTIU, `OP_IMM} : begin alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0;                    end
+
+            {`XORI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = operand_1 ^ operand_2;    end
+            {`ORI, `OP_IMM}   : begin alu_enable = 1'b1; alu_output = operand_1 | operand_2;    end
+            {`ANDI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = operand_1 & operand_2;    end
             
+            {`SRI, `OP_IMM}   : 
+            begin
+                case (funct7)
+                    `LOGICAL    : begin alu_enable = 1'b1; alu_output = operand_1 >> operand_2 [4 : 0];             end    
+                    `ARITHMETIC : begin alu_enable = 1'b1; alu_output = operand_1 >> $signed(operand_2 [4 : 0]);    end     
+                endcase
+            end
+        
             // R-TYPE Instructions
-            {7'b0_000_000, 3'b000, `OP}     : alu_output = adder_result;
-            {7'b0_100_000, 3'b000, `OP}     : alu_output = adder_result;
-            {7'b0_000_000, 3'b001, `OP}     : 
-            begin shifter_input = operand_1; shifter_amount = operand_2 [4 : 0]; shift_direction = `LEFT; alu_output = shifter_result;  end     // SLL
-            {7'b0_000_000, 3'b010, `OP}     : begin alu_enable = 1'b1; alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;    end     // SLT
-            {7'b0_000_000, 3'b011, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0;                      end     // SLTU
-            {7'b0_000_000, 3'b100, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 ^ operand_2;                              end     // XOR
-            {7'b0_000_000, 3'b101, `OP}     : 
-            begin shifter_input = operand_1; shifter_amount = operand_2 [4 : 0]; shift_direction = `RIGHT; alu_output = shifter_result; end     // SRL
-            {7'b0_100_000, 3'b101, `OP}     :                                                                                                   // SRA
-            begin shifter_input = operand_1; shifter_amount = $signed(operand_2 [4 : 0]); shift_direction = `RIGHT; alu_output = shifter_result; end
-            {7'b0_000_000, 3'b110, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 | operand_2;                              end     // OR
-            {7'b0_000_000, 3'b111, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 & operand_2;                              end     // AND
-            
-            default: begin $display("default case @ %t", $time);alu_enable = 1'b0; alu_output = 32'bz; end
+            {`ADDSUB, `OP}  : begin alu_enable = 1'b1; alu_output = adder_result;               end  
+            {`SLL, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 << operand_2;     end
+            {`SLT, `OP}     : begin alu_enable = 1'b1; alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;    end
+            {`SLTU, `OP}    : begin alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0; ;                    end
+            {`XOR, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 ^ operand_2;  end
+            {`OR, `OP}      : begin alu_enable = 1'b1; alu_output = operand_1 | operand_2;  end
+            {`AND, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 & operand_2;  end
+            {`SR, `OP}      :
+            begin
+                case (funct7)
+                    `LOGICAL    : begin alu_enable = 1'b1; alu_output = operand_1 >> operand_2;             end
+                    `ARITHMETIC : begin alu_enable = 1'b1; alu_output = operand_1 >> $signed(operand_2);    end
+                endcase
+            end           
+
+            default: begin alu_enable = 1'b0; alu_output = 32'bz; end
         endcase
     end
-
-    Barrel_Shifter
-    #(
-        .WIDTH(32)
-    )
-    arithmetic_logic_unit_shifter_circuit
-    (
-        .value(shifter_input),
-        .shift_amount(shifter_amount),
-        .direction(shift_direction),
-        .result(shifter_result)
-    );
 
     // ----------------------------------------- //
     // Arithmetical Instructions: ADDI, ADD, SUB //
@@ -179,13 +179,17 @@ module Arithmetic_Logic_Unit
     // *** Implement the control systems required for your circuit ***
     always @(*) 
     begin
-        casez ({funct7, funct3, opcode})
-            {7'bz_zzz_zzz, 3'b000, `OP_IMM} :
-            begin adder_enable = 1'b1; adder_input_1 = operand_1; adder_input_2 = operand_2; adder_Cin = 1'b0;  end // ADDI
-            {7'b0_000_000, 3'b000, `OP}     : 
-            begin adder_enable = 1'b1; adder_input_1 = operand_1; adder_input_2 = operand_2; adder_Cin = 1'b0;  end // ADD
-            {7'b0_100_000, 3'b000, `OP}     : 
-            begin adder_enable = 1'b1; adder_input_1 = operand_1; adder_input_2 = ~operand_2; adder_Cin = 1'b1; end // SUB
+        case ({funct3, opcode})
+            {`ADDI, `OP_IMM} : begin adder_enable = 1'b1; adder_input_1 = operand_1; adder_input_2 = operand_2; adder_Cin = 1'b0;  end 
+
+            {`ADDSUB, `OP} :
+            begin
+                case (funct7)
+                    `ADD : begin adder_enable = 1'b1; adder_input_1 = operand_1; adder_input_2 = operand_2; adder_Cin = 1'b0;  end 
+                    `SUB : begin adder_enable = 1'b1; adder_input_1 = operand_1; adder_input_2 = ~operand_2; adder_Cin = 1'b1; end 
+                endcase
+            end
+            
             default: begin adder_enable = 1'b0; end
         endcase    
     end
@@ -208,47 +212,6 @@ module Arithmetic_Logic_Unit
     );
     // --------------------------------------------------------------------------------------------------
     // *** End of adder module instantiation ***
-
-endmodule
-
-module Barrel_Shifter #(parameter WIDTH = 32)
-(
-    input  [WIDTH - 1         : 0]   value,
-    input  [$clog2(WIDTH) - 1 : 0]   shift_amount,
-    input                         direction,
-    output reg [WIDTH - 1  : 0]   result
-);
-
-    reg [WIDTH - 1 : 0] shifted;
-
-    always @(*)
-    begin
-        // Right shift
-        if (direction)
-        begin
-            shifted = value;
-            for (integer i = 0 ; i < WIDTH ; i = i + 1)
-            begin
-                if (i < WIDTH - shift_amount)
-                    result[i] = shifted[i + shift_amount];
-                else
-                    result[i] = 0;
-            end
-        end 
-        // Left shift
-        if (!direction)
-        begin
-            shifted = value;
-            for (integer i = 0 ; i < WIDTH ; i = i + 1)
-            begin
-                if (i < shift_amount)
-                    result[i] = 0;
-                else
-                    result[i] = shifted[i - shift_amount];
-            end
-        end 
-    end
-
 endmodule
 
 
@@ -404,12 +367,12 @@ module Basic_Unit
     output C0
 );
 
-    assign B[1] =  ~A[0];
+    assign B[1] = ~A[0];
     assign B[2] = A[1] ^ A[0];
-    wire C1 = A[1] & A[0];
-    wire C2 = A[2] & A[3];
-    wire C0 = C1 & C2;
-    wire C3 = C1 & A[2];
+    wire   C1   = A[1] & A[0];
+    wire   C2   = A[2] & A[3];
+    wire   C0   = C1 & C2;
+    wire   C3   = C1 & A[2];
     assign B[3] = A[2] ^ C1;
     assign B[4] = A[3] ^ C3;
 
