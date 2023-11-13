@@ -3,7 +3,7 @@
 `include "Instruction_Decoder.v"
 `include "Immediate_Generator.v"
 `include "Register_File.v"
-`include "Arithmetic_Logic_Unit___.v"
+`include "Arithmetic_Logic_Unit.v"
 `include "Jump_Branch_Unit.v"
 `include "Address_Generator.v"
 `include "Load_Store_Unit.v"
@@ -46,11 +46,12 @@ module phoeniX
     ///////////////////////////////////
     // Data Memory Interface Signals //
     ///////////////////////////////////
+    input  data_memory_interface_ready,
     output data_memory_interface_enable,
     output data_memory_interface_state,
     output  [31 : 0] data_memory_interface_address,
     output  [ 3 : 0] data_memory_interface_frame_mask,
-    inout   [31 : 0] data_memory_interface_data 
+    inout   [31 : 0] data_memory_interface_data
 );
     // ---------------------------------
     // Wire Declarations for Fetch Stage
@@ -234,7 +235,7 @@ module phoeniX
     ////////////////////////////////////////
     always @(posedge (clk)) 
     begin
-        if (jump_branch_enable_execute_wire || stall_condition[2])
+        if (jump_branch_enable_execute_wire || stall_condition[3])
         begin
             write_enable_execute_reg <= 1'b0;  
             rs1_execute_reg <= 32'b0;
@@ -445,7 +446,7 @@ module phoeniX
             write_index_memory_reg <= `NOP_write_index;            
         end
 
-        else if (!(|stall_condition[1 : 3]) || stall_condition[2])
+        else if (!(|stall_condition[1 : 3]) || stall_condition[3])
         begin
             pc_memory_reg <= pc_execute_reg;
             next_pc_memory_reg <= next_pc_execute_reg;
@@ -531,7 +532,7 @@ module phoeniX
             write_index_writeback_reg <= `NOP_write_index; 
         end
 
-        if (!(|stall_condition[1 : 3]) || stall_condition[2])
+        if (!(|stall_condition[1 : 3]) || stall_condition[3])
         begin
             pc_writeback_reg <= pc_memory_reg;
             next_pc_writeback_reg <= next_pc_memory_reg;
@@ -636,11 +637,13 @@ module phoeniX
             (((write_index_execute_reg == read_index_1_decode_wire) & read_enable_1_decode_wire)  || 
              ((write_index_execute_reg == read_index_2_decode_wire) & read_enable_2_decode_wire))) 
         begin
-            stall_condition[2] = 1'b1;
+            stall_condition[3] = 1'b1;
         end   
-        else stall_condition[2] = 1'b0;
+        else stall_condition[3] = 1'b0;
 
-        stall_condition[3] = 1'b0;
+        if (opcode_memory_reg == `LOAD & !(data_memory_interface_ready))
+            stall_condition[2] = 1'b1;
+        else stall_condition[2] = 1'b0;
     end
 
     ////////////////////////////////////////
