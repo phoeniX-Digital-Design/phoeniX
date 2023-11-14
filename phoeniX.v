@@ -111,6 +111,7 @@ module phoeniX
             next_pc_decode_reg <= 32'bz;
             instruction_decode_reg <= 32'bz;
         end
+
         else if (jump_branch_enable_execute_wire)
             instruction_decode_reg <= `NOP;
 
@@ -235,7 +236,8 @@ module phoeniX
     ////////////////////////////////////////
     always @(posedge (clk)) 
     begin
-        if (jump_branch_enable_execute_wire || stall_condition[3])
+        if (jump_branch_enable_execute_wire || 
+            (!(|stall_condition[1 : 2]) & stall_condition[3]))
         begin
             write_enable_execute_reg <= 1'b0;  
             rs1_execute_reg <= 32'b0;
@@ -432,7 +434,7 @@ module phoeniX
     ////////////////////////////////////////
     always @(posedge clk) 
     begin
-        if (stall_condition[1])
+        if (stall_condition[1] & !stall_condition[2])
         begin
             write_enable_memory_reg <= 1'b0;  
 
@@ -446,7 +448,7 @@ module phoeniX
             write_index_memory_reg <= `NOP_write_index;            
         end
 
-        else if (!(|stall_condition[1 : 3]) || stall_condition[3])
+        else if (!(|stall_condition[1 : 2]))
         begin
             pc_memory_reg <= pc_execute_reg;
             next_pc_memory_reg <= next_pc_execute_reg;
@@ -518,7 +520,7 @@ module phoeniX
     ////////////////////////////////////////
     always @(posedge clk) 
     begin
-        if (stall_condition[3])
+        if (stall_condition[2])
         begin
             write_enable_writeback_reg <= 1'b0;  
 
@@ -532,7 +534,7 @@ module phoeniX
             write_index_writeback_reg <= `NOP_write_index; 
         end
 
-        if (!(|stall_condition[1 : 3]) || stall_condition[3])
+        else
         begin
             pc_writeback_reg <= pc_memory_reg;
             next_pc_writeback_reg <= next_pc_memory_reg;
@@ -621,7 +623,7 @@ module phoeniX
     reg [1 : 3] stall_condition;
     /*
         1 -> Stall Condition 1 corresponds to instructions with multi-cycle execution
-        1 -> Stall Condition 2 corresponds to instructions with multi-cycle memory access
+        2 -> Stall Condition 2 corresponds to instructions with multi-cycle memory access
         3 -> Stall Condition 3 corresponds to instructions with dependencies on previous instructions whose values are not available in the pipeline
     */
 
