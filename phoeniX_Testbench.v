@@ -2,7 +2,7 @@
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-	`define FIRMWARE "Software\\Sample_Assembly_Codes\\fibonacci\\fibonacci_firmware.hex"
+	`define FIRMWARE "Software\\Sample_C_Codes\\sum1ton\\sum1ton_firmware.hex"
 `endif /*FIRMWARE*/
 
 `define MEMORY_DELAY        #15
@@ -15,7 +15,7 @@ module phoeniX_Testbench;
     parameter CLK_PERIOD = 4;
     reg clk = 1'b1;
     initial begin forever #(CLK_PERIOD/2) clk = ~clk; end
-    initial #(1000 * CLK_PERIOD) $finish;
+    initial #(10000 * CLK_PERIOD) $finish;
 
     reg reset = 1'b1;
     

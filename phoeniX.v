@@ -584,7 +584,10 @@ module phoeniX
         .destination_index_2(write_index_memory_reg),
         .destination_index_3(write_index_writeback_reg),
 
-        .data_1(opcode_execute_reg == `LUI ? immediate_execute_reg : result_execute_reg),
+        .data_1(    opcode_execute_reg == `LUI      ? immediate_execute_reg : 
+                    opcode_execute_reg == `AUIPC    ? address_execute_wire  : 
+                    result_execute_reg
+                ),
         .data_2(opcode_memory_reg == `LOAD ? load_data_memory_wire : result_memory_reg),
         .data_3(write_data_writeback_reg),
 
@@ -604,7 +607,10 @@ module phoeniX
         .destination_index_2(write_index_memory_reg),
         .destination_index_3(write_index_writeback_reg),
 
-        .data_1(opcode_execute_reg == `LUI ? immediate_execute_reg : result_execute_reg),
+        .data_1(    opcode_execute_reg == `LUI      ? immediate_execute_reg : 
+                    opcode_execute_reg == `AUIPC    ? address_execute_wire  : 
+                    result_execute_reg
+                ),
         .data_2(opcode_memory_reg == `LOAD ? load_data_memory_wire : result_memory_reg),
         .data_3(write_data_writeback_reg),
 
