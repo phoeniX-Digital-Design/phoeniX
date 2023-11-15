@@ -1,16 +1,16 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Sat Nov 11 15:27:14 2023
+[*] Wed Nov 15 08:09:10 2023
 [*]
 [dumpfile] "D:\GitHub\phoeniX-Digital-Design\phoeniX\phoeniX.vcd"
-[dumpfile_mtime] "Sat Nov 11 15:22:55 2023"
-[dumpfile_size] 197162
+[dumpfile_mtime] "Wed Nov 15 08:08:43 2023"
+[dumpfile_size] 771781
 [savefile] "D:\GitHub\phoeniX-Digital-Design\phoeniX\phoeniX.gtkw"
-[timestart] 5
+[timestart] 0
 [size] 1920 1009
 [pos] -1 -1
-*-4.006899 72 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
-[treeopen] phoeniX_Testbench.uut.
+*-8.362842 106 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] phoeniX_Testbench.
 [treeopen] phoeniX_Testbench.uut.fetch_unit.
 [treeopen] phoeniX_Testbench.uut.load_store_unit.
 [treeopen] phoeniX_Testbench.uut.register_file.
@@ -78,6 +78,8 @@ phoeniX_Testbench.uut.stall_condition[1:3]
 -
 -FETCH -> DECODE
 -
+@28
+phoeniX_Testbench.uut.clk
 @22
 phoeniX_Testbench.uut.pc_decode_reg[31:0]
 phoeniX_Testbench.uut.next_pc_decode_reg[31:0]
@@ -117,7 +119,7 @@ phoeniX_Testbench.uut.write_enable_decode_wire
 -
 @420
 phoeniX_Testbench.uut.RF_source_1[31:0]
-@25
+@24
 phoeniX_Testbench.uut.FW_source_1[31:0]
 @420
 phoeniX_Testbench.uut.FW_enable_1
@@ -136,6 +138,8 @@ phoeniX_Testbench.uut.csr_data_decode_wire[31:0]
 -
 -DECODE -> EXECUTE
 -
+@28
+phoeniX_Testbench.clk
 @22
 phoeniX_Testbench.uut.pc_execute_reg[31:0]
 @28
@@ -186,6 +190,8 @@ phoeniX_Testbench.uut.read_index_1_execute_reg[4:0]
 -
 -EXECUTE -> MEMORY
 -
+@28
+phoeniX_Testbench.uut.clk
 @22
 phoeniX_Testbench.uut.pc_memory_reg[31:0]
 @28
@@ -217,21 +223,37 @@ phoeniX_Testbench.uut.write_index_memory_reg[4:0]
 -
 @28
 phoeniX_Testbench.uut.data_memory_interface_enable
-@22
+@24
 phoeniX_Testbench.uut.data_memory_interface_address[31:0]
+@28
+phoeniX_Testbench.data_memory_interface_state
+@200
+-
+@25
 phoeniX_Testbench.uut.data_memory_interface_data[31:0]
+@28
+phoeniX_Testbench.data_memory_interface_ready
+@200
+-
+@24
 phoeniX_Testbench.uut.load_store_unit.store_data[31:0]
 phoeniX_Testbench.uut.load_data_memory_wire[31:0]
 @200
 -
 -MEMORY -> WRITEBACK
 -
+@28
+phoeniX_Testbench.uut.clk
 @22
 phoeniX_Testbench.uut.pc_writeback_reg[31:0]
 @28
 phoeniX_Testbench.uut.instruction_type_writeback_reg[2:0]
-@22
+@200
+-
+@28
 phoeniX_Testbench.uut.opcode_writeback_reg[6:0]
+phoeniX_Testbench.uut.funct3_writeback_reg[2:0]
+phoeniX_Testbench.uut.funct7_writeback_reg[6:0]
 @200
 -
 @420
@@ -270,7 +292,7 @@ phoeniX_Testbench.x11_a1[31:0]
 phoeniX_Testbench.x12_a2[31:0]
 phoeniX_Testbench.x13_a3[31:0]
 phoeniX_Testbench.x14_a4[31:0]
-@22
+@24
 phoeniX_Testbench.x15_a5[31:0]
 @420
 phoeniX_Testbench.x16_a6[31:0]
