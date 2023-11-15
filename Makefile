@@ -9,7 +9,7 @@ CORE_TESTBENCH = $(CORE_NAME)_Testbench.v
 TOOLCHAIN_PREFIX = riscv64-unknown-elf-
 
 MABI = ilp32
-MARCH = rv32i
+MARCH = rv32im
 
 CFLAGS = -mabi=$(MABI) -march=$(MARCH)
 CFLAG_LINKING = -Wl,--gc-sections
