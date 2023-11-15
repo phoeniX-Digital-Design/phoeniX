@@ -224,12 +224,12 @@ module Arithmetic_Logic_Unit
     // *** Instantiate your adder circuit here ***
     // Please instantiate your adder module according to the guidelines and naming conventions of phoeniX
     // --------------------------------------------------------------------------------------------------
-    Approximate_Accuracy_Controlable_Adder 
+    Approximate_Accuracy_Controllable_Adder 
     #(
         .LEN(32),
         .APX_LEN(8)
     )
-    approximate_accuracy_controlable_adder 
+    approximate_accuracy_controllable_adder 
     (
         .Er(accuracy_control[10 : 3] | {8{~accuracy_control[0]}}), 
         .A(adder_input_1),
@@ -299,7 +299,7 @@ endmodule
 // Add your custom adder circuit here ***
 // Please create your adder module according to the guidelines and naming conventions of phoeniX
 // --------------------------------------------------------------------------------------------------
-module Approximate_Accuracy_Controlable_Adder 
+module Approximate_Accuracy_Controllable_Adder 
 #(
     parameter LEN = 32,
     parameter APX_LEN = 8         // Valid Options for APX_LEN : 4, 8, 12, 16, ...
