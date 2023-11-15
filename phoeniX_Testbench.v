@@ -2,7 +2,7 @@
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-	`define FIRMWARE "Software\\Sample_Assembly_Codes\\manual_test\\manual_test_firmware.hex"
+	`define FIRMWARE "Software\\Sample_Assembly_Codes\\fibonacci\\fibonacci_firmware.hex"
 `endif /*FIRMWARE*/
 
 `define MEMORY_DELAY        #15
@@ -105,14 +105,6 @@ module phoeniX_Testbench;
         wire [31 : 0] mul_csr   = uut.control_status_register_file.mul_csr;
     `endif
 
-    ///////////////////////////////////
-    //   4 MB Memory Instantiation   //
-    ///////////////////////////////////
-    reg [31 : 0] Memory [0 : 1024 * 1024 - 1];
-    initial $readmemh(`FIRMWARE, Memory);
-    localparam  READ    = 1'b0;
-    localparam  WRITE   = 1'b1;
-
     initial
     begin
         $dumpfile("phoeniX.vcd");
@@ -121,6 +113,28 @@ module phoeniX_Testbench;
         repeat (5) @(posedge clk);
 		reset <= 1'b0;
     end
+
+    always @(*) 
+    begin
+        if (uut.opcode_writeback_reg == `SYSTEM && uut.funct12_writeback_reg == `EBREAK) 
+        begin
+            reset <= 1'b1;
+            repeat (5) @(posedge clk);
+            $display("\n--> EXECUTION FINISHED <--\n");
+            $dumpoff;
+            $finish;
+        end
+    end
+
+    ////////////////
+    //   Memory   //
+    ////////////////
+
+    // 4 MB Memory Instantiation
+    reg [31 : 0] Memory [0 : 1024 * 1024 - 1];
+    initial $readmemh(`FIRMWARE, Memory);
+    localparam  READ    = 1'b0;
+    localparam  WRITE   = 1'b1;
 
     // Instruction Memory Interface Behaviour
     always @(negedge clk)
@@ -150,7 +164,7 @@ module phoeniX_Testbench;
                 if (data_memory_interface_frame_mask[1]) Memory[data_memory_interface_address >> 2][23 : 16] <= data_memory_interface_data[23 : 16];
                 if (data_memory_interface_frame_mask[0]) Memory[data_memory_interface_address >> 2][31 : 24] <= data_memory_interface_data[31 : 24];
             end 
-            if (data_memory_interface_state == READ) 
+            if (data_memory_interface_state == READ & !data_memory_interface_ready) 
             begin
                 `MEMORY_DELAY 
                 data_memory_interface_data_reg <= Memory[data_memory_interface_address >> 2];
@@ -165,18 +179,6 @@ module phoeniX_Testbench;
         begin
            data_memory_interface_data_reg <= 32'bz;    
            data_memory_interface_ready <= 1'b0; 
-        end
-    end
-
-    always @(*) 
-    begin
-        if (uut.opcode_writeback_reg == `SYSTEM && uut.funct12_writeback_reg == `EBREAK) 
-        begin
-            reset <= 1'b1;
-            repeat (5) @(posedge clk);
-            $display("\n--> EXECUTION FINISHED <--\n");
-            $dumpoff;
-            $finish;
         end
     end
 endmodule

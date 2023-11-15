@@ -234,7 +234,7 @@ module phoeniX
     ////////////////////////////////////////
     //    DECODE TO EXECUTE TRANSITION    //
     ////////////////////////////////////////
-    always @(posedge (clk)) 
+    always @(posedge clk) 
     begin
         if (jump_branch_enable_execute_wire || 
             (!(|stall_condition[1 : 2]) & stall_condition[3]))
