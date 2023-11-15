@@ -70,10 +70,10 @@
     `define custom_3    7'b11_110_11
 `endif /*OPCODES*/
 
-`define DIV     3'b000
-`define DIVU    3'b001
-`define REM     3'b010
-`define REMU    3'b011 
+`define DIV     3'b100
+`define DIVU    3'b101
+`define REM     3'b110
+`define REMU    3'b111 
 
 `define MULDIV  7'b0000001
 
