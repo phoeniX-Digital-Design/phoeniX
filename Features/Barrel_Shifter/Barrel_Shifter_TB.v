@@ -5,13 +5,13 @@ module Barrel_Shifter_Testbench;
     parameter WIDTH = 32;
     
     reg  [WIDTH - 1 : 0] value;
-    reg  [$clog2(WIDTH) : 0] shift_amount;
-    reg  direction;
+    reg  [$clog2(WIDTH) - 1 : 0] shift_amount;
+    reg  direction = 0;
     wire [WIDTH - 1 : 0] result;
     
-    Barrel_Shifter #(WIDTH) uut 
+    Barrel_Shifter uut
     (
-        .value(value),
+        .input_value(value),
         .shift_amount(shift_amount),
         .direction(direction),
         .result(result)
@@ -23,7 +23,7 @@ module Barrel_Shifter_Testbench;
         $dumpvars(0, Barrel_Shifter_Testbench);
 
         value = 32'hFFFF_FFFF;
-        shift_amount = 10;
+        shift_amount = 3;
         direction = 1'b0;
         #10
         $display("Value: %b", value);
