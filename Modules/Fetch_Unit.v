@@ -36,101 +36,100 @@ module Fetch_Unit
     end
 
     wire [29 : 0] incrementer_result;
-    Incrementer incrementer
+    Incrementer 
+    #(
+        .LEN(30)
+    )
+    incrementer
     (
-        .operand_1(pc[31 : 2]),
+        .value(pc[31 : 2]),
         .result(incrementer_result)
     );
 endmodule
 
 module Incrementer
-(
-    input   [29 : 0] operand_1,
-    output  [29 : 0] result
-);
-
-    wire [8 : 0] carry_chain;
-    assign carry_chain[0] = 1'b1;
-
-    genvar i;
-    generate
-        for (i = 0; i < 7; i = i + 1)
-        begin
-            Lookahead_Adder 
-            #(
-                .LEN(4)
-            )
-            incrementer_4bit
-            (
-                .A(operand_1[(i * 4) + 3 : i * 4]),
-                .B(4'b0000),
-                .Carry_in(carry_chain[i]),
-                .Sum(result[(i * 4) + 3 : i * 4]),
-                .Carry_out(carry_chain[i + 1])
-            );
-        end
-    endgenerate
-
-    Lookahead_Adder 
-    #(
-        .LEN(2)
-    )
-    incrementer_2bit
-    (
-        .A(operand_1[29 : 28]),
-        .B(2'b00),
-        .Carry_in(carry_chain[7]),
-        .Sum(result[29 : 28]),
-        .Carry_out(carry_chain[8])
-    );
-endmodule
-
-module Lookahead_Adder 
 #(
-    parameter LEN = 4
+    parameter LEN = 32
 )
 (
-    input [LEN - 1 : 0] A,
-    input [LEN - 1 : 0] B,
-    input Carry_in,
-    output [LEN - 1 : 0] Sum,
-    output Carry_out
+    input   [LEN - 1 : 0]   value,
+    output  [LEN - 1 : 0]   result
 );
-    wire [LEN : 0] Carry;
-    wire [LEN : 0] CarryX;
-    wire [LEN - 1 : 0] P;
-    wire [LEN - 1 : 0] G;
-    assign P = A | B;   // Bitwise AND
-    assign G = A & B;   // Bitwise OR
+    localparam COUNT = LEN / 4;
+    `define SLICE  [(i * 4) + 3 : (i * 4)]
 
-    assign Carry[0] = Carry_in;
+    wire [COUNT - 1 : 0] carry_chain;
+    
+    Incrementer_Unit IU_1 
+    (
+        .value(value[3 : 0]),
+        .result(result[3 : 0]),
+        .Cout(carry_chain[0])
+    );
+
+    wire [3 : 0] incrementer_unit_result [1 : COUNT];
+    wire [COUNT - 1 : 1] incrementer_unit_carry_out;
 
     genvar i;
     generate
-        for (i = 1 ; i <= LEN; i = i + 1)
+        for (i = 1; i < COUNT; i = i + 1)
         begin
-            assign Carry[i] = G[i - 1] | (P[i - 1] & Carry[i - 1]);
-        end
-    endgenerate
 
-    generate
-        for (i = 0; i < LEN; i = i + 1)
-        begin
-            Full_Adder_Incrementer FA (.A(A[i]), .B(B[i]), .Carry_in(Carry[i]), .Sum(Sum[i]), .Carry_out(CarryX[i + 1]));
+            Incrementer_Unit IU
+            (
+                .value(value`SLICE),
+                .result(incrementer_unit_result[i]),
+                .Cout(incrementer_unit_carry_out[i])
+            );
+
+            Mux_2to1_Incrementer MUX
+            (
+                .data_in_1({1'b0, value`SLICE}),
+                .data_in_2({incrementer_unit_carry_out[i], incrementer_unit_result[i]}),
+                .select(carry_chain[i - 1]),
+                .data_out({carry_chain[i], result`SLICE})
+            );
         end
-    assign Carry_out = Carry[LEN];
+        if (COUNT * 4 < LEN)
+            assign result[LEN - 1 : (COUNT * 4)] = value[LEN - 1 : (COUNT * 4)] + carry_chain[COUNT - 1]; 
     endgenerate
 endmodule
 
-module Full_Adder_Incrementer 
+module Incrementer_Unit 
 (
-    input A,
-    input B,
-    input Carry_in,
-
-    output Sum,
-    output Carry_out
+    input  [3 : 0] value,
+    output [4 : 1] result,
+    output Cout
 );
-    assign Sum = A ^ B ^ Carry_in;
-    assign Carry_out = (A && B) || (A && Carry_in) || (B && Carry_in); 
+
+    assign result[1] = ~value[0];
+    assign result[2] = value[1] ^ value[0];
+    wire   C1   = value[1] & value[0];
+    wire   C2   = value[2] & value[3];
+    wire   Cout   = C1 & C2;
+    wire   C3   = C1 & value[2];
+    assign result[3] = value[2] ^ C1;
+    assign result[4] = value[3] ^ C3;
+endmodule
+
+module Mux_2to1_Incrementer
+#(
+    parameter LEN = 5
+) 
+(
+    input [LEN - 1 : 0] data_in_1,        
+    input [LEN - 1 : 0] data_in_2,        
+    input select,                   
+
+    output reg [LEN - 1: 0] data_out            
+);
+
+    always @(*) 
+    begin
+        case (select)
+            1'b0: begin data_out = data_in_1; end
+            1'b1: begin data_out = data_in_2; end
+            default: begin data_out = {LEN{1'bz}}; end
+        endcase
+    end
 endmodule

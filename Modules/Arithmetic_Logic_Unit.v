@@ -129,9 +129,9 @@ module Arithmetic_Logic_Unit
     always @(*) 
     begin
         case (opcode)
-        `OP     : begin operand_1 = rs1; operand_2 = rs2;       end // R-TYPE 
-        `OP_IMM : begin operand_1 = rs1; operand_2 = immediate; end // I-TYPE 
-        default : begin operand_1 = 32'bz; operand_2 = 32'bz;   end
+            `OP     : begin operand_1 = rs1; operand_2 = rs2;       end // R-TYPE 
+            `OP_IMM : begin operand_1 = rs1; operand_2 = immediate; end // I-TYPE 
+            default : begin operand_1 = 32'bz; operand_2 = 32'bz;   end
         endcase        
     end
 
@@ -245,9 +245,8 @@ module Barrel_Shifter
 (
     input  [31 : 0] input_value, 
     input  [4  : 0] shift_amount,
-    input           direction,
-    // direction = 1 : RIGHT 
-    // direction = 0 : LEFT
+    input           direction,          // direction = 1 : RIGHT, direction = 0 : LEFT
+
     output [31 : 0] result 
 );
 
@@ -277,7 +276,9 @@ module Barrel_Shifter
 endmodule
 
 module Reverser_Circuit
-#(parameter N = 32)
+#(
+    parameter N = 32
+)
 (
     input  [N - 1 : 0]  input_value, 
     input               enable, 
