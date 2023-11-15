@@ -1,8 +1,8 @@
 .section .text
-.global sum1ton
-.type sum1ton, @function
+.global load
+.type load, @function
 
-sum1ton:
+load:
         add 	a4, a0, zero        
         add 	a2, a0, a1          
         add	    a3, a0, zero        
@@ -13,3 +13,4 @@ loop:
         blt 	a3, a2, loop        
         add	    a0, a4, zero        
         ret
+        
