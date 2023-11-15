@@ -1,8 +1,8 @@
 .section .text
-.global fibonacci
-.type fibonacci, @function
+.global factorial
+.type factorial, @function
 
-fibonacci:
+factorial:
     add     a4, a0, zero
     add     a2, a0, a1
     add     a3, a0, zero
