@@ -13,10 +13,6 @@ module Incrementer_Testbench;
     );
     
     initial begin
-
-        $dumpfile("Incrementer.vcd");
-        $dumpvars(0, Incrementer_Testbench);
-
         A = $random;
         #10
         $display("A: %b", A);
