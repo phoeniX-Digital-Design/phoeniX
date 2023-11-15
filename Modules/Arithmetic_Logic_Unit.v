@@ -93,6 +93,9 @@
 `define ADD         7'b000_0000     
 `define SUB         7'b010_0000
 
+`define RIGHT 1'b1
+`define LEFT  1'b0
+
 module Arithmetic_Logic_Unit
 (
     input [6 : 0] opcode,               
@@ -117,6 +120,12 @@ module Arithmetic_Logic_Unit
     reg  [31 : 0] adder_input_2;
     wire [31 : 0] adder_result;
 
+    
+    reg  [31 : 0] shift_input;
+    reg  [4  : 0] shift_amount;
+    reg           shift_direction;
+    wire [31 : 0] shift_result;
+
     always @(*) 
     begin
         case (opcode)
@@ -133,9 +142,9 @@ module Arithmetic_Logic_Unit
     begin
         case ({funct3, opcode})
             // I-TYPE Intructions
-            {`ADDI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = adder_result;                     end
-            {`SLLI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = operand_1 << operand_2 [4 : 0];   end 
-
+            {`ADDI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = adder_result;             end
+            {`SLLI, `OP_IMM}  : 
+            begin shift_direction = `LEFT; shift_input = operand_1; shift_amount = operand_2[4 : 0]; alu_output = shift_result; end 
             {`SLTI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;  end
             {`SLTIU, `OP_IMM} : begin alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0;                    end
 
@@ -146,14 +155,17 @@ module Arithmetic_Logic_Unit
             {`SRI, `OP_IMM}   : 
             begin
                 case (funct7)
-                    `LOGICAL    : begin alu_enable = 1'b1; alu_output = operand_1 >> operand_2 [4 : 0];             end    
-                    `ARITHMETIC : begin alu_enable = 1'b1; alu_output = operand_1 >> $signed(operand_2 [4 : 0]);    end     
+                    `LOGICAL    : 
+                    begin shift_direction = `RIGHT; shift_input = operand_1; shift_amount = operand_2[4 : 0]; alu_output = shift_result; end    
+                    `ARITHMETIC :
+                    begin shift_direction = `RIGHT; shift_input = operand_1; shift_amount = $signed(operand_2[4 : 0]); alu_output = shift_result; end     
                 endcase
             end
         
             // R-TYPE Instructions
-            {`ADDSUB, `OP}  : begin alu_enable = 1'b1; alu_output = adder_result;               end  
-            {`SLL, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 << operand_2;     end
+            {`ADDSUB, `OP}  : begin alu_enable = 1'b1; alu_output = adder_result;           end  
+            {`SLL, `OP}     : 
+            begin shift_direction = `LEFT; shift_input = operand_1; shift_amount = operand_2[4 : 0]; alu_output = shift_result; end
             {`SLT, `OP}     : begin alu_enable = 1'b1; alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;    end
             {`SLTU, `OP}    : begin alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0; ;                    end
             {`XOR, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 ^ operand_2;  end
@@ -162,8 +174,10 @@ module Arithmetic_Logic_Unit
             {`SR, `OP}      :
             begin
                 case (funct7)
-                    `LOGICAL    : begin alu_enable = 1'b1; alu_output = operand_1 >> operand_2;             end
-                    `ARITHMETIC : begin alu_enable = 1'b1; alu_output = operand_1 >> $signed(operand_2);    end
+                    `LOGICAL    : 
+                    begin shift_direction = `RIGHT; shift_input = operand_1; shift_amount = operand_2[4 : 0]; alu_output = shift_result; end
+                    `ARITHMETIC : 
+                    begin shift_direction = `RIGHT; shift_input = operand_1; shift_amount = $signed(operand_2[4 : 0]); alu_output = shift_result; end
                 endcase
             end           
 
@@ -193,6 +207,19 @@ module Arithmetic_Logic_Unit
             default: begin adder_enable = 1'b0; end
         endcase    
     end
+
+    // Instantiation of Barrel Shifter circuit
+    // ---------------------------------------
+    Barrel_Shifter alu_shifter_circuit
+    (
+        .input_value(shift_input),
+        .shift_amount(shift_amount),
+        .direction(shift_direction),
+        .result(shift_result)
+    );
+    // ---------------------------------------
+    // End of Barrel Shifter instantiation
+
     
     // *** Instantiate your adder circuit here ***
     // Please instantiate your adder module according to the guidelines and naming conventions of phoeniX
@@ -214,6 +241,59 @@ module Arithmetic_Logic_Unit
     // *** End of adder module instantiation ***
 endmodule
 
+module Barrel_Shifter
+(
+    input  [31 : 0] input_value, 
+    input  [4  : 0] shift_amount,
+    input           direction,
+    // direction = 1 : RIGHT 
+    // direction = 0 : LEFT
+    output [31 : 0] result 
+);
+
+    wire [31 : 0] shift_mux_0; 
+    wire [31 : 0] shift_mux_1; 
+    wire [31 : 0] shift_mux_2; 
+    wire [31 : 0] shift_mux_3; 
+    wire [31 : 0] shift_mux_4; 
+    wire [31 : 0] reversed;
+     
+    // reverse -> shift right -> then reverse again
+    Reverser_Circuit #(.N(32)) RC1 (input_value, direction, reversed);
+
+    // Stage 0: shift 0 or 1 bit
+    assign shift_mux_0 = shift_amount[0] ? {1'b0,  reversed[31 : 1]} : reversed;
+    // Stage 1: shift 0 or 2 bits 
+    assign shift_mux_1 = shift_amount[1] ? {2'b0,  shift_mux_0[31 : 2]} : shift_mux_0;
+    // Stage 2: shift 0 or 4 bits 
+    assign shift_mux_2 = shift_amount[2] ? {4'b0,  shift_mux_1[31 : 4]} : shift_mux_1;
+    // Stage 3: shift 0 or 8 bits 
+    assign shift_mux_3 = shift_amount[3] ? {8'b0,  shift_mux_2[31 : 8]} : shift_mux_2;
+    // Stage 4: shift 0 or 16 bits 
+    assign shift_mux_4 = shift_amount[4] ? {16'b0, shift_mux_3[31 : 16]} : shift_mux_3;
+
+    // Reverse again 
+    Reverser_Circuit #(.N(32)) RC2 (shift_mux_4, direction, result);
+endmodule
+
+module Reverser_Circuit
+#(parameter N = 32)
+(
+    input  [N - 1 : 0]  input_value, 
+    input               enable, 
+    output [N - 1 : 0]  reversed_value
+);
+
+    wire [N - 1 : 0] temp;
+    generate
+        genvar i;
+        for (i = 0 ; i <= N - 1 ; i = i + 1)
+            assign temp[i] = input_value[N - 1 - i];
+    endgenerate
+    // enable = 1 (RIGHT) -> reverse module does nothing 
+    // enable = 0 (LEFT)  -> result = temp (reversed)
+    assign reversed_value = enable ? input_value : temp;
+endmodule
 
 // Add your custom adder circuit here ***
 // Please create your adder module according to the guidelines and naming conventions of phoeniX
@@ -375,7 +455,6 @@ module Basic_Unit
     wire   C3   = C1 & A[2];
     assign B[3] = A[2] ^ C1;
     assign B[4] = A[3] ^ C3;
-
 endmodule
 
 module Mux_2to1
