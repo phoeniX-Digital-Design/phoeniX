@@ -40,12 +40,12 @@
 
 module Control_Status_Unit 
 (
-    input  [ 6 : 0] opcode,
-    input  [ 2 : 0] funct3,
+    input  [6  : 0] opcode,
+    input  [2  : 0] funct3,
 
     input  [31 : 0] CSR_in,
     input  [31 : 0] rs1,
-    input  [ 4 : 0] unsigned_immediate,
+    input  [4  : 0] unsigned_immediate,
 
     output reg [31 : 0] rd,
     output reg [31 : 0] CSR_out
@@ -53,14 +53,39 @@ module Control_Status_Unit
 
     always @(*) 
     begin
+        
         case ({funct3, opcode})
             {`CSRRW,  `SYSTEM} : begin rd <= CSR_in; CSR_out <= rs1; end                                        
             {`CSRRS,  `SYSTEM} : begin rd <= CSR_in; CSR_out <= CSR_in | rs1; end                               
             {`CSRRC,  `SYSTEM} : begin rd <= CSR_in; CSR_out <= CSR_in & ~rs1; end                              
             {`CSRRWI, `SYSTEM} : begin rd <= CSR_in; CSR_out <= {27'b0, unsigned_immediate}; end                
             {`CSRRSI, `SYSTEM} : begin rd <= CSR_in; CSR_out <= CSR_in | {27'b0, unsigned_immediate}; end       
-            {`CSRRCI, `SYSTEM} : begin rd <= CSR_in; CSR_out <= CSR_in & ~{27'b0, unsigned_immediate}; end      
+            {`CSRRCI, `SYSTEM} : begin rd <= CSR_in; CSR_out <= CSR_in & ~{27'b0, unsigned_immediate}; end         
             default : begin rd <= 32'bz; CSR_out <= 32'bz; end
         endcase
+        
+        /*
+        assign rd = (opcode == `SYSTEM) ? 
+        (
+            (funct3 == `CSRRW) ? CSR_in :
+            (funct3 == `CSRRS) ? CSR_in :
+            (funct3 == `CSRRC) ? CSR_in :
+            (funct3 == `CSRRWI) ? CSR_in :
+            (funct3 == `CSRRSI) ? CSR_in :
+            (funct3 == `CSRRCI) ? CSR_in :
+            32'bz
+        ) : 32'bz;
+                    
+        assign CSR_out = (opcode == `SYSTEM) ? 
+        (
+            (funct3 == `CSRRW) ? rs1 :
+            (funct3 == `CSRRS) ? (CSR_in | rs1) :
+            (funct3 == `CSRRC) ? (CSR_in & ~rs1) :
+            (funct3 == `CSRRWI) ? {27'b0, unsigned_immediate} :
+            (funct3 == `CSRRSI) ? (CSR_in | {27'b0, unsigned_immediate}) :
+            (funct3 == `CSRRCI) ? (CSR_in & ~{27'b0, unsigned_immediate}) :
+            32'bz
+        ) : 32'bz;
+        */
     end
 endmodule

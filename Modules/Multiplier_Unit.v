@@ -28,7 +28,7 @@
 */
 
 // *** Include your headers and modules here ***
-// `include "Approximate_Arithmetic_Units/Approximate_Accuracy_Controlable_Multiplier.v"
+// `include "Approximate_Arithmetic_Units/Approximate_Accuracy_Controllable_Multiplier.v"
 // *** End of including headers and modules ***
 
 `ifndef OPCODES
@@ -151,7 +151,7 @@ module Multiplier_Unit
     // *** Instantiate your multiplier circuit here ***
     // Please instantiate your multiplier module according to the guidelines and naming conventions of phoeniX
     // -------------------------------------------------------------------------------------------------------
-    Approximate_Accuracy_Controlable_Multiplier multiplier 
+    Approximate_Accuracy_Controllable_Multiplier multiplier 
     (
         .clk(clk),
         .enable(multiplier_enable),
@@ -168,7 +168,7 @@ endmodule
 // Add your custom multilpier circuit here ***
 // Please create your multilpier module according to the guidelines and naming conventions of phoeniX
 // --------------------------------------------------------------------------------------------------------
-module Approximate_Accuracy_Controlable_Multiplier 
+module Approximate_Accuracy_Controllable_Multiplier 
 (
     input clk,
     input enable,
@@ -184,7 +184,7 @@ module Approximate_Accuracy_Controlable_Multiplier
     wire [31 : 0] Partial_Product [0 : 3];
     wire Partial_Busy [0 : 3];
 
-    Approximate_Accuracy_Controlable_Multiplier_16bit multiplier_LOWxLOW
+    Approximate_Accuracy_Controllable_Multiplier_16bit multiplier_LOWxLOW
     (
         .clk(clk),
         .enable(enable),
@@ -197,7 +197,7 @@ module Approximate_Accuracy_Controlable_Multiplier
         .Busy(Partial_Busy[0])
     );
 
-    Approximate_Accuracy_Controlable_Multiplier_16bit multiplier_HIGHxLOW
+    Approximate_Accuracy_Controllable_Multiplier_16bit multiplier_HIGHxLOW
     (
         .clk(clk),
         .enable(enable),
@@ -210,7 +210,7 @@ module Approximate_Accuracy_Controlable_Multiplier
         .Busy(Partial_Busy[1])
     );
 
-    Approximate_Accuracy_Controlable_Multiplier_16bit multiplier_LOWxHIGH
+    Approximate_Accuracy_Controllable_Multiplier_16bit multiplier_LOWxHIGH
     (
         .clk(clk),
         .enable(enable),
@@ -223,7 +223,7 @@ module Approximate_Accuracy_Controlable_Multiplier
         .Busy(Partial_Busy[2])
     );
 
-    Approximate_Accuracy_Controlable_Multiplier_16bit multiplier_HIGHxHIGH
+    Approximate_Accuracy_Controllable_Multiplier_16bit multiplier_HIGHxHIGH
     (
         .clk(clk),
         .enable(enable),
@@ -240,7 +240,7 @@ module Approximate_Accuracy_Controlable_Multiplier
     assign Busy  = &{Partial_Busy[0], Partial_Busy[1], Partial_Busy[2], Partial_Busy[3]};
 endmodule
 
-module Approximate_Accuracy_Controlable_Multiplier_16bit 
+module Approximate_Accuracy_Controllable_Multiplier_16bit 
 (
     input clk,
     input enable,
@@ -262,7 +262,7 @@ module Approximate_Accuracy_Controlable_Multiplier_16bit
     reg     [15 : 0] mul_result_3;
     reg     [15 : 0] mul_result_4;
 
-    Approximate_Accuracy_Controlable_Multiplier_8bit mul
+    Approximate_Accuracy_Controllable_Multiplier_8bit mul
     (
         .clk(clk),
         .Er(Er),
@@ -304,7 +304,7 @@ module Approximate_Accuracy_Controlable_Multiplier_16bit
     end
 endmodule
 
-module Approximate_Accuracy_Controlable_Multiplier_8bit
+module Approximate_Accuracy_Controllable_Multiplier_8bit
 (
     input clk,
 
