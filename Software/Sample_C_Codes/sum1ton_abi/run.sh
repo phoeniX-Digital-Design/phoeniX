@@ -12,3 +12,5 @@ cat start.tmp firmware.tmp > firmware.mem
 
 python3 Firmware/hex_converter.py firmware.mem > sum1ton_abi_firmware.hex
 
+rm -rf Firmware/*.o
+rm -rf *.tmp *.mem *.o *.elf
