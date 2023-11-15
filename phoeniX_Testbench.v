@@ -2,7 +2,7 @@
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-	`define FIRMWARE "Software\\Sample_C_Codes\\sum1ton_abi\\sum1ton_abi_firmware.hex"
+	`define FIRMWARE "Software\\Sample_C_Codes\\factorial\\factorial_firmware.hex"
 `endif /*FIRMWARE*/
 
 `define MEMORY_DELAY        #15
