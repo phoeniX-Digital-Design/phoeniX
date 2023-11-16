@@ -5,8 +5,8 @@
 ![ISA](https://img.shields.io/badge/RV32-IEM_extension-blue)
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoenix_full_logotype_bb.png" width="530" height="150" style="vertical-align:middle">
-    <img alt="logo in light mode and dark mode" src="https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoenix_full_logotype.png" width="530" height="150" style="vertical-align:middle"> 
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Documents/Images/phoenix_full_logotype_bb.png" width="530" height="150" style="vertical-align:middle">
+    <img alt="logo in light mode and dark mode" src="https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Documents/Images/phoenix_full_logotype.png" width="530" height="150" style="vertical-align:middle"> 
 </picture> 
 
 <div align="justify">
@@ -137,7 +137,7 @@ Each modules was designed with concepts of modularity and distributed-control in
 
 </div>
 
-![Alt text](https://github.com/ArvinDelavari/phoeniX-RV32/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoeniX_Block_Diagram.png "phoeniX Block Diagram")
+![Alt text](https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Documents/Images/phoeniX_Block_Diagram.png "phoeniX Block Diagram")
 
 | Module                        | Description                                                                                   |
 | ----------------------------- | --------------------------------------------------------------------------------------------- |
