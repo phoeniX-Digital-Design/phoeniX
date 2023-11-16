@@ -1,12 +1,13 @@
 /*
-    phoeniX RV32IMX ALU: Developer Guidelines
+    phoeniX RV32IEM ALU: Developer Guidelines
     ==========================================================================================================================
     DEVELOPER NOTICE:
     - Kindly adhere to the established guidelines and naming conventions outlined in the project documentation. 
     - Following these standards will ensure smooth integration of your custom-made modules into this codebase.
     - Thank you for your cooperation.
     ==========================================================================================================================
-    ALU Approximation CSR:
+    ALU Approximation CSR
+    - ALU CSR is addressed as 0x800 in control status registers.
     - One adder circuit is used for 3 integer instructions: ADD/ADDI/SUB
     - Internal signals are all generated according to phoeniX core "Self Control Logic" of the modules so developer won't 
       need to change anything inside this module (excepts parts which are considered for developers to instatiate their own 
@@ -28,11 +29,6 @@
     - Inputs `rs1`, `rs2` comes from `Register_File` (DATA BUS)
     - Input `immediate` comes from `Immediate_Generator`
     - Input signals `opcode`, `funct3`, `funct7`, comes from `Instruction_Decoder`
-    - Supported Instructions :
-        I-TYPE : ADDI - SLTI - SLTIU            R-TYPE : ADD  - SUB  - SLL           
-                 XORI - ORI  - ANDI                      SLT  - SLTU - XOR                         
-                 SLLI - SRLI - SRAI                      SRL  - SRA  - OR  - AND
-        U-TYPE : AUIPC         
 */
 
 `ifndef OPCODES

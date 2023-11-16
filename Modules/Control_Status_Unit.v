@@ -59,7 +59,6 @@ module Control_Status_Unit
 
     always @(*) 
     begin
-        
         case ({funct3, opcode})
             {`CSRRW,  `SYSTEM} : begin rd <= CSR_in; CSR_out <= rs1; end                                        
             {`CSRRS,  `SYSTEM} : begin rd <= CSR_in; CSR_out <= CSR_in | rs1; end                               
@@ -69,30 +68,6 @@ module Control_Status_Unit
             {`CSRRCI, `SYSTEM} : begin rd <= CSR_in; CSR_out <= CSR_in & ~{27'b0, unsigned_immediate}; end         
             default : begin rd <= 32'bz; CSR_out <= 32'bz; end
         endcase
-        
-        /*
-        assign rd = (opcode == `SYSTEM) ? 
-        (
-            (funct3 == `CSRRW) ? CSR_in :
-            (funct3 == `CSRRS) ? CSR_in :
-            (funct3 == `CSRRC) ? CSR_in :
-            (funct3 == `CSRRWI) ? CSR_in :
-            (funct3 == `CSRRSI) ? CSR_in :
-            (funct3 == `CSRRCI) ? CSR_in :
-            32'bz
-        ) : 32'bz;
-                    
-        assign CSR_out = (opcode == `SYSTEM) ? 
-        (
-            (funct3 == `CSRRW) ? rs1 :
-            (funct3 == `CSRRS) ? (CSR_in | rs1) :
-            (funct3 == `CSRRC) ? (CSR_in & ~rs1) :
-            (funct3 == `CSRRWI) ? {27'b0, unsigned_immediate} :
-            (funct3 == `CSRRSI) ? (CSR_in | {27'b0, unsigned_immediate}) :
-            (funct3 == `CSRRCI) ? (CSR_in & ~{27'b0, unsigned_immediate}) :
-            32'bz
-        ) : 32'bz;
-        */
     end
 endmodule
 

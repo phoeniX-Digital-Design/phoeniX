@@ -7,6 +7,7 @@
     - Thank you for your cooperation.
     ==========================================================================================================================
     Multiplier Approximation CSR:
+    - MUL CSR is addressed as 0x801 in control status registers.
     - Multiplier circuit is used for 4 M-Extension instructions: MUL/MULH/MULHSU/MULHU
     - Internal signals are all generated according to phoeniX core "Self Control Logic" of the modules so developer won't 
       need to change anything inside this module (excepts parts which are considered for developers to instatiate their own 
