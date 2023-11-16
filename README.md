@@ -2,7 +2,7 @@
 ![GCC Test](https://img.shields.io/badge/GCC_tests-passed-dark_green)
 ![Pipeline](https://img.shields.io/badge/pipeline-5_stages-dark_green)
 ![Version](https://img.shields.io/badge/Version-0.2-blue)
-![ISA](https://img.shields.io/badge/RV32-IEMX_extension-blue)
+![ISA](https://img.shields.io/badge/RV32-IEM_extension-blue)
 
 <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://github.com/phoeniX-Digital-Design/phoeniX/blob/%F0%9F%94%A7-execution-flow/Documents/Images/phoenix_full_logotype_bb.png" width="530" height="150" style="vertical-align:middle">
@@ -11,7 +11,7 @@
 
 <div align="justify">
  
-**phoeniX** RISC-V processor is designed in Verilog HDL based on the 32-bit Base Instrcution Set of [RISC-V Instruction Set Architecture](http://riscv.org/) and can execute `RV32IEM` instructions (user have options to choose between `I` and `E`, and also to activate/deactivate `M` extensions), with special features supported for **approximate computing** techniques, which we shall call it `RV32X` extension. Support for other extensions will be covered in the upcoming updates. 
+**phoeniX** RISC-V processor is designed in Verilog HDL based on the 32-bit Base Instrcution Set of [RISC-V Instruction Set Architecture](http://riscv.org/) and can execute `RV32IEM` instructions (user have options to choose between `I` and `E`, and also to activate/deactivate `M` extensions), with special features supported for **approximate computing** techniques. In fact, **phoeniX** is a novel modular and extensive RISC-V platform for approximate computing.
 
 You can find a full list of RISC-V assembly instructions in the [ISA Specifications Documents](https://riscv.org/technical/specifications/).
 
@@ -24,7 +24,7 @@ This repository contains an open source CPU under the [GNU V3.0 license](https:/
 
 - Designed By : [Arvin Delavari](https://github.com/ArvinDelavari) and [Faraz Ghoreishy](https://github.com/FarazGhoreishy)
 - Contact us : arvin7807@gmail.com - farazghoreishy@gmail.com
-- Iran University of Science and Technology - Summer 2023
+- Iran University of Science and Technology, Summer 2023 - Present
 
 ## Table of Contents
 
@@ -40,11 +40,11 @@ This repository contains an open source CPU under the [GNU V3.0 license](https:/
 ## Features
 <div align="justify">
 
- - **Classic 5-stage pipline**
+ - **Classic DLX pipline**
 
- The classic 5-stage pipeline in a processor improves instruction throughput by dividing execution into sequential stages. By incorporating data forwarding and bypassing options (such as forwarding data from execution, memory or writeback stage) the pipeline minimizes stalls caused by data hazards. As a result, the pipeline achieves higher performance, reduced stalls, and improved instruction-level parallelism, enabling concurrent processing of independent instructions.
+ The classic DLX 5-stage pipeline in a processor improves instruction throughput by dividing execution into sequential stages. By incorporating data forwarding and bypassing options (such as forwarding data from execution, memory or writeback stage) the pipeline minimizes stalls caused by data hazards. As a result, the pipeline achieves higher performance, reduced stalls, and improved instruction-level parallelism, enabling concurrent processing of independent instructions.
 
- - **Distributed Control**
+ - **Self Control Logic in Modules**
 
 Distributed control logic refers to a design approach in which the control signals required for instruction execution are generated within the individual blocks the processor core, eliminating the need for a centralized control unit. In this approach, each building block is responsible for generating and managing its own control signals based on the current instruction being processed. There are several benefits to this decentralized control mechanism.
 
@@ -54,7 +54,7 @@ Secondly, distributed control logic can facilitate better pipelining, as each bl
 
 Additionally, distributed control logic can enhance modularity and scalability as will be discussed in the next part. Since individual blocks can be designed and optimized independently, it allows for easier customization and future upgrades. Overall, this approach can contribute to a more flexible processor design.
 
- - **Modularity**
+ - **Modularity and Extensiveness**
 
 Modularity in processor design promotes flexibility, reusability, scalability, simpler testing, and increased system reliability by breaking down the processor into smaller, independent modules that form the building blocks. Each one of these building blocks can be designed, optimized, and tested separately. This approach offers several benefits. 
 
@@ -63,6 +63,13 @@ First, modularity increases flexibility and reusability, as individual modules c
 Secondly, modularity aids in design verification and testing, as individual modules can be tested in isolated testbenches, simplifying the debugging process and reducing the overall development time. 
 
 Additionally, modular designs can lead to improved overall system reliability, as faults and failures in one module are less likely to affect the functionality of the entire processor.
+
+**Special features for Approximate Computing**
+
+The phoeniX RISC-V core introduces novel features that will help the emerging field of approximate computing techniques. With its modular design and extensive architecture, phoeniX presents a configurable platform for exploring and implementing approximate computing methodologies for developers and designers. 
+
+This platform enables researchers and developers to delve into the field realm of approximate computing, where trade-offs between accuracy and computational efficiency can be carefully balanced. By offering a range of specialized instructions, optimized datapaths, and adaptable precision controls, phoeniX empowers users to use the help of approximation in diverse application domains, openning the way for advancements in energy-efficient computing, machine learning, image processing, and etc.
+
 </div>
 
 ## Directory Map
