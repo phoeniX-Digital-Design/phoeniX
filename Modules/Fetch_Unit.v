@@ -106,7 +106,7 @@ module Incrementer_Unit
     assign result[2] = value[1] ^ value[0];
     wire   C1   = value[1] & value[0];
     wire   C2   = value[2] & value[3];
-    wire   Cout   = C1 & C2;
+    assign Cout   = C1 & C2;
     wire   C3   = C1 & value[2];
     assign result[3] = value[2] ^ C1;
     assign result[4] = value[3] ^ C3;

@@ -448,7 +448,7 @@ module Basic_Unit
     assign B[2] = A[1] ^ A[0];
     wire   C1   = A[1] & A[0];
     wire   C2   = A[2] & A[3];
-    wire   C0   = C1 & C2;
+    assign C0   = C1 & C2;
     wire   C3   = C1 & A[2];
     assign B[3] = A[2] ^ C1;
     assign B[4] = A[3] ^ C3;
