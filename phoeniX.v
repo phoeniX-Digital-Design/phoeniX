@@ -312,13 +312,20 @@ module phoeniX
     // -------------------------------------
     generate if (M_EXTENSION)
     begin
-        Multiplier_Unit multiplier_unit
+        Multiplier_Unit
+        #(
+            .GENERATE_CIRCUIT_1(1),
+            .GENERATE_CIRCUIT_2(0),
+            .GENERATE_CIRCUIT_3(0),
+            .GENERATE_CIRCUIT_4(0)
+        ) 
+        multiplier_unit
         (
             .clk(clk),
             .opcode(opcode_execute_reg),
             .funct3(funct3_execute_reg),
             .funct7(funct7_execute_reg),
-            .accuracy_control(control_status_register_file.mul_csr),    
+            .control_status_reg(control_status_register_file.mul_csr),    
             .rs1(rs1_execute_reg),
             .rs2(rs2_execute_reg),
             .mul_busy(mul_busy_execute_wire),
