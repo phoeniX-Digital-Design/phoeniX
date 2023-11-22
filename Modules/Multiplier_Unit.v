@@ -112,6 +112,8 @@ module Multiplier_Unit
     reg  multiplier_2_enable;
     reg  multiplier_3_enable;
 
+    reg  [1  : 0] multiplier_circuits_enbale; 
+
     wire [63 : 0] multiplier_0_result;
     wire [63 : 0] multiplier_1_result;
     wire [63 : 0] multiplier_2_result;
@@ -121,6 +123,8 @@ module Multiplier_Unit
     wire multiplier_1_busy;
     wire multiplier_2_busy;
     wire multiplier_3_busy;
+
+    reg  [1  : 0] multiplier_circuits_busy; 
 
     always @(*) 
     begin
@@ -153,7 +157,7 @@ module Multiplier_Unit
             end
             default: 
             begin 
-                multiplier_enable = 1'b0; mul_output = 32'bz; multiplier_0_enable = 1'b0; 
+                multiplier_enable = 1'b0; mul_output = 32'bz; multiplier_0_enable = 1'b0; mul_unit_busy = 1'b0;
             end             
         endcase
     end
@@ -185,10 +189,20 @@ module Multiplier_Unit
                     (multiplier_2_enable) ? multiplier_2_result :
                     (multiplier_3_enable) ? multiplier_3_result : multiplier_0_result;
 
-    assign mul_unit_busy =  (multiplier_0_enable) ? multiplier_0_busy :
-                            (multiplier_1_enable) ? multiplier_1_busy :
-                            (multiplier_2_enable) ? multiplier_2_busy :
-                            (multiplier_3_enable) ? multiplier_3_busy : 1'b0;
+    reg mul_unit_busy;
+    always @(*) 
+    begin
+        if (multiplier_0_enable)
+            mul_unit_busy <= multiplier_0_busy;
+        else if (multiplier_1_enable)
+            mul_unit_busy <= multiplier_1_busy;
+        else if (multiplier_2_enable)
+            mul_unit_busy <= multiplier_2_busy;
+        else if (multiplier_3_enable)
+            mul_unit_busy <= multiplier_3_busy;
+        else
+            mul_unit_busy <= 1'b0; 
+    end
 
     // *** Instantiate your multiplier circuit here ***
     // Please instantiate your multiplier module according to the guidelines and naming conventions of phoeniX
