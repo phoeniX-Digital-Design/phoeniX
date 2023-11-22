@@ -57,10 +57,11 @@ start.elf:
 	$(TOOLCHAIN_PREFIX)objcopy -O verilog $(PROJECT_DIR)/$(project)_start.elf $(PROJECT_DIR)/start.tmp
 
 $(OBJECT_C): $(SOURCE_C)
-	@echo "Hello are you there?"
+	@echo "Compiling C files"
 	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $@ $<
 
 $(OBJECT_S): $(SOURCE_S)
+	@echo "Compiling ASM files"
 	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $@ $<
 
 %::
