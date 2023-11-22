@@ -80,16 +80,16 @@ module Multiplier_Unit
 (
     input clk,                          // Source Clock Signal
 
-    input [6 : 0] opcode,               // ALU Operation
-    input [6 : 0] funct7,               // ALU Operation
-    input [2 : 0] funct3,               // ALU Operation
+    input [6 : 0] opcode,               // MUL/DIV Operation
+    input [6 : 0] funct7,               // MUL/DIV Operation
+    input [2 : 0] funct3,               // MUL/DIV Operation
 
     input [31 : 0] control_status_reg,  // Approximation Control Register
 
     input [31 : 0] rs1,                 // Register Source 1
     input [31 : 0] rs2,                 // Register Source 2
 
-    output reg mul_busy,               
+    output reg mul_busy,                // Multiplier Unit Busy
     output reg [31 : 0] mul_output      // Multiplier Unit Result
 );
 
@@ -104,6 +104,8 @@ module Multiplier_Unit
     reg  [ 6 : 0] multiplier_accuracy;
     reg  [31 : 0] multiplier_input_1;   // Latched Module input 1
     reg  [31 : 0] multiplier_input_2;   // Latched Module input 2
+
+    reg mul_unit_busy;                  // MUX result for busy signals
 
     wire [63 : 0] result;               // Multiplier 64-bit result
 
@@ -188,8 +190,7 @@ module Multiplier_Unit
                     (multiplier_1_enable) ? multiplier_1_result :
                     (multiplier_2_enable) ? multiplier_2_result :
                     (multiplier_3_enable) ? multiplier_3_result : multiplier_0_result;
-
-    reg mul_unit_busy;
+  
     always @(*) 
     begin
         if (multiplier_0_enable)
