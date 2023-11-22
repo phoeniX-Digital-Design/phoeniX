@@ -71,6 +71,12 @@
 `define MULDIV  7'b0000001
 
 module Multiplier_Unit
+#(
+    parameter GENERATE_CIRCUIT_1 = 1,
+    parameter GENERATE_CIRCUIT_2 = 0,
+    parameter GENERATE_CIRCUIT_3 = 0,
+    parameter GENERATE_CIRCUIT_4 = 0
+)
 (
     input clk,                          // Source Clock Signal
 
@@ -78,7 +84,7 @@ module Multiplier_Unit
     input [6 : 0] funct7,               // ALU Operation
     input [2 : 0] funct3,               // ALU Operation
 
-    input [31 : 0] accuracy_control,    // Approximation Control Register
+    input [31 : 0] control_status_reg,  // Approximation Control Register
 
     input [31 : 0] rs1,                 // Register Source 1
     input [31 : 0] rs2,                 // Register Source 2
@@ -100,6 +106,21 @@ module Multiplier_Unit
     reg  [31 : 0] multiplier_input_2;   // Latched Module input 2
 
     wire [63 : 0] result;               // Multiplier 64-bit result
+
+    reg  multiplier_0_enable;
+    reg  multiplier_1_enable;
+    reg  multiplier_2_enable;
+    reg  multiplier_3_enable;
+
+    wire [63 : 0] multiplier_0_result;
+    wire [63 : 0] multiplier_1_result;
+    wire [63 : 0] multiplier_2_result;
+    wire [63 : 0] multiplier_3_result;
+
+    wire multiplier_0_busy;
+    wire multiplier_1_busy;
+    wire multiplier_2_busy;
+    wire multiplier_3_busy;
 
     always @(*) 
     begin
@@ -130,7 +151,10 @@ module Multiplier_Unit
                 input_2 = operand_2;
                 mul_output = result >> 32;
             end
-            default: begin multiplier_enable = 1'b0; mul_output = 32'bz; end             
+            default: 
+            begin 
+                multiplier_enable = 1'b0; mul_output = 32'bz; multiplier_0_enable = 1'b0; 
+            end             
         endcase
     end
 
@@ -146,22 +170,72 @@ module Multiplier_Unit
     begin
         multiplier_input_1 <= input_1;
         multiplier_input_2 <= input_2;
-        multiplier_accuracy <= accuracy_control[9 : 3] | {7{~accuracy_control[0]}};
+        multiplier_accuracy <= control_status_reg[9 : 3] | {7{~control_status_reg[0]}};
+        case (control_status_reg[2 : 1])
+            2'b00: begin multiplier_0_enable = 1'b1; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
+            2'b01: begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b1; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
+            2'b10: begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b1; multiplier_3_enable = 1'b0; end
+            2'b11: begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b1; end 
+            default: begin multiplier_0_enable = 1'b1; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
+        endcase
     end
+
+    assign result = (multiplier_0_enable) ? multiplier_0_result :
+                    (multiplier_1_enable) ? multiplier_1_result :
+                    (multiplier_2_enable) ? multiplier_2_result :
+                    (multiplier_3_enable) ? multiplier_3_result : multiplier_0_result;
+
+    assign mul_unit_busy =  (multiplier_0_enable) ? multiplier_0_busy :
+                            (multiplier_1_enable) ? multiplier_1_busy :
+                            (multiplier_2_enable) ? multiplier_2_busy :
+                            (multiplier_3_enable) ? multiplier_3_busy : 1'b0;
 
     // *** Instantiate your multiplier circuit here ***
     // Please instantiate your multiplier module according to the guidelines and naming conventions of phoeniX
     // -------------------------------------------------------------------------------------------------------
-    Approximate_Accuracy_Controllable_Multiplier multiplier 
-    (
-        .clk(clk),
-        .enable(multiplier_enable),
-        .Er(multiplier_accuracy),
-        .Operand_1(multiplier_input_1), 
-        .Operand_2(multiplier_input_2),  
-        .Result(result),
-        .Busy(mul_unit_busy)
-    );
+    generate 
+        if (GENERATE_CIRCUIT_1)
+        begin
+            // Circuit 0 (deafult) instantiation
+            //----------------------------------
+            Approximate_Accuracy_Controllable_Multiplier multiplier 
+            (
+                .clk(clk),
+                .enable(multiplier_0_enable),
+                .Er(multiplier_accuracy),
+                .Operand_1(multiplier_input_1), 
+                .Operand_2(multiplier_input_2),  
+                .Result(multiplier_0_result),
+                .Busy(multiplier_0_busy)
+            );
+            //----------------------------------
+            // End of Circuit 0 instantiation
+        end
+        if (GENERATE_CIRCUIT_2)
+        begin
+            // Circuit 1 instantiation
+            //-------------------------------
+            assign multiplier_1_result = (multiplier_1_enable) ? multiplier_input_1 * multiplier_input_2 : 64'bz;
+            //-------------------------------
+            // End of Circuit 1 instantiation
+        end
+        if (GENERATE_CIRCUIT_3)
+        begin
+            // Circuit 2 instantiation
+            //-------------------------------
+
+            //-------------------------------
+            // End of Circuit 2 instantiation
+        end
+        if (GENERATE_CIRCUIT_4 == 1)
+        begin
+            // Circuit 3 instantiation
+            //-------------------------------
+
+            //-------------------------------
+            // End of Circuit 3 instantiation
+        end
+    endgenerate
     // -------------------------------------------------------------------------------------------------------
     // *** End of multiplier module instantiation ***
 endmodule
