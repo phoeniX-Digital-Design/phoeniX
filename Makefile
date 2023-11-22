@@ -48,7 +48,7 @@ firmware.hex: start.elf firmware.elf
 
 firmware.elf: $(OBJECT_C) $(OBJECT_S)
 	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $(PROJECT_DIR)/syscalls.o $(FIRMWARE_DIR)/syscalls.c
-	$(TOOLCHAIN_PREFIX)gcc $(CFLAGS) $(CFLAG_LINKING) -o $(PROJECT_DIR)/$(project)_firmware.elf $< $(PROJECT_DIR)/syscalls.o -T $(FIRMWARE_DIR)/riscv.ld -lstdc++
+	$(TOOLCHAIN_PREFIX)gcc $(CFLAGS) $(CFLAG_LINKING) -o $(PROJECT_DIR)/$(project)_firmware.elf $^ $(PROJECT_DIR)/syscalls.o -T $(FIRMWARE_DIR)/riscv.ld -lstdc++
 	$(TOOLCHAIN_PREFIX)objdump -d $(PROJECT_DIR)/$(project)_firmware.elf > $(PROJECT_DIR)/$(project)_firmware.txt
 	$(TOOLCHAIN_PREFIX)objcopy -O verilog $(PROJECT_DIR)/$(project)_firmware.elf $(PROJECT_DIR)/firmware.tmp
 
