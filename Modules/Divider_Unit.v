@@ -213,16 +213,58 @@ module Divider_Unit
     // *** Instantiate your divider here ***
     // Please instantiate your divider module according to the guidelines and naming conventions of phoeniX
     // ----------------------------------------------------------------------------------------------------
-    Approximate_Accuracy_Controlable_Divider divider 
-    (
-        .clk(clk),
-        .Er(divider_accuracy),
-        .operand_1(divider_input_1),  
-        .operand_2(divider_input_1),  
-        .div(divider_0_result),  
-        .rem(divider_0_remainder), 
-        .busy(divider_0_busy)
-    );
+    generate 
+        if (GENERATE_CIRCUIT_1)
+        begin
+            // Circuit 0 (deafult) instantiation
+            //----------------------------------
+            Approximate_Accuracy_Controlable_Divider divider_1 
+            (
+                .clk(clk),
+                .Er(divider_accuracy),
+                .operand_1(divider_input_1),  
+                .operand_2(divider_input_1),  
+                .div(divider_0_result),  
+                .rem(divider_0_remainder), 
+                .busy(divider_0_busy)
+            );
+            //----------------------------------
+            // End of Circuit 0 instantiation
+        end
+        if (GENERATE_CIRCUIT_2)
+        begin
+            // Circuit 1 instantiation
+            //-------------------------------
+            Approximate_Accuracy_Controlable_Divider divider_2 
+            (
+                .clk(clk),
+                .Er(8'b0000_0000),
+                .operand_1(divider_input_1),  
+                .operand_2(divider_input_1),  
+                .div(divider_1_result),  
+                .rem(divider_1_remainder), 
+                .busy(divider_1_busy)
+            );
+            //-------------------------------
+            // End of Circuit 1 instantiation
+        end
+        if (GENERATE_CIRCUIT_3)
+        begin
+            // Circuit 2 instantiation
+            //-------------------------------
+
+            //-------------------------------
+            // End of Circuit 2 instantiation
+        end
+        if (GENERATE_CIRCUIT_4)
+        begin
+            // Circuit 3 instantiation
+            //-------------------------------
+
+            //-------------------------------
+            // End of Circuit 3 instantiation
+        end
+    endgenerate
     // ----------------------------------------------------------------------------------------------------
     // *** End of divider instantiation ***
 endmodule
