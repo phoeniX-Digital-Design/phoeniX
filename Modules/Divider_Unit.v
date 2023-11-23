@@ -19,7 +19,7 @@
     - PLEASE DO NOT REMOVE ANY OF THE COMMENTS IN THIS FILE
     - Input and Output paramaters:
         Input:  clk = Source clock signal
-        Input:  error_control = {accuracy_control[USER_ERROR_LEN:3], accuracy_control[2:1] (module select), accuracy_control[0]}
+        Input:  error_control = {control_status_reg[USER_ERROR_LEN:3], control_status_reg[2:1] (module select), control_status_reg[0]}
         Input:  input_1       = First operand of your module
         Input:  input_2       = Second operand of your module
         Output: result        = Module division output
@@ -32,12 +32,6 @@
     - Supported Instructions :
         R-TYPE :  DIV - DIVU - REM - REMU
 */
-
-// *** Include your headers and modules here ***
-// -----------------------------------------------------------------------------------
-// `include "Approximate_Arithmetic_Units/Approximate_Accuracy_Controlable_Divider.v"
-// -----------------------------------------------------------------------------------
-// *** End of including headers and modules ***
 
 `ifndef OPCODES
     `define LOAD        7'b00_000_11
@@ -78,6 +72,12 @@
 `define MULDIV  7'b0000001
 
 module Divider_Unit
+#(
+    parameter GENERATE_CIRCUIT_1 = 1,
+    parameter GENERATE_CIRCUIT_2 = 0,
+    parameter GENERATE_CIRCUIT_3 = 0,
+    parameter GENERATE_CIRCUIT_4 = 0
+)
 (
     input clk,                          // Source clock signal
 
@@ -85,7 +85,7 @@ module Divider_Unit
     input [6 : 0] funct7,               // DIV Operation
     input [2 : 0] funct3,               // DIV Operation
 
-    input [31 : 0] accuracy_control,    // Approximation Control Register
+    input [31 : 0] control_status_reg,    // Approximation Control Register
 
     input [31 : 0] rs1,                 // Register Source 1
     input [31 : 0] rs2,                 // Register Source 1
@@ -106,6 +106,30 @@ module Divider_Unit
     wire [31 : 0] result;
     wire [31 : 0] remainder;
     wire busy;
+
+    reg  [ 7 : 0] divider_accuracy;
+    reg  [31 : 0] divider_input_1;   // Latched Module input 1
+    reg  [31 : 0] divider_input_2;   // Latched Module input 2
+
+    reg  divider_0_enable;
+    reg  divider_1_enable;
+    reg  divider_2_enable;
+    reg  divider_3_enable;
+
+    wire [31 : 0] divider_0_result;
+    wire [31 : 0] divider_1_result;
+    wire [31 : 0] divider_2_result;
+    wire [31 : 0] divider_3_result;
+
+    wire [31 : 0] divider_0_remainder;
+    wire [31 : 0] divider_1_remainder;
+    wire [31 : 0] divider_2_remainder;
+    wire [31 : 0] divider_3_remainder;
+
+    wire divider_0_busy;
+    wire divider_1_busy;
+    wire divider_2_busy;
+    wire divider_3_busy;
 
     always @(*) 
     begin
@@ -137,11 +161,54 @@ module Divider_Unit
                 input_2 = operand_2;
                 div_output = $signed(remainder);
             end
-            default: begin div_output = 32'bz; div_unit_busy = 1'b0; enable = 1'b0; end // Wrong opcode                
+            default: 
+            begin 
+                div_output = 32'bz; div_unit_busy = 1'b0; enable = 1'b0; 
+                divider_0_enable = 1'b0; divider_1_enable = 1'b0;
+                divider_2_enable = 1'b0; divider_3_enable = 1'b0;
+            end // Wrong opcode                
+        endcase
+    end
+
+    always @(posedge enable) 
+    begin
+        divider_input_1 <= input_1;
+        divider_input_2 <= input_2;
+        divider_accuracy <= control_status_reg[10 : 3] | {8{~control_status_reg[0]}};
+        case (control_status_reg[2 : 1])
+            2'b00:   begin divider_0_enable = 1'b1; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
+            2'b01:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b1; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
+            2'b10:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b0; divider_2_enable = 1'b1; divider_3_enable = 1'b0; end
+            2'b11:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b1; end 
+            default: begin divider_0_enable = 1'b1; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
         endcase
     end
 
     always @(negedge div_unit_busy) enable <= 1'b0;
+
+    assign result = (divider_0_enable) ? divider_0_result :
+                    (divider_1_enable) ? divider_1_result :
+                    (divider_2_enable) ? divider_2_result :
+                    (divider_3_enable) ? divider_3_result : divider_0_result;
+
+    assign remainder =  (divider_0_enable) ? divider_0_remainder :
+                        (divider_1_enable) ? divider_1_remainder :
+                        (divider_2_enable) ? divider_2_remainder :
+                        (divider_3_enable) ? divider_3_remainder : divider_0_remainder;
+  
+    always @(*) 
+    begin
+        if (divider_0_enable)
+            div_unit_busy <= divider_0_busy;
+        else if (divider_1_enable)
+            div_unit_busy <= divider_1_busy;
+        else if (divider_2_enable)
+            div_unit_busy <= divider_2_busy;
+        else if (divider_3_enable)
+            div_unit_busy <= divider_3_busy;
+        else
+            div_unit_busy <= 1'b0; 
+    end
 
     // *** Instantiate your divider here ***
     // Please instantiate your divider module according to the guidelines and naming conventions of phoeniX
@@ -149,12 +216,12 @@ module Divider_Unit
     Approximate_Accuracy_Controlable_Divider divider 
     (
         .clk(clk),
-        .Er(accuracy_control[10 : 3] | {8{~accuracy_control[0]}}),
-        .operand_1(input_1),  
-        .operand_2(input_2),  
-        .div(result),  
-        .rem(remainder), 
-        .busy(busy)
+        .Er(divider_accuracy),
+        .operand_1(divider_input_1),  
+        .operand_2(divider_input_1),  
+        .div(divider_0_result),  
+        .rem(divider_0_remainder), 
+        .busy(divider_0_busy)
     );
     // ----------------------------------------------------------------------------------------------------
     // *** End of divider instantiation ***
