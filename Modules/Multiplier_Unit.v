@@ -229,7 +229,16 @@ module Multiplier_Unit
         begin
             // Circuit 1 instantiation
             //-------------------------------
-            assign multiplier_1_result = (multiplier_1_enable) ? multiplier_input_1 * multiplier_input_2 : 64'bz;
+            Approximate_Accuracy_Controllable_Multiplier multiplier_2 
+            (
+                .clk(clk),
+                .enable(multiplier_1_enable),
+                .Er(7'b000_0000),
+                .Operand_1(multiplier_input_1), 
+                .Operand_2(multiplier_input_2),  
+                .Result(multiplier_1_result),
+                .Busy(multiplier_1_busy)
+            );
             //-------------------------------
             // End of Circuit 1 instantiation
         end
