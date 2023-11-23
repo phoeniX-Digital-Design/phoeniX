@@ -295,12 +295,19 @@ module phoeniX
     // -----------------------------------
     // Arithmetic Logic Unit Instantiation
     // -----------------------------------
-    Arithmetic_Logic_Unit arithmetic_logic_unit
+    Arithmetic_Logic_Unit
+    #(
+            .GENERATE_CIRCUIT_1(1),
+            .GENERATE_CIRCUIT_2(1),
+            .GENERATE_CIRCUIT_3(0),
+            .GENERATE_CIRCUIT_4(0)
+    )  
+    arithmetic_logic_unit
     (
         .opcode(opcode_execute_reg),
         .funct3(funct3_execute_reg),
         .funct7(funct7_execute_reg),
-        .accuracy_control(control_status_register_file.alu_csr),    
+        .control_status_reg(control_status_register_file.alu_csr),    
         .rs1(rs1_execute_reg),
         .rs2(rs2_execute_reg),
         .immediate(immediate_execute_reg),
@@ -315,7 +322,7 @@ module phoeniX
         Multiplier_Unit
         #(
             .GENERATE_CIRCUIT_1(1),
-            .GENERATE_CIRCUIT_2(0),
+            .GENERATE_CIRCUIT_2(1),
             .GENERATE_CIRCUIT_3(0),
             .GENERATE_CIRCUIT_4(0)
         ) 
@@ -332,13 +339,20 @@ module phoeniX
             .mul_output(mul_output_execute_wire)
         );
 
-        Divider_Unit divider_unit
+        Divider_Unit
+        #(
+            .GENERATE_CIRCUIT_1(1),
+            .GENERATE_CIRCUIT_2(1),
+            .GENERATE_CIRCUIT_3(0),
+            .GENERATE_CIRCUIT_4(0)
+        ) 
+        divider_unit
         (
             .clk(clk),
             .opcode(opcode_execute_reg),
             .funct3(funct3_execute_reg),
             .funct7(funct7_execute_reg),
-            .accuracy_control(control_status_register_file.div_csr),    
+            .control_status_reg(control_status_register_file.div_csr),    
             .rs1(rs1_execute_reg),
             .rs2(rs2_execute_reg),
             .div_unit_busy(div_busy_execute_wire),
