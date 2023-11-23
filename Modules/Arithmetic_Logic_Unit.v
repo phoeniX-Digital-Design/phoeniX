@@ -19,7 +19,7 @@
         CSR [31 : 3] : APPROXIMATION_ERROR_CONTROL
     - PLEASE DO NOT REMOVE ANY OF THE COMMENTS IN THIS FILE
     - Input and Output paramaters:
-        Input:  error_control = {accuracy_control[USER_ERROR_LEN:3], accuracy_control[2:1] (module select), accuracy_control[0]}
+        Input:  error_control = {control_status_reg[USER_ERROR_LEN:3], control_status_reg[2:1] (module select), control_status_reg[0]}
         Input:  adder_input_1 = First operand of your module
         Input:  adder_input_2 = Second operand of your module
         Input:  adder_Cin     = Input Carry
@@ -93,12 +93,18 @@
 `define LEFT  1'b0
 
 module Arithmetic_Logic_Unit
+#(
+    parameter GENERATE_CIRCUIT_1 = 1,
+    parameter GENERATE_CIRCUIT_2 = 0,
+    parameter GENERATE_CIRCUIT_3 = 0,
+    parameter GENERATE_CIRCUIT_4 = 0
+)
 (
     input [6 : 0] opcode,               
     input [2 : 0] funct3,               
     input [6 : 0] funct7,               
 
-    input [31 : 0] accuracy_control,    
+    input [31 : 0] control_status_reg,    
 
     input [31 : 0] rs1,                 
     input [31 : 0] rs2,                 
@@ -116,11 +122,20 @@ module Arithmetic_Logic_Unit
     reg  [31 : 0] adder_input_2;
     wire [31 : 0] adder_result;
 
-    
     reg  [31 : 0] shift_input;
     reg  [4  : 0] shift_amount;
     reg           shift_direction;
     wire [31 : 0] shift_result;
+
+    reg  adder_0_enable;
+    reg  adder_1_enable;
+    reg  adder_2_enable;
+    reg  adder_3_enable;
+
+    wire [31 : 0] adder_0_result;
+    wire [31 : 0] adder_1_result;
+    wire [31 : 0] adder_2_result;
+    wire [31 : 0] adder_3_result;
 
     always @(*) 
     begin
@@ -199,10 +214,25 @@ module Arithmetic_Logic_Unit
                     `SUB : begin adder_enable = 1'b1; adder_input_1 = operand_1; adder_input_2 = ~operand_2; adder_Cin = 1'b1; end 
                 endcase
             end
-            
             default: begin adder_enable = 1'b0; end
         endcase    
     end
+
+    always @(posedge adder_enable) 
+    begin
+        case (control_status_reg[2 : 1])
+            2'b00:   begin adder_0_enable = 1'b1; adder_1_enable = 1'b0; adder_2_enable = 1'b0; adder_3_enable = 1'b0; end
+            2'b01:   begin adder_0_enable = 1'b0; adder_1_enable = 1'b1; adder_2_enable = 1'b0; adder_3_enable = 1'b0; end
+            2'b10:   begin adder_0_enable = 1'b0; adder_1_enable = 1'b0; adder_2_enable = 1'b1; adder_3_enable = 1'b0; end
+            2'b11:   begin adder_0_enable = 1'b0; adder_1_enable = 1'b0; adder_2_enable = 1'b0; adder_3_enable = 1'b1; end 
+            default: begin adder_0_enable = 1'b1; adder_1_enable = 1'b0; adder_2_enable = 1'b0; adder_3_enable = 1'b0; end
+        endcase
+    end
+
+    assign adder_result =   (adder_0_enable) ? adder_0_result :
+                            (adder_1_enable) ? adder_1_result :
+                            (adder_2_enable) ? adder_2_result :
+                            (adder_3_enable) ? adder_3_result : adder_0_result;
 
     // Instantiation of Barrel Shifter circuit
     // ---------------------------------------
@@ -216,23 +246,55 @@ module Arithmetic_Logic_Unit
     // ---------------------------------------
     // End of Barrel Shifter instantiation
 
-    
     // *** Instantiate your adder circuit here ***
     // Please instantiate your adder module according to the guidelines and naming conventions of phoeniX
     // --------------------------------------------------------------------------------------------------
-    Approximate_Accuracy_Controllable_Adder 
-    #(
-        .LEN(32),
-        .APX_LEN(8)
-    )
-    approximate_accuracy_controllable_adder 
-    (
-        .Er(accuracy_control[10 : 3] | {8{~accuracy_control[0]}}), 
-        .A(adder_input_1),
-        .B(adder_input_2),
-        .Cin(adder_Cin),
-        .Sum(adder_result)
-    );
+    generate 
+        if (GENERATE_CIRCUIT_1)
+        begin
+            // Circuit 0 (deafult) instantiation
+            //----------------------------------
+            Approximate_Accuracy_Controllable_Adder 
+            #(
+                .LEN(32),
+                .APX_LEN(8)
+            )
+            approximate_accuracy_controllable_adder 
+            (
+                .Er(control_status_reg[10 : 3] | {8{~control_status_reg[0]}}), 
+                .A(adder_input_1),
+                .B(adder_input_2),
+                .Cin(adder_Cin),
+                .Sum(adder_0_result)
+            );
+            //----------------------------------
+            // End of Circuit 0 instantiation
+        end
+        if (GENERATE_CIRCUIT_2)
+        begin
+            // Circuit 1 instantiation
+            //-------------------------------
+            assign adder_1_result = (adder_1_enable) ? adder_input_1 + adder_input_2 + adder_Cin : 32'bz;
+            //-------------------------------
+            // End of Circuit 1 instantiation
+        end
+        if (GENERATE_CIRCUIT_3)
+        begin
+            // Circuit 2 instantiation
+            //-------------------------------
+
+            //-------------------------------
+            // End of Circuit 2 instantiation
+        end
+        if (GENERATE_CIRCUIT_4)
+        begin
+            // Circuit 3 instantiation
+            //-------------------------------
+
+            //-------------------------------
+            // End of Circuit 3 instantiation
+        end
+    endgenerate
     // --------------------------------------------------------------------------------------------------
     // *** End of adder module instantiation ***
 endmodule
