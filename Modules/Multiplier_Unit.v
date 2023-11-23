@@ -28,10 +28,6 @@
     ==========================================================================================================================
 */
 
-// *** Include your headers and modules here ***
-// `include "Approximate_Arithmetic_Units/Approximate_Accuracy_Controllable_Multiplier.v"
-// *** End of including headers and modules ***
-
 `ifndef OPCODES
     `define LOAD        7'b00_000_11
     `define LOAD_FP     7'b00_001_11
@@ -114,8 +110,6 @@ module Multiplier_Unit
     reg  multiplier_2_enable;
     reg  multiplier_3_enable;
 
-    reg  [1  : 0] multiplier_circuits_enbale; 
-
     wire [63 : 0] multiplier_0_result;
     wire [63 : 0] multiplier_1_result;
     wire [63 : 0] multiplier_2_result;
@@ -126,40 +120,45 @@ module Multiplier_Unit
     wire multiplier_2_busy;
     wire multiplier_3_busy;
 
-    reg  [1  : 0] multiplier_circuits_busy; 
-
     always @(*) 
     begin
         operand_1 = rs1;
         operand_2 = rs2;
         case ({funct7, funct3, opcode})
-            {`MULDIV, `MUL, `OP} : begin  // MUL
+            {`MULDIV, `MUL, `OP} :      // MUL
+            begin
                 multiplier_enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = $signed(operand_2);
                 mul_output = result[31 : 0];
             end
-            {`MULDIV, `MULH, `OP} : begin  // MULH
+            {`MULDIV, `MULH, `OP} :     // MULH
+            begin 
                 multiplier_enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = $signed(operand_2);
                 mul_output = result >>> 32;
             end
-            {`MULDIV, `MULHSU, `OP} : begin  // MULHSU
+            {`MULDIV, `MULHSU, `OP} :   // MULHSU 
+            begin
                 multiplier_enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = operand_2;
                 mul_output = result >>> 32;
             end
-            {`MULDIV, `MULHU, `OP} : begin  // MULHU
+            {`MULDIV, `MULHU, `OP} :    // MULHU 
+            begin
                 multiplier_enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = operand_2;
                 mul_output = result >> 32;
             end
             default: 
-            begin 
-                multiplier_enable = 1'b0; mul_output = 32'bz; multiplier_0_enable = 1'b0; mul_unit_busy = 1'b0;
+            begin
+                mul_output = 32'bz; 
+                multiplier_enable   = 1'b0; 
+                multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0;
+                multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0;
             end             
         endcase
     end
@@ -178,10 +177,10 @@ module Multiplier_Unit
         multiplier_input_2 <= input_2;
         multiplier_accuracy <= control_status_reg[9 : 3] | {7{~control_status_reg[0]}};
         case (control_status_reg[2 : 1])
-            2'b00: begin multiplier_0_enable = 1'b1; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
-            2'b01: begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b1; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
-            2'b10: begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b1; multiplier_3_enable = 1'b0; end
-            2'b11: begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b1; end 
+            2'b00:   begin multiplier_0_enable = 1'b1; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
+            2'b01:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b1; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
+            2'b10:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b1; multiplier_3_enable = 1'b0; end
+            2'b11:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b1; end 
             default: begin multiplier_0_enable = 1'b1; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
         endcase
     end
@@ -242,7 +241,7 @@ module Multiplier_Unit
             //-------------------------------
             // End of Circuit 2 instantiation
         end
-        if (GENERATE_CIRCUIT_4 == 1)
+        if (GENERATE_CIRCUIT_4)
         begin
             // Circuit 3 instantiation
             //-------------------------------
