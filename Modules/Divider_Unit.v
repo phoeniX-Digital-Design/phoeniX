@@ -1,15 +1,15 @@
 /*
-    phoeniX RV32IMX Divider Unit: Developer Guidelines
+    phoeniX RV32IMX Divider Unit: Designer Guidelines
     ==========================================================================================================================
-    DEVELOPER NOTICE:
+    DESIGNER NOTICE:
     - Kindly adhere to the established guidelines and naming conventions outlined in the project documentation. 
     - Following these standards will ensure smooth integration of your custom-made modules into this codebase.
     - Thank you for your cooperation.
     ==========================================================================================================================
     Divider Unit Unit Approximation CSR:
     - One adder circuit is used for 3 integer instructions: DIV/DIVU/REM/REMU
-    - Internal signals are all generated according to phoeniX core "Self Control Logic" of the modules so developer won't 
-      need to change anything inside this module (excepts parts which are considered for developers to instatiate their own 
+    - Internal signals are all generated according to phoeniX core "Self Control Logic" of the modules so designer won't 
+      need to change anything inside this module (excepts parts which are considered for designers to instatiate their own 
       custom made designs).
     - Instantiate your modules (Approximate or Accurate) between the comments in the code.
     - How to work with the speical purpose CSR:
@@ -19,7 +19,7 @@
     - PLEASE DO NOT REMOVE ANY OF THE COMMENTS IN THIS FILE
     - Input and Output paramaters:
         Input:  clk = Source clock signal
-        Input:  error_control = {control_status_reg[USER_ERROR_LEN:3], control_status_reg[2:1] (module select), control_status_reg[0]}
+        Input:  error_control = {control_status_register[USER_ERROR_LEN:3], control_status_register[2:1] (module select), control_status_register[0]}
         Input:  input_1       = First operand of your module
         Input:  input_2       = Second operand of your module
         Output: result        = Module division output
@@ -79,22 +79,21 @@ module Divider_Unit
     parameter GENERATE_CIRCUIT_4 = 0
 )
 (
-    input clk,                          // Source clock signal
+    input clk, 
 
-    input [6 : 0] opcode,               // DIV Operation
-    input [6 : 0] funct7,               // DIV Operation
-    input [2 : 0] funct3,               // DIV Operation
+    input [6 : 0] opcode, 
+    input [6 : 0] funct7, 
+    input [2 : 0] funct3, 
 
-    input [31 : 0] control_status_reg,    // Approximation Control Register
+    input [31 : 0] control_status_register, 
 
-    input [31 : 0] rs1,                 // Register Source 1
-    input [31 : 0] rs2,                 // Register Source 1
+    input [31 : 0] rs1, 
+    input [31 : 0] rs2, 
 
-    output reg div_unit_busy,           // Divider unit busy signal
-    output reg [31 : 0] div_output      // DIV Result (DIV/REM)
+    output reg divider_unit_busy,  
+    output reg [31 : 0] divider_unit_output 
 );
 
-    // Data forwarding will be considered in the core file (phoeniX.v)
     reg  enable;
 
     reg  [31 : 0] operand_1; 
@@ -135,38 +134,38 @@ module Divider_Unit
     begin
         operand_1 = rs1;
         operand_2 = rs2;
-        div_unit_busy = busy;
+        divider_unit_busy = busy;
         case ({funct7, funct3, opcode})
-            {`MULDIV, `DIV, `OP} : begin  // DIV
+            {`MULDIV, `DIV, `OP} : begin
                 enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = $signed(operand_2);
-                div_output = result;
+                divider_unit_output = result;
             end
-            {`MULDIV, `DIVU, `OP} : begin  // DIVU
+            {`MULDIV, `DIVU, `OP} : begin
                 enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = operand_2;
-                div_output = result;
+                divider_unit_output = result;
             end
-            {`MULDIV, `REM, `OP} : begin  // REM
+            {`MULDIV, `REM, `OP} : begin 
                 enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = $signed(operand_2);
-                div_output = remainder;
+                divider_unit_output = remainder;
             end
-            {`MULDIV, `REMU, `OP} : begin  // REMU
+            {`MULDIV, `REMU, `OP} : begin
                 enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = operand_2;
-                div_output = $signed(remainder);
+                divider_unit_output = $signed(remainder);
             end
             default: 
             begin 
-                div_output = 32'bz; div_unit_busy = 1'b0; enable = 1'b0; 
+                divider_unit_output = 32'bz; divider_unit_busy = 1'b0; enable = 1'b0; 
                 divider_0_enable = 1'b0; divider_1_enable = 1'b0;
                 divider_2_enable = 1'b0; divider_3_enable = 1'b0;
-            end // Wrong opcode                
+            end              
         endcase
     end
 
@@ -174,8 +173,8 @@ module Divider_Unit
     begin
         divider_input_1 <= input_1;
         divider_input_2 <= input_2;
-        divider_accuracy <= control_status_reg[10 : 3] | {8{~control_status_reg[0]}};
-        case (control_status_reg[2 : 1])
+        divider_accuracy <= control_status_register[10 : 3] | {8{~control_status_register[0]}};
+        case (control_status_register[2 : 1])
             2'b00:   begin divider_0_enable = 1'b1; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
             2'b01:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b1; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
             2'b10:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b0; divider_2_enable = 1'b1; divider_3_enable = 1'b0; end
@@ -184,7 +183,7 @@ module Divider_Unit
         endcase
     end
 
-    always @(negedge div_unit_busy) enable <= 1'b0;
+    always @(negedge divider_unit_busy) enable <= 1'b0;
 
     assign result = (divider_0_enable) ? divider_0_result :
                     (divider_1_enable) ? divider_1_result :
@@ -199,15 +198,15 @@ module Divider_Unit
     always @(*) 
     begin
         if (divider_0_enable)
-            div_unit_busy <= divider_0_busy;
+            divider_unit_busy <= divider_0_busy;
         else if (divider_1_enable)
-            div_unit_busy <= divider_1_busy;
+            divider_unit_busy <= divider_1_busy;
         else if (divider_2_enable)
-            div_unit_busy <= divider_2_busy;
+            divider_unit_busy <= divider_2_busy;
         else if (divider_3_enable)
-            div_unit_busy <= divider_3_busy;
+            divider_unit_busy <= divider_3_busy;
         else
-            div_unit_busy <= 1'b0; 
+            divider_unit_busy <= 1'b0; 
     end
 
     // *** Instantiate your divider here ***
