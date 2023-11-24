@@ -1,5 +1,5 @@
 $date
-	Fri Nov 24 13:26:00 2023
+	Fri Nov 24 18:01:04 2023
 $end
 $version
 	Icarus Verilog
@@ -1367,12 +1367,12 @@ $var parameter 32 k* GENERATE_CIRCUIT_3 $end
 $var parameter 32 l* GENERATE_CIRCUIT_4 $end
 $var reg 32 m* input_1 [31:0] $end
 $var reg 32 n* input_2 [31:0] $end
-$var reg 1 o* mul_unit_busy $end
-$var reg 1 p* multiplier_0_enable $end
-$var reg 1 q* multiplier_1_enable $end
-$var reg 1 r* multiplier_2_enable $end
-$var reg 1 s* multiplier_3_enable $end
-$var reg 7 t* multiplier_accuracy [6:0] $end
+$var reg 1 o* multiplier_0_enable $end
+$var reg 1 p* multiplier_1_enable $end
+$var reg 1 q* multiplier_2_enable $end
+$var reg 1 r* multiplier_3_enable $end
+$var reg 7 s* multiplier_accuracy [6:0] $end
+$var reg 1 t* multiplier_busy $end
 $var reg 1 u* multiplier_enable $end
 $var reg 32 v* multiplier_input_1 [31:0] $end
 $var reg 32 w* multiplier_input_2 [31:0] $end
@@ -1386,7 +1386,7 @@ $var wire 7 {* Er [6:0] $end
 $var wire 32 |* Operand_1 [31:0] $end
 $var wire 32 }* Operand_2 [31:0] $end
 $var wire 1 O clk $end
-$var wire 1 p* enable $end
+$var wire 1 o* enable $end
 $var wire 64 ~* Result [63:0] $end
 $var wire 1 h* Busy $end
 $scope module multiplier_HIGHxHIGH $end
@@ -1394,7 +1394,7 @@ $var wire 7 !+ Er [6:0] $end
 $var wire 16 "+ Operand_1 [15:0] $end
 $var wire 16 #+ Operand_2 [15:0] $end
 $var wire 1 O clk $end
-$var wire 1 p* enable $end
+$var wire 1 o* enable $end
 $var wire 16 $+ mul_result [15:0] $end
 $var reg 1 %+ Busy $end
 $var reg 32 &+ Result [31:0] $end
@@ -1744,7 +1744,7 @@ $var wire 7 f- Er [6:0] $end
 $var wire 16 g- Operand_1 [15:0] $end
 $var wire 16 h- Operand_2 [15:0] $end
 $var wire 1 O clk $end
-$var wire 1 p* enable $end
+$var wire 1 o* enable $end
 $var wire 16 i- mul_result [15:0] $end
 $var reg 1 j- Busy $end
 $var reg 32 k- Result [31:0] $end
@@ -2094,7 +2094,7 @@ $var wire 7 M0 Er [6:0] $end
 $var wire 16 N0 Operand_1 [15:0] $end
 $var wire 16 O0 Operand_2 [15:0] $end
 $var wire 1 O clk $end
-$var wire 1 p* enable $end
+$var wire 1 o* enable $end
 $var wire 16 P0 mul_result [15:0] $end
 $var reg 1 Q0 Busy $end
 $var reg 32 R0 Result [31:0] $end
@@ -2444,7 +2444,7 @@ $var wire 7 43 Er [6:0] $end
 $var wire 16 53 Operand_1 [15:0] $end
 $var wire 16 63 Operand_2 [15:0] $end
 $var wire 1 O clk $end
-$var wire 1 p* enable $end
+$var wire 1 o* enable $end
 $var wire 16 73 mul_result [15:0] $end
 $var reg 1 83 Busy $end
 $var reg 32 93 Result [31:0] $end
@@ -2797,7 +2797,7 @@ $var wire 7 y5 Er [6:0] $end
 $var wire 32 z5 Operand_1 [31:0] $end
 $var wire 32 {5 Operand_2 [31:0] $end
 $var wire 1 O clk $end
-$var wire 1 q* enable $end
+$var wire 1 p* enable $end
 $var wire 64 |5 Result [63:0] $end
 $var wire 1 f* Busy $end
 $scope module multiplier_HIGHxHIGH $end
@@ -2805,7 +2805,7 @@ $var wire 7 }5 Er [6:0] $end
 $var wire 16 ~5 Operand_1 [15:0] $end
 $var wire 16 !6 Operand_2 [15:0] $end
 $var wire 1 O clk $end
-$var wire 1 q* enable $end
+$var wire 1 p* enable $end
 $var wire 16 "6 mul_result [15:0] $end
 $var reg 1 #6 Busy $end
 $var reg 32 $6 Result [31:0] $end
@@ -3155,7 +3155,7 @@ $var wire 7 d8 Er [6:0] $end
 $var wire 16 e8 Operand_1 [15:0] $end
 $var wire 16 f8 Operand_2 [15:0] $end
 $var wire 1 O clk $end
-$var wire 1 q* enable $end
+$var wire 1 p* enable $end
 $var wire 16 g8 mul_result [15:0] $end
 $var reg 1 h8 Busy $end
 $var reg 32 i8 Result [31:0] $end
@@ -3505,7 +3505,7 @@ $var wire 7 K; Er [6:0] $end
 $var wire 16 L; Operand_1 [15:0] $end
 $var wire 16 M; Operand_2 [15:0] $end
 $var wire 1 O clk $end
-$var wire 1 q* enable $end
+$var wire 1 p* enable $end
 $var wire 16 N; mul_result [15:0] $end
 $var reg 1 O; Busy $end
 $var reg 32 P; Result [31:0] $end
@@ -3855,7 +3855,7 @@ $var wire 7 2> Er [6:0] $end
 $var wire 16 3> Operand_1 [15:0] $end
 $var wire 16 4> Operand_2 [15:0] $end
 $var wire 1 O clk $end
-$var wire 1 q* enable $end
+$var wire 1 p* enable $end
 $var wire 16 5> mul_result [15:0] $end
 $var reg 1 6> Busy $end
 $var reg 32 7> Result [31:0] $end
@@ -6513,7 +6513,7 @@ $upscope $end
 $upscope $end
 $upscope $end
 $scope begin genblk2 $end
-$scope module deafult_fast_adder $end
+$scope module default_fast_adder $end
 $var wire 1 RL carry_in $end
 $var wire 1 :P carry_stage_1 $end
 $var wire 1 ;P carry_stage_2 $end
@@ -13642,12 +13642,12 @@ bx x*
 bz w*
 bz v*
 0u*
-bz t*
-xs*
+0t*
+bz s*
 xr*
 xq*
 xp*
-0o*
+xo*
 bx n*
 bx m*
 xh*
@@ -14491,10 +14491,10 @@ bz XL
 0p
 bz {"
 bz z"
-0s*
 0r*
 0q*
 0p*
+0o*
 bz d
 bz x*
 bz z*
@@ -87584,7 +87584,7 @@ b1 f]
 b1 q]
 bz y
 bz -^
-b1111111 t*
+b1111111 s*
 b1111111 {*
 b1111111 43
 b1111111 B3
@@ -87623,7 +87623,7 @@ b0xx 7*
 b1000 S]
 b100 M"
 bx G"
-1p*
+1o*
 1e
 b0xx 0#
 b0xx }&
@@ -87775,7 +87775,7 @@ bz R
 bz W
 0O
 #1196
-1o*
+1t*
 b0 2+
 b0 A+
 b0 Q+
@@ -89082,7 +89082,7 @@ bz e8
 bz L;
 bz ~5
 0e
-bz t*
+bz s*
 bz {*
 bz 43
 bz B3
@@ -89094,7 +89094,7 @@ bz v*
 bz |*
 bz z5
 0u*
-0o*
+0t*
 083
 0j-
 0Q0
@@ -89961,7 +89961,7 @@ b1 @P
 1SL
 0p
 bz {"
-0p*
+0o*
 bz d
 bz x*
 bz z*
@@ -91345,7 +91345,7 @@ b1 g]
 bz [
 b10000000011100100 c
 b10000000011100100 ^\
-b1111111 t*
+b1111111 s*
 b1111111 {*
 b1111111 43
 b1111111 B3
@@ -91373,7 +91373,7 @@ b1 ]]
 x@(
 xQ$
 b100 M"
-1p*
+1o*
 1e
 b1000 S]
 b0xx 4(
@@ -91499,7 +91499,7 @@ bz R
 bz W
 0O
 #1248
-1o*
+1t*
 b0 E3
 b0 T3
 b0 d3
@@ -92734,7 +92734,7 @@ bz e8
 bz L;
 bz ~5
 0e
-bz t*
+bz s*
 bz {*
 bz 43
 bz B3
@@ -92746,7 +92746,7 @@ bz v*
 bz |*
 bz z5
 0u*
-0o*
+0t*
 0%+
 0Q0
 0j-
@@ -93183,7 +93183,7 @@ b10 ]L
 b10 @P
 0p
 bz {"
-0p*
+0o*
 bz d
 bz x*
 bz z*
@@ -94420,7 +94420,7 @@ b1 f]
 b1 q]
 bz y
 bz -^
-b1111111 t*
+b1111111 s*
 b1111111 {*
 b1111111 43
 b1111111 B3
@@ -94449,7 +94449,7 @@ bx e%
 bx T)
 b1000 S]
 b100 M"
-1p*
+1o*
 1e
 b0xxxxxxxxxxxxxxxxxxxxxxxxxxxx 0#
 b0xxxxxxxxxxxxxxxxxxxxxxxxxxxx }&
@@ -94573,7 +94573,7 @@ bz R
 bz W
 0O
 #1300
-1o*
+1t*
 b0 2+
 b0 A+
 b0 Q+
@@ -96055,7 +96055,7 @@ bz e8
 bz L;
 bz ~5
 0e
-bz t*
+bz s*
 bz {*
 bz 43
 bz B3
@@ -96067,7 +96067,7 @@ bz v*
 bz |*
 bz z5
 0u*
-0o*
+0t*
 083
 0j-
 0Q0
@@ -96532,7 +96532,7 @@ b11 @P
 b1 YL
 0p
 bz {"
-0p*
+0o*
 bz d
 bz x*
 bz z*
@@ -97810,7 +97810,7 @@ b1 g]
 bz [
 b10000000011100100 c
 b10000000011100100 ^\
-b1111111 t*
+b1111111 s*
 b1111111 {*
 b1111111 43
 b1111111 B3
@@ -97842,7 +97842,7 @@ b110 ]]
 xG'
 xX#
 b100 M"
-1p*
+1o*
 1e
 b1000 S]
 bx 2'
@@ -97969,7 +97969,7 @@ bz R
 bz W
 0O
 #1352
-1o*
+1t*
 b0 E3
 b0 T3
 b0 d3
@@ -99225,7 +99225,7 @@ bz e8
 bz L;
 bz ~5
 0e
-bz t*
+bz s*
 bz {*
 bz 43
 bz B3
@@ -99237,7 +99237,7 @@ bz v*
 bz |*
 bz z5
 0u*
-0o*
+0t*
 0%+
 0Q0
 0j-
@@ -99688,7 +99688,7 @@ b100 @P
 b1 YL
 0p
 bz {"
-0p*
+0o*
 bz d
 bz x*
 bz z*
@@ -100902,7 +100902,7 @@ b1 f]
 b1 q]
 bz y
 bz -^
-b1111111 t*
+b1111111 s*
 b1111111 {*
 b1111111 43
 b1111111 B3
@@ -100949,7 +100949,7 @@ x3%
 x")
 b1000 S]
 b100 M"
-1p*
+1o*
 1e
 b0xxxxxxxxxxxxxxxxxxxxx 0#
 b0xxxxxxxxxxxxxxxxxxxxx }&
@@ -101073,7 +101073,7 @@ bz R
 bz W
 0O
 #1404
-1o*
+1t*
 b0 2+
 b0 A+
 b0 Q+
@@ -102331,7 +102331,7 @@ bz e8
 bz L;
 bz ~5
 0e
-bz t*
+bz s*
 bz {*
 bz 43
 bz B3
@@ -102343,7 +102343,7 @@ bz v*
 bz |*
 bz z5
 0u*
-0o*
+0t*
 083
 0j-
 0Q0
@@ -102792,7 +102792,7 @@ b101 @P
 b1 YL
 0p
 bz {"
-0p*
+0o*
 bz d
 bz x*
 bz z*
@@ -104054,7 +104054,7 @@ b1 g]
 bz [
 b10000000011100100 c
 b10000000011100100 ^\
-b1111111 t*
+b1111111 s*
 b1111111 {*
 b1111111 43
 b1111111 B3
@@ -104298,7 +104298,7 @@ xP&
 0^&
 0e&
 b100 M"
-1p*
+1o*
 1e
 b1000 S]
 0M'
@@ -104457,7 +104457,7 @@ bz R
 bz W
 0O
 #1456
-1o*
+1t*
 b10000000 E3
 b10000000 T3
 b10000000 d3
@@ -105813,7 +105813,7 @@ bz e8
 bz L;
 bz ~5
 0e
-bz t*
+bz s*
 bz {*
 bz 43
 bz B3
@@ -105825,7 +105825,7 @@ bz v*
 bz |*
 bz z5
 0u*
-0o*
+0t*
 0%+
 0Q0
 0j-
@@ -106290,7 +106290,7 @@ b110 @P
 b1 YL
 0p
 bz {"
-0p*
+0o*
 bz d
 bz x*
 bz z*
@@ -107536,7 +107536,7 @@ b1 f]
 b1 q]
 bz y
 bz -^
-b1111111 t*
+b1111111 s*
 b1111111 {*
 b1111111 43
 b1111111 B3
@@ -107565,7 +107565,7 @@ b0x E$
 b0x 4(
 b1000 S]
 b100 M"
-1p*
+1o*
 1e
 b0xxxxxxxxxxxxxx 0#
 b0xxxxxxxxxxxxxx }&
@@ -107689,7 +107689,7 @@ bz R
 bz W
 0O
 #1508
-1o*
+1t*
 b0 2+
 b0 A+
 b0 Q+
@@ -109067,7 +109067,7 @@ bz e8
 bz L;
 bz ~5
 0e
-bz t*
+bz s*
 bz {*
 bz 43
 bz B3
@@ -109079,7 +109079,7 @@ bz v*
 bz |*
 bz z5
 0u*
-0o*
+0t*
 083
 0j-
 0Q0
@@ -109536,7 +109536,7 @@ b111 @P
 b1 YL
 0p
 bz {"
-0p*
+0o*
 bz d
 bz x*
 bz z*
@@ -110831,7 +110831,7 @@ b1 g]
 bz [
 b10000000011100100 c
 b10000000011100100 ^\
-b1111111 t*
+b1111111 s*
 b1111111 {*
 b1111111 43
 b1111111 B3
@@ -110859,7 +110859,7 @@ b1001110110000 ]]
 x`)
 xq%
 b100 M"
-1p*
+1o*
 1e
 b1000 S]
 b0xx T)
@@ -110986,7 +110986,7 @@ bz R
 bz W
 0O
 #1560
-1o*
+1t*
 b0 E3
 b0 T3
 b0 d3
@@ -112585,7 +112585,7 @@ bz e8
 bz L;
 bz ~5
 0e
-bz t*
+bz s*
 bz {*
 bz 43
 bz B3
@@ -112597,7 +112597,7 @@ bz v*
 bz |*
 bz z5
 0u*
-0o*
+0t*
 0%+
 0Q0
 0j-
@@ -113036,7 +113036,7 @@ b1000 @P
 b1 YL
 0p
 bz {"
-0p*
+0o*
 bz d
 bz x*
 bz z*
@@ -114286,7 +114286,7 @@ b1 f]
 b1 q]
 bz y
 bz -^
-b1111111 t*
+b1111111 s*
 b1111111 {*
 b1111111 43
 b1111111 B3
@@ -114318,7 +114318,7 @@ b0xx C#
 b0xx 2'
 b1000 S]
 b100 M"
-1p*
+1o*
 1e
 b0xxxxxxx 0#
 b0xxxxxxx }&
@@ -114442,7 +114442,7 @@ bz R
 bz W
 0O
 #1612
-1o*
+1t*
 b0 2+
 b0 A+
 b0 Q+
@@ -115878,7 +115878,7 @@ bz e8
 bz L;
 bz ~5
 0e
-bz t*
+bz s*
 bz {*
 bz 43
 bz B3
@@ -115890,7 +115890,7 @@ bz v*
 bz |*
 bz z5
 0u*
-0o*
+0t*
 083
 0j-
 0Q0
@@ -116321,7 +116321,7 @@ b1001 @P
 b1 YL
 0p
 bz {"
-0p*
+0o*
 bz d
 bz x*
 bz z*
@@ -117592,7 +117592,7 @@ b1 g]
 bz [
 b10000000011100100 c
 b10000000011100100 ^\
-b1111111 t*
+b1111111 s*
 b1111111 {*
 b1111111 43
 b1111111 B3
@@ -117620,7 +117620,7 @@ b1010111100110000000 ]]
 xp(
 x#%
 b100 M"
-1p*
+1o*
 1e
 b1000 S]
 bx ^(
@@ -117747,7 +117747,7 @@ bz R
 bz W
 0O
 #1664
-1o*
+1t*
 b0 E3
 b0 T3
 b0 d3
@@ -119281,7 +119281,7 @@ bz e8
 bz L;
 bz ~5
 0e
-bz t*
+bz s*
 bz {*
 bz 43
 bz B3
@@ -119293,7 +119293,7 @@ bz v*
 bz |*
 bz z5
 0u*
-0o*
+0t*
 0%+
 0Q0
 0j-
@@ -119755,7 +119755,7 @@ b1010 @P
 b1 YL
 0p
 bz {"
-0p*
+0o*
 bz d
 bz x*
 bz z*
@@ -120980,7 +120980,7 @@ b1 f]
 b1 q]
 bz y
 bz -^
-b1111111 t*
+b1111111 s*
 b1111111 {*
 b1111111 43
 b1111111 B3
@@ -121012,7 +121012,7 @@ bx0 H&
 bx0 7*
 b1000 S]
 b100 M"
-1p*
+1o*
 1e
 1"#
 bx0 0#
@@ -121142,7 +121142,7 @@ bz R
 bz W
 0O
 #1716
-1o*
+1t*
 b0 2+
 b0 A+
 b0 Q+
@@ -123064,7 +123064,7 @@ bz e8
 bz L;
 bz ~5
 0e
-bz t*
+bz s*
 bz {*
 bz 43
 bz B3
@@ -123076,7 +123076,7 @@ bz v*
 bz |*
 bz z5
 0u*
-0o*
+0t*
 083
 0j-
 0Q0
@@ -123544,7 +123544,7 @@ b1011 @P
 b1 YL
 0p
 bz {"
-0p*
+0o*
 bz d
 bz x*
 bz z*
@@ -192987,8 +192987,8 @@ bx x*
 bx w*
 bx v*
 xu*
-bx t*
-xs*
+xt*
+bx s*
 xr*
 xq*
 xp*
