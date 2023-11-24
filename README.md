@@ -20,7 +20,7 @@ The core can be implemented as a softcore CPU on Xilinx 7 Ultrascale/Ultrascale+
 The core has undergone a complete design flow, including synthesis, routing, and post layout process, to become an Integrated Circuit using open-source tools, the [QFlow](http://opencircuitdesign.com/qflow/) and [Magic VLSI](http://opencircuitdesign.com/magic/) projects. The ASIC implementation was specifically carried out utilizing the `osu018 (TSMC 180nm)` Process Design Kit (PDK).
 </div>
 
-This repository contains an open source CPU under the [GNU V3.0 license](https://en.wikipedia.org/wiki/GNU_General_Public_License) and is free to use.
+This repository contains an open source CPU including RTL codes and assistant software, under the [GNU V3.0 license](https://en.wikipedia.org/wiki/GNU_General_Public_License) and is free to use.
 
 - Designed By : [Arvin Delavari](https://github.com/ArvinDelavari) and [Faraz Ghoreishy](https://github.com/FarazGhoreishy)
 - Contact us : arvin7807@gmail.com - farazghoreishy@gmail.com
@@ -64,7 +64,7 @@ Secondly, modularity aids in design verification and testing, as individual modu
 
 Additionally, modular designs can lead to improved overall system reliability, as faults and failures in one module are less likely to affect the functionality of the entire processor.
 
-**Special features for Approximate Computing**
+- **Special features for Approximate Computing**
 
 The phoeniX RISC-V core introduces novel features that will help the emerging field of approximate computing techniques. With its modular design and extensive architecture, phoeniX presents a configurable platform for exploring and implementing approximate computing methodologies for developers and designers. 
 
@@ -132,8 +132,8 @@ repository/
 ## phoeniX Core Structure
 <div align="justify">
 
-The repository contains a collection of Verilog modules that build up the phoeniX RISC-V processor. These building block modules are included in `\Modules`.
-Each modules was designed with concepts of modularity and distributed-control in mind. This deliberate approach allows for effortless replacement and configuration of individual building blocks, resulting in a simplified process.
+The repository contains a collection of Verilog modules that build up the phoeniX RISC-V processor. These building block modules are included in `\Modules` directory.
+Each modules was designed with concepts of modularity and distributed-control in mind. This deliberate approach allows for effortless replacement and configuration of individual building blocks, resulting in a simplified process. This will help designers with integrating new modules (especially arithmetic and execution units) within the processor.
 
 </div>
 
@@ -143,12 +143,15 @@ Each modules was designed with concepts of modularity and distributed-control in
 | ----------------------------- | --------------------------------------------------------------------------------------------- |
 | `Address_Generator`           | Generating address for BRANCH, JUMP and LOAD/STORE instructions                               |
 | `Arithmetic_Logic_Unit`       | ALU with support for `I_TYPE` and `R_TYPE` RISC-V instructions                                |
+| `Control_Status_Unit`         | CSR instructions and custom CSRs for approximate computing acceleration of the phoeniX        |
+| `Divider_unit`                | Divider unit with a modular design (Default module: Error configrable non-restoring divider)  |
 | `Fetch_Unit`                  | Instruction Fetch logic and program counter addressing                                        | 
 | `Hazard_Forward_Unit`         | Hazard detection and data forwarding logic in pipelined processor                             |
 | `Immediate_Generator`         | Generating immediate values according to instructions type                                    |
 | `Instruction_Decoder`         | Decoding instructions and extracting `opcode`, `funct` and `imm` fields                       |
 | `Jump_Branch_Unit`            | Condition checking for all branch instructions                                                |
 | `Load_Store_Unit`             | Load and Store operations for aligned addresses and wordsize management                       |
+| `Multiplier_Unit`             | Multiplier unit with a modular design (Default module: Fast, low-power approximate multiplier)|
 | `Register_File`               | Parametrized register file suitable for GP registers and CSRs (2 read & 1 write ports)        |
 
 
@@ -249,14 +252,14 @@ We have meticulously developed a lightweight and user-friendly software solution
 This tool  enhances the efficiency of the code execution process, offering a streamlined experience for users seeking to enter the realm of assembly programming on pheoniX processor in a very simple and user-friendly way.
 
 Before running the script, note that the assembly output of the Venus Simulator for the code must be also saved in the project directory.
-To run any of these sample projects simply run python `AssembleX.py sample` followed by the name of the project passed as a variable named project to the Python script.
+To run any of these sample projects simply run python `AssembleX_V1.0.py sample` followed by the name of the project passed as a variable named project to the Python script.
 The input command format for the terminal follows the structure illustrated below:
 ```
-python AssembleX.py sample {project_name}
+python AssembleX_V1.0.py sample {project_name}
 ```
 For example:
 ```
-python AssembleX.py sample fibonacci
+python AssembleX_V1.0.py sample fibonacci
 ```
 After execution of this script, firmware file will be generated and this final file can be directly fed to our Verilog testbench. AssembleX automatically runs the testbench and calls upon gtkwave to display the selected signals in the waveform viewer application, gtkwave.
 </div>
@@ -266,7 +269,7 @@ After execution of this script, firmware file will be generated and this final f
 
 In order to run your own code on phoeniX, create a directory named to your project such as `/my_project in /Software/User_Codes/`. Put all your ``user_code.s` files in my_project and run the following command from the main directory:
 ```
-python AssembleX.py code my_project
+python AssembleX_V1.0.py code my_project
 ```
 Provided that you name your project sub-directory correctly the AssembleX software will create `my_project_firmware.hex` and fed it directly to the testbench of phoeniX processor. After that, iverilog and GTKWave are used to compile the design and view the selected waveforms.
 </div>
@@ -293,8 +296,8 @@ Here is a picture of final layout result of the phoeniX core using Qflow:
 
 <div align="justify">
 
-The Static Time Analysis (STA) results indicate that the maximum delay observed in the core modules, and consequently in the pipeline stages, is approximately 4 nanoseconds. Setting the **clock cycle time at 4 nanoseconds** allows for sufficient margin to account for the maximum delay across the modules, ensuring that data propagates through the pipeline within the specified time frame. 
-By adhering to this timing requirement, the processor can achieve a performance level of approximately **250 MHz**, enabling efficient execution of instructions and supporting the desired operational specifications.
+The Static Time Analysis (STA) results indicate that the maximum delay observed in the core modules, and consequently in the pipeline stages, is approximately 3 nanoseconds. Setting the **clock cycle time at 3 nanoseconds** allows for sufficient margin to account for the maximum delay across the modules, ensuring that data propagates through the pipeline within the specified time frame. 
+By adhering to this timing requirement, the processor can achieve a performance level of approximately **330 MHz**, enabling efficient execution of instructions and supporting the desired operational specifications.
 
 </div>
 
