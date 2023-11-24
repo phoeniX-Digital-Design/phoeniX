@@ -1,4 +1,4 @@
-`include "Defines.vh"
+`include "Defines.v"
 `include "Fetch_Unit.v"
 `include "Instruction_Decoder.v"
 `include "Immediate_Generator.v"
