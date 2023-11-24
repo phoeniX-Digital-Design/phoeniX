@@ -1,7 +1,7 @@
 /*
-    phoeniX RV32IEM ALU: Developer Guidelines
+    phoeniX RV32IEM ALU: Designer Guidelines
     ==========================================================================================================================
-    DEVELOPER NOTICE:
+    DESIGNER NOTICE:
     - Kindly adhere to the established guidelines and naming conventions outlined in the project documentation. 
     - Following these standards will ensure smooth integration of your custom-made modules into this codebase.
     - Thank you for your cooperation.
@@ -9,8 +9,8 @@
     ALU Approximation CSR
     - ALU CSR is addressed as 0x800 in control status registers.
     - One adder circuit is used for 3 integer instructions: ADD/ADDI/SUB
-    - Internal signals are all generated according to phoeniX core "Self Control Logic" of the modules so developer won't 
-      need to change anything inside this module (excepts parts which are considered for developers to instatiate their own 
+    - Internal signals are all generated according to phoeniX core "Self Control Logic" of the modules so designer won't 
+      need to change anything inside this module (excepts parts which are considered for designers to instatiate their own 
       custom made designs).
     - Instantiate your modules (Approximate or Accurate) between the comments in the code.
     - How to work with the speical purpose CSR:
@@ -19,7 +19,7 @@
         CSR [31 : 3] : APPROXIMATION_ERROR_CONTROL
     - PLEASE DO NOT REMOVE ANY OF THE COMMENTS IN THIS FILE
     - Input and Output paramaters:
-        Input:  error_control = {accuracy_control[USER_ERROR_LEN:3], accuracy_control[2:1] (module select), accuracy_control[0]}
+        Input:  error_control = {control_status_register[USER_ERROR_LEN:3], control_status_register[2:1] (module select), control_status_register[0]}
         Input:  adder_input_1 = First operand of your module
         Input:  adder_input_2 = Second operand of your module
         Input:  adder_Cin     = Input Carry
@@ -98,7 +98,7 @@ module Arithmetic_Logic_Unit
     input [2 : 0] funct3,               
     input [6 : 0] funct7,               
 
-    input [31 : 0] accuracy_control,    
+    input [31 : 0] control_status_register,    
 
     input [31 : 0] rs1,                 
     input [31 : 0] rs2,                 
@@ -227,7 +227,7 @@ module Arithmetic_Logic_Unit
     )
     approximate_accuracy_controllable_adder 
     (
-        .Er(accuracy_control[10 : 3] | {8{~accuracy_control[0]}}), 
+        .Er(control_status_register[10 : 3] | {8{~control_status_register[0]}}), 
         .A(adder_input_1),
         .B(adder_input_2),
         .Cin(adder_Cin),

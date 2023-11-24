@@ -1,15 +1,15 @@
 /*
-    phoeniX RV32IMX Divider Unit: Developer Guidelines
+    phoeniX RV32IMX Divider Unit: Designer Guidelines
     ==========================================================================================================================
-    DEVELOPER NOTICE:
+    DESIGNER NOTICE:
     - Kindly adhere to the established guidelines and naming conventions outlined in the project documentation. 
     - Following these standards will ensure smooth integration of your custom-made modules into this codebase.
     - Thank you for your cooperation.
     ==========================================================================================================================
     Divider Unit Unit Approximation CSR:
     - One adder circuit is used for 3 integer instructions: DIV/DIVU/REM/REMU
-    - Internal signals are all generated according to phoeniX core "Self Control Logic" of the modules so developer won't 
-      need to change anything inside this module (excepts parts which are considered for developers to instatiate their own 
+    - Internal signals are all generated according to phoeniX core "Self Control Logic" of the modules so designer won't 
+      need to change anything inside this module (excepts parts which are considered for designers to instatiate their own 
       custom made designs).
     - Instantiate your modules (Approximate or Accurate) between the comments in the code.
     - How to work with the speical purpose CSR:
@@ -19,7 +19,7 @@
     - PLEASE DO NOT REMOVE ANY OF THE COMMENTS IN THIS FILE
     - Input and Output paramaters:
         Input:  clk = Source clock signal
-        Input:  error_control = {accuracy_control[USER_ERROR_LEN:3], accuracy_control[2:1] (module select), accuracy_control[0]}
+        Input:  error_control = {control_status_register[USER_ERROR_LEN:3], control_status_register[2:1] (module select), control_status_register[0]}
         Input:  input_1       = First operand of your module
         Input:  input_2       = Second operand of your module
         Output: result        = Module division output
@@ -32,12 +32,6 @@
     - Supported Instructions :
         R-TYPE :  DIV - DIVU - REM - REMU
 */
-
-// *** Include your headers and modules here ***
-// -----------------------------------------------------------------------------------
-// `include "Approximate_Arithmetic_Units/Approximate_Accuracy_Controlable_Divider.v"
-// -----------------------------------------------------------------------------------
-// *** End of including headers and modules ***
 
 `ifndef OPCODES
     `define LOAD        7'b00_000_11
@@ -79,19 +73,19 @@
 
 module Divider_Unit
 (
-    input clk,                          // Source clock signal
+    input clk,                          
 
-    input [6 : 0] opcode,               // DIV Operation
-    input [6 : 0] funct7,               // DIV Operation
-    input [2 : 0] funct3,               // DIV Operation
+    input [6 : 0] opcode,               
+    input [6 : 0] funct7,               
+    input [2 : 0] funct3,               
 
-    input [31 : 0] accuracy_control,    // Approximation Control Register
+    input [31 : 0] control_status_register,    
 
-    input [31 : 0] rs1,                 // Register Source 1
-    input [31 : 0] rs2,                 // Register Source 1
+    input [31 : 0] rs1,                 
+    input [31 : 0] rs2,                 
 
-    output reg div_unit_busy,           // Divider unit busy signal
-    output reg [31 : 0] div_output      // DIV Result (DIV/REM)
+    output reg div_unit_busy,           
+    output reg [31 : 0] div_output      
 );
 
     // Data forwarding will be considered in the core file (phoeniX.v)
@@ -113,31 +107,31 @@ module Divider_Unit
         operand_2 = rs2;
         div_unit_busy = busy;
         case ({funct7, funct3, opcode})
-            {`MULDIV, `DIV, `OP} : begin  // DIV
+            {`MULDIV, `DIV, `OP} : begin  
                 enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = $signed(operand_2);
                 div_output = result;
             end
-            {`MULDIV, `DIVU, `OP} : begin  // DIVU
+            {`MULDIV, `DIVU, `OP} : begin  
                 enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = operand_2;
                 div_output = result;
             end
-            {`MULDIV, `REM, `OP} : begin  // REM
+            {`MULDIV, `REM, `OP} : begin  
                 enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = $signed(operand_2);
                 div_output = remainder;
             end
-            {`MULDIV, `REMU, `OP} : begin  // REMU
+            {`MULDIV, `REMU, `OP} : begin  
                 enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = operand_2;
                 div_output = $signed(remainder);
             end
-            default: begin div_output = 32'bz; div_unit_busy = 1'b0; enable = 1'b0; end // Wrong opcode                
+            default: begin div_output = 32'bz; div_unit_busy = 1'b0; enable = 1'b0; end
         endcase
     end
 
@@ -149,7 +143,7 @@ module Divider_Unit
     Approximate_Accuracy_Controlable_Divider divider 
     (
         .clk(clk),
-        .Er(accuracy_control[10 : 3] | {8{~accuracy_control[0]}}),
+        .Er(control_status_register[10 : 3] | {8{~control_status_register[0]}}),
         .operand_1(input_1),  
         .operand_2(input_2),  
         .div(result),  

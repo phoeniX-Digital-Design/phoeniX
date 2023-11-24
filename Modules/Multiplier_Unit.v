@@ -1,7 +1,7 @@
 /*
-    phoeniX RV32IMX Multiplier: Developer Guidelines
+    phoeniX RV32IMX Multiplier: Designer Guidelines
     ==========================================================================================================================
-    DEVELOPER NOTICE:
+    DESIGNER NOTICE:
     - Kindly adhere to the established guidelines and naming conventions outlined in the project documentation. 
     - Following these standards will ensure smooth integration of your custom-made modules into this codebase.
     - Thank you for your cooperation.
@@ -9,8 +9,8 @@
     Multiplier Approximation CSR:
     - MUL CSR is addressed as 0x801 in control status registers.
     - Multiplier circuit is used for 4 M-Extension instructions: MUL/MULH/MULHSU/MULHU
-    - Internal signals are all generated according to phoeniX core "Self Control Logic" of the modules so developer won't 
-      need to change anything inside this module (excepts parts which are considered for developers to instatiate their own 
+    - Internal signals are all generated according to phoeniX core "Self Control Logic" of the modules so designer won't 
+      need to change anything inside this module (excepts parts which are considered for designers to instatiate their own 
       custom made designs).
     - Instantiate your modules (Approximate or Accurate) between the comments in the code.
     - How to work with the speical purpose CSR:
@@ -20,7 +20,7 @@
     - PLEASE DO NOT REMOVE ANY OF THE COMMENTS IN THIS FILE
     - Input and Output paramaters:
         Input:  clk = Source clock signal
-        Input:  error_control = {accuracy_control[USER_ERROR_LEN:3], accuracy_control[2:1] (module select), accuracy_control[0]}
+        Input:  error_control = {control_status_register[USER_ERROR_LEN:3], control_status_register[2:1] (module select), control_status_register[0]}
         Input:  input_1       = First operand of your module
         Input:  input_2       = Second operand of your module
         Output: result        = Module division output
@@ -72,19 +72,19 @@
 
 module Multiplier_Unit
 (
-    input clk,                          // Source Clock Signal
+    input clk,                          
 
-    input [6 : 0] opcode,               // ALU Operation
-    input [6 : 0] funct7,               // ALU Operation
-    input [2 : 0] funct3,               // ALU Operation
+    input [6 : 0] opcode,               
+    input [6 : 0] funct7,               
+    input [2 : 0] funct3,               
 
-    input [31 : 0] accuracy_control,    // Approximation Control Register
+    input [31 : 0] control_status_register,    
 
-    input [31 : 0] rs1,                 // Register Source 1
-    input [31 : 0] rs2,                 // Register Source 2
+    input [31 : 0] rs1,                 
+    input [31 : 0] rs2,                 
 
     output reg mul_busy,               
-    output reg [31 : 0] mul_output      // Multiplier Unit Result
+    output reg [31 : 0] mul_output      
 );
 
     reg  multiplier_enable;
@@ -146,7 +146,7 @@ module Multiplier_Unit
     begin
         multiplier_input_1 <= input_1;
         multiplier_input_2 <= input_2;
-        multiplier_accuracy <= accuracy_control[9 : 3] | {7{~accuracy_control[0]}};
+        multiplier_accuracy <= control_status_register[9 : 3] | {7{~control_status_register[0]}};
     end
 
     // *** Instantiate your multiplier circuit here ***
