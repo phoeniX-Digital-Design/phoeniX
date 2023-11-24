@@ -321,8 +321,8 @@ module phoeniX
             .control_status_register(control_status_register_file.mul_csr),    
             .rs1(rs1_execute_reg),
             .rs2(rs2_execute_reg),
-            .mul_busy(mul_busy_execute_wire),
-            .mul_output(mul_output_execute_wire)
+            .multiplier_unit_busy(mul_busy_execute_wire),
+            .multiplier_unit_output(mul_output_execute_wire)
         );
 
         Divider_Unit divider_unit
@@ -334,8 +334,8 @@ module phoeniX
             .control_status_register(control_status_register_file.div_csr),    
             .rs1(rs1_execute_reg),
             .rs2(rs2_execute_reg),
-            .div_unit_busy(div_busy_execute_wire),
-            .div_output(div_output_execute_wire)
+            .divider_unit_busy(div_busy_execute_wire),
+            .divider_unit_output(div_output_execute_wire)
         );
     end
     endgenerate

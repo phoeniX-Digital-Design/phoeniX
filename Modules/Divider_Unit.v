@@ -85,8 +85,8 @@ module Divider_Unit
     input [31 : 0] rs1,                 
     input [31 : 0] rs2,                 
 
-    output reg div_unit_busy,           
-    output reg [31 : 0] div_output      
+    output reg divider_unit_busy,           
+    output reg [31 : 0] divider_unit_output      
 );
 
     // Data forwarding will be considered in the core file (phoeniX.v)
@@ -106,37 +106,37 @@ module Divider_Unit
     begin
         operand_1 = rs1;
         operand_2 = rs2;
-        div_unit_busy = busy;
+        divider_unit_busy = busy;
         case ({funct7, funct3, opcode})
             {`MULDIV, `DIV, `OP} : begin  
                 enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = $signed(operand_2);
-                div_output = result;
+                divider_unit_output = result;
             end
             {`MULDIV, `DIVU, `OP} : begin  
                 enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = operand_2;
-                div_output = result;
+                divider_unit_output = result;
             end
             {`MULDIV, `REM, `OP} : begin  
                 enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = $signed(operand_2);
-                div_output = remainder;
+                divider_unit_output = remainder;
             end
             {`MULDIV, `REMU, `OP} : begin  
                 enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = operand_2;
-                div_output = $signed(remainder);
+                divider_unit_output = $signed(remainder);
             end
-            default: begin div_output = 32'bz; div_unit_busy = 1'b0; enable = 1'b0; end
+            default: begin divider_unit_output = 32'bz; divider_unit_busy = 1'b0; enable = 1'b0; end
         endcase
     end
 
-    always @(negedge div_unit_busy) enable <= 1'b0;
+    always @(negedge divider_unit_busy) enable <= 1'b0;
 
     // *** Instantiate your divider here ***
     // Please instantiate your divider module according to the guidelines and naming conventions of phoeniX

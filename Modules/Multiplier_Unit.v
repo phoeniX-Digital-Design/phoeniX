@@ -84,8 +84,8 @@ module Multiplier_Unit
     input [31 : 0] rs1,                 
     input [31 : 0] rs2,                 
 
-    output reg mul_busy,               
-    output reg [31 : 0] mul_output      
+    output reg multiplier_unit_busy,               
+    output reg [31 : 0] multiplier_unit_output      
 );
 
     reg  multiplier_enable;
@@ -107,36 +107,36 @@ module Multiplier_Unit
         operand_1 = rs1;
         operand_2 = rs2;
         case ({funct7, funct3, opcode})
-            {`MULDIV, `MUL, `OP} : begin  // MUL
+            {`MULDIV, `MUL, `OP} : begin  
                 multiplier_enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = $signed(operand_2);
-                mul_output = result[31 : 0];
+                multiplier_unit_output = result[31 : 0];
             end
-            {`MULDIV, `MULH, `OP} : begin  // MULH
+            {`MULDIV, `MULH, `OP} : begin  
                 multiplier_enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = $signed(operand_2);
-                mul_output = result >>> 32;
+                multiplier_unit_output = result >>> 32;
             end
-            {`MULDIV, `MULHSU, `OP} : begin  // MULHSU
+            {`MULDIV, `MULHSU, `OP} : begin  
                 multiplier_enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = operand_2;
-                mul_output = result >>> 32;
+                multiplier_unit_output = result >>> 32;
             end
-            {`MULDIV, `MULHU, `OP} : begin  // MULHU
+            {`MULDIV, `MULHU, `OP} : begin  
                 multiplier_enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = operand_2;
-                mul_output = result >> 32;
+                multiplier_unit_output = result >> 32;
             end
-            default: begin multiplier_enable = 1'b0; mul_output = 32'bz; end             
+            default: begin multiplier_enable = 1'b0; multiplier_unit_output = 32'bz; end             
         endcase
     end
 
-    always @(*) mul_busy = multiplier_enable; 
-    always @(negedge mul_unit_busy) 
+    always @(*) multiplier_unit_busy = multiplier_enable; 
+    always @(negedge multiplier_busy) 
     begin
         multiplier_enable <= 1'b0;
         multiplier_input_1 <= 32'bz;
@@ -161,7 +161,7 @@ module Multiplier_Unit
         .Operand_1(multiplier_input_1), 
         .Operand_2(multiplier_input_2),  
         .Result(result),
-        .Busy(mul_unit_busy)
+        .Busy(multiplier_busy)
     );
     // -------------------------------------------------------------------------------------------------------
     // *** End of multiplier module instantiation ***
