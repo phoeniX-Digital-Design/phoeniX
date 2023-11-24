@@ -15,7 +15,7 @@
     - Instantiate your modules (Approximate or Accurate) between the comments in the code.
     - How to work with the speical purpose CSR:
         CSR [0]      : APPROXIMATE = 1 | ACCURATE = 0
-        CSR [2  : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate and approximate circuits)
+        CSR [2  : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate or approximate circuits)
         CSR [31 : 3] : APPROXIMATION_ERROR_CONTROL
     - PLEASE DO NOT REMOVE ANY OF THE COMMENTS IN THIS FILE
     - Input and Output paramaters:
@@ -94,16 +94,16 @@ module Multiplier_Unit
     reg  [31 : 0] operand_1;            // RS1 latch
     reg  [31 : 0] operand_2;            // RS2 latch
 
-    reg  [31 : 0] input_1;              // Module input 1
-    reg  [31 : 0] input_2;              // Module input 2
+    reg  [31 : 0] input_1;              // Modules input 1
+    reg  [31 : 0] input_2;              // Modules input 2
 
     reg  [ 6 : 0] multiplier_accuracy;
-    reg  [31 : 0] multiplier_input_1;   // Latched Module input 1
-    reg  [31 : 0] multiplier_input_2;   // Latched Module input 2
+    reg  [31 : 0] multiplier_input_1;   // Latched modules input 1
+    reg  [31 : 0] multiplier_input_2;   // Latched modules input 2
 
-    reg mul_unit_busy;                  // MUX result for busy signals
+    reg multiplier_busy;                // Multiplexer result for multipliers busy signals
 
-    wire [63 : 0] result;               // Multiplier 64-bit result
+    wire [63 : 0] result;               // Multiplexer result for multipliers 64-bit result
 
     reg  multiplier_0_enable;
     reg  multiplier_1_enable;
@@ -164,7 +164,7 @@ module Multiplier_Unit
     end
 
     always @(*) multiplier_unit_busy = multiplier_enable; 
-    always @(negedge mul_unit_busy) 
+    always @(negedge multiplier_busy) 
     begin
         multiplier_enable <= 1'b0;
         multiplier_input_1 <= 32'bz;
@@ -193,15 +193,15 @@ module Multiplier_Unit
     always @(*) 
     begin
         if (multiplier_0_enable)
-            mul_unit_busy <= multiplier_0_busy;
+            multiplier_busy <= multiplier_0_busy;
         else if (multiplier_1_enable)
-            mul_unit_busy <= multiplier_1_busy;
+            multiplier_busy <= multiplier_1_busy;
         else if (multiplier_2_enable)
-            mul_unit_busy <= multiplier_2_busy;
+            multiplier_busy <= multiplier_2_busy;
         else if (multiplier_3_enable)
-            mul_unit_busy <= multiplier_3_busy;
+            multiplier_busy <= multiplier_3_busy;
         else
-            mul_unit_busy <= 1'b0; 
+            multiplier_busy <= 1'b0; 
     end
 
     // *** Instantiate your multiplier circuit here ***
