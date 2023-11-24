@@ -114,6 +114,17 @@ module phoeniX_Testbench;
 		reset <= 1'b0;
     end
 
+    integer enable_high_count = 0;
+    integer enable_low_count = 0;
+
+    always @(posedge clk) 
+    begin
+        if (uut.fetch_unit.enable)
+            enable_high_count = enable_high_count + 1;
+        else
+            enable_low_count = enable_low_count + 1;    
+    end
+
     always @(*) 
     begin
         if (uut.opcode_writeback_reg == `SYSTEM && uut.funct12_writeback_reg == `EBREAK) 
@@ -121,6 +132,7 @@ module phoeniX_Testbench;
             reset <= 1'b1;
             repeat (5) @(posedge clk);
             $display("\n--> EXECUTION FINISHED <--\n");
+            $display("FETCH ENABLE ON  TIME:\t%d\nFETCH ENABLE OFF TIME:\t%d", enable_high_count * CLK_PERIOD, enable_low_count * CLK_PERIOD);
             $dumpoff;
             $finish;
         end
