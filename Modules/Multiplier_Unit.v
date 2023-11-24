@@ -1,7 +1,7 @@
 /*
-    phoeniX RV32IMX Multiplier: Developer Guidelines
+    phoeniX RV32IMX Multiplier: Designer Guidelines
     ==========================================================================================================================
-    DEVELOPER NOTICE:
+    DESIGNER NOTICE:
     - Kindly adhere to the established guidelines and naming conventions outlined in the project documentation. 
     - Following these standards will ensure smooth integration of your custom-made modules into this codebase.
     - Thank you for your cooperation.
@@ -9,8 +9,8 @@
     Multiplier Approximation CSR:
     - MUL CSR is addressed as 0x801 in control status registers.
     - Multiplier circuit is used for 4 M-Extension instructions: MUL/MULH/MULHSU/MULHU
-    - Internal signals are all generated according to phoeniX core "Self Control Logic" of the modules so developer won't 
-      need to change anything inside this module (excepts parts which are considered for developers to instatiate their own 
+    - Internal signals are all generated according to phoeniX core "Self Control Logic" of the modules so designer won't 
+      need to change anything inside this module (excepts parts which are considered for designers to instatiate their own 
       custom made designs).
     - Instantiate your modules (Approximate or Accurate) between the comments in the code.
     - How to work with the speical purpose CSR:
@@ -74,19 +74,19 @@ module Multiplier_Unit
     parameter GENERATE_CIRCUIT_4 = 0
 )
 (
-    input clk,                          // Source Clock Signal
+    input clk, 
 
-    input [6 : 0] opcode,               // MUL/DIV Operation
-    input [6 : 0] funct7,               // MUL/DIV Operation
-    input [2 : 0] funct3,               // MUL/DIV Operation
+    input [6 : 0] opcode, 
+    input [6 : 0] funct7,
+    input [2 : 0] funct3, 
 
-    input [31 : 0] control_status_reg,  // Approximation Control Register
+    input [31 : 0] control_status_register, 
 
-    input [31 : 0] rs1,                 // Register Source 1
-    input [31 : 0] rs2,                 // Register Source 2
+    input [31 : 0] rs1, 
+    input [31 : 0] rs2,  
 
-    output reg mul_busy,                // Multiplier Unit Busy
-    output reg [31 : 0] mul_output      // Multiplier Unit Result
+    output reg multiplier_unit_busy, 
+    output reg [31 : 0] multiplier_unit_output  
 );
 
     reg  multiplier_enable;
@@ -125,37 +125,37 @@ module Multiplier_Unit
         operand_1 = rs1;
         operand_2 = rs2;
         case ({funct7, funct3, opcode})
-            {`MULDIV, `MUL, `OP} :      // MUL
+            {`MULDIV, `MUL, `OP} : 
             begin
                 multiplier_enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = $signed(operand_2);
-                mul_output = result[31 : 0];
+                multiplier_unit_output = result[31 : 0];
             end
-            {`MULDIV, `MULH, `OP} :     // MULH
+            {`MULDIV, `MULH, `OP} : 
             begin 
                 multiplier_enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = $signed(operand_2);
-                mul_output = result >>> 32;
+                multiplier_unit_output = result >>> 32;
             end
-            {`MULDIV, `MULHSU, `OP} :   // MULHSU 
+            {`MULDIV, `MULHSU, `OP} : 
             begin
                 multiplier_enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = operand_2;
-                mul_output = result >>> 32;
+                multiplier_unit_output = result >>> 32;
             end
-            {`MULDIV, `MULHU, `OP} :    // MULHU 
+            {`MULDIV, `MULHU, `OP} : 
             begin
                 multiplier_enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = operand_2;
-                mul_output = result >> 32;
+                multiplier_unit_output = result >> 32;
             end
             default: 
             begin
-                mul_output = 32'bz; 
+                multiplier_unit_output = 32'bz; 
                 multiplier_enable   = 1'b0; 
                 multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0;
                 multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0;
@@ -163,7 +163,7 @@ module Multiplier_Unit
         endcase
     end
 
-    always @(*) mul_busy = multiplier_enable; 
+    always @(*) multiplier_unit_busy = multiplier_enable; 
     always @(negedge mul_unit_busy) 
     begin
         multiplier_enable <= 1'b0;
@@ -175,8 +175,8 @@ module Multiplier_Unit
     begin
         multiplier_input_1 <= input_1;
         multiplier_input_2 <= input_2;
-        multiplier_accuracy <= control_status_reg[9 : 3] | {7{~control_status_reg[0]}};
-        case (control_status_reg[2 : 1])
+        multiplier_accuracy <= control_status_register[9 : 3] | {7{~control_status_register[0]}};
+        case (control_status_register[2 : 1])
             2'b00:   begin multiplier_0_enable = 1'b1; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
             2'b01:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b1; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
             2'b10:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b1; multiplier_3_enable = 1'b0; end
