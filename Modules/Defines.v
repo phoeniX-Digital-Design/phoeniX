@@ -1,4 +1,4 @@
-`define OPCODES
+`ifndef OPCODES
     `define LOAD        7'b00_000_11
     `define LOAD_FP     7'b00_001_11
     `define custom_0    7'b00_010_11
@@ -27,16 +27,18 @@
     `define JAL         7'b11_011_11
     `define SYSTEM      7'b11_100_11
     `define custom_3    7'b11_110_11
+`endif /*OPCODES*/
 
-`define INSTRUCTION_TYPES
+`ifndef INSTRUCTION_TYPES
     `define R_TYPE 0
     `define I_TYPE 1
     `define S_TYPE 2
     `define B_TYPE 3
     `define U_TYPE 4
     `define J_TYPE 5
+`endif /*INSTRUCTION_TYPES*/
 
-`define EXCEPTIONS 
+`ifndef EXCEPTIONS
     `define INSTRUCTION_ADDRESS_MISALLIGNED 4'b0000
     `define INSTRUCTION_ACCESS_FAULT        4'b0001
     `define ILLEGAL_INSTRUCTION             4'b0010
@@ -50,20 +52,23 @@
     `define INSTRUCTION_PAGE_FAULT          4'b1010
     `define LOAD_PAGE_FAULT                 4'b1011
     `define STORE_AMO_PAGE_FAULT            4'b1100
+`endif /*EXCEPTIONS*/
 
-`define SYSTEM_INSTRUCTIONS
+`ifndef SYSTEM_INSTRUCTIONS
     `define ECALL   12'b000000000000
     `define EBREAK  12'b000000000001
+`endif /*SYSTEM_INSTRUCTIONS*/
 
-`define CSR_INSTRUCTIONS
+`ifndef CSR_INSTRUCTIONS
     `define CSRRW  3'b001
     `define CSRRS  3'b010
     `define CSRRC  3'b011
     `define CSRRWI 3'b101
     `define CSRRSI 3'b110
     `define CSRRCI 3'b111
+`endif /*CSR_INSTRUCTIONS*/
 
-`define MUL_DIV_INSTRCUTIONS
+`ifndef MUL_DIV_INSTRCUTIONS
     `define MUL     3'b000
     `define MULH    3'b001
     `define MULHSU  3'b010
@@ -75,3 +80,4 @@
     `define REMU    3'b111
 
     `define MULDIV  7'b0000001
+`endif /*MUL_DIV_INSTRCUTIONS*/
