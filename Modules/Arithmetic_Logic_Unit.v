@@ -15,7 +15,7 @@
     - Instantiate your modules (Approximate or Accurate) between the comments in the code.
     - How to work with the speical purpose CSR:
         CSR [0]      : APPROXIMATE = 1 | ACCURATE = 0
-        CSR [2  : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate and approximate circuits)
+        CSR [2  : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate or approximate circuits)
         CSR [31 : 3] : APPROXIMATION_ERROR_CONTROL
     - PLEASE DO NOT REMOVE ANY OF THE COMMENTS IN THIS FILE
     - Input and Output paramaters:
@@ -274,7 +274,7 @@ module Arithmetic_Logic_Unit
         begin
             // Circuit 1 instantiation
             //-------------------------------
-            Kogge_Stone_Adder_ALU deafult_fast_adder
+            Kogge_Stone_Adder_ALU default_fast_adder
             (
                 .carry_in(adder_Cin), 
                 .input_A(adder_input_1),
@@ -288,7 +288,7 @@ module Arithmetic_Logic_Unit
         begin
             // Circuit 2 instantiation
             //-------------------------------
-
+            assign adder_2_result = (adder_2_enable) ? adder_input_1 + adder_input_2 + adder_Cin : 32'bz;
             //-------------------------------
             // End of Circuit 2 instantiation
         end
