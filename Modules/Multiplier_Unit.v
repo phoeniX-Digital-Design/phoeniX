@@ -106,25 +106,25 @@ module Multiplier_Unit
         operand_1 = rs1;
         operand_2 = rs2;
         case ({funct7, funct3, opcode})
-            {`MULDIV, `MUL, `OP} : begin  // MUL
+            {`MULDIV, `MUL, `OP} : begin  
                 multiplier_enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = $signed(operand_2);
                 mul_output = result[31 : 0];
             end
-            {`MULDIV, `MULH, `OP} : begin  // MULH
+            {`MULDIV, `MULH, `OP} : begin  
                 multiplier_enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = $signed(operand_2);
                 mul_output = result >>> 32;
             end
-            {`MULDIV, `MULHSU, `OP} : begin  // MULHSU
+            {`MULDIV, `MULHSU, `OP} : begin  
                 multiplier_enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = operand_2;
                 mul_output = result >>> 32;
             end
-            {`MULDIV, `MULHU, `OP} : begin  // MULHU
+            {`MULDIV, `MULHU, `OP} : begin  
                 multiplier_enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = operand_2;
