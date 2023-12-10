@@ -29,13 +29,14 @@ module Fetch_Unit
         memory_interface_address = pc;  
     end
 
+    wire [29 : 0] incrementer_result;
+
     always @(*)
     begin
         if (jump_branch_enable) next_pc <= jump_branch_address;
         else                    next_pc <= {incrementer_result, 2'b00};
     end
 
-    wire [29 : 0] incrementer_result;
     Incrementer 
     #(
         .LEN(30)
