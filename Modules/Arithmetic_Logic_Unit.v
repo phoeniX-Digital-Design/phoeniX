@@ -178,7 +178,7 @@ module Arithmetic_Logic_Unit
             {`SLL, `OP}     : 
             begin shift_direction = `LEFT; shift_input = operand_1; shift_amount = operand_2[4 : 0]; alu_output = shift_result; end
             {`SLT, `OP}     : begin alu_enable = 1'b1; alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;    end
-            {`SLTU, `OP}    : begin alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0; ;                    end
+            {`SLTU, `OP}    : begin alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0;                      end
             {`XOR, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 ^ operand_2;  end
             {`OR, `OP}      : begin alu_enable = 1'b1; alu_output = operand_1 | operand_2;  end
             {`AND, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 & operand_2;  end
