@@ -1,5 +1,5 @@
 $date
-	Fri Nov 24 18:01:04 2023
+	Fri Dec 08 11:46:39 2023
 $end
 $version
 	Icarus Verilog
@@ -9470,7 +9470,7 @@ bx )^
 bx (^
 bz '^
 bz &^
-bz %^
+bx %^
 bx $^
 bx #^
 bx "^
@@ -14622,6 +14622,7 @@ b1 W;
 b1 +6
 0f*
 0#6
+bz %^
 bz f
 bz "^
 xV*
