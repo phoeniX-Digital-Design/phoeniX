@@ -19,7 +19,7 @@
         CSR [31 : 3] : APPROXIMATION_ERROR_CONTROL
     - PLEASE DO NOT REMOVE ANY OF THE COMMENTS IN THIS FILE
     - Input and Output paramaters:
-        Input:  error_control = {control_status_register[USER_ERROR_LEN:3], control_status_register[2:1] (module select), control_status_register[0]}
+        Input:  control_status_register = {control_status_register[USER_ERROR_LEN:3], control_status_register[2:1] (module select), control_status_register[0]}
         Input:  adder_input_1 = First operand of your module
         Input:  adder_input_2 = Second operand of your module
         Input:  adder_Cin     = Input Carry
@@ -252,7 +252,7 @@ module Arithmetic_Logic_Unit
     generate 
         if (GENERATE_CIRCUIT_1)
         begin
-            // Circuit 0 (deafult) instantiation
+            // Circuit 1 (default) instantiation
             //----------------------------------
             Approximate_Accuracy_Controllable_Adder 
             #(
@@ -268,11 +268,11 @@ module Arithmetic_Logic_Unit
                 .Sum(adder_0_result)
             );
             //----------------------------------
-            // End of Circuit 0 instantiation
+            // End of Circuit 1 instantiation
         end
         if (GENERATE_CIRCUIT_2)
         begin
-            // Circuit 1 instantiation
+            // Circuit 2 instantiation
             //-------------------------------
             Kogge_Stone_Adder_ALU default_fast_adder
             (
@@ -282,23 +282,23 @@ module Arithmetic_Logic_Unit
                 .sum(adder_1_result)
             );
             //-------------------------------
-            // End of Circuit 1 instantiation
+            // End of Circuit 2 instantiation
         end
         if (GENERATE_CIRCUIT_3)
         begin
-            // Circuit 2 instantiation
+            // Circuit 3 instantiation
             //-------------------------------
             assign adder_2_result = (adder_2_enable) ? adder_input_1 + adder_input_2 + adder_Cin : 32'bz;
             //-------------------------------
-            // End of Circuit 2 instantiation
+            // End of Circuit 3 instantiation
         end
         if (GENERATE_CIRCUIT_4)
         begin
-            // Circuit 3 instantiation
+            // Circuit 4 instantiation
             //-------------------------------
 
             //-------------------------------
-            // End of Circuit 3 instantiation
+            // End of Circuit 4 instantiation
         end
     endgenerate
     // --------------------------------------------------------------------------------------------------

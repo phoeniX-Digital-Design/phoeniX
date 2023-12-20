@@ -1,36 +1,31 @@
 /*
-    phoeniX RV32IMX Divider Unit: Designer Guidelines
+    phoeniX RV32IMX Divider: Designer Guidelines
     ==========================================================================================================================
     DESIGNER NOTICE:
     - Kindly adhere to the established guidelines and naming conventions outlined in the project documentation. 
     - Following these standards will ensure smooth integration of your custom-made modules into this codebase.
     - Thank you for your cooperation.
     ==========================================================================================================================
-    Divider Unit Unit Approximation CSR:
-    - One adder circuit is used for 3 integer instructions: DIV/DIVU/REM/REMU
+    Divider Approximation CSR:
+    - MUL CSR is addressed as 0x802 in control status registers.
+    - Divider circuit is used for the following M-Extension instructions: DIV/DIVU/REM/REMU
     - Internal signals are all generated according to phoeniX core "Self Control Logic" of the modules so designer won't 
       need to change anything inside this module (excepts parts which are considered for designers to instatiate their own 
       custom made designs).
     - Instantiate your modules (Approximate or Accurate) between the comments in the code.
     - How to work with the speical purpose CSR:
         CSR [0]      : APPROXIMATE = 1 | ACCURATE = 0
-        CSR [2  : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate and approximate circuits)
+        CSR [2  : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate or approximate circuits)
         CSR [31 : 3] : APPROXIMATION_ERROR_CONTROL
     - PLEASE DO NOT REMOVE ANY OF THE COMMENTS IN THIS FILE
     - Input and Output paramaters:
-        Input:  clk = Source clock signal
-        Input:  error_control = {control_status_register[USER_ERROR_LEN:3], control_status_register[2:1] (module select), control_status_register[0]}
+        Input:  clk           = Source clock signal
+        Input:  control_status_register = {accuracy_control[USER_ERROR_LEN:3], accuracy_control[2:1] (module select), accuracy_control[0]}
         Input:  input_1       = First operand of your module
         Input:  input_2       = Second operand of your module
         Output: result        = Module division output
-        Output: reamainder    = Module remainder output
         Output: busy          = Module busy signal
     ==========================================================================================================================
-    - This unit executes R-Type instructions
-    - Inputs `rs1`, `rs2` comes from `Register_File` (DATA BUS)
-    - Input signals `opcode`, `funct3`, `funct7`, comes from `Instruction_Decoder`
-    - Supported Instructions :
-        R-TYPE :  DIV - DIVU - REM - REMU
 */
 
 `ifndef OPCODES
@@ -215,7 +210,7 @@ module Divider_Unit
     generate 
         if (GENERATE_CIRCUIT_1)
         begin
-            // Circuit 0 (deafult) instantiation
+            // Circuit 1 (default) instantiation
             //----------------------------------
             Approximate_Accuracy_Controlable_Divider divider_1 
             (
@@ -228,11 +223,11 @@ module Divider_Unit
                 .busy(divider_0_busy)
             );
             //----------------------------------
-            // End of Circuit 0 instantiation
+            // End of Circuit 1 instantiation
         end
         if (GENERATE_CIRCUIT_2)
         begin
-            // Circuit 1 instantiation
+            // Circuit 2 instantiation
             //-------------------------------
             Approximate_Accuracy_Controlable_Divider divider_2 
             (
@@ -245,23 +240,23 @@ module Divider_Unit
                 .busy(divider_1_busy)
             );
             //-------------------------------
-            // End of Circuit 1 instantiation
-        end
-        if (GENERATE_CIRCUIT_3)
-        begin
-            // Circuit 2 instantiation
-            //-------------------------------
-
-            //-------------------------------
             // End of Circuit 2 instantiation
         end
-        if (GENERATE_CIRCUIT_4)
+        if (GENERATE_CIRCUIT_3)
         begin
             // Circuit 3 instantiation
             //-------------------------------
 
             //-------------------------------
             // End of Circuit 3 instantiation
+        end
+        if (GENERATE_CIRCUIT_4)
+        begin
+            // Circuit 4 instantiation
+            //-------------------------------
+
+            //-------------------------------
+            // End of Circuit 4 instantiation
         end
     endgenerate
     // ----------------------------------------------------------------------------------------------------
