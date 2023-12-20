@@ -1,46 +1,41 @@
 /*
-    phoeniX RV32IMX Divider Unit: Designer Guidelines
+    phoeniX RV32IMX Divider: Designer Guidelines
     ==========================================================================================================================
     DESIGNER NOTICE:
     - Kindly adhere to the established guidelines and naming conventions outlined in the project documentation. 
     - Following these standards will ensure smooth integration of your custom-made modules into this codebase.
     - Thank you for your cooperation.
     ==========================================================================================================================
-    Divider Unit Unit Approximation CSR:
-    - One adder circuit is used for 3 integer instructions: DIV/DIVU/REM/REMU
+    Divider Approximation CSR:
+    - MUL CSR is addressed as 0x802 in control status registers.
+    - Divider circuit is used for the following M-Extension instructions: DIV/DIVU/REM/REMU
     - Internal signals are all generated according to phoeniX core "Self Control Logic" of the modules so designer won't 
       need to change anything inside this module (excepts parts which are considered for designers to instatiate their own 
       custom made designs).
     - Instantiate your modules (Approximate or Accurate) between the comments in the code.
     - How to work with the speical purpose CSR:
         CSR [0]      : APPROXIMATE = 1 | ACCURATE = 0
-        CSR [2  : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate and approximate circuits)
+        CSR [2  : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate or approximate circuits)
         CSR [31 : 3] : APPROXIMATION_ERROR_CONTROL
     - PLEASE DO NOT REMOVE ANY OF THE COMMENTS IN THIS FILE
     - Input and Output paramaters:
-        Input:  clk = Source clock signal
-        Input:  error_control = {control_status_register[USER_ERROR_LEN:3], control_status_register[2:1] (module select), control_status_register[0]}
+        Input:  clk           = Source clock signal
+        Input:  control_status_register = {accuracy_control[USER_ERROR_LEN:3], accuracy_control[2:1] (module select), accuracy_control[0]}
         Input:  input_1       = First operand of your module
         Input:  input_2       = Second operand of your module
         Output: result        = Module division output
-        Output: reamainder    = Module remainder output
         Output: busy          = Module busy signal
     ==========================================================================================================================
-    - This unit executes R-Type instructions
-    - Inputs `rs1`, `rs2` comes from `Register_File` (DATA BUS)
-    - Input signals `opcode`, `funct3`, `funct7`, comes from `Instruction_Decoder`
-    - Supported Instructions :
-        R-TYPE :  DIV - DIVU - REM - REMU
 */
 
-// `ifndef OPCODES
-//     `define LOAD        7'b00_000_11
-//     `define LOAD_FP     7'b00_001_11
-//     `define custom_0    7'b00_010_11
-//     `define MISC_MEM    7'b00_011_11
-//     `define OP_IMM      7'b00_100_11
-//     `define AUIPC       7'b00_101_11
-//     `define OP_IMM_32   7'b00_110_11
+`ifndef OPCODES
+    `define LOAD        7'b00_000_11
+    `define LOAD_FP     7'b00_001_11
+    `define custom_0    7'b00_010_11
+    `define MISC_MEM    7'b00_011_11
+    `define OP_IMM      7'b00_100_11
+    `define AUIPC       7'b00_101_11
+    `define OP_IMM_32   7'b00_110_11
 
 //     `define STORE       7'b01_000_11
 //     `define STORE_FP    7'b01_001_11
@@ -73,23 +68,28 @@
 `include "Defines.v"
 
 module Divider_Unit
+#(
+    parameter GENERATE_CIRCUIT_1 = 1,
+    parameter GENERATE_CIRCUIT_2 = 0,
+    parameter GENERATE_CIRCUIT_3 = 0,
+    parameter GENERATE_CIRCUIT_4 = 0
+)
 (
-    input clk,                          
+    input clk, 
 
-    input [6 : 0] opcode,               
-    input [6 : 0] funct7,               
-    input [2 : 0] funct3,               
+    input [6 : 0] opcode, 
+    input [6 : 0] funct7, 
+    input [2 : 0] funct3, 
 
-    input [31 : 0] control_status_register,    
+    input [31 : 0] control_status_register, 
 
-    input [31 : 0] rs1,                 
-    input [31 : 0] rs2,                 
+    input [31 : 0] rs1, 
+    input [31 : 0] rs2, 
 
-    output reg divider_unit_busy,           
-    output reg [31 : 0] divider_unit_output      
+    output reg divider_unit_busy,  
+    output reg [31 : 0] divider_unit_output 
 );
 
-    // Data forwarding will be considered in the core file (phoeniX.v)
     reg  enable;
 
     reg  [31 : 0] operand_1; 
@@ -102,55 +102,164 @@ module Divider_Unit
     wire [31 : 0] remainder;
     wire busy;
 
+    reg  [ 7 : 0] divider_accuracy;
+    reg  [31 : 0] divider_input_1;   // Latched Module input 1
+    reg  [31 : 0] divider_input_2;   // Latched Module input 2
+
+    reg  divider_0_enable;
+    reg  divider_1_enable;
+    reg  divider_2_enable;
+    reg  divider_3_enable;
+
+    wire [31 : 0] divider_0_result;
+    wire [31 : 0] divider_1_result;
+    wire [31 : 0] divider_2_result;
+    wire [31 : 0] divider_3_result;
+
+    wire [31 : 0] divider_0_remainder;
+    wire [31 : 0] divider_1_remainder;
+    wire [31 : 0] divider_2_remainder;
+    wire [31 : 0] divider_3_remainder;
+
+    wire divider_0_busy;
+    wire divider_1_busy;
+    wire divider_2_busy;
+    wire divider_3_busy;
+
     always @(*) 
     begin
         operand_1 = rs1;
         operand_2 = rs2;
         divider_unit_busy = busy;
         case ({funct7, funct3, opcode})
-            {`MULDIV, `DIV, `OP} : begin  
+            {`MULDIV, `DIV, `OP} : begin
                 enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = $signed(operand_2);
                 divider_unit_output = result;
             end
-            {`MULDIV, `DIVU, `OP} : begin  
+            {`MULDIV, `DIVU, `OP} : begin
                 enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = operand_2;
                 divider_unit_output = result;
             end
-            {`MULDIV, `REM, `OP} : begin  
+            {`MULDIV, `REM, `OP} : begin 
                 enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = $signed(operand_2);
                 divider_unit_output = remainder;
             end
-            {`MULDIV, `REMU, `OP} : begin  
+            {`MULDIV, `REMU, `OP} : begin
                 enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = operand_2;
                 divider_unit_output = $signed(remainder);
             end
-            default: begin divider_unit_output = 32'bz; divider_unit_busy = 1'b0; enable = 1'b0; end
+            default: 
+            begin 
+                divider_unit_output = 32'bz; divider_unit_busy = 1'b0; enable = 1'b0; 
+                divider_0_enable = 1'b0; divider_1_enable = 1'b0;
+                divider_2_enable = 1'b0; divider_3_enable = 1'b0;
+            end              
+        endcase
+    end
+
+    always @(posedge enable) 
+    begin
+        divider_input_1 <= input_1;
+        divider_input_2 <= input_2;
+        divider_accuracy <= control_status_register[10 : 3] | {8{~control_status_register[0]}};
+        case (control_status_register[2 : 1])
+            2'b00:   begin divider_0_enable = 1'b1; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
+            2'b01:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b1; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
+            2'b10:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b0; divider_2_enable = 1'b1; divider_3_enable = 1'b0; end
+            2'b11:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b1; end 
+            default: begin divider_0_enable = 1'b1; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
         endcase
     end
 
     always @(negedge divider_unit_busy) enable <= 1'b0;
 
+    assign result = (divider_0_enable) ? divider_0_result :
+                    (divider_1_enable) ? divider_1_result :
+                    (divider_2_enable) ? divider_2_result :
+                    (divider_3_enable) ? divider_3_result : divider_0_result;
+
+    assign remainder =  (divider_0_enable) ? divider_0_remainder :
+                        (divider_1_enable) ? divider_1_remainder :
+                        (divider_2_enable) ? divider_2_remainder :
+                        (divider_3_enable) ? divider_3_remainder : divider_0_remainder;
+  
+    always @(*) 
+    begin
+        if (divider_0_enable)
+            divider_unit_busy <= divider_0_busy;
+        else if (divider_1_enable)
+            divider_unit_busy <= divider_1_busy;
+        else if (divider_2_enable)
+            divider_unit_busy <= divider_2_busy;
+        else if (divider_3_enable)
+            divider_unit_busy <= divider_3_busy;
+        else
+            divider_unit_busy <= 1'b0; 
+    end
+
     // *** Instantiate your divider here ***
     // Please instantiate your divider module according to the guidelines and naming conventions of phoeniX
     // ----------------------------------------------------------------------------------------------------
-    Approximate_Accuracy_Controlable_Divider divider 
-    (
-        .clk(clk),
-        .Er(control_status_register[10 : 3] | {8{~control_status_register[0]}}),
-        .operand_1(input_1),  
-        .operand_2(input_2),  
-        .div(result),  
-        .rem(remainder), 
-        .busy(busy)
-    );
+    generate 
+        if (GENERATE_CIRCUIT_1)
+        begin
+            // Circuit 1 (default) instantiation
+            //----------------------------------
+            Approximate_Accuracy_Controlable_Divider divider_1 
+            (
+                .clk(clk),
+                .Er(divider_accuracy),
+                .operand_1(divider_input_1),  
+                .operand_2(divider_input_1),  
+                .div(divider_0_result),  
+                .rem(divider_0_remainder), 
+                .busy(divider_0_busy)
+            );
+            //----------------------------------
+            // End of Circuit 1 instantiation
+        end
+        if (GENERATE_CIRCUIT_2)
+        begin
+            // Circuit 2 instantiation
+            //-------------------------------
+            Approximate_Accuracy_Controlable_Divider divider_2 
+            (
+                .clk(clk),
+                .Er(8'b0000_0000),
+                .operand_1(divider_input_1),  
+                .operand_2(divider_input_1),  
+                .div(divider_1_result),  
+                .rem(divider_1_remainder), 
+                .busy(divider_1_busy)
+            );
+            //-------------------------------
+            // End of Circuit 2 instantiation
+        end
+        if (GENERATE_CIRCUIT_3)
+        begin
+            // Circuit 3 instantiation
+            //-------------------------------
+
+            //-------------------------------
+            // End of Circuit 3 instantiation
+        end
+        if (GENERATE_CIRCUIT_4)
+        begin
+            // Circuit 4 instantiation
+            //-------------------------------
+
+            //-------------------------------
+            // End of Circuit 4 instantiation
+        end
+    endgenerate
     // ----------------------------------------------------------------------------------------------------
     // *** End of divider instantiation ***
 endmodule

@@ -70,7 +70,7 @@ module Instruction_Decoder
     output reg write_enable_csr
 );
 
-    assign opcode = instruction [6 : 0];
+    assign opcode  = instruction [6 : 0];
     assign funct7  = instruction[31 : 25];
     assign funct3  = instruction[14 : 12];
     assign funct12 = instruction[31 : 20];

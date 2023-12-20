@@ -126,7 +126,7 @@ module Load_Store_Unit
     // -------------------------------------
     // Data Management for Store Instruction
     // -------------------------------------
-    reg [31 : 0] store_data_reg = 32'bz;
+    reg [31 : 0] store_data_reg;
     assign memory_interface_data = opcode == `STORE ? store_data_reg : 32'bz;
 
     // ------------------------------------------------

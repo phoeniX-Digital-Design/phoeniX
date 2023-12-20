@@ -15,11 +15,11 @@
     - Instantiate your modules (Approximate or Accurate) between the comments in the code.
     - How to work with the speical purpose CSR:
         CSR [0]      : APPROXIMATE = 1 | ACCURATE = 0
-        CSR [2  : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate and approximate circuits)
+        CSR [2  : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate or approximate circuits)
         CSR [31 : 3] : APPROXIMATION_ERROR_CONTROL
     - PLEASE DO NOT REMOVE ANY OF THE COMMENTS IN THIS FILE
     - Input and Output paramaters:
-        Input:  error_control = {control_status_register[USER_ERROR_LEN:3], control_status_register[2:1] (module select), control_status_register[0]}
+        Input:  control_status_register = {control_status_register[USER_ERROR_LEN:3], control_status_register[2:1] (module select), control_status_register[0]}
         Input:  adder_input_1 = First operand of your module
         Input:  adder_input_2 = Second operand of your module
         Input:  adder_Cin     = Input Carry
@@ -93,6 +93,12 @@
 `define LEFT  1'b0
 
 module Arithmetic_Logic_Unit
+#(
+    parameter GENERATE_CIRCUIT_1 = 1,
+    parameter GENERATE_CIRCUIT_2 = 0,
+    parameter GENERATE_CIRCUIT_3 = 0,
+    parameter GENERATE_CIRCUIT_4 = 0
+)
 (
     input [6 : 0] opcode,               
     input [2 : 0] funct3,               
@@ -116,11 +122,20 @@ module Arithmetic_Logic_Unit
     reg  [31 : 0] adder_input_2;
     wire [31 : 0] adder_result;
 
-    
     reg  [31 : 0] shift_input;
     reg  [4  : 0] shift_amount;
     reg           shift_direction;
     wire [31 : 0] shift_result;
+
+    reg  adder_0_enable;
+    reg  adder_1_enable;
+    reg  adder_2_enable;
+    reg  adder_3_enable;
+
+    wire [31 : 0] adder_0_result;
+    wire [31 : 0] adder_1_result;
+    wire [31 : 0] adder_2_result;
+    wire [31 : 0] adder_3_result;
 
     always @(*) 
     begin
@@ -163,7 +178,7 @@ module Arithmetic_Logic_Unit
             {`SLL, `OP}     : 
             begin shift_direction = `LEFT; shift_input = operand_1; shift_amount = operand_2[4 : 0]; alu_output = shift_result; end
             {`SLT, `OP}     : begin alu_enable = 1'b1; alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;    end
-            {`SLTU, `OP}    : begin alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0; ;                    end
+            {`SLTU, `OP}    : begin alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0;                      end
             {`XOR, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 ^ operand_2;  end
             {`OR, `OP}      : begin alu_enable = 1'b1; alu_output = operand_1 | operand_2;  end
             {`AND, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 & operand_2;  end
@@ -199,10 +214,25 @@ module Arithmetic_Logic_Unit
                     `SUB : begin adder_enable = 1'b1; adder_input_1 = operand_1; adder_input_2 = ~operand_2; adder_Cin = 1'b1; end 
                 endcase
             end
-            
             default: begin adder_enable = 1'b0; end
         endcase    
     end
+
+    always @(posedge adder_enable) 
+    begin
+        case (control_status_register[2 : 1])
+            2'b00:   begin adder_0_enable = 1'b1; adder_1_enable = 1'b0; adder_2_enable = 1'b0; adder_3_enable = 1'b0; end
+            2'b01:   begin adder_0_enable = 1'b0; adder_1_enable = 1'b1; adder_2_enable = 1'b0; adder_3_enable = 1'b0; end
+            2'b10:   begin adder_0_enable = 1'b0; adder_1_enable = 1'b0; adder_2_enable = 1'b1; adder_3_enable = 1'b0; end
+            2'b11:   begin adder_0_enable = 1'b0; adder_1_enable = 1'b0; adder_2_enable = 1'b0; adder_3_enable = 1'b1; end 
+            default: begin adder_0_enable = 1'b1; adder_1_enable = 1'b0; adder_2_enable = 1'b0; adder_3_enable = 1'b0; end
+        endcase
+    end
+
+    assign adder_result =   (adder_0_enable) ? adder_0_result :
+                            (adder_1_enable) ? adder_1_result :
+                            (adder_2_enable) ? adder_2_result :
+                            (adder_3_enable) ? adder_3_result : adder_0_result;
 
     // Instantiation of Barrel Shifter circuit
     // ---------------------------------------
@@ -216,25 +246,298 @@ module Arithmetic_Logic_Unit
     // ---------------------------------------
     // End of Barrel Shifter instantiation
 
-    
     // *** Instantiate your adder circuit here ***
     // Please instantiate your adder module according to the guidelines and naming conventions of phoeniX
     // --------------------------------------------------------------------------------------------------
-    Approximate_Accuracy_Controllable_Adder 
-    #(
-        .LEN(32),
-        .APX_LEN(8)
-    )
-    approximate_accuracy_controllable_adder 
-    (
-        .Er(control_status_register[10 : 3] | {8{~control_status_register[0]}}), 
-        .A(adder_input_1),
-        .B(adder_input_2),
-        .Cin(adder_Cin),
-        .Sum(adder_result)
-    );
+    generate 
+        if (GENERATE_CIRCUIT_1)
+        begin
+            // Circuit 1 (default) instantiation
+            //----------------------------------
+            Approximate_Accuracy_Controllable_Adder 
+            #(
+                .LEN(32),
+                .APX_LEN(8)
+            )
+            approximate_accuracy_controllable_adder 
+            (
+                .Er(control_status_register[10 : 3] | {8{~control_status_register[0]}}), 
+                .A(adder_input_1),
+                .B(adder_input_2),
+                .Cin(adder_Cin),
+                .Sum(adder_0_result)
+            );
+            //----------------------------------
+            // End of Circuit 1 instantiation
+        end
+        if (GENERATE_CIRCUIT_2)
+        begin
+            // Circuit 2 instantiation
+            //-------------------------------
+            Kogge_Stone_Adder_ALU default_fast_adder
+            (
+                .carry_in(adder_Cin), 
+                .input_A(adder_input_1),
+                .input_B(adder_input_2),
+                .sum(adder_1_result)
+            );
+            //-------------------------------
+            // End of Circuit 2 instantiation
+        end
+        if (GENERATE_CIRCUIT_3)
+        begin
+            // Circuit 3 instantiation
+            //-------------------------------
+            assign adder_2_result = (adder_2_enable) ? adder_input_1 + adder_input_2 + adder_Cin : 32'bz;
+            //-------------------------------
+            // End of Circuit 3 instantiation
+        end
+        if (GENERATE_CIRCUIT_4)
+        begin
+            // Circuit 4 instantiation
+            //-------------------------------
+
+            //-------------------------------
+            // End of Circuit 4 instantiation
+        end
+    endgenerate
     // --------------------------------------------------------------------------------------------------
     // *** End of adder module instantiation ***
+endmodule
+
+module Kogge_Stone_Adder_ALU
+(
+    input  wire          carry_in,
+    input  wire [31 : 0] input_A,
+    input  wire [31 : 0] input_B,
+    output wire [31 : 0] sum,
+    output wire          carry_out
+);
+
+    // Stage 1
+    wire [31 : 0] p_stage_1; wire [31 : 0] g_stage_1; wire carry_stage_1;
+    // Stage 2
+    wire [30 : 0] p_stage_2; wire [31 : 0] g_stage_2; wire carry_stage_2; wire [31 : 0] p_saved_1;
+    // Stage 3
+    wire [28 : 0] p_stage_3; wire [31 : 0] g_stage_3; wire carry_stage_3; wire [31 : 0] p_saved_2;
+    // Stage 4
+    wire [24 : 0] p_stage_4; wire [31 : 0] g_stage_4; wire carry_stage_4; wire [31 : 0] p_saved_3;
+    // Stage 5
+    wire [16 : 0] p_stage_5; wire [31 : 0] g_stage_5; wire carry_stage_5; wire [31 : 0] p_saved_4;
+    // Stage 6
+    wire [31 : 0] p_stage_6; wire [31 : 0] g_stage_6; wire carry_stage_6;
+
+    // Kogge Stone Stage 1
+    assign carry_stage_1 = carry_in;
+    genvar i;
+    generate
+    for (i = 0 ; i < 32 ; i = i + 1) 
+    begin
+        PG_ALU pg_stage_1 
+        (
+            .input_a(input_A[i]),
+            .input_b(input_B[i]),
+            .output_p(p_stage_1[i]),
+            .output_g(g_stage_1[i])
+        );
+    end
+    endgenerate
+
+    // Kogge Stone Stage 2
+    wire [31 : 0] gkj_stage_2;
+    wire [30 : 0] pkj_stage_2;
+
+    assign carry_stage_2        = carry_stage_1;
+    assign p_saved_1            = p_stage_1 [31 : 0];
+    assign gkj_stage_2 [0]      = carry_stage_1;
+    assign gkj_stage_2 [31 : 1] = g_stage_1 [30 : 0];
+    assign pkj_stage_2          = p_stage_1 [30 : 0];
+
+    Grey_Cell_ALU gc_0(gkj_stage_2[0], p_stage_1[0], g_stage_1[0], g_stage_2[0]);
+    genvar j;
+    generate
+    for (j = 0 ; j < 31 ; j = j + 1) 
+    begin
+        Black_Cell_ALU bc_stage_2 
+        (
+            .input_pj(pkj_stage_2[j]),
+            .input_gj(gkj_stage_2[j + 1]),
+            .input_pk(p_stage_1[j + 1]),
+            .input_gk(g_stage_1[j + 1]),
+            .output_g(g_stage_2[j + 1]),
+            .output_p(p_stage_2[j])
+        );
+    end
+    endgenerate
+
+    // Kogge Stone Stage 3
+    wire [30 : 0] gkj_stage_3;
+    wire [28 : 0] pkj_stage_3;
+
+    assign carry_stage_3       = carry_stage_2;
+    assign p_saved_2           = p_saved_1[31 : 0];
+    assign gkj_stage_3[0]      = carry_stage_2;
+    assign gkj_stage_3[30 : 1] = g_stage_2[29 : 0];
+    assign pkj_stage_3         = p_stage_2[28 : 0];
+    assign g_stage_3[0]        = g_stage_2[0];
+
+    Grey_Cell_ALU  gc_1(gkj_stage_3[0], p_stage_2[0], g_stage_2[1], g_stage_3[1]);
+    Grey_Cell_ALU  gc_2(gkj_stage_3[1], p_stage_2[1], g_stage_2[2], g_stage_3[2]);
+
+    genvar k;
+    generate
+    for (k = 0 ; k < 29 ; k = k + 1) begin
+        Black_Cell_ALU bc_stage_3 
+        (
+            .input_pj(pkj_stage_3[k]),
+            .input_gj(gkj_stage_3[k + 2]),
+            .input_pk(p_stage_2[k + 2]),
+            .input_gk(g_stage_2[k + 3]),
+            .output_g (g_stage_3[k + 3]),
+            .output_p (p_stage_3[k])
+        );
+    end
+    endgenerate
+
+    // Kogge Stone Stage 4
+    wire [28 : 0] gkj_stage_4;
+    wire [24 : 0] pkj_stage_4;
+
+    assign carry_stage_4       = carry_stage_3;
+    assign p_saved_3           = p_saved_2[31 : 0];
+    assign gkj_stage_4[0]      = carry_stage_3;
+    assign gkj_stage_4[28 : 1] = g_stage_3[27 : 0];
+    assign pkj_stage_4         = p_stage_3[24 : 0];
+    assign g_stage_4[2 : 0]    = g_stage_3[2  : 0];
+
+    genvar l;
+    generate
+    for (l = 0 ; l < 4 ; l = l + 1) begin
+        Grey_Cell_ALU gc_stage_4 
+        (
+            .input_gj(gkj_stage_4[l]),
+            .input_pk(p_stage_3[l]),
+            .input_gk(g_stage_3[l + 3]),
+            .output_g(g_stage_4[l + 3])
+        );
+    end
+    endgenerate
+
+    genvar m;
+    generate
+    for (m = 0 ; m < 25 ; m = m + 1) begin
+        Black_Cell_ALU bc_stage_4 
+        (
+            .input_pj(pkj_stage_4[m]),
+            .input_gj(gkj_stage_4[m + 4]),
+            .input_pk(p_stage_3[m + 4]),
+            .input_gk(g_stage_3[m + 7]),
+            .output_g(g_stage_4[m + 7]),
+            .output_p(p_stage_4[m])
+        );
+    end
+    endgenerate
+
+    // Kogge Stone Stage 5
+    wire [24 : 0] gkj_stage_5;
+    wire [16 : 0] pkj_stage_5;
+
+    assign carry_stage_5       = carry_stage_4;
+    assign p_saved_4           = p_saved_3[31 : 0];
+    assign gkj_stage_5[0]      = carry_stage_4;
+    assign gkj_stage_5[24 : 1] = g_stage_4[23 : 0];
+    assign pkj_stage_5         = p_stage_4[16 : 0];
+    assign g_stage_5[6 : 0]    = g_stage_4[6  : 0];
+
+    genvar n;
+    generate
+    for (n = 0 ; n < 8 ; n = n + 1) begin
+        Grey_Cell_ALU gc_stage_5 
+        (
+            .input_gj(gkj_stage_5[n]),
+            .input_pk(p_stage_4[n]),
+            .input_gk(g_stage_4[n + 7]),
+            .output_g(g_stage_5[n + 7])
+        );
+    end
+    endgenerate
+
+    genvar o;
+    generate
+    for (o = 0 ; o < 17 ; o = o + 1) begin
+        Black_Cell_ALU bc_stage_5 
+        (
+            .input_pj(pkj_stage_5[o]),
+            .input_gj(gkj_stage_5[o + 8]),
+            .input_pk(p_stage_4[o + 8]),
+            .input_gk(g_stage_4[o + 15]),
+            .output_g(g_stage_5[o + 15]),
+            .output_p(p_stage_5[o])
+        );
+    end
+    endgenerate
+
+    // Kogge Stone Stage 6
+    wire [16 : 0] gkj_stage_6;
+
+    assign carry_stage_6       = carry_stage_5;
+    assign p_stage_6           = p_saved_4[31 : 0];
+    assign gkj_stage_6[0]      = carry_stage_5;
+    assign gkj_stage_6[16 : 1] = g_stage_5[15 : 0];
+    assign g_stage_6[15 : 0]   = g_stage_5[15 : 0];
+
+    genvar p;
+    generate
+    for (p = 1 ; p <= 16 ; p = p + 1) begin
+        Grey_Cell_ALU gc_stage_6 
+        (
+            .input_gj(gkj_stage_6[p]),
+            .input_pk(p_stage_5[p]),
+            .input_gk(g_stage_5[p + 15]),
+            .output_g(g_stage_6[p + 15])
+        );
+    end
+    endgenerate
+
+    // Kogge Stone Stage 7
+    assign carry_out   = g_stage_6[31];
+    assign sum[0]      = carry_stage_6 ^ p_stage_6[0];
+    assign sum[31 : 1] = g_stage_6[30 : 0] ^ p_stage_6[31 : 1];
+
+endmodule
+
+module PG_ALU
+(
+    input  wire input_a,
+    input  wire input_b,
+    output wire output_p,
+    output wire output_g
+);
+    assign output_p = input_a ^ input_b;
+    assign output_g = input_a & input_b;
+endmodule
+
+module Black_Cell_ALU
+(
+    input  wire input_pj,
+    input  wire input_gj,
+    input  wire input_pk,
+    input  wire input_gk,
+    output wire output_g,
+    output wire output_p
+);
+    assign output_g = input_gk | (input_gj & input_pk);
+    assign output_p = input_pk & input_pj;
+endmodule
+
+module Grey_Cell_ALU
+(
+    input  wire input_gj,
+    input  wire input_pk,
+    input  wire input_gk,
+    output wire output_g
+);
+    assign output_g = input_gk | (input_gj & input_pk);
 endmodule
 
 module Barrel_Shifter

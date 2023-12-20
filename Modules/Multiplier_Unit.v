@@ -15,12 +15,12 @@
     - Instantiate your modules (Approximate or Accurate) between the comments in the code.
     - How to work with the speical purpose CSR:
         CSR [0]      : APPROXIMATE = 1 | ACCURATE = 0
-        CSR [2  : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate and approximate circuits)
+        CSR [2  : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate or approximate circuits)
         CSR [31 : 3] : APPROXIMATION_ERROR_CONTROL
     - PLEASE DO NOT REMOVE ANY OF THE COMMENTS IN THIS FILE
     - Input and Output paramaters:
-        Input:  clk = Source clock signal
-        Input:  error_control = {control_status_register[USER_ERROR_LEN:3], control_status_register[2:1] (module select), control_status_register[0]}
+        Input:  clk           = Source clock signal
+        Input:  control_status_register = {accuracy_control[USER_ERROR_LEN:3], accuracy_control[2:1] (module select), accuracy_control[0]}
         Input:  input_1       = First operand of your module
         Input:  input_2       = Second operand of your module
         Output: result        = Module division output
@@ -28,18 +28,14 @@
     ==========================================================================================================================
 */
 
-// *** Include your headers and modules here ***
-// `include "Approximate_Arithmetic_Units/Approximate_Accuracy_Controllable_Multiplier.v"
-// *** End of including headers and modules ***
-
-// `ifndef OPCODES
-//     `define LOAD        7'b00_000_11
-//     `define LOAD_FP     7'b00_001_11
-//     `define custom_0    7'b00_010_11
-//     `define MISC_MEM    7'b00_011_11
-//     `define OP_IMM      7'b00_100_11
-//     `define AUIPC       7'b00_101_11
-//     `define OP_IMM_32   7'b00_110_11
+`ifndef OPCODES
+    `define LOAD        7'b00_000_11
+    `define LOAD_FP     7'b00_001_11
+    `define custom_0    7'b00_010_11
+    `define MISC_MEM    7'b00_011_11
+    `define OP_IMM      7'b00_100_11
+    `define AUIPC       7'b00_101_11
+    `define OP_IMM_32   7'b00_110_11
 
 //     `define STORE       7'b01_000_11
 //     `define STORE_FP    7'b01_001_11
@@ -72,20 +68,26 @@
 `include "Defines.v"
 
 module Multiplier_Unit
+#(
+    parameter GENERATE_CIRCUIT_1 = 1,
+    parameter GENERATE_CIRCUIT_2 = 0,
+    parameter GENERATE_CIRCUIT_3 = 0,
+    parameter GENERATE_CIRCUIT_4 = 0
+)
 (
-    input clk,                          
+    input clk, 
 
-    input [6 : 0] opcode,               
-    input [6 : 0] funct7,               
-    input [2 : 0] funct3,               
+    input [6 : 0] opcode, 
+    input [6 : 0] funct7,
+    input [2 : 0] funct3, 
 
-    input [31 : 0] control_status_register,    
+    input [31 : 0] control_status_register, 
 
-    input [31 : 0] rs1,                 
-    input [31 : 0] rs2,                 
+    input [31 : 0] rs1, 
+    input [31 : 0] rs2,  
 
-    output reg multiplier_unit_busy,               
-    output reg [31 : 0] multiplier_unit_output      
+    output reg multiplier_unit_busy, 
+    output reg [31 : 0] multiplier_unit_output  
 );
 
     reg  multiplier_enable;
@@ -93,45 +95,72 @@ module Multiplier_Unit
     reg  [31 : 0] operand_1;            // RS1 latch
     reg  [31 : 0] operand_2;            // RS2 latch
 
-    reg  [31 : 0] input_1;              // Module input 1
-    reg  [31 : 0] input_2;              // Module input 2
+    reg  [31 : 0] input_1;              // Modules input 1
+    reg  [31 : 0] input_2;              // Modules input 2
 
     reg  [ 6 : 0] multiplier_accuracy;
-    reg  [31 : 0] multiplier_input_1;   // Latched Module input 1
-    reg  [31 : 0] multiplier_input_2;   // Latched Module input 2
+    reg  [31 : 0] multiplier_input_1;   // Latched modules input 1
+    reg  [31 : 0] multiplier_input_2;   // Latched modules input 2
 
-    wire [63 : 0] result;               // Multiplier 64-bit result
+    reg multiplier_busy;                // Multiplexer result for multipliers busy signals
+
+    wire [63 : 0] result;               // Multiplexer result for multipliers 64-bit result
+
+    reg  multiplier_0_enable;
+    reg  multiplier_1_enable;
+    reg  multiplier_2_enable;
+    reg  multiplier_3_enable;
+
+    wire [63 : 0] multiplier_0_result;
+    wire [63 : 0] multiplier_1_result;
+    wire [63 : 0] multiplier_2_result;
+    wire [63 : 0] multiplier_3_result;
+
+    wire multiplier_0_busy;
+    wire multiplier_1_busy;
+    wire multiplier_2_busy;
+    wire multiplier_3_busy;
 
     always @(*) 
     begin
         operand_1 = rs1;
         operand_2 = rs2;
         case ({funct7, funct3, opcode})
-            {`MULDIV, `MUL, `OP} : begin  
+            {`MULDIV, `MUL, `OP} : 
+            begin
                 multiplier_enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = $signed(operand_2);
                 multiplier_unit_output = result[31 : 0];
             end
-            {`MULDIV, `MULH, `OP} : begin  
+            {`MULDIV, `MULH, `OP} : 
+            begin 
                 multiplier_enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = $signed(operand_2);
                 multiplier_unit_output = result >>> 32;
             end
-            {`MULDIV, `MULHSU, `OP} : begin  
+            {`MULDIV, `MULHSU, `OP} : 
+            begin
                 multiplier_enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = operand_2;
                 multiplier_unit_output = result >>> 32;
             end
-            {`MULDIV, `MULHU, `OP} : begin  
+            {`MULDIV, `MULHU, `OP} : 
+            begin
                 multiplier_enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = operand_2;
                 multiplier_unit_output = result >> 32;
             end
-            default: begin multiplier_enable = 1'b0; multiplier_unit_output = 32'bz; end             
+            default: 
+            begin
+                multiplier_unit_output = 32'bz; 
+                multiplier_enable   = 1'b0; 
+                multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0;
+                multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0;
+            end             
         endcase
     end
 
@@ -148,21 +177,89 @@ module Multiplier_Unit
         multiplier_input_1 <= input_1;
         multiplier_input_2 <= input_2;
         multiplier_accuracy <= control_status_register[9 : 3] | {7{~control_status_register[0]}};
+        case (control_status_register[2 : 1])
+            2'b00:   begin multiplier_0_enable = 1'b1; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
+            2'b01:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b1; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
+            2'b10:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b1; multiplier_3_enable = 1'b0; end
+            2'b11:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b1; end 
+            default: begin multiplier_0_enable = 1'b1; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
+        endcase
+    end
+
+    assign result = (multiplier_0_enable) ? multiplier_0_result :
+                    (multiplier_1_enable) ? multiplier_1_result :
+                    (multiplier_2_enable) ? multiplier_2_result :
+                    (multiplier_3_enable) ? multiplier_3_result : multiplier_0_result;
+  
+    always @(*) 
+    begin
+        if (multiplier_0_enable)
+            multiplier_busy <= multiplier_0_busy;
+        else if (multiplier_1_enable)
+            multiplier_busy <= multiplier_1_busy;
+        else if (multiplier_2_enable)
+            multiplier_busy <= multiplier_2_busy;
+        else if (multiplier_3_enable)
+            multiplier_busy <= multiplier_3_busy;
+        else
+            multiplier_busy <= 1'b0; 
     end
 
     // *** Instantiate your multiplier circuit here ***
     // Please instantiate your multiplier module according to the guidelines and naming conventions of phoeniX
     // -------------------------------------------------------------------------------------------------------
-    Approximate_Accuracy_Controllable_Multiplier multiplier 
-    (
-        .clk(clk),
-        .enable(multiplier_enable),
-        .Er(multiplier_accuracy),
-        .Operand_1(multiplier_input_1), 
-        .Operand_2(multiplier_input_2),  
-        .Result(result),
-        .Busy(multiplier_busy)
-    );
+    generate 
+        if (GENERATE_CIRCUIT_1)
+        begin
+            // Circuit 1 (default) instantiation
+            //----------------------------------
+            Approximate_Accuracy_Controllable_Multiplier multiplier 
+            (
+                .clk(clk),
+                .enable(multiplier_0_enable),
+                .Er(multiplier_accuracy),
+                .Operand_1(multiplier_input_1), 
+                .Operand_2(multiplier_input_2),  
+                .Result(multiplier_0_result),
+                .Busy(multiplier_0_busy)
+            );
+            //----------------------------------
+            // End of Circuit 1 instantiation
+        end
+        if (GENERATE_CIRCUIT_2)
+        begin
+            // Circuit 2 instantiation
+            //-------------------------------
+            Approximate_Accuracy_Controllable_Multiplier multiplier_2 
+            (
+                .clk(clk),
+                .enable(multiplier_1_enable),
+                .Er(7'b000_0000),
+                .Operand_1(multiplier_input_1), 
+                .Operand_2(multiplier_input_2),  
+                .Result(multiplier_1_result),
+                .Busy(multiplier_1_busy)
+            );
+            //-------------------------------
+            // End of Circuit 2 instantiation
+        end
+        if (GENERATE_CIRCUIT_3)
+        begin
+            // Circuit 3 instantiation
+            //-------------------------------
+
+            //-------------------------------
+            // End of Circuit 3 instantiation
+        end
+        if (GENERATE_CIRCUIT_4)
+        begin
+            // Circuit 4 instantiation
+            //-------------------------------
+
+            //-------------------------------
+            // End of Circuit 4 instantiation
+        end
+    endgenerate
     // -------------------------------------------------------------------------------------------------------
     // *** End of multiplier module instantiation ***
 endmodule
