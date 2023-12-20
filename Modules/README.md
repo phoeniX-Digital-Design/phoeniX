@@ -118,7 +118,7 @@ A parametrized register file suitable for general purpose and control-status reg
 <div align="justify">
 
 Platform’s execution engine which is designed for an RV32IEM core, has three main modules: `Arithmetic Logic Unit`, `Multiplier Unit` and `Divider Unit`. These three modules are designed in a novel way which gives designers the ability to **change or add executer circuits** in the function units, without any need to change the control logic in the modules. Obviously there are some guidelines for this kind of transformations and changes like this for the platform, but in the end it is very simple to do and needs lowest requirements and changes.
-For each execution unit, there is one special purpose register defined named as `ALU_CSR`, `MUL_CSR` and `DIV_CSR`. These Control Status Registers (CSRs) are designed in a way to provide phoeniX’s special features for approximate computing. You can see the structure of the mentioned registers in the following table:
+For each execution unit, there is one special purpose register defined named as `alucsr`, `mulcsr` and `divcsr`. These Control Status Registers (CSRs) are designed in a way to provide phoeniX’s special features for approximate computing. You can see the structure of the mentioned registers in the following table:
 
 | CSR [31 : 16] | CSR [15 : 12]      | CSR [11 : 8] | CSR [7 : 3] | CSR [2 : 1]    | CSR [0]              |
 | ------------- | ------------------ | ------------ | ----------- | -------------- | -------------------- |
@@ -126,7 +126,7 @@ For each execution unit, there is one special purpose register defined named as 
 
 Each entry in these registers is dedicated to a specific feature, aiming to assist users and designers in demonstrating advancements in their respective fields of study and work. The ultimate objective of these features, which contributes to the overall goal of this project, is to enhance user accessibility in programming and provide designers with greater flexibility in implementations, and achieving this target with the integration of **precise circuits’ accuracy and the efficiency** and potential **energy savings offered by approximate circuits**.
 
-These three registers are mapped as `0x800 (ALU_CSR)`, `0x801(MUL_CSR)` and `0x802 (DIV_CSR)` in platform’s register file. Here is a sample RISC-V assembly code included to show the programming convention of the phoeniX using an approximate arithmetic circuit which also the error level is configurable in the circuit.
+These three registers are mapped as `0x800 (alucsr)`, `0x801(mulcsr)` and `0x802 (divcsr)` in platform’s register file. Here is a sample RISC-V assembly code included to show the programming convention of the phoeniX using an approximate arithmetic circuit which also the error level is configurable in the circuit.
 
 ```asm
 factorial: 	add     a4,     a0,     zero
