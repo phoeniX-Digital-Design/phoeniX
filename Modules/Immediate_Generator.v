@@ -1,11 +1,4 @@
-`ifndef INSTRUCTION_TYPES
-    `define R_TYPE 0
-    `define I_TYPE 1
-    `define S_TYPE 2
-    `define B_TYPE 3
-    `define U_TYPE 4
-    `define J_TYPE 5
-`endif /*INSTRUCTION_TYPES*/
+`include "Defines.v"
 
 module Immediate_Generator 
 (

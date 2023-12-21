@@ -30,12 +30,12 @@
 `endif /*OPCODES*/
 
 `ifndef INSTRUCTION_TYPES
-    `define R_TYPE 0
-    `define I_TYPE 1
-    `define S_TYPE 2
-    `define B_TYPE 3
-    `define U_TYPE 4
-    `define J_TYPE 5
+    `define R_TYPE 3'b000
+    `define I_TYPE 3'b001
+    `define S_TYPE 3'b010
+    `define B_TYPE 3'b011
+    `define U_TYPE 3'b100
+    `define J_TYPE 3'b101
 `endif /*INSTRUCTION_TYPES*/
 
 `ifndef EXCEPTIONS
@@ -87,3 +87,52 @@
 
     `define MULDIV  7'b0000001
 `endif /*MUL_DIV_INSTRCUTIONS*/
+
+`ifndef I_INSTRUCTIONS
+    `define ADDI    3'b000
+    `define SLTI    3'b010
+    `define SLTIU   3'b011
+    `define XORI    3'b100
+    `define ORI     3'b110
+    `define ANDI    3'b111
+    `define SLLI    3'b001      // Shift Left Immediate -> Logical
+    `define SRI     3'b101      // Shift Right Immediate -> Logical & Arithmetic
+`endif /*I_INSTRUCTIONS*/
+
+`ifndef R_INSTRUCTIONS
+    `define ADDSUB  3'b000
+    `define SLL     3'b001      // Shift Left -> Logical   
+    `define SLT     3'b010
+    `define SLTU    3'b011    
+    `define XOR     3'b100    
+    `define SR      3'b101      // Shift Right -> Logical & Arithmetic   
+    `define OR      3'b110    
+    `define AND     3'b111
+`endif /*R_INSTRUCTIONS*/
+
+`ifndef ALU_AUXILIARY_DEFINES
+    `define LOGICAL     7'b000_0000
+    `define ARITHMETIC  7'b010_0000
+    `define ADD         7'b000_0000     
+    `define SUB         7'b010_0000
+
+    `define RIGHT 1'b1
+    `define LEFT  1'b0
+`endif /*ALU_AUXILIARY_DEFINES*/
+
+`ifndef BRANCH_INSTRUCTIONS
+    `define BEQ  3'b000
+    `define BNE  3'b001
+    `define BLT  3'b100
+    `define BGE  3'b101
+    `define BLTU 3'b110
+    `define BGEU 3'b111
+`endif /*BRANCH_INSTRUCTIONS*/
+
+`ifndef MEMORY_ACCESS_SIZE
+    `define BYTE                3'b000
+    `define HALFWORD            3'b001
+    `define WORD                3'b010
+    `define BYTE_UNSIGNED       3'b100
+    `define HALFWORD_UNSIGNED   3'b101
+`endif /*MEMORY_ACCESS_SIZE*/

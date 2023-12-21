@@ -31,66 +31,7 @@
     - Input signals `opcode`, `funct3`, `funct7`, comes from `Instruction_Decoder`
 */
 
-`ifndef OPCODES
-    `define LOAD        7'b00_000_11
-    `define LOAD_FP     7'b00_001_11
-    `define custom_0    7'b00_010_11
-    `define MISC_MEM    7'b00_011_11
-    `define OP_IMM      7'b00_100_11
-    `define AUIPC       7'b00_101_11
-    `define OP_IMM_32   7'b00_110_11
-
-    `define STORE       7'b01_000_11
-    `define STORE_FP    7'b01_001_11
-    `define custom_1    7'b01_010_11
-    `define AMO         7'b01_011_11
-    `define OP          7'b01_100_11
-    `define LUI         7'b01_101_11
-    `define OP_32       7'b01_110_11
-
-    `define MADD        7'b10_000_11
-    `define MSUB        7'b10_001_11
-    `define NMSUB       7'b10_010_11
-    `define NMADD       7'b10_011_11
-    `define OP_FP       7'b10_100_11
-    `define custom_2    7'b10_110_11
-
-    `define BRANCH      7'b11_000_11
-    `define JALR        7'b11_001_11
-    `define JAL         7'b11_011_11
-    `define SYSTEM      7'b11_100_11
-    `define custom_3    7'b11_110_11
-`endif /*OPCODES*/
-
-`ifndef I_INSTRUCTIONS
-    `define ADDI    3'b000
-    `define SLTI    3'b010
-    `define SLTIU   3'b011
-    `define XORI    3'b100
-    `define ORI     3'b110
-    `define ANDI    3'b111
-    `define SLLI    3'b001      // Shift Left Immediate -> Logical
-    `define SRI     3'b101      // Shift Right Immediate -> Logical & Arithmetic
-`endif /*I_INSTRUCTIONS*/
-
-`ifndef R_INSTRUCTIONS
-    `define ADDSUB  3'b000
-    `define SLL     3'b001      // Shift Left -> Logical   
-    `define SLT     3'b010
-    `define SLTU    3'b011    
-    `define XOR     3'b100    
-    `define SR      3'b101      // Shift Right -> Logical & Arithmetic   
-    `define OR      3'b110    
-    `define AND     3'b111
-`endif /*R_INSTRUCTIONS*/
-
-`define LOGICAL     7'b000_0000
-`define ARITHMETIC  7'b010_0000
-`define ADD         7'b000_0000     
-`define SUB         7'b010_0000
-
-`define RIGHT 1'b1
-`define LEFT  1'b0
+`include "Defines.v"
 
 module Arithmetic_Logic_Unit
 #(
