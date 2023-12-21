@@ -23,7 +23,7 @@ module Instruction_Decoder
     output reg write_enable_csr
 );
 
-    assign opcode  = instruction [6 : 0];
+    assign opcode = instruction [6 : 0];
     assign funct7  = instruction[31 : 25];
     assign funct3  = instruction[14 : 12];
     assign funct12 = instruction[31 : 20];
@@ -36,26 +36,26 @@ module Instruction_Decoder
     always @(*)
     begin
         case (opcode)
-            `OP         : instruction_type <= `R_TYPE;
-            `OP_FP      : instruction_type <= `R_TYPE;
+            `OP         : instruction_type = `R_TYPE;
+            `OP_FP      : instruction_type = `R_TYPE;
 
-            `LOAD       : instruction_type <= `I_TYPE;
-            `LOAD_FP    : instruction_type <= `I_TYPE;
-            `OP_IMM     : instruction_type <= `I_TYPE;
-            `OP_IMM_32  : instruction_type <= `I_TYPE;
-            `JALR       : instruction_type <= `I_TYPE;
-            `SYSTEM     : instruction_type <= `I_TYPE; 
+            `LOAD       : instruction_type = `I_TYPE;
+            `LOAD_FP    : instruction_type = `I_TYPE;
+            `OP_IMM     : instruction_type = `I_TYPE;
+            `OP_IMM_32  : instruction_type = `I_TYPE;
+            `JALR       : instruction_type = `I_TYPE;
+            `SYSTEM     : instruction_type = `I_TYPE; 
 
-            `STORE      : instruction_type <= `S_TYPE;
-            `STORE_FP   : instruction_type <= `S_TYPE;
+            `STORE      : instruction_type = `S_TYPE;
+            `STORE_FP   : instruction_type = `S_TYPE;
 
-            `BRANCH     : instruction_type <= `B_TYPE;
+            `BRANCH     : instruction_type = `B_TYPE;
 
-            `AUIPC      : instruction_type <= `U_TYPE;
-            `LUI        : instruction_type <= `U_TYPE;
+            `AUIPC      : instruction_type = `U_TYPE;
+            `LUI        : instruction_type = `U_TYPE;
 
-            `JAL        : instruction_type <= `J_TYPE;
-            default     : instruction_type <= 3'bz;
+            `JAL        : instruction_type = `J_TYPE;
+            default     : instruction_type = 3'bz;
         endcase
     end
 
@@ -74,19 +74,19 @@ module Instruction_Decoder
 
         // Disable Write Signal when destination is x0
         if (write_index == 5'b00000)
-            write_enable <= 1'b0;
+            write_enable = 1'b0;
     end
 
     always @(*) 
     begin
         // CSR register file read/write enable signals evaluation
-        case ({funct3, opcode})
-            {`CSRRW,  `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1 & ~(csr_index[11] & csr_index[10]); end // CSRRW
-            {`CSRRS,  `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1 & ~(csr_index[11] & csr_index[10]); end // CSRRS
-            {`CSRRC,  `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1 & ~(csr_index[11] & csr_index[10]); end // CSRRC
-            {`CSRRWI, `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1 & ~(csr_index[11] & csr_index[10]); end // CSRRWI
-            {`CSRRSI, `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1 & ~(csr_index[11] & csr_index[10]); end // CSRRSI
-            {`CSRRCI, `SYSTEM} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1 & ~(csr_index[11] & csr_index[10]); end // CSRRCI
+        case ({opcode, funct3})
+            {`SYSTEM, `CSRRW}  : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1 & ~(csr_index[11] & csr_index[10]); end // CSRRW
+            {`SYSTEM, `CSRRS}  : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1 & ~(csr_index[11] & csr_index[10]); end // CSRRS
+            {`SYSTEM, `CSRRC}  : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1 & ~(csr_index[11] & csr_index[10]); end // CSRRC
+            {`SYSTEM, `CSRRWI} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1 & ~(csr_index[11] & csr_index[10]); end // CSRRWI
+            {`SYSTEM, `CSRRSI} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1 & ~(csr_index[11] & csr_index[10]); end // CSRRSI
+            {`SYSTEM, `CSRRCI} : begin read_enable_csr = 1'b1; write_enable_csr = 1'b1 & ~(csr_index[11] & csr_index[10]); end // CSRRCI
             default : begin read_enable_csr = 1'b0; write_enable_csr = 1'b0; end
         endcase  
     end

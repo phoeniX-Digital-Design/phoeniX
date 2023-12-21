@@ -22,9 +22,7 @@ module Load_Store_Unit
     localparam  READ    = 1'b0;
     localparam  WRITE   = 1'b1;
     
-    // -----------------------------------------
     // Memory Interface Enable Signal Generation
-    // -----------------------------------------
     always @(*)
     begin
         case (opcode)
@@ -34,16 +32,15 @@ module Load_Store_Unit
         endcase
     end
 
-    // --------------------------------------
     // Memory State and Frame Mask Generation
-    // --------------------------------------
     always @(*) 
     begin
         {memory_interface_state, memory_interface_frame_mask} = {1'bx, 4'bx};
 
         case ({opcode, funct3})
             // Load Instructions
-
+            
+            // LB and LBU
             {`LOAD, `BYTE}, {`LOAD, `BYTE_UNSIGNED}: {memory_interface_state, memory_interface_frame_mask} = 
             {   READ, 
             {                   
@@ -54,6 +51,7 @@ module Load_Store_Unit
             }
             };
 
+            // LH and LHU
             {`LOAD, `HALFWORD}, {`LOAD, `HALFWORD_UNSIGNED} : {memory_interface_state, memory_interface_frame_mask} = 
             {   READ,
             {                   
@@ -61,10 +59,12 @@ module Load_Store_Unit
             }
             };
 
+            // LW
             {`LOAD, `WORD} : {memory_interface_state, memory_interface_frame_mask} = {READ, 4'b1111}; 
             
             // Store Instructions
 
+            // SB
             {`STORE, `BYTE} : {memory_interface_state, memory_interface_frame_mask} = 
             {   WRITE, 
             {                   
@@ -75,6 +75,7 @@ module Load_Store_Unit
             }
             }; 
 
+            // SH
             {`STORE, `HALFWORD} : {memory_interface_state, memory_interface_frame_mask} = 
             {   WRITE,
             {                   
@@ -82,74 +83,73 @@ module Load_Store_Unit
             }
             }; 
 
+            // SW
             {`STORE, `WORD} : {memory_interface_state, memory_interface_frame_mask} = {WRITE, 4'b1111};
 
             default : {memory_interface_state, memory_interface_frame_mask} = {1'b0, 4'b0};
         endcase    
     end
 
-    // -------------------------------------
-    // Data Management for Store Instruction
-    // -------------------------------------
+    // Data Management in case of Store Instruction
     reg [31 : 0] store_data_reg;
     assign memory_interface_data = opcode == `STORE ? store_data_reg : 32'bz;
 
-    // ------------------------------------------------
-    // Data Segmentation for Memory Access Instructions
-    // ------------------------------------------------
+    // Latch condition when Loading
     always @(*)
     begin
         if (opcode == `LOAD)
-        case ({funct3})
+        casex ({funct3})
             `BYTE : 
             begin
-                if (memory_interface_frame_mask == 4'b0001) load_data <= { {24{memory_interface_data[31]}}, memory_interface_data[31 : 24]}; 
-                if (memory_interface_frame_mask == 4'b0010) load_data <= { {24{memory_interface_data[23]}}, memory_interface_data[23 : 16]}; 
-                if (memory_interface_frame_mask == 4'b0100) load_data <= { {24{memory_interface_data[15]}}, memory_interface_data[15 :  7]}; 
-                if (memory_interface_frame_mask == 4'b1000) load_data <= { {24{memory_interface_data[ 7]}}, memory_interface_data[ 7 :  0]}; 
+                if (memory_interface_frame_mask == 4'b0001) load_data = { {24{memory_interface_data[31]}}, memory_interface_data[31 : 24]}; 
+                if (memory_interface_frame_mask == 4'b0010) load_data = { {24{memory_interface_data[23]}}, memory_interface_data[23 : 16]}; 
+                if (memory_interface_frame_mask == 4'b0100) load_data = { {24{memory_interface_data[15]}}, memory_interface_data[15 :  8]}; 
+                if (memory_interface_frame_mask == 4'b1000) load_data = { {24{memory_interface_data[ 7]}}, memory_interface_data[ 7 :  0]}; 
             end    
               
             `BYTE_UNSIGNED : 
             begin
-                if (memory_interface_frame_mask == 4'b0001) load_data <= { 24'b0, memory_interface_data[31 : 24]};
-                if (memory_interface_frame_mask == 4'b0010) load_data <= { 24'b0, memory_interface_data[23 : 16]};
-                if (memory_interface_frame_mask == 4'b0100) load_data <= { 24'b0, memory_interface_data[15 :  7]};
-                if (memory_interface_frame_mask == 4'b1000) load_data <= { 24'b0, memory_interface_data[ 7 :  0]}; 
+                if (memory_interface_frame_mask == 4'b0001) load_data = { 24'b0, memory_interface_data[31 : 24]};
+                if (memory_interface_frame_mask == 4'b0010) load_data = { 24'b0, memory_interface_data[23 : 16]};
+                if (memory_interface_frame_mask == 4'b0100) load_data = { 24'b0, memory_interface_data[15 :  8]};
+                if (memory_interface_frame_mask == 4'b1000) load_data = { 24'b0, memory_interface_data[ 7 :  0]}; 
             end
 
             `HALFWORD : 
             begin
-                if (memory_interface_frame_mask == 4'b0011) load_data <= { {16{memory_interface_data[31]}}, memory_interface_data[31 : 16]};
-                if (memory_interface_frame_mask == 4'b1100) load_data <= { {16{memory_interface_data[15]}}, memory_interface_data[15 :  0]};
+                if (memory_interface_frame_mask == 4'b0011) load_data = { {16{memory_interface_data[31]}}, memory_interface_data[31 : 16]};
+                if (memory_interface_frame_mask == 4'b1100) load_data = { {16{memory_interface_data[15]}}, memory_interface_data[15 :  0]};
             end
             `HALFWORD_UNSIGNED :
             begin
-                if (memory_interface_frame_mask == 4'b0011) load_data <= { 16'b0, memory_interface_data[31 : 16]};
-                if (memory_interface_frame_mask == 4'b1100) load_data <= { 16'b0, memory_interface_data[15 :  0]};
+                if (memory_interface_frame_mask == 4'b0011) load_data = { 16'b0, memory_interface_data[31 : 16]};
+                if (memory_interface_frame_mask == 4'b1100) load_data = { 16'b0, memory_interface_data[15 :  0]};
             end 
-            `WORD : load_data <= memory_interface_data;                                               
+            `WORD : load_data = memory_interface_data;    
+            
+            default : load_data = 32'bz;                                       
         endcase    
-        else load_data <= 32'bz;
+        else load_data = 32'bz;
 
         if (opcode == `STORE)
-        case ({funct3})
+        casex ({funct3})
             `BYTE : 
             begin
-                if (memory_interface_frame_mask == 4'b0001) store_data_reg[31 : 24] <= store_data[ 7 : 0];
-                if (memory_interface_frame_mask == 4'b0010) store_data_reg[23 : 16] <= store_data[ 7 : 0];
-                if (memory_interface_frame_mask == 4'b0100) store_data_reg[15 :  7] <= store_data[ 7 : 0];
-                if (memory_interface_frame_mask == 4'b1000) store_data_reg[ 7 :  0] <= store_data[ 7 : 0];
+                if (memory_interface_frame_mask == 4'b0001) store_data_reg[31 : 24] = store_data[ 7 : 0];
+                if (memory_interface_frame_mask == 4'b0010) store_data_reg[23 : 16] = store_data[ 7 : 0];
+                if (memory_interface_frame_mask == 4'b0100) store_data_reg[15 :  8] = store_data[ 7 : 0];
+                if (memory_interface_frame_mask == 4'b1000) store_data_reg[ 7 :  0] = store_data[ 7 : 0];
             end 
             `HALFWORD : 
             begin
-                if (memory_interface_frame_mask == 4'b0011) store_data_reg[31 : 16] <= store_data[15 : 0];
-                if (memory_interface_frame_mask == 4'b1100) store_data_reg[15 :  0] <= store_data[15 : 0];
+                if (memory_interface_frame_mask == 4'b0011) store_data_reg[31 : 16] = store_data[15 : 0];
+                if (memory_interface_frame_mask == 4'b1100) store_data_reg[15 :  0] = store_data[15 : 0];
             end
             `WORD : 
             begin
                 if (memory_interface_frame_mask == 4'b1111) store_data_reg[31 : 0] = store_data[31 : 0];
             end 
         endcase
-        else store_data_reg <= 32'bz;
+        else store_data_reg = 32'bz;
     end
 endmodule

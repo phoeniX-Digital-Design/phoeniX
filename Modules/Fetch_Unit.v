@@ -30,13 +30,6 @@ module Fetch_Unit
     end
 
     wire [29 : 0] incrementer_result;
-
-    always @(*)
-    begin
-        if (jump_branch_enable) next_pc <= jump_branch_address;
-        else                    next_pc <= {incrementer_result, 2'b00};
-    end
-
     Incrementer 
     #(
         .LEN(30)
@@ -46,6 +39,12 @@ module Fetch_Unit
         .value(pc[31 : 2]),
         .result(incrementer_result)
     );
+
+    always @(*)
+    begin
+        if (jump_branch_enable) next_pc = jump_branch_address;
+        else                    next_pc = {incrementer_result, 2'b00};
+    end
 endmodule
 
 module Incrementer

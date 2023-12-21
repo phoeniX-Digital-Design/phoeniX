@@ -16,13 +16,13 @@ module Control_Status_Unit
     always @(*) 
     begin
         case ({funct3, opcode})
-            {`CSRRW,  `SYSTEM} : begin rd <= CSR_in; CSR_out <= rs1; end                                        
-            {`CSRRS,  `SYSTEM} : begin rd <= CSR_in; CSR_out <= CSR_in | rs1; end                               
-            {`CSRRC,  `SYSTEM} : begin rd <= CSR_in; CSR_out <= CSR_in & ~rs1; end                              
-            {`CSRRWI, `SYSTEM} : begin rd <= CSR_in; CSR_out <= {27'b0, unsigned_immediate}; end                
-            {`CSRRSI, `SYSTEM} : begin rd <= CSR_in; CSR_out <= CSR_in | {27'b0, unsigned_immediate}; end       
-            {`CSRRCI, `SYSTEM} : begin rd <= CSR_in; CSR_out <= CSR_in & ~{27'b0, unsigned_immediate}; end         
-            default : begin rd <= 32'bz; CSR_out <= 32'bz; end
+            {`CSRRW,  `SYSTEM} : begin rd = CSR_in; CSR_out = rs1; end                                        
+            {`CSRRS,  `SYSTEM} : begin rd = CSR_in; CSR_out = CSR_in | rs1; end                               
+            {`CSRRC,  `SYSTEM} : begin rd = CSR_in; CSR_out = CSR_in & ~rs1; end                              
+            {`CSRRWI, `SYSTEM} : begin rd = CSR_in; CSR_out = {27'b0, unsigned_immediate}; end                
+            {`CSRRSI, `SYSTEM} : begin rd = CSR_in; CSR_out = CSR_in | {27'b0, unsigned_immediate}; end       
+            {`CSRRCI, `SYSTEM} : begin rd = CSR_in; CSR_out = CSR_in & ~{27'b0, unsigned_immediate}; end         
+            default : begin rd = 32'bz; CSR_out = 32'bz; end
         endcase
     end
 endmodule
@@ -58,10 +58,10 @@ module Control_Status_Register_File
         if (read_enable_csr)
         begin
             case (csr_read_index)
-                `alucsr : csr_read_data <= alucsr_reg;
-                `mulcsr : csr_read_data <= mulcsr_reg;
-                `divcsr : csr_read_data <= divcsr_reg;
-                default  : csr_read_data <= 32'bz;
+                `alucsr : csr_read_data = alucsr_reg;
+                `mulcsr : csr_read_data = mulcsr_reg;
+                `divcsr : csr_read_data = divcsr_reg;
+                default : csr_read_data = 32'bz;
             endcase
         end
         else csr_read_data <= 32'bz;

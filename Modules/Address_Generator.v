@@ -17,13 +17,13 @@ module Address_Generator
     always @(*) 
     begin
         case (opcode)
-            `STORE   : begin adder_input_1 = rs1; adder_input_2 = immediate; address = adder_result; end    //  Store  ->   rs1  + immediate
-            `LOAD    : begin adder_input_1 = rs1; adder_input_2 = immediate; address = adder_result; end    //  Load   ->   rs1  + immediate
-            `JALR    : begin adder_input_1 = rs1; adder_input_2 = immediate; address = adder_result; end    //  JALR   ->   rs1  + immediate
-            `JAL     : begin adder_input_1 = pc;  adder_input_2 = immediate; address = adder_result; end    //  JAL    ->   pc   + immediate
-            `AUIPC   : begin adder_input_1 = pc;  adder_input_2 = immediate; address = adder_result; end    //  AUIPC  ->   pc   + immediate
-            `BRANCH  : begin adder_input_1 = pc;  adder_input_2 = immediate; address = adder_result; end    //  Branch ->   pc   + immediate
-            default  : address = 32'bz;
+            `STORE   : begin adder_input_1 = rs1;   adder_input_2 = immediate; address = adder_result; end    //  Store  ->   rs1  + immediate
+            `LOAD    : begin adder_input_1 = rs1;   adder_input_2 = immediate; address = adder_result; end    //  Load   ->   rs1  + immediate
+            `JALR    : begin adder_input_1 = rs1;   adder_input_2 = immediate; address = adder_result; end    //  JALR   ->   rs1  + immediate
+            `JAL     : begin adder_input_1 = pc;    adder_input_2 = immediate; address = adder_result; end    //  JAL    ->   pc   + immediate
+            `AUIPC   : begin adder_input_1 = pc;    adder_input_2 = immediate; address = adder_result; end    //  AUIPC  ->   pc   + immediate
+            `BRANCH  : begin adder_input_1 = pc;    adder_input_2 = immediate; address = adder_result; end    //  Branch ->   pc   + immediate
+            default  : begin adder_input_1 = 32'bz; adder_input_2 = 32'bz;     address = 32'bz;        end
         endcase 
     end
 
@@ -34,6 +34,7 @@ module Address_Generator
         .input_B(adder_input_2),
         .sum(adder_result)
     );
+    
 endmodule
 
 module Kogge_Stone_Adder

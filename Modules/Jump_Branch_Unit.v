@@ -19,13 +19,13 @@ module Jump_Branch_Unit
     begin
             if (instruction_type == `B_TYPE)  
                 casex ({funct3})
-                    `BEQ  : if ($signed(rs1) == $signed(rs2))   branch_enable = 1'b1; 
-                    `BNE  : if ($signed(rs1) != $signed(rs2))   branch_enable = 1'b1;                    
-                    `BLT  : if ($signed(rs1) < $signed(rs2))    branch_enable = 1'b1;                    
-                    `BGE  : if ($signed(rs1) >= $signed(rs2))   branch_enable = 1'b1;                    
-                    `BLTU : if (rs1 < rs2)                      branch_enable = 1'b1;
-                    `BGEU : if (rs1 >= rs2)                     branch_enable = 1'b1;                    
-                    default:    branch_enable = 1'b0;
+                    `BEQ  : begin if ($signed(rs1) == $signed(rs2))   branch_enable = 1'b1; else  branch_enable = 1'b0; end 
+                    `BNE  : begin if ($signed(rs1) != $signed(rs2))   branch_enable = 1'b1; else  branch_enable = 1'b0; end                    
+                    `BLT  : begin if ($signed(rs1) <  $signed(rs2))   branch_enable = 1'b1; else  branch_enable = 1'b0; end                    
+                    `BGE  : begin if ($signed(rs1) >= $signed(rs2))   branch_enable = 1'b1; else  branch_enable = 1'b0; end                    
+                    `BLTU : begin if (rs1 < rs2)                      branch_enable = 1'b1; else  branch_enable = 1'b0; end
+                    `BGEU : begin if (rs1 >= rs2)                     branch_enable = 1'b1; else  branch_enable = 1'b0; end                    
+                    default: branch_enable = 1'b0;
                 endcase
             else
                 branch_enable = 1'b0;
