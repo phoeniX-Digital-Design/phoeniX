@@ -7,7 +7,7 @@
     - Thank you for your cooperation.
     ==========================================================================================================================
     Divider Approximation CSR:
-    - MUL CSR is addressed as 0x802 in control status registers.
+    - DIV CSR is addressed as 0x802 in control status registers.
     - Divider circuit is used for the following M-Extension instructions: DIV/DIVU/REM/REMU
     - Internal signals are all generated according to phoeniX core "Self Control Logic" of the modules so designer won't 
       need to change anything inside this module (excepts parts which are considered for designers to instatiate their own 
@@ -124,6 +124,7 @@ module Divider_Unit
                 divider_unit_output = 32'bz; divider_unit_busy = 1'b0; enable = 1'b0; 
                 divider_0_enable = 1'b0; divider_1_enable = 1'b0;
                 divider_2_enable = 1'b0; divider_3_enable = 1'b0;
+                input_1 = 32'bz; input_2 = 32'bz;
             end              
         endcase
     end
@@ -282,6 +283,9 @@ module Approximate_Accuracy_Controlable_Divider
         begin
             assign latched_div_result = div_result;  
             assign latched_rem_result = rem_result;
+        end else begin
+            assign latched_div_result = 32'bz;
+            assign latched_rem_result = 32'bz;
         end
     end
     always @(*) 
@@ -290,6 +294,9 @@ module Approximate_Accuracy_Controlable_Divider
         begin
             div = latched_div_result;
             rem = latched_rem_result;
+        end else begin
+            div = 32'bz;
+            rem = 32'bz;
         end
     end
 
