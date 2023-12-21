@@ -12,7 +12,7 @@ module phoeniX_Testbench;
     //////////////////////
     // Clock Generation //
     //////////////////////
-    parameter CLK_PERIOD = 4;
+    parameter CLK_PERIOD = 2;
     reg clk = 1'b1;
     initial begin forever #(CLK_PERIOD/2) clk = ~clk; end
     initial #(10000 * CLK_PERIOD) $finish;
