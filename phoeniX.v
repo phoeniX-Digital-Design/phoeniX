@@ -297,10 +297,10 @@ module phoeniX
     // -----------------------------------
     Arithmetic_Logic_Unit
     #(
-            .GENERATE_CIRCUIT_1(1),
-            .GENERATE_CIRCUIT_2(1),
-            .GENERATE_CIRCUIT_3(0),
-            .GENERATE_CIRCUIT_4(0)
+        .GENERATE_CIRCUIT_1(1),
+        .GENERATE_CIRCUIT_2(1),
+        .GENERATE_CIRCUIT_3(0),
+        .GENERATE_CIRCUIT_4(0)
     )  
     arithmetic_logic_unit
     (
