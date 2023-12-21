@@ -101,8 +101,8 @@ module phoeniX_Testbench;
         wire [31 : 0] x29_t4 	= uut.register_file.Registers[29];
         wire [31 : 0] x30_t5 	= uut.register_file.Registers[30];
         wire [31 : 0] x31_t6 	= uut.register_file.Registers[31];
-        wire [31 : 0] alu_csr   = uut.control_status_register_file.alu_csr;
-        wire [31 : 0] mul_csr   = uut.control_status_register_file.mul_csr;
+        wire [31 : 0] alu_csr   = uut.control_status_register_file.alucsr_reg;
+        wire [31 : 0] mul_csr   = uut.control_status_register_file.mulcsr_reg;
     `endif
 
     initial
