@@ -69,9 +69,9 @@
 `endif /*CSR_INSTRUCTIONS*/
 
 `ifndef EXECUTION_UNITS_CSR
-    `define ALU_CSR     12'h800
-    `define MUL_CSR     12'h801
-    `define DIV_CSR     12'h802
+    `define alucsr     12'h800
+    `define mulcsr     12'h801
+    `define divcsr     12'h802
 `endif /*EXECUTION_UNITS_CSR*/
 
 `ifndef MUL_DIV_INSTRCUTIONS

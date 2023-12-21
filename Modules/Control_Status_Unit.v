@@ -42,15 +42,15 @@ module Control_Status_Register_File
     output reg [31 : 0] csr_read_data
 );
 
-    reg [31 : 0] alu_csr;       // Arithmetic Logic Unit Aproximation Control Register
-    reg [31 : 0] mul_csr;       // Multiplier Unit Aproximation Control Register
-    reg [31 : 0] div_csr;       // Divider Unit Aproximation Control Register
+    reg [31 : 0] alucsr_reg;       // Arithmetic Logic Unit Aproximation Control Register
+    reg [31 : 0] mulcsr_reg;       // Multiplier Unit Aproximation Control Register
+    reg [31 : 0] divcsr_reg;       // Divider Unit Aproximation Control Register
 
     always @(posedge reset)
     begin
-        alu_csr = 32'b0;
-        mul_csr = 32'b0;
-        div_csr = 32'b0;
+        alucsr_reg = 32'b0;
+        mulcsr_reg = 32'b0;
+        divcsr_reg = 32'b0;
     end
 
     always @(*) 
@@ -58,9 +58,9 @@ module Control_Status_Register_File
         if (read_enable_csr)
         begin
             case (csr_read_index)
-                `ALU_CSR : csr_read_data <= alu_csr;
-                `MUL_CSR : csr_read_data <= mul_csr;
-                `DIV_CSR : csr_read_data <= div_csr;
+                `alucsr : csr_read_data <= alucsr_reg;
+                `mulcsr : csr_read_data <= mulcsr_reg;
+                `divcsr : csr_read_data <= divcsr_reg;
                 default  : csr_read_data <= 32'bz;
             endcase
         end
@@ -71,9 +71,9 @@ module Control_Status_Register_File
         if (write_enable_csr)
         begin
             case (csr_write_index)
-                `ALU_CSR : alu_csr <= csr_write_data;
-                `MUL_CSR : mul_csr <= csr_write_data;
-                `DIV_CSR : div_csr <= csr_write_data;
+                `alucsr : alucsr_reg <= csr_write_data;
+                `mulcsr : mulcsr_reg <= csr_write_data;
+                `divcsr : divcsr_reg <= csr_write_data;
             endcase
         end  
     end
