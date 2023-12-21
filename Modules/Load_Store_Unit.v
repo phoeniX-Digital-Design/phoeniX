@@ -125,9 +125,8 @@ module Load_Store_Unit
                 if (memory_interface_frame_mask == 4'b0011) load_data = { 16'b0, memory_interface_data[31 : 16]};
                 if (memory_interface_frame_mask == 4'b1100) load_data = { 16'b0, memory_interface_data[15 :  0]};
             end 
-            `WORD : load_data = memory_interface_data;    
-            
-            default : load_data = 32'bz;                                       
+            `WORD : load_data = memory_interface_data;         
+            default load_data = 32'bz;                                      
         endcase    
         else load_data = 32'bz;
 
@@ -149,6 +148,7 @@ module Load_Store_Unit
             begin
                 if (memory_interface_frame_mask == 4'b1111) store_data_reg[31 : 0] = store_data[31 : 0];
             end 
+            default : store_data_reg = 32'bz;
         endcase
         else store_data_reg = 32'bz;
     end
