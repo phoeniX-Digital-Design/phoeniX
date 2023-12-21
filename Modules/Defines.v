@@ -68,6 +68,12 @@
     `define CSRRCI 3'b111
 `endif /*CSR_INSTRUCTIONS*/
 
+`ifndef EXECUTION_UNITS_CSR
+    `define ALU_CSR     12'h800
+    `define MUL_CSR     12'h801
+    `define DIV_CSR     12'h802
+`endif /*EXECUTION_UNITS_CSR*/
+
 `ifndef MUL_DIV_INSTRCUTIONS
     `define MUL     3'b000
     `define MULH    3'b001
