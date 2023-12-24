@@ -34,7 +34,6 @@ module Address_Generator
         .input_B(adder_input_2),
         .sum(adder_result)
     );
-    
 endmodule
 
 module Kogge_Stone_Adder
@@ -118,7 +117,8 @@ module Kogge_Stone_Adder
 
     genvar k;
     generate
-    for (k = 0 ; k < 29 ; k = k + 1) begin
+    for (k = 0 ; k < 29 ; k = k + 1) 
+    begin
         Black_Cell bc_stage_3 
         (
             .input_pj(pkj_stage_3[k]),
@@ -144,7 +144,8 @@ module Kogge_Stone_Adder
 
     genvar l;
     generate
-    for (l = 0 ; l < 4 ; l = l + 1) begin
+    for (l = 0 ; l < 4 ; l = l + 1) 
+    begin
         Grey_Cell gc_stage_4 
         (
             .input_gj(gkj_stage_4[l]),
@@ -157,7 +158,8 @@ module Kogge_Stone_Adder
 
     genvar m;
     generate
-    for (m = 0 ; m < 25 ; m = m + 1) begin
+    for (m = 0 ; m < 25 ; m = m + 1) 
+    begin
         Black_Cell bc_stage_4 
         (
             .input_pj(pkj_stage_4[m]),
@@ -183,7 +185,8 @@ module Kogge_Stone_Adder
 
     genvar n;
     generate
-    for (n = 0 ; n < 8 ; n = n + 1) begin
+    for (n = 0 ; n < 8 ; n = n + 1) 
+    begin
         Grey_Cell gc_stage_5 
         (
             .input_gj(gkj_stage_5[n]),
@@ -196,7 +199,8 @@ module Kogge_Stone_Adder
 
     genvar o;
     generate
-    for (o = 0 ; o < 17 ; o = o + 1) begin
+    for (o = 0 ; o < 17 ; o = o + 1) 
+    begin
         Black_Cell bc_stage_5 
         (
             .input_pj(pkj_stage_5[o]),
@@ -220,7 +224,8 @@ module Kogge_Stone_Adder
 
     genvar p;
     generate
-    for (p = 1 ; p <= 16 ; p = p + 1) begin
+    for (p = 1 ; p <= 16 ; p = p + 1) 
+    begin
         Grey_Cell gc_stage_6 
         (
             .input_gj(gkj_stage_6[p]),
