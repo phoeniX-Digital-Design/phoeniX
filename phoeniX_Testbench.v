@@ -5,7 +5,7 @@
 	`define FIRMWARE "Software/Sample_C_Codes/factorial_abi/factorial_abi_firmware.hex"
 `endif /*FIRMWARE*/
 
-`define MEMORY_DELAY        #15
+`define MEMORY_DELAY        #1
 
 module phoeniX_Testbench;
 
