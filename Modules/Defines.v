@@ -136,3 +136,14 @@
     `define BYTE_UNSIGNED       3'b100
     `define HALFWORD_UNSIGNED   3'b101
 `endif /*MEMORY_ACCESS_SIZE*/
+
+`ifndef NOP_INSTRUCTION
+    `define NOP                     32'h0000_0013
+    `define NOP_opcode              `OP_IMM
+    `define NOP_funct12             12'h000
+    `define NOP_funct7              7'b000_0000
+    `define NOP_funct3              3'b000
+    `define NOP_immediate           12'h000
+    `define NOP_instruction_type   `I_TYPE
+    `define NOP_write_index         5'b00000
+`endif /*NOP_INSTRUCTION*/
