@@ -35,7 +35,7 @@ module Load_Store_Unit
     // Memory State and Frame Mask Generation
     always @(*) 
     begin
-        {memory_interface_state, memory_interface_frame_mask} = {1'bx, 4'bx};
+        {memory_interface_state, memory_interface_frame_mask} = {1'bz, 4'bz};
 
         case ({opcode, funct3})
             // Load Instructions
