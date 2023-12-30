@@ -9,10 +9,10 @@ module Fetch_Unit
     // Memory Interface Signals //
     //////////////////////////////
 
-    output  reg  memory_interface_enable,
-    output  reg  memory_interface_state,
-    output  reg  [31 : 0]   memory_interface_address,
-    output  reg  [ 3 : 0]   memory_interface_frame_mask
+    output reg  memory_interface_enable,
+    output reg  memory_interface_state,
+    output reg  [31 : 0]   memory_interface_address,
+    output reg  [ 3 : 0]   memory_interface_frame_mask
 );
     localparam  READ    = 1'b0;
     localparam  WRITE   = 1'b1;
