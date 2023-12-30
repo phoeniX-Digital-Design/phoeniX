@@ -38,16 +38,16 @@ module Divider_Unit
     parameter GENERATE_CIRCUIT_4 = 0
 )
 (
-    input clk, 
+    input wire clk, 
 
-    input [6 : 0] opcode, 
-    input [6 : 0] funct7, 
-    input [2 : 0] funct3, 
+    input wire [ 6 : 0] opcode, 
+    input wire [ 6 : 0] funct7, 
+    input wire [ 2 : 0] funct3, 
 
-    input [31 : 0] control_status_register, 
+    input wire [31 : 0] control_status_register, 
 
-    input [31 : 0] rs1, 
-    input [31 : 0] rs2, 
+    input wire [31 : 0] rs1, 
+    input wire [31 : 0] rs2, 
 
     output reg divider_unit_busy,  
     output reg [31 : 0] divider_unit_output 
