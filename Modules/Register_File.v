@@ -4,8 +4,8 @@ module Register_File
     parameter DEPTH = 5
 )
 (
-    input clk,
-    input reset,
+    input wire clk,
+    input wire reset,
     
     input wire read_enable_1,
     input wire read_enable_2,
