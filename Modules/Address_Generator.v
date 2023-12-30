@@ -2,10 +2,10 @@
 
 module Address_Generator
 (
-    input [ 6 : 0] opcode, 
-    input [31 : 0] rs1,            
-    input [31 : 0] pc,
-    input [31 : 0] immediate,
+    input wire [ 6 : 0] opcode, 
+    input wire [31 : 0] rs1,            
+    input wire [31 : 0] pc,
+    input wire [31 : 0] immediate,
 
     output reg [31 : 0] address
 );
@@ -240,7 +240,6 @@ module Kogge_Stone_Adder
     assign carry_out   = g_stage_6[31];
     assign sum[0]      = carry_stage_6 ^ p_stage_6[0];
     assign sum[31 : 1] = g_stage_6[30 : 0] ^ p_stage_6[31 : 1];
-
 endmodule
 
 module PG
