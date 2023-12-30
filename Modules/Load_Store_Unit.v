@@ -2,12 +2,12 @@
 
 module Load_Store_Unit
 (
-    input  [6 : 0] opcode,                  // Load/Store function
-    input  [2 : 0] funct3,                  // Load/Store function
+    input wire [ 6 : 0] opcode,                  
+    input wire [ 2 : 0] funct3,                  
 
-    input       [31 : 0] address,           // Generated in Address Generator module
-    input       [31 : 0] store_data,        // Connected to Register Source 2
-    output reg  [31 : 0] load_data,         // Data returned from memory
+    input wire [31 : 0] address,           
+    input wire [31 : 0] store_data,        
+    output reg [31 : 0] load_data,         
 
     //////////////////////////////
     // Memory Interface Signals //
@@ -19,30 +19,28 @@ module Load_Store_Unit
     output  reg  [ 3 : 0] memory_interface_frame_mask,
     inout        [31 : 0] memory_interface_data
 );
-    localparam  READ    = 1'b0;
-    localparam  WRITE   = 1'b1;
     
     // Memory Interface Enable Signal Generation
     always @(*)
     begin
         case (opcode)
-            `LOAD   : begin memory_interface_enable = 1'b1; memory_interface_address = {address[31 : 2], 2'b00}; end
-            `STORE  : begin memory_interface_enable = 1'b1; memory_interface_address = {address[31 : 2], 2'b00}; end 
-            default : begin memory_interface_enable = 1'b0; memory_interface_address = 32'bz; end
+            `LOAD   : begin memory_interface_enable = `ENABLE;  memory_interface_address = {address[31 : 2], 2'b00}; end
+            `STORE  : begin memory_interface_enable = `ENABLE;  memory_interface_address = {address[31 : 2], 2'b00}; end 
+            default : begin memory_interface_enable = `DISABLE; memory_interface_address = 32'bz; end
         endcase
     end
 
     // Memory State and Frame Mask Generation
     always @(*) 
     begin
-        {memory_interface_state, memory_interface_frame_mask} = {1'bx, 4'bx};
+        {memory_interface_state, memory_interface_frame_mask} = {1'bz, 4'bz};
 
         case ({opcode, funct3})
             // Load Instructions
             
             // LB and LBU
             {`LOAD, `BYTE}, {`LOAD, `BYTE_UNSIGNED}: {memory_interface_state, memory_interface_frame_mask} = 
-            {   READ, 
+            {   `READ, 
             {                   
                 ~address[1] & ~address[0], 
                 ~address[1] &  address[0], 
@@ -53,20 +51,20 @@ module Load_Store_Unit
 
             // LH and LHU
             {`LOAD, `HALFWORD}, {`LOAD, `HALFWORD_UNSIGNED} : {memory_interface_state, memory_interface_frame_mask} = 
-            {   READ,
+            {   `READ,
             {                   
                 {2{~address[1]}}, {2{address[1]}}
             }
             };
 
             // LW
-            {`LOAD, `WORD} : {memory_interface_state, memory_interface_frame_mask} = {READ, 4'b1111}; 
+            {`LOAD, `WORD} : {memory_interface_state, memory_interface_frame_mask} = {`READ, 4'b1111}; 
             
             // Store Instructions
 
             // SB
             {`STORE, `BYTE} : {memory_interface_state, memory_interface_frame_mask} = 
-            {   WRITE, 
+            {   `WRITE, 
             {                   
                 ~address[1] & ~address[0], 
                 ~address[1] &  address[0], 
@@ -77,16 +75,16 @@ module Load_Store_Unit
 
             // SH
             {`STORE, `HALFWORD} : {memory_interface_state, memory_interface_frame_mask} = 
-            {   WRITE,
+            {   `WRITE,
             {                   
                 {2{~address[1]}}, {2{address[1]}}
             }
             }; 
 
             // SW
-            {`STORE, `WORD} : {memory_interface_state, memory_interface_frame_mask} = {WRITE, 4'b1111};
+            {`STORE, `WORD} : {memory_interface_state, memory_interface_frame_mask} = {`WRITE, 4'b1111};
 
-            default : {memory_interface_state, memory_interface_frame_mask} = {1'b0, 4'b0};
+            default : {memory_interface_state, memory_interface_frame_mask} = {1'bz, 4'bz};
         endcase    
     end
 
@@ -98,7 +96,7 @@ module Load_Store_Unit
     always @(*)
     begin
         if (opcode == `LOAD)
-        casex ({funct3})
+        case (funct3)
             `BYTE : 
             begin
                 if (memory_interface_frame_mask == 4'b0001) load_data = { {24{memory_interface_data[31]}}, memory_interface_data[31 : 24]}; 
@@ -131,7 +129,7 @@ module Load_Store_Unit
         else load_data = 32'bz;
 
         if (opcode == `STORE)
-        casex ({funct3})
+        case (funct3)
             `BYTE : 
             begin
                 if (memory_interface_frame_mask == 4'b0001) store_data_reg[31 : 24] = store_data[ 7 : 0];
