@@ -88,7 +88,7 @@ module phoeniX
     // --------------------
     // Instruction Register 
     // --------------------
-    always @(posedge clk) 
+    always @(*) 
     begin
         if (reset)
             instruction_FD_reg <= 32'bz;
@@ -233,7 +233,7 @@ module phoeniX
         else if (!(|stall_condition[1 : 2]))
         begin
             pc_EX_reg <= pc_FD_reg;
-            next_pc_EX_reg <= next_pc_FD_reg;
+            next_pc_EX_reg <= next_pc_FD_wire;
             
             
             instruction_type_EX_reg <= instruction_type_FD_wire;
@@ -436,16 +436,16 @@ module phoeniX
     begin
         if (stall_condition[1])
         begin
-            write_enable_memory_reg <= `ENABLE;  
+            write_enable_MW_reg <= `ENABLE;  
 
-            opcode_memory_reg <= `NOP_opcode;
-            funct3_memory_reg <= `NOP_funct3;
-            funct7_memory_reg <= `NOP_funct7;
-            funct12_memory_reg <= `NOP_funct12;
+            opcode_MW_reg <= `NOP_opcode;
+            funct3_MW_reg <= `NOP_funct3;
+            funct7_MW_reg <= `NOP_funct7;
+            funct12_MW_reg <= `NOP_funct12;
 
-            immediate_memory_reg <= `NOP_immediate;
-            instruction_type_memory_reg <= `NOP_instruction_type;
-            write_index_memory_reg <= `NOP_write_index;            
+            immediate_MW_reg <= `NOP_immediate;
+            instruction_type_MW_reg <= `NOP_instruction_type;
+            write_index_MW_reg <= `NOP_write_index;            
         end
 
         else if (!(stall_condition[1]))
@@ -500,12 +500,12 @@ module phoeniX
     always @(*) 
     begin    
         case (opcode_MW_reg)
-            `OP_IMM : write_data_MW_reg = result_MW_reg;
-            `OP     : write_data_MW_reg = result_MW_reg;
+            `OP_IMM : write_data_MW_reg = execution_result_MW_reg;
+            `OP     : write_data_MW_reg = execution_result_MW_reg;
             `JAL    : write_data_MW_reg = next_pc_MW_reg;
             `JALR   : write_data_MW_reg = next_pc_MW_reg;
             `AUIPC  : write_data_MW_reg = address_MW_reg;
-            `LOAD   : write_data_MW_reg = load_data_MW_reg;
+            `LOAD   : write_data_MW_reg = load_data_MW_wire;
             `LUI    : write_data_MW_reg = immediate_MW_reg;
             default : write_data_MW_reg = 32'bz;
         endcase
@@ -552,8 +552,8 @@ module phoeniX
         .enable_1(write_enable_EX_reg),
         .enable_2(write_enable_MW_reg),
 
-        .forward_enable(FW_enable_1),
-        .forward_data(FW_source_1)
+        .forward_enable(FW_enable_2),
+        .forward_data(FW_source_2)
     );
 
     ////////////////////////////////////
