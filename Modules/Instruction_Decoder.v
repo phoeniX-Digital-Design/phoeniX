@@ -4,6 +4,7 @@ module Instruction_Decoder
 (
     input wire [31 : 0] instruction,
 
+    output reg [ 2 : 0] instruction_type,
     output reg [ 6 : 0] opcode,
     output reg [ 2 : 0] funct3,
     output reg [ 6 : 0] funct7,
@@ -14,7 +15,6 @@ module Instruction_Decoder
     output reg [ 4 : 0] write_index,
     output reg [11 : 0] csr_index,
 
-    output reg [ 2 : 0] instruction_type,
     output reg read_enable_1,
     output reg read_enable_2,
     output reg write_enable,
