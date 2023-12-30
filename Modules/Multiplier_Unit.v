@@ -176,7 +176,7 @@ module Multiplier_Unit
         begin
             // Circuit 1 (default) instantiation
             //----------------------------------
-            Approximate_Accuracy_Controllable_Multiplier multiplier 
+            Approximate_Accuracy_Controllable_Multiplier approximate_accuracy_controllable_multiplier 
             (
                 .clk(clk),
                 .enable(multiplier_0_enable),
@@ -193,16 +193,7 @@ module Multiplier_Unit
         begin
             // Circuit 2 instantiation
             //-------------------------------
-            Approximate_Accuracy_Controllable_Multiplier multiplier_2 
-            (
-                .clk(clk),
-                .enable(multiplier_1_enable),
-                .Er(7'b000_0000),
-                .Operand_1(multiplier_input_1), 
-                .Operand_2(multiplier_input_2),  
-                .Result(multiplier_1_result),
-                .Busy(multiplier_1_busy)
-            );
+
             //-------------------------------
             // End of Circuit 2 instantiation
         end

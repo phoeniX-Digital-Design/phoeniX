@@ -177,7 +177,7 @@ module Divider_Unit
         begin
             // Circuit 1 (default) instantiation
             //----------------------------------
-            Approximate_Accuracy_Controlable_Divider divider_1 
+            Approximate_Accuracy_Controlable_Divider approximate_accuracy_controlable_divider 
             (
                 .clk(clk),
                 .Er(divider_accuracy),
@@ -194,16 +194,7 @@ module Divider_Unit
         begin
             // Circuit 2 instantiation
             //-------------------------------
-            Approximate_Accuracy_Controlable_Divider divider_2 
-            (
-                .clk(clk),
-                .Er(8'b0000_0000),
-                .operand_1(divider_input_1),  
-                .operand_2(divider_input_1),  
-                .div(divider_1_result),  
-                .rem(divider_1_remainder), 
-                .busy(divider_1_busy)
-            );
+
             //-------------------------------
             // End of Circuit 2 instantiation
         end
