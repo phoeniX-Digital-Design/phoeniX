@@ -36,21 +36,6 @@
     `define U_TYPE 4
     `define J_TYPE 5
 
-`define BRANCH_TYPES
-    `define BEQ  3'b000
-    `define BNE  3'b001
-    `define BLT  3'b100
-    `define BGE  3'b101
-    `define BLTU 3'b110
-    `define BGEU 3'b111
-
-`define MEMORY_WORDSIZE
-    `define BYTE                3'b000
-    `define HALFWORD            3'b001
-    `define WORD                3'b010
-    `define BYTE_UNSIGNED       3'b100
-    `define HALFWORD_UNSIGNED   3'b101
-
 `define EXCEPTIONS 
     `define INSTRUCTION_ADDRESS_MISALLIGNED 4'b0000
     `define INSTRUCTION_ACCESS_FAULT        4'b0001
@@ -70,12 +55,16 @@
     `define ECALL   12'b000000000000
     `define EBREAK  12'b000000000001
 
-`define NOP_INSTRUCTION
-    `define NOP         32'h0000_0013
-    `define NOP_OPCODE  `OP_IMM
-    `define NOP_funct12 12'h000
-    `define NOP_funct7  7'b000_0000
-    `define NOP_funct3  3'b000
+`ifndef NOP_INSTRUCTION
+    `define NOP                     32'h0000_0013
+    `define NOP_OPCODE              `OP_IMM
+    `define NOP_funct12             12'h000
+    `define NOP_funct7              7'b000_0000
+    `define NOP_funct3              3'b000
+    `define NOP_immediate           12'h000
+    `define NOP_instruction_type   `I_TYPE
+    `define NOP_write_index         5'b00000
+`endif /*NOP_INSTRUCTION*/
 
 module phoeniX 
 #(
@@ -270,6 +259,9 @@ module phoeniX
             funct7_execute_reg <= `NOP_funct7;
             funct12_execute_reg <= `NOP_funct12;
 
+            immediate_execute_reg <= `NOP_immediate;
+            instruction_type_execute_reg <= `NOP_instruction_type;
+            write_index_execute_reg <= `NOP_write_index;
         end
         else
         begin
@@ -280,11 +272,11 @@ module phoeniX
             funct3_execute_reg <= funct3_decode_wire;
             funct7_execute_reg <= funct7_decode_wire;
             funct12_execute_reg <= funct12_decode_wire;
-        end
 
-        immediate_execute_reg <= immediate_decode_wire; 
-        instruction_type_execute_reg <= instruction_type_decode_wire;
-        write_index_execute_reg <= write_index_decode_wire;
+            immediate_execute_reg <= immediate_decode_wire; 
+            instruction_type_execute_reg <= instruction_type_decode_wire;
+            write_index_execute_reg <= write_index_decode_wire;
+        end
         
         bus_rs1 <= bus_rs1_decode_wire;
         bus_rs2 <= bus_rs2_decode_wire;
@@ -577,7 +569,9 @@ module phoeniX
 
     always @(*) 
     begin
-        if  (opcode_execute_reg == `LOAD & (write_index_execute_reg == read_index_1_decode_wire || write_index_execute_reg == read_index_2_decode_wire ) & write_enable_execute_reg)
+        if  (opcode_execute_reg == `LOAD & write_enable_execute_reg &
+            (((write_index_execute_reg == read_index_1_decode_wire) & read_enable_1_decode_wire) || 
+             ((write_index_execute_reg == read_index_2_decode_wire) & read_enable_2_decode_wire)))
         begin
             stall = 1'b1;
             PC_stall_address = PC_decode_reg;
@@ -590,186 +584,119 @@ module phoeniX
     end
 endmodule
 
-module Fetch_Unit
-(
-	input enable,                                       // Memory Interface module enable pin (from Control Unit)
+/*
+    Address Generator:
+    There are 3 types of addresses generated in this module:
+    1. Branch Address
+    2. Jump and Link Address
+    3. Load/Store Address
+    Immediate values are determined in Immediate_Generator module.
+    So no determination (Mux) will be needed here.(I-J-B immediate)
+*/
 
+`ifndef OPCODES
+    `define LOAD        7'b00_000_11
+    `define LOAD_FP     7'b00_001_11
+    `define custom_0    7'b00_010_11
+    `define MISC_MEM    7'b00_011_11
+    `define OP_IMM      7'b00_100_11
+    `define AUIPC       7'b00_101_11
+    `define OP_IMM_32   7'b00_110_11
+
+    `define STORE       7'b01_000_11
+    `define STORE_FP    7'b01_001_11
+    `define custom_1    7'b01_010_11
+    `define AMO         7'b01_011_11
+    `define OP          7'b01_100_11
+    `define LUI         7'b01_101_11
+    `define OP_32       7'b01_110_11
+
+    `define MADD        7'b10_000_11
+    `define MSUB        7'b10_001_11
+    `define NMSUB       7'b10_010_11
+    `define NMADD       7'b10_011_11
+    `define OP_FP       7'b10_100_11
+    `define custom_2    7'b10_110_11
+
+    `define BRANCH      7'b11_000_11
+    `define JALR        7'b11_001_11
+    `define JAL         7'b11_011_11
+    `define SYSTEM      7'b11_100_11
+    `define custom_3    7'b11_110_11
+`endif 
+
+module Address_Generator
+(
+    input [6 : 0] opcode, 
+    input [31 : 0] rs1,            // to be connected to bus_rs1
     input [31 : 0] PC,
+    input [31 : 0] immediate,
 
-	input [31 : 0] address,                             // Branch or Jump address generated in Address Generator
-	input jump_branch_enable,                           // Generated in Branch Unit module
-
-    output [31 : 0] next_PC,                            // next instruction PC output
-    
-    //////////////////////////////
-    // Memory Interface Signals //
-    //////////////////////////////
-
-    output  reg  memory_interface_enable,
-    output  reg  memory_interface_state,
-    output  reg  [31 : 0]   memory_interface_address,
-    output  reg  [3 : 0]    memory_interface_frame_mask
+    output reg [31 : 0] address
 );
-    localparam  READ    = 1'b0;
-    localparam  WRITE   = 1'b1;
-
+    reg  [31 : 0] value;
+    
     always @(*) 
     begin
-        memory_interface_enable = enable;
-        memory_interface_state = READ;
-        memory_interface_frame_mask = 4'b1111;
-        memory_interface_address = PC;  
-    end
-
-    assign next_PC = jump_branch_enable ? address : PC + 32'd4;
-endmodule
-
-module Instruction_Decoder 
-(
-    input [31 : 0] instruction,
-
-    output [2 : 0] instruction_type,
-
-    output [6 : 0] opcode,
-    output [2 : 0] funct3,
-    output [6 : 0] funct7,
-    output [11 : 0] funct12,
-
-    output [4 : 0] read_index_1,
-    output [4 : 0] read_index_2,
-    output [4 : 0] write_index,
-
-    output reg read_enable_1,
-    output reg read_enable_2,
-    output reg write_enable
-);
-    assign opcode = instruction [6 : 0];
-
-    assign instruction_type_i = opcode == `LOAD         ||
-                                opcode == `LOAD_FP      ||
-                                opcode == `OP_IMM       ||
-                                opcode == `OP_IMM_32    ||
-                                opcode == `JALR;
+        // Address Type evaluation (for Address Generator module)
+        case (opcode)
+            `STORE   : value = rs1;    //  Store  -> bus_rs1 + immediate
+            `LOAD    : value = rs1;    //  Load   -> bus_rs1 + immediate
+            `JAL     : value = PC;     //  JAL    ->    PC   + immediate
+            `JALR    : value = rs1;    //  JALR   -> bus_rs1 + immediate
+            `BRANCH  : value = PC;     //  Branch ->    PC   + immediate
+            default  : value = 1'bz;
+        endcase 
         
-    assign instruction_type_b = opcode == `BRANCH;
-
-    assign instruction_type_r = opcode == `OP ||
-                                opcode == `OP_FP;
-
-    assign instruction_type_s = opcode == `STORE ||
-                                opcode == `STORE_FP;
-
-    assign instruction_type_u = opcode == `AUIPC ||
-                                opcode == `LUI;
-
-    assign instruction_type_j = opcode == `JAL;
-
-    assign instruction_type =   (instruction_type_r) ? `R_TYPE :
-                                (instruction_type_i) ? `I_TYPE : 
-                                (instruction_type_s) ? `S_TYPE :
-                                (instruction_type_b) ? `B_TYPE :
-                                (instruction_type_u) ? `U_TYPE : 
-                                (instruction_type_j) ? `J_TYPE :
-                                1'bz; // Default value
-
-    assign funct7 = instruction[31 : 25];
-    assign funct3 = instruction[14 : 12];
-    assign funct12 = instruction[31 : 20];
-    
-    assign read_index_1 = instruction[19 : 15];
-    assign read_index_2 = instruction[24 : 20];
-    assign write_index  = instruction[11 :  7];
-
-    always @(*) 
-    begin
-        // Register File read/write enable signals evaluation
-        case (instruction_type)
-            `I_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b0; write_enable = 1'b1; end
-            `B_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b1; write_enable = 1'b0; end
-            `S_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b1; write_enable = 1'b0; end
-            `U_TYPE : begin read_enable_1 = 1'b0; read_enable_2 = 1'b0; write_enable = 1'b1; end
-            `J_TYPE : begin read_enable_1 = 1'b0; read_enable_2 = 1'b0; write_enable = 1'b1; end 
-            `R_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b1; write_enable = 1'b1; end
-            default : begin end // Raise Exception
-        endcase    
-
-        // Disable Write Signal when destination is x0
-        if (write_index == 5'b00000)
-            write_enable <= 1'b0;
+        address = value + immediate;
     end
 endmodule
 
-module Immediate_Generator 
-(
-	input [31 : 0] instruction,
-	input [ 2 : 0] instruction_type,
+/*
+    phoeniX RV32I core - Arithmetic Logic Unit
+    - This unit executes R-Type, I-Type and J-Type instructions
+    - Inputs bus_rs1, bus_rs2 comes from Register_File
+    - Input immediate comes from Immediate_Generator
+    - Input signals opcode, funct3, funct7, comes from Instruction_Decoder
+    - Supported Instructions :
 
-	output reg [31 : 0] immediate
-);
-    always @(*) begin
-        case (instruction_type)
-            `I_TYPE : immediate = { {21{instruction[31]}}, instruction[30 : 20] };
-            `S_TYPE : immediate = { {21{instruction[31]}}, instruction[30 : 25], instruction[11 : 7] };
-            `B_TYPE : immediate = { {20{instruction[31]}}, instruction[7], instruction[30 : 25], instruction[11 : 8], 1'b0 };
-            `U_TYPE : immediate = { instruction[31 : 12], {12{1'b0}} };
-            `J_TYPE : immediate = { {12{instruction[31]}}, instruction[19 : 12], instruction[20], instruction[30 : 21], 1'b0 };
-            default : immediate = { 32{1'bz} };
-        endcase
-    end
-endmodule
+        I-TYPE : ADDI - SLTI - SLTIU            R-TYPE : ADD  - SUB  - SLL           
+                 XORI - ORI  - ANDI                      SLT  - SLTU - XOR                         
+                 SLLI - SRLI - SRAI                      SRL  - SRA  - OR  - AND
+        
+        J-TYPE : JAL  - JALR                    U-TYPE : AUIPC         
+*/
 
-module Register_File
-#(
-    parameter WIDTH = 32,
-    parameter DEPTH = 5
-)
-(
-    input CLK,
-    input reset,
-    
-    input wire read_enable_1,
-    input wire read_enable_2,
-    input wire write_enable,
-    
-    input wire [DEPTH - 1 : 0] read_index_1,
-    input wire [DEPTH - 1 : 0] read_index_2,
-    input wire [DEPTH - 1 : 0] write_index,
+`ifndef OPCODES
+    `define LOAD        7'b00_000_11
+    `define LOAD_FP     7'b00_001_11
+    `define custom_0    7'b00_010_11
+    `define MISC_MEM    7'b00_011_11
+    `define OP_IMM      7'b00_100_11
+    `define AUIPC       7'b00_101_11
+    `define OP_IMM_32   7'b00_110_11
 
-    input wire [WIDTH - 1 : 0] write_data,
+    `define STORE       7'b01_000_11
+    `define STORE_FP    7'b01_001_11
+    `define custom_1    7'b01_010_11
+    `define AMO         7'b01_011_11
+    `define OP          7'b01_100_11
+    `define LUI         7'b01_101_11
+    `define OP_32       7'b01_110_11
 
-    output reg [WIDTH - 1 : 0] read_data_1,
-    output reg [WIDTH - 1 : 0] read_data_2
-);
-	reg [WIDTH - 1 : 0] Registers [0 : 31];      
+    `define MADD        7'b10_000_11
+    `define MSUB        7'b10_001_11
+    `define NMSUB       7'b10_010_11
+    `define NMADD       7'b10_011_11
+    `define OP_FP       7'b10_100_11
+    `define custom_2    7'b10_110_11
 
-    integer i;    	
-    always @(posedge reset)
-    begin
-        for (i = 0; i < 32 ; i = i + 1)
-            Registers[i] = {WIDTH{1'b0}};
-    end
-	
-    always @(negedge CLK)
-    begin
-        if (write_enable == 1'b1 && write_index != 0)
-        begin
-            Registers[write_index] <= write_data;
-        end
-    end
-
-    always @(*) 
-    begin
-        if (read_enable_1 == 1'b1)
-            read_data_1 <= Registers[read_index_1];
-        else
-            read_data_1 <= {WIDTH{1'bz}};
-
-        if (read_enable_2 == 1'b1)
-            read_data_2 <= Registers[read_index_2];
-        else
-            read_data_2 <= {WIDTH{1'bz}};
-    end
-endmodule
+    `define BRANCH      7'b11_000_11
+    `define JALR        7'b11_001_11
+    `define JAL         7'b11_011_11
+    `define SYSTEM      7'b11_100_11
+    `define custom_3    7'b11_110_11
+`endif
 
 module Arithmetic_Logic_Unit 
 (
@@ -795,10 +722,11 @@ module Arithmetic_Logic_Unit
     always @(*) 
     begin
         case (opcode)
-        `OP     : begin mux1_select = 1'b0; mux2_select = 2'b00; end // R-TYPE instructions
-        `OP_IMM : begin mux1_select = 1'b0; mux2_select = 2'b01; end // I-TYPE instructions
-        `JALR   : begin mux1_select = 1'b1; mux2_select = 2'b10; end // JALR   instructions
-        `JAL    : begin mux1_select = 1'b1; mux2_select = 2'b10; end // JAL    instructions
+        `OP     : begin mux1_select = 1'b0; mux2_select = 2'b00; end // R-TYPE 
+        `OP_IMM : begin mux1_select = 1'b0; mux2_select = 2'b01; end // I-TYPE 
+        `JALR   : begin mux1_select = 1'b1; mux2_select = 2'b10; end // JALR   
+        `JAL    : begin mux1_select = 1'b1; mux2_select = 2'b10; end // JAL    
+        `AUIPC  : begin mux1_select = 1'b1; mux2_select = 2'b01; end // AUIPC
         endcase        
     end
 
@@ -859,6 +787,282 @@ module Arithmetic_Logic_Unit
     end
 endmodule
 
+module Fetch_Unit
+(
+	input enable,                    // Memory interface enable pin
+
+    input [31 : 0] PC,
+
+	input [31 : 0] address,         // Branch or Jump address generated in Address Generator
+	input jump_branch_enable,       // Generated in Branch Unit module
+
+    output reg [31 : 0] next_PC,    // next instruction PC output
+    
+    //////////////////////////////
+    // Memory Interface Signals //
+    //////////////////////////////
+
+    output  reg  memory_interface_enable,
+    output  reg  memory_interface_state,
+    output  reg  [31 : 0]   memory_interface_address,
+    output  reg  [3 : 0]    memory_interface_frame_mask
+);
+    localparam  READ    = 1'b0;
+    localparam  WRITE   = 1'b1;
+
+    always @(*) 
+    begin
+        memory_interface_enable = enable;
+        memory_interface_state = READ;
+        memory_interface_frame_mask = 4'b1111;
+        memory_interface_address = PC;  
+    end
+
+    always @(*)
+    begin
+        if (jump_branch_enable) next_PC <= address;
+        else                    next_PC <= PC + 32'd4;
+    end
+endmodule
+
+module Hazard_Forward_Unit 
+(
+    input [4 : 0] source_index,          
+    
+    input [4 : 0] destination_index_1,
+    input [4 : 0] destination_index_2,
+    input [4 : 0] destination_index_3,
+
+    input [31 : 0] data_1,
+    input [31 : 0] data_2,
+    input [31 : 0] data_3,
+
+    input enable_1,
+    input enable_2,
+    input enable_3,
+    
+    output reg forward_enable,
+    output reg [31 : 0] forward_data
+);
+
+    always @(*) 
+    begin
+        if (source_index == destination_index_1 && enable_1 == 1'b1)
+        begin
+            forward_data <= data_1;
+            forward_enable <= 1'b1;
+        end
+            
+        else if (source_index == destination_index_2 && enable_2 == 1'b1)
+        begin
+            forward_data <= data_2;
+            forward_enable <= 1'b1;
+        end
+            
+        else if (source_index == destination_index_3 && enable_3 == 1'b1)
+        begin
+            forward_data <= data_3;
+            forward_enable <= 1'b1;
+        end
+        else
+        begin
+            forward_data <= 32'bz;
+            forward_enable <= 1'b0;
+        end
+    end
+endmodule
+
+`ifndef INSTRUCTION_TYPES
+    `define R_TYPE 0
+    `define I_TYPE 1
+    `define S_TYPE 2
+    `define B_TYPE 3
+    `define U_TYPE 4
+    `define J_TYPE 5
+`endif
+
+module Immediate_Generator 
+(
+	input [31 : 0] instruction,
+	input [2 : 0] instruction_type,
+
+	output reg [31 : 0] immediate
+);
+    always @(*) begin
+        case (instruction_type)
+            `I_TYPE : immediate = { {21{instruction[31]}}, instruction[30 : 20] };
+            `S_TYPE : immediate = { {21{instruction[31]}}, instruction[30 : 25], instruction[11 : 7] };
+            `B_TYPE : immediate = { {20{instruction[31]}}, instruction[7], instruction[30 : 25], instruction[11 : 8], 1'b0 };
+            `U_TYPE : immediate = { instruction[31 : 12], {12{1'b0}} };
+            `J_TYPE : immediate = { {12{instruction[31]}}, instruction[19 : 12], instruction[20], instruction[30 : 21], 1'b0 };
+            default : immediate = { 32{1'bz} };
+        endcase
+    end
+endmodule
+
+`ifndef OPCODES
+    `define LOAD        7'b00_000_11
+    `define LOAD_FP     7'b00_001_11
+    `define custom_0    7'b00_010_11
+    `define MISC_MEM    7'b00_011_11
+    `define OP_IMM      7'b00_100_11
+    `define AUIPC       7'b00_101_11
+    `define OP_IMM_32   7'b00_110_11
+
+    `define STORE       7'b01_000_11
+    `define STORE_FP    7'b01_001_11
+    `define custom_1    7'b01_010_11
+    `define AMO         7'b01_011_11
+    `define OP          7'b01_100_11
+    `define LUI         7'b01_101_11
+    `define OP_32       7'b01_110_11
+
+    `define MADD        7'b10_000_11
+    `define MSUB        7'b10_001_11
+    `define NMSUB       7'b10_010_11
+    `define NMADD       7'b10_011_11
+    `define OP_FP       7'b10_100_11
+    `define custom_2    7'b10_110_11
+
+    `define BRANCH      7'b11_000_11
+    `define JALR        7'b11_001_11
+    `define JAL         7'b11_011_11
+    `define SYSTEM      7'b11_100_11
+    `define custom_3    7'b11_110_11
+`endif
+
+`ifndef INSTRUCTION_TYPES
+    `define R_TYPE 0
+    `define I_TYPE 1
+    `define S_TYPE 2
+    `define B_TYPE 3
+    `define U_TYPE 4
+    `define J_TYPE 5
+`endif
+
+module Instruction_Decoder 
+(
+    input [31 : 0] instruction,
+
+    output [2 : 0] instruction_type,
+
+    output [6 : 0] opcode,
+    output [2 : 0] funct3,
+    output [6 : 0] funct7,
+    output [11 : 0] funct12,
+
+    output [4 : 0] read_index_1,
+    output [4 : 0] read_index_2,
+    output [4 : 0] write_index,
+
+    output reg read_enable_1,
+    output reg read_enable_2,
+    output reg write_enable
+);
+
+    assign opcode = instruction [6 : 0];
+
+    assign instruction_type_i = opcode == `LOAD         ||
+                                opcode == `LOAD_FP      ||
+                                opcode == `OP_IMM       ||
+                                opcode == `OP_IMM_32    ||
+                                opcode == `JALR;
+        
+    assign instruction_type_b = opcode == `BRANCH;
+
+    assign instruction_type_r = opcode == `OP ||
+                                opcode == `OP_FP;
+
+    assign instruction_type_s = opcode == `STORE ||
+                                opcode == `STORE_FP;
+
+    assign instruction_type_u = opcode == `AUIPC ||
+                                opcode == `LUI;
+
+    assign instruction_type_j = opcode == `JAL;
+
+    assign instruction_type =   (instruction_type_r) ? `R_TYPE :
+                                (instruction_type_i) ? `I_TYPE : 
+                                (instruction_type_s) ? `S_TYPE :
+                                (instruction_type_b) ? `B_TYPE :
+                                (instruction_type_u) ? `U_TYPE : 
+                                (instruction_type_j) ? `J_TYPE :
+                                1'bz; // Default value
+
+    assign funct7 = instruction[31 : 25];
+    assign funct3 = instruction[14 : 12];
+    assign funct12 = instruction[31 : 20];
+    
+    assign read_index_1 = instruction[19 : 15];
+    assign read_index_2 = instruction[24 : 20];
+    assign write_index  = instruction[11 :  7];
+
+    always @(*) 
+    begin
+        // Register File read/write enable signals evaluation
+        case (instruction_type)
+            `I_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b0; write_enable = 1'b1; end
+            `B_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b1; write_enable = 1'b0; end
+            `S_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b1; write_enable = 1'b0; end
+            `U_TYPE : begin read_enable_1 = 1'b0; read_enable_2 = 1'b0; write_enable = 1'b1; end
+            `J_TYPE : begin read_enable_1 = 1'b0; read_enable_2 = 1'b0; write_enable = 1'b1; end 
+            `R_TYPE : begin read_enable_1 = 1'b1; read_enable_2 = 1'b1; write_enable = 1'b1; end
+            default : begin end // Raise Exception
+        endcase    
+
+        // Disable Write Signal when destination is x0
+        if (write_index == 5'b00000)
+            write_enable <= 1'b0;
+    end
+endmodule
+
+`ifndef OPCODES
+    `define LOAD        7'b00_000_11
+    `define LOAD_FP     7'b00_001_11
+    `define custom_0    7'b00_010_11
+    `define MISC_MEM    7'b00_011_11
+    `define OP_IMM      7'b00_100_11
+    `define AUIPC       7'b00_101_11
+    `define OP_IMM_32   7'b00_110_11
+
+    `define STORE       7'b01_000_11
+    `define STORE_FP    7'b01_001_11
+    `define custom_1    7'b01_010_11
+    `define AMO         7'b01_011_11
+    `define OP          7'b01_100_11
+    `define LUI         7'b01_101_11
+    `define OP_32       7'b01_110_11
+
+    `define MADD        7'b10_000_11
+    `define MSUB        7'b10_001_11
+    `define NMSUB       7'b10_010_11
+    `define NMADD       7'b10_011_11
+    `define OP_FP       7'b10_100_11
+    `define custom_2    7'b10_110_11
+
+    `define BRANCH      7'b11_000_11
+    `define JALR        7'b11_001_11
+    `define JAL         7'b11_011_11
+    `define SYSTEM      7'b11_100_11
+    `define custom_3    7'b11_110_11
+`endif
+
+`ifndef INSTRUCTION_TYPES
+    `define R_TYPE 0
+    `define I_TYPE 1
+    `define S_TYPE 2
+    `define B_TYPE 3
+    `define U_TYPE 4
+    `define J_TYPE 5
+`endif
+
+`define BEQ  3'b000
+`define BNE  3'b001
+`define BLT  3'b100
+`define BGE  3'b101
+`define BLTU 3'b110
+`define BGEU 3'b111
+
 module Jump_Branch_Unit 
 (
     input [6 : 0] opcode,
@@ -904,35 +1108,45 @@ module Jump_Branch_Unit
       assign jump_branch_enable = jump_enable || branch_enable;
 endmodule
 
-module Address_Generator
-(
-    input [6 : 0] opcode, 
-    input [31 : 0] rs1,            // to be connected to bus_rs1
-    input [31 : 0] PC,
-    input [31 : 0] immediate,
+`ifndef OPCODES
+    `define LOAD        7'b00_000_11
+    `define LOAD_FP     7'b00_001_11
+    `define custom_0    7'b00_010_11
+    `define MISC_MEM    7'b00_011_11
+    `define OP_IMM      7'b00_100_11
+    `define AUIPC       7'b00_101_11
+    `define OP_IMM_32   7'b00_110_11
 
-    output reg [31 : 0] address
-);
-    reg  [31 : 0] value;
-    
-    always @(*) 
-    begin
-        // Address Type evaluation (for Address Generator module)
-        case (opcode)
-            `STORE   : value = rs1;    //  Store  -> bus_rs1 + immediate
-            `LOAD    : value = rs1;    //  Load   -> bus_rs1 + immediate
-            `JAL     : value = PC;     //  JAL    ->    PC   + immediate
-            `JALR    : value = rs1;    //  JALR   -> bus_rs1 + immediate
-            `BRANCH  : value = PC;     //  Branch ->    PC   + immediate
-            default  : value = 1'bz;
-        endcase 
-        
-        address = value + immediate;
-    end
-endmodule
+    `define STORE       7'b01_000_11
+    `define STORE_FP    7'b01_001_11
+    `define custom_1    7'b01_010_11
+    `define AMO         7'b01_011_11
+    `define OP          7'b01_100_11
+    `define LUI         7'b01_101_11
+    `define OP_32       7'b01_110_11
+
+    `define MADD        7'b10_000_11
+    `define MSUB        7'b10_001_11
+    `define NMSUB       7'b10_010_11
+    `define NMADD       7'b10_011_11
+    `define OP_FP       7'b10_100_11
+    `define custom_2    7'b10_110_11
+
+    `define BRANCH      7'b11_000_11
+    `define JALR        7'b11_001_11
+    `define JAL         7'b11_011_11
+    `define SYSTEM      7'b11_100_11
+    `define custom_3    7'b11_110_11
+`endif 
+
+`define BYTE                3'b000
+`define HALFWORD            3'b001
+`define WORD                3'b010
+`define BYTE_UNSIGNED       3'b100
+`define HALFWORD_UNSIGNED   3'b101
 
 module Load_Store_Unit
-(       
+(
     input  [6 : 0] opcode,                  // Load/Store function
     input  [2 : 0] funct3,                  // Load/Store function
 
@@ -1075,55 +1289,64 @@ module Load_Store_Unit
                 if (memory_interface_frame_mask == 4'b0011) store_data_reg[31 : 16] <= store_data[15 : 0];
                 if (memory_interface_frame_mask == 4'b1100) store_data_reg[15 :  0] <= store_data[15 : 0];
             end
-            `WORD : store_data_reg <= store_data;
+            `WORD : 
+            begin
+                if (memory_interface_frame_mask == 4'b1111) store_data_reg[31 : 0] = store_data[31 : 0];
+            end 
         endcase
         else store_data_reg <= 32'bz;
     end
 endmodule
 
-module Hazard_Forward_Unit 
+module Register_File
+#(
+    parameter WIDTH = 32,
+    parameter DEPTH = 5
+)
 (
-    input [4 : 0] source_index,          
+    input CLK,
+    input reset,
     
-    input [4 : 0] destination_index_1,
-    input [4 : 0] destination_index_2,
-    input [4 : 0] destination_index_3,
-
-    input [31 : 0] data_1,
-    input [31 : 0] data_2,
-    input [31 : 0] data_3,
-
-    input enable_1,
-    input enable_2,
-    input enable_3,
+    input wire read_enable_1,
+    input wire read_enable_2,
+    input wire write_enable,
     
-    output reg forward_enable,
-    output reg [31 : 0] forward_data
+    input wire [DEPTH - 1 : 0] read_index_1,
+    input wire [DEPTH - 1 : 0] read_index_2,
+    input wire [DEPTH - 1 : 0] write_index,
+
+    input wire [WIDTH - 1 : 0] write_data,
+
+    output reg [WIDTH - 1 : 0] read_data_1,
+    output reg [WIDTH - 1 : 0] read_data_2
 );
+	reg [WIDTH - 1 : 0] Registers [0 : 31];      
+
+    integer i;    	
+    always @(posedge reset)
+    begin
+        for (i = 0; i < 32; i = i + 1)
+            Registers[i] = {WIDTH{1'b0}};
+    end
+	
+    always @(negedge CLK)
+    begin
+        if (write_enable == 1'b1 && write_index != 0)
+        begin
+            Registers[write_index] <= write_data;
+        end
+    end
 
     always @(*) 
     begin
-        if (source_index == destination_index_1 && enable_1 == 1'b1)
-        begin
-            forward_data <= data_1;
-            forward_enable <= 1'b1;
-        end
-            
-        else if (source_index == destination_index_2 && enable_2 == 1'b1)
-        begin
-            forward_data <= data_2;
-            forward_enable <= 1'b1;
-        end
-            
-        else if (source_index == destination_index_3 && enable_3 == 1'b1)
-        begin
-            forward_data <= data_3;
-            forward_enable <= 1'b1;
-        end
+        if (read_enable_1 == 1'b1)
+            read_data_1 <= Registers[read_index_1];
         else
-        begin
-            forward_data <= 32'bz;
-            forward_enable <= 1'b0;
-        end
+            read_data_1 <= {WIDTH{1'bz}};
+
+        if (read_enable_2 == 1'b1)
+            read_data_2 <= Registers[read_index_2];
+        else
+            read_data_2 <= {WIDTH{1'bz}};
     end
 endmodule

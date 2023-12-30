@@ -9,7 +9,7 @@ CORE_TESTBENCH = $(CORE_NAME)_Testbench.v
 TOOLCHAIN_PREFIX = riscv64-unknown-elf-
 
 MABI = ilp32
-MARCH = rv32i
+MARCH = rv32im
 
 CFLAGS = -mabi=$(MABI) -march=$(MARCH)
 CFLAG_LINKING = -Wl,--gc-sections
@@ -48,7 +48,7 @@ firmware.hex: start.elf firmware.elf
 
 firmware.elf: $(OBJECT_C) $(OBJECT_S)
 	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $(PROJECT_DIR)/syscalls.o $(FIRMWARE_DIR)/syscalls.c
-	$(TOOLCHAIN_PREFIX)gcc $(CFLAGS) $(CFLAG_LINKING) -o $(PROJECT_DIR)/$(project)_firmware.elf $< $(PROJECT_DIR)/syscalls.o -T $(FIRMWARE_DIR)/riscv.ld -lstdc++
+	$(TOOLCHAIN_PREFIX)gcc $(CFLAGS) $(CFLAG_LINKING) -o $(PROJECT_DIR)/$(project)_firmware.elf $^ $(PROJECT_DIR)/syscalls.o -T $(FIRMWARE_DIR)/riscv.ld -lstdc++
 	$(TOOLCHAIN_PREFIX)objdump -d $(PROJECT_DIR)/$(project)_firmware.elf > $(PROJECT_DIR)/$(project)_firmware.txt
 	$(TOOLCHAIN_PREFIX)objcopy -O verilog $(PROJECT_DIR)/$(project)_firmware.elf $(PROJECT_DIR)/firmware.tmp
 
@@ -57,10 +57,11 @@ start.elf:
 	$(TOOLCHAIN_PREFIX)objcopy -O verilog $(PROJECT_DIR)/$(project)_start.elf $(PROJECT_DIR)/start.tmp
 
 $(OBJECT_C): $(SOURCE_C)
-	@echo "Hello are you there?"
+	@echo "Compiling C files"
 	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $@ $<
 
 $(OBJECT_S): $(SOURCE_S)
+	@echo "Compiling ASM files"
 	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $@ $<
 
 %::

@@ -4,7 +4,7 @@ module Register_File
     parameter DEPTH = 5
 )
 (
-    input CLK,
+    input clk,
     input reset,
     
     input wire read_enable_1,
@@ -29,7 +29,7 @@ module Register_File
             Registers[i] = {WIDTH{1'b0}};
     end
 	
-    always @(negedge CLK)
+    always @(negedge clk)
     begin
         if (write_enable == 1'b1 && write_index != 0)
         begin

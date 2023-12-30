@@ -1,67 +1,278 @@
-/*
-    Address Generator:
-    There are 3 types of addresses generated in this module:
-    1. Branch Address
-    2. Jump and Link Address
-    3. Load/Store Address
-    Immediate values are determined in Immediate_Generator module.
-    So no determination (Mux) will be needed here.(I-J-B immediate)
-*/
-
-`ifndef OPCODES
-    `define LOAD        7'b00_000_11
-    `define LOAD_FP     7'b00_001_11
-    `define custom_0    7'b00_010_11
-    `define MISC_MEM    7'b00_011_11
-    `define OP_IMM      7'b00_100_11
-    `define AUIPC       7'b00_101_11
-    `define OP_IMM_32   7'b00_110_11
-
-    `define STORE       7'b01_000_11
-    `define STORE_FP    7'b01_001_11
-    `define custom_1    7'b01_010_11
-    `define AMO         7'b01_011_11
-    `define OP          7'b01_100_11
-    `define LUI         7'b01_101_11
-    `define OP_32       7'b01_110_11
-
-    `define MADD        7'b10_000_11
-    `define MSUB        7'b10_001_11
-    `define NMSUB       7'b10_010_11
-    `define NMADD       7'b10_011_11
-    `define OP_FP       7'b10_100_11
-    `define custom_2    7'b10_110_11
-
-    `define BRANCH      7'b11_000_11
-    `define JALR        7'b11_001_11
-    `define JAL         7'b11_011_11
-    `define SYSTEM      7'b11_100_11
-    `define custom_3    7'b11_110_11
-`endif 
+`include "Defines.v"
 
 module Address_Generator
 (
-    input [6 : 0] opcode, 
-    input [31 : 0] rs1,            // to be connected to bus_rs1
-    input [31 : 0] PC,
+    input [ 6 : 0] opcode, 
+    input [31 : 0] rs1,            
+    input [31 : 0] pc,
     input [31 : 0] immediate,
 
     output reg [31 : 0] address
 );
-    reg  [31 : 0] value;
     
+    reg  [31 : 0] adder_input_1;
+    reg  [31 : 0] adder_input_2;
+    wire [31 : 0] adder_result;
+
     always @(*) 
     begin
-        // Address Type evaluation (for Address Generator module)
         case (opcode)
-            `STORE   : value = rs1;    //  Store  -> bus_rs1 + immediate
-            `LOAD    : value = rs1;    //  Load   -> bus_rs1 + immediate
-            `JAL     : value = PC;     //  JAL    ->    PC   + immediate
-            `JALR    : value = rs1;    //  JALR   -> bus_rs1 + immediate
-            `BRANCH  : value = PC;     //  Branch ->    PC   + immediate
-            default  : value = 1'bz;
+            `STORE   : begin adder_input_1 = rs1;   adder_input_2 = immediate; address = adder_result; end    //  Store  ->   rs1  + immediate
+            `LOAD    : begin adder_input_1 = rs1;   adder_input_2 = immediate; address = adder_result; end    //  Load   ->   rs1  + immediate
+            `JALR    : begin adder_input_1 = rs1;   adder_input_2 = immediate; address = adder_result; end    //  JALR   ->   rs1  + immediate
+            `JAL     : begin adder_input_1 = pc;    adder_input_2 = immediate; address = adder_result; end    //  JAL    ->   pc   + immediate
+            `AUIPC   : begin adder_input_1 = pc;    adder_input_2 = immediate; address = adder_result; end    //  AUIPC  ->   pc   + immediate
+            `BRANCH  : begin adder_input_1 = pc;    adder_input_2 = immediate; address = adder_result; end    //  Branch ->   pc   + immediate
+            default  : begin adder_input_1 = 32'bz; adder_input_2 = 32'bz;     address = 32'bz;        end
         endcase 
-        
-        address = value + immediate;
     end
+
+    Kogge_Stone_Adder adder_address_generator 
+    (
+        .carry_in(1'b0), 
+        .input_A(adder_input_1),
+        .input_B(adder_input_2),
+        .sum(adder_result)
+    );
+endmodule
+
+module Kogge_Stone_Adder
+(
+    input  wire          carry_in,
+    input  wire [31 : 0] input_A,
+    input  wire [31 : 0] input_B,
+    output wire [31 : 0] sum,
+    output wire          carry_out
+);
+
+    // Stage 1
+    wire [31 : 0] p_stage_1; wire [31 : 0] g_stage_1; wire carry_stage_1;
+    // Stage 2
+    wire [30 : 0] p_stage_2; wire [31 : 0] g_stage_2; wire carry_stage_2; wire [31 : 0] p_saved_1;
+    // Stage 3
+    wire [28 : 0] p_stage_3; wire [31 : 0] g_stage_3; wire carry_stage_3; wire [31 : 0] p_saved_2;
+    // Stage 4
+    wire [24 : 0] p_stage_4; wire [31 : 0] g_stage_4; wire carry_stage_4; wire [31 : 0] p_saved_3;
+    // Stage 5
+    wire [16 : 0] p_stage_5; wire [31 : 0] g_stage_5; wire carry_stage_5; wire [31 : 0] p_saved_4;
+    // Stage 6
+    wire [31 : 0] p_stage_6; wire [31 : 0] g_stage_6; wire carry_stage_6;
+
+    // Kogge Stone Stage 1
+    assign carry_stage_1 = carry_in;
+    genvar i;
+    generate
+    for (i = 0 ; i < 32 ; i = i + 1) 
+    begin
+        PG pg_stage_1 
+        (
+            .input_a(input_A[i]),
+            .input_b(input_B[i]),
+            .output_p(p_stage_1[i]),
+            .output_g(g_stage_1[i])
+        );
+    end
+    endgenerate
+
+    // Kogge Stone Stage 2
+    wire [31 : 0] gkj_stage_2;
+    wire [30 : 0] pkj_stage_2;
+
+    assign carry_stage_2        = carry_stage_1;
+    assign p_saved_1            = p_stage_1 [31 : 0];
+    assign gkj_stage_2 [0]      = carry_stage_1;
+    assign gkj_stage_2 [31 : 1] = g_stage_1 [30 : 0];
+    assign pkj_stage_2          = p_stage_1 [30 : 0];
+
+    Grey_Cell gc_0(gkj_stage_2[0], p_stage_1[0], g_stage_1[0], g_stage_2[0]);
+    genvar j;
+    generate
+    for (j = 0 ; j < 31 ; j = j + 1) 
+    begin
+        Black_Cell bc_stage_2 
+        (
+            .input_pj(pkj_stage_2[j]),
+            .input_gj(gkj_stage_2[j + 1]),
+            .input_pk(p_stage_1[j + 1]),
+            .input_gk(g_stage_1[j + 1]),
+            .output_g(g_stage_2[j + 1]),
+            .output_p(p_stage_2[j])
+        );
+    end
+    endgenerate
+
+    // Kogge Stone Stage 3
+    wire [30 : 0] gkj_stage_3;
+    wire [28 : 0] pkj_stage_3;
+
+    assign carry_stage_3       = carry_stage_2;
+    assign p_saved_2           = p_saved_1[31 : 0];
+    assign gkj_stage_3[0]      = carry_stage_2;
+    assign gkj_stage_3[30 : 1] = g_stage_2[29 : 0];
+    assign pkj_stage_3         = p_stage_2[28 : 0];
+    assign g_stage_3[0]        = g_stage_2[0];
+
+    Grey_Cell  gc_1(gkj_stage_3[0], p_stage_2[0], g_stage_2[1], g_stage_3[1]);
+    Grey_Cell  gc_2(gkj_stage_3[1], p_stage_2[1], g_stage_2[2], g_stage_3[2]);
+
+    genvar k;
+    generate
+    for (k = 0 ; k < 29 ; k = k + 1) 
+    begin
+        Black_Cell bc_stage_3 
+        (
+            .input_pj(pkj_stage_3[k]),
+            .input_gj(gkj_stage_3[k + 2]),
+            .input_pk(p_stage_2[k + 2]),
+            .input_gk(g_stage_2[k + 3]),
+            .output_g (g_stage_3[k + 3]),
+            .output_p (p_stage_3[k])
+        );
+    end
+    endgenerate
+
+    // Kogge Stone Stage 4
+    wire [28 : 0] gkj_stage_4;
+    wire [24 : 0] pkj_stage_4;
+
+    assign carry_stage_4       = carry_stage_3;
+    assign p_saved_3           = p_saved_2[31 : 0];
+    assign gkj_stage_4[0]      = carry_stage_3;
+    assign gkj_stage_4[28 : 1] = g_stage_3[27 : 0];
+    assign pkj_stage_4         = p_stage_3[24 : 0];
+    assign g_stage_4[2 : 0]    = g_stage_3[2  : 0];
+
+    genvar l;
+    generate
+    for (l = 0 ; l < 4 ; l = l + 1) 
+    begin
+        Grey_Cell gc_stage_4 
+        (
+            .input_gj(gkj_stage_4[l]),
+            .input_pk(p_stage_3[l]),
+            .input_gk(g_stage_3[l + 3]),
+            .output_g(g_stage_4[l + 3])
+        );
+    end
+    endgenerate
+
+    genvar m;
+    generate
+    for (m = 0 ; m < 25 ; m = m + 1) 
+    begin
+        Black_Cell bc_stage_4 
+        (
+            .input_pj(pkj_stage_4[m]),
+            .input_gj(gkj_stage_4[m + 4]),
+            .input_pk(p_stage_3[m + 4]),
+            .input_gk(g_stage_3[m + 7]),
+            .output_g(g_stage_4[m + 7]),
+            .output_p(p_stage_4[m])
+        );
+    end
+    endgenerate
+
+    // Kogge Stone Stage 5
+    wire [24 : 0] gkj_stage_5;
+    wire [16 : 0] pkj_stage_5;
+
+    assign carry_stage_5       = carry_stage_4;
+    assign p_saved_4           = p_saved_3[31 : 0];
+    assign gkj_stage_5[0]      = carry_stage_4;
+    assign gkj_stage_5[24 : 1] = g_stage_4[23 : 0];
+    assign pkj_stage_5         = p_stage_4[16 : 0];
+    assign g_stage_5[6 : 0]    = g_stage_4[6  : 0];
+
+    genvar n;
+    generate
+    for (n = 0 ; n < 8 ; n = n + 1) 
+    begin
+        Grey_Cell gc_stage_5 
+        (
+            .input_gj(gkj_stage_5[n]),
+            .input_pk(p_stage_4[n]),
+            .input_gk(g_stage_4[n + 7]),
+            .output_g(g_stage_5[n + 7])
+        );
+    end
+    endgenerate
+
+    genvar o;
+    generate
+    for (o = 0 ; o < 17 ; o = o + 1) 
+    begin
+        Black_Cell bc_stage_5 
+        (
+            .input_pj(pkj_stage_5[o]),
+            .input_gj(gkj_stage_5[o + 8]),
+            .input_pk(p_stage_4[o + 8]),
+            .input_gk(g_stage_4[o + 15]),
+            .output_g(g_stage_5[o + 15]),
+            .output_p(p_stage_5[o])
+        );
+    end
+    endgenerate
+
+    // Kogge Stone Stage 6
+    wire [16 : 0] gkj_stage_6;
+
+    assign carry_stage_6       = carry_stage_5;
+    assign p_stage_6           = p_saved_4[31 : 0];
+    assign gkj_stage_6[0]      = carry_stage_5;
+    assign gkj_stage_6[16 : 1] = g_stage_5[15 : 0];
+    assign g_stage_6[15 : 0]   = g_stage_5[15 : 0];
+
+    genvar p;
+    generate
+    for (p = 1 ; p <= 16 ; p = p + 1) 
+    begin
+        Grey_Cell gc_stage_6 
+        (
+            .input_gj(gkj_stage_6[p]),
+            .input_pk(p_stage_5[p]),
+            .input_gk(g_stage_5[p + 15]),
+            .output_g(g_stage_6[p + 15])
+        );
+    end
+    endgenerate
+
+    // Kogge Stone Stage 7
+    assign carry_out   = g_stage_6[31];
+    assign sum[0]      = carry_stage_6 ^ p_stage_6[0];
+    assign sum[31 : 1] = g_stage_6[30 : 0] ^ p_stage_6[31 : 1];
+
+endmodule
+
+module PG
+(
+    input  wire input_a,
+    input  wire input_b,
+    output wire output_p,
+    output wire output_g
+);
+    assign output_p = input_a ^ input_b;
+    assign output_g = input_a & input_b;
+endmodule
+
+module Black_Cell
+(
+    input  wire input_pj,
+    input  wire input_gj,
+    input  wire input_pk,
+    input  wire input_gk,
+    output wire output_g,
+    output wire output_p
+);
+    assign output_g = input_gk | (input_gj & input_pk);
+    assign output_p = input_pk & input_pj;
+endmodule
+
+module Grey_Cell
+(
+    input  wire input_gj,
+    input  wire input_pk,
+    input  wire input_gk,
+    output wire output_g
+);
+    assign output_g = input_gk | (input_gj & input_pk);
 endmodule
