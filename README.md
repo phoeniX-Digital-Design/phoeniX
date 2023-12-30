@@ -51,9 +51,9 @@ This repository contains an open source CPU including RTL codes and assistant so
 ## Features
 <div align="justify">
 
- - **DLX 5 stage pipline**
+ - **Optimized 3 stage pipline**
 
- The classic DLX 5-stage pipeline in a processor improves instruction throughput by dividing execution into sequential stages. By incorporating data forwarding and bypassing options (such as forwarding data from execution, memory or writeback stage) the pipeline minimizes stalls caused by data hazards. As a result, the pipeline achieves higher performance, reduced stalls, and improved instruction-level parallelism, enabling concurrent processing of independent instructions.
+ The 3-stage pipeline in a processor improves instruction throughput by dividing execution into sequential stages with minimal internal fragmentation. By incorporating data forwarding and bypassing options (such as forwarding data from execution, memory or writeback stage) the pipeline minimizes stalls caused by data hazards. As a result, the pipeline achieves higher performance, reduced stalls, and improved instruction-level parallelism, enabling concurrent processing of independent instructions.
 
  - **Modularity and Extensiveness**
 
@@ -227,6 +227,7 @@ phoeniX convention for naming projects is as follows; The main source file of th
 
 Sample projects provided at this time are `bubble_sort`, `fibonacci`, `find_max_array`, `sum1ton`.
 To run any of these sample projects simply run `make sample` followed by the name of the project passed as a variable named project to the Makefile.
+
 ```shell
 make sample project={project}
 ```
@@ -309,8 +310,6 @@ This table provides a comparison of similar embedded processors to phoeniX, used
 | FE310                 | 150                 | 180                  | Si-Five           | RV32IMAC       |
 | ESP32                 | 240                 | 40                   | Espressif         | Xtensa LX6     |
 | PIC32MX795F512L       | 80                  | 90                   | Microchip         | MIPS32 M4K     |
-| RL78/G13              | 32                  | 90                   | Renesas           | RL78 (CISC)    |
-| MSP430F5529           | 25                  | 180                  | Texas Instruments | MSP430         |
 
 </div>
 
