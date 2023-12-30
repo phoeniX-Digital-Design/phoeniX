@@ -15,7 +15,7 @@ module phoeniX_Testbench;
     initial begin forever #(CLK_PERIOD/2) clk = ~clk; end
     initial #(5000 * CLK_PERIOD) $finish;
 
-    reg reset = 1'b1;
+    reg reset = `ENABLE;
     
     //////////////////////////////////////////
     // Instruction Memory Interface Signals //
@@ -98,6 +98,7 @@ module phoeniX_Testbench;
         wire [31 : 0] x31_t6 	= uut.register_file.Registers[31];
         wire [31 : 0] alu_csr   = uut.control_status_register_file.alucsr_reg;
         wire [31 : 0] mul_csr   = uut.control_status_register_file.mulcsr_reg;
+        wire [31 : 0] div_csr   = uut.control_status_register_file.divcsr_reg;
     `endif
 
     initial
@@ -106,7 +107,7 @@ module phoeniX_Testbench;
         $dumpvars(0, phoeniX_Testbench);
         // Reset
         repeat (5) @(posedge clk);
-		reset <= 1'b0;
+		reset <= `DISABLE;
     end
 
     integer enable_high_count = 0;
@@ -120,19 +121,6 @@ module phoeniX_Testbench;
             enable_low_count = enable_low_count + 1;    
     end
 
-    always @(*) 
-    begin
-        if (uut.opcode_writeback_reg == `SYSTEM && uut.funct12_writeback_reg == `EBREAK) 
-        begin
-            reset <= 1'b1;
-            repeat (5) @(posedge clk);
-            $display("\n--> EXECUTION FINISHED <--\n");
-            $display("ON TIME:\t%d\nOFF TIME:\t%d", enable_high_count * CLK_PERIOD, enable_low_count * CLK_PERIOD);
-            $dumpoff;
-            $finish;
-        end
-    end
-
     ////////////////
     //   Memory   //
     ////////////////
@@ -140,8 +128,6 @@ module phoeniX_Testbench;
     // 4 MB Memory Instantiation
     reg [31 : 0] Memory [0 : 1024 * 1024 - 1];
     initial $readmemh(`FIRMWARE, Memory);
-    localparam  READ    = 1'b0;
-    localparam  WRITE   = 1'b1;
 
     // Instruction Memory Interface Behaviour
     always @(negedge clk)
@@ -149,7 +135,7 @@ module phoeniX_Testbench;
         if (!instruction_memory_interface_enable) instruction_memory_interface_data <= 32'bz;
         else
         begin
-            if (instruction_memory_interface_state == READ)
+            if (instruction_memory_interface_state == `READ)
                 instruction_memory_interface_data <= Memory[instruction_memory_interface_address >> 2];
         end    
     end
@@ -168,14 +154,14 @@ module phoeniX_Testbench;
         end
         else
         begin
-            if (data_memory_interface_state == WRITE) 
+            if (data_memory_interface_state == `WRITE) 
             begin
                 if (data_memory_interface_frame_mask[3]) Memory[data_memory_interface_address >> 2][ 7 :  0] <= data_memory_interface_data[ 7 :  0];
                 if (data_memory_interface_frame_mask[2]) Memory[data_memory_interface_address >> 2][15 :  8] <= data_memory_interface_data[15 :  8];
                 if (data_memory_interface_frame_mask[1]) Memory[data_memory_interface_address >> 2][23 : 16] <= data_memory_interface_data[23 : 16];
                 if (data_memory_interface_frame_mask[0]) Memory[data_memory_interface_address >> 2][31 : 24] <= data_memory_interface_data[31 : 24];
             end 
-            if (data_memory_interface_state == READ)
+            if (data_memory_interface_state == `READ)
             begin
                 data_memory_interface_data_reg <= Memory[data_memory_interface_address >> 2];
             end
@@ -193,5 +179,23 @@ module phoeniX_Testbench;
     always @(posedge clk) 
     begin
         data_memory_interface_data_reg <= 32'bz;
+    end
+
+    //////////////////
+    // System Calls //
+    //////////////////
+
+    always @(*) 
+    begin
+        if (uut.opcode_writeback_reg == `SYSTEM && uut.funct12_writeback_reg == `EBREAK) 
+        begin
+            reset <= `ENABLE;
+            repeat (5) @(posedge clk);
+            $display("\n--> EXECUTION FINISHED <--\n");
+            $display("Firmware File: %s\n", `FIRMWARE);
+            $display("ON TIME:\t%d\nOFF TIME:\t%d", enable_high_count * CLK_PERIOD, enable_low_count * CLK_PERIOD);
+            $dumpoff;
+            $finish;
+        end
     end
 endmodule
