@@ -2,10 +2,8 @@
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-	`define FIRMWARE "Software/Sample_C_Codes/factorial_abi/factorial_abi_firmware.hex"
+	`define FIRMWARE "Software/User_Codes/TellMeWhy/TellMeWhy_firmware.hex"
 `endif /*FIRMWARE*/
-
-`define MEMORY_DELAY        #1
 
 module phoeniX_Testbench;
 
@@ -15,7 +13,7 @@ module phoeniX_Testbench;
     parameter CLK_PERIOD = 2;
     reg clk = 1'b1;
     initial begin forever #(CLK_PERIOD/2) clk = ~clk; end
-    initial #(10000 * CLK_PERIOD) $finish;
+    initial #(5000 * CLK_PERIOD) $finish;
 
     reg reset = 1'b1;
     
@@ -35,10 +33,8 @@ module phoeniX_Testbench;
     wire data_memory_interface_state;
     wire [31 : 0] data_memory_interface_address;
     wire [ 3 : 0] data_memory_interface_frame_mask;
-    
     wire [31 : 0] data_memory_interface_data;
     reg  [31 : 0] data_memory_interface_data_reg;
-    reg data_memory_interface_ready;
 
     assign data_memory_interface_data = data_memory_interface_data_reg;
 
@@ -59,7 +55,6 @@ module phoeniX_Testbench;
         .instruction_memory_interface_frame_mask(instruction_memory_interface_frame_mask),
         .instruction_memory_interface_data(instruction_memory_interface_data),
 
-        .data_memory_interface_ready(data_memory_interface_ready),
         .data_memory_interface_enable(data_memory_interface_enable),
         .data_memory_interface_state(data_memory_interface_state),
         .data_memory_interface_address(data_memory_interface_address),
@@ -159,13 +154,17 @@ module phoeniX_Testbench;
         end    
     end
 
+    always @(posedge clk) 
+    begin
+        instruction_memory_interface_data <= 32'bz;
+    end
+
     // Data Memory Interface Behaviour
     always @(negedge clk)
     begin
         if (!data_memory_interface_enable)
         begin
              data_memory_interface_data_reg <= 32'bz;
-             data_memory_interface_ready <= 1'b0;
         end
         else
         begin
@@ -176,21 +175,23 @@ module phoeniX_Testbench;
                 if (data_memory_interface_frame_mask[1]) Memory[data_memory_interface_address >> 2][23 : 16] <= data_memory_interface_data[23 : 16];
                 if (data_memory_interface_frame_mask[0]) Memory[data_memory_interface_address >> 2][31 : 24] <= data_memory_interface_data[31 : 24];
             end 
-            if (data_memory_interface_state == READ & !data_memory_interface_ready) 
+            if (data_memory_interface_state == READ)
             begin
-                `MEMORY_DELAY 
                 data_memory_interface_data_reg <= Memory[data_memory_interface_address >> 2];
-                data_memory_interface_ready <= 1'b1;
             end
-        end   
+        end    
+
+        ////////////////////////////////////
+        // Environment Support for printf //
+        ////////////////////////////////////
+        if (data_memory_interface_address == 32'h1000_0000)
+        begin
+            $write("%c", data_memory_interface_data[7 : 0]);
+        end
     end
 
     always @(posedge clk) 
     begin
-        if (data_memory_interface_ready)
-        begin
-           data_memory_interface_data_reg <= 32'bz;    
-           data_memory_interface_ready <= 1'b0; 
-        end
+        data_memory_interface_data_reg <= 32'bz;
     end
 endmodule

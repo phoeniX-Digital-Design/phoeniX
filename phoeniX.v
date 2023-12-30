@@ -34,7 +34,7 @@ module phoeniX
     ///////////////////////////////////
     // Data Memory Interface Signals //
     ///////////////////////////////////
-    input  data_memory_interface_ready,
+    // input  data_memory_interface_ready,
     output data_memory_interface_enable,
     output data_memory_interface_state,
     output  [31 : 0] data_memory_interface_address,
@@ -597,7 +597,13 @@ module phoeniX
                     opcode_execute_reg == `AUIPC    ? address_execute_wire  : 
                     result_execute_reg
                 ),
-        .data_2(opcode_memory_reg == `LOAD ? load_data_memory_wire : result_memory_reg),
+
+        .data_2(    opcode_memory_reg == `LOAD      ? load_data_memory_wire : 
+                    opcode_memory_reg == `LUI       ? immediate_memory_reg  :
+                    opcode_memory_reg == `AUIPC     ? address_memory_reg    :
+                    result_memory_reg
+                ),
+
         .data_3(write_data_writeback_reg),
 
         .enable_1(write_enable_execute_reg),
@@ -617,10 +623,16 @@ module phoeniX
         .destination_index_3(write_index_writeback_reg),
 
         .data_1(    opcode_execute_reg == `LUI      ? immediate_execute_reg : 
-                    opcode_execute_reg == `AUIPC    ? address_execute_wire  : 
-                    result_execute_reg
+            opcode_execute_reg == `AUIPC    ? address_execute_wire  : 
+            result_execute_reg
+        ),
+
+        .data_2(    opcode_memory_reg == `LOAD      ? load_data_memory_wire : 
+                    opcode_memory_reg == `LUI       ? immediate_memory_reg  :
+                    opcode_memory_reg == `AUIPC     ? address_memory_reg    :
+                    result_memory_reg
                 ),
-        .data_2(opcode_memory_reg == `LOAD ? load_data_memory_wire : result_memory_reg),
+                
         .data_3(write_data_writeback_reg),
 
         .enable_1(write_enable_execute_reg),
@@ -658,9 +670,10 @@ module phoeniX
         end   
         else stall_condition[3] = 1'b0;
 
-        if (opcode_memory_reg == `LOAD & !(data_memory_interface_ready))
-            stall_condition[2] = 1'b1;
-        else stall_condition[2] = 1'b0;
+        stall_condition[2] = 1'b0;
+        // if (opcode_memory_reg == `LOAD & !(data_memory_interface_ready))
+        //     stall_condition[2] = 1'b1;
+        // else stall_condition[2] = 1'b0;
     end
 
     ////////////////////////////////////////
