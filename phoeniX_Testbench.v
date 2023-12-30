@@ -2,7 +2,7 @@
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-	`define FIRMWARE "Software/Sample_C_Codes/factorial_abi/factorial_abi_firmware.hex"
+	`define FIRMWARE "Software/User_Codes/TellMeWhy/TellMeWhy_firmware.hex"
 `endif /*FIRMWARE*/
 
 module phoeniX_Testbench;
@@ -13,7 +13,7 @@ module phoeniX_Testbench;
     parameter CLK_PERIOD = 2;
     reg clk = 1'b1;
     initial begin forever #(CLK_PERIOD/2) clk = ~clk; end
-    initial #(4000 * CLK_PERIOD) $finish;
+    initial #(5000 * CLK_PERIOD) $finish;
 
     reg reset = 1'b1;
     
