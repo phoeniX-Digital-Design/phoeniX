@@ -147,3 +147,8 @@
     `define NOP_instruction_type   `I_TYPE
     `define NOP_write_index         5'b00000
 `endif /*NOP_INSTRUCTION*/
+
+`ifndef CONTROL_SIGNALS
+    `define ENABLE      1'b1
+    `define DISABLE     1'b0
+`endif /*CONTROL_SIGNALS*/
