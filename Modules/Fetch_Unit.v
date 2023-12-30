@@ -1,12 +1,8 @@
 module Fetch_Unit
 (
-	input enable,                    
+	input wire enable,                    
 
-    input [31 : 0] pc,
-
-	input [31 : 0] jump_branch_address,         
-	input jump_branch_enable,       
-    
+    input wire [31 : 0] pc, 
     output reg [31 : 0] next_pc,  
     
     //////////////////////////////
@@ -42,8 +38,7 @@ module Fetch_Unit
 
     always @(*)
     begin
-        if (jump_branch_enable) next_pc = jump_branch_address;
-        else                    next_pc = {incrementer_result, 2'b00};
+        next_pc = {incrementer_result, 2'b00};
     end
 endmodule
 
