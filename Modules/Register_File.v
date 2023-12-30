@@ -29,7 +29,7 @@ module Register_File
             Registers[i] = {WIDTH{1'b0}};
     end
 	
-    always @(negedge clk)
+    always @(posedge clk)
     begin
         if (write_enable == 1'b1 && write_index != 0)
         begin
