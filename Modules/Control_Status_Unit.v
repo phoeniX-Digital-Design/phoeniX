@@ -2,12 +2,12 @@
 
 module Control_Status_Unit 
 (
-    input  [6  : 0] opcode,
-    input  [2  : 0] funct3,
+    input wire [ 6 : 0] opcode,
+    input wire [ 2 : 0] funct3,
 
-    input  [31 : 0] CSR_in,
-    input  [31 : 0] rs1,
-    input  [4  : 0] unsigned_immediate,
+    input wire [31 : 0] CSR_in,
+    input wire [31 : 0] rs1,
+    input wire [ 4 : 0] unsigned_immediate,
 
     output reg [31 : 0] rd,
     output reg [31 : 0] CSR_out
@@ -29,16 +29,16 @@ endmodule
 
 module Control_Status_Register_File 
 (
-    input clk,
-    input reset,
+    input wire clk,
+    input wire reset,
 
-    input read_enable_csr,
-    input write_enable_csr,
+    input wire read_enable_csr,
+    input wire write_enable_csr,
 
-    input [11 : 0] csr_read_index,
-    input [11 : 0] csr_write_index,
+    input wire [11 : 0] csr_read_index,
+    input wire [11 : 0] csr_write_index,
 
-    input  [31 : 0] csr_write_data,
+    input wire [31 : 0] csr_write_data,
     output reg [31 : 0] csr_read_data
 );
 
