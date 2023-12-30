@@ -41,15 +41,15 @@ module Arithmetic_Logic_Unit
     parameter GENERATE_CIRCUIT_4 = 0
 )
 (
-    input [6 : 0] opcode,               
-    input [2 : 0] funct3,               
-    input [6 : 0] funct7,               
+    input wire [ 6 : 0] opcode,               
+    input wire [ 2 : 0] funct3,               
+    input wire [ 6 : 0] funct7,               
 
-    input [31 : 0] control_status_register,    
+    input wire [31 : 0] control_status_register,    
 
-    input [31 : 0] rs1,                 
-    input [31 : 0] rs2,                 
-    input [31 : 0] immediate,           
+    input wire [31 : 0] rs1,                 
+    input wire [31 : 0] rs2,                 
+    input wire [31 : 0] immediate,           
 
     output reg [31 : 0] alu_output      
 );
@@ -81,9 +81,9 @@ module Arithmetic_Logic_Unit
     always @(*) 
     begin
         case (opcode)
-            `OP     : begin operand_1 = rs1; operand_2 = rs2;       end // R-TYPE 
-            `OP_IMM : begin operand_1 = rs1; operand_2 = immediate; end // I-TYPE 
-            default : begin operand_1 = 32'bz; operand_2 = 32'bz;   end
+            `OP     : begin operand_1 = rs1;    operand_2 = rs2;        end // R-TYPE 
+            `OP_IMM : begin operand_1 = rs1;    operand_2 = immediate;  end // I-TYPE 
+            default : begin operand_1 = 32'bz;  operand_2 = 32'bz;      end
         endcase        
     end
 
@@ -94,46 +94,121 @@ module Arithmetic_Logic_Unit
     begin
         case ({funct3, opcode})
             // I-TYPE Intructions
-            {`ADDI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = adder_result;             end
-            {`SLLI, `OP_IMM}  : 
-            begin shift_direction = `LEFT; shift_input = operand_1; shift_amount = operand_2[4 : 0]; alu_output = shift_result; end 
-            {`SLTI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;  end
-            {`SLTIU, `OP_IMM} : begin alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0;                    end
-
-            {`XORI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = operand_1 ^ operand_2;    end
-            {`ORI, `OP_IMM}   : begin alu_enable = 1'b1; alu_output = operand_1 | operand_2;    end
-            {`ANDI, `OP_IMM}  : begin alu_enable = 1'b1; alu_output = operand_1 & operand_2;    end
-            
-            {`SRI, `OP_IMM}   : 
+            {`ADDI,     `OP_IMM} : 
+            begin 
+                alu_enable = 1'b1; alu_output = adder_result;
+            end
+            {`SLLI,     `OP_IMM} : 
+            begin 
+                shift_direction = `LEFT; shift_input = operand_1; shift_amount = operand_2[4 : 0]; alu_output = shift_result;
+            end 
+            {`SLTI,     `OP_IMM} : 
+            begin 
+                alu_enable = 1'b1; 
+                alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;  
+            end
+            {`SLTIU,    `OP_IMM} : 
+            begin 
+                alu_enable = 1'b1; 
+                alu_output = operand_1 < operand_2 ? 1 : 0;
+            end
+            {`XORI,     `OP_IMM} : 
+            begin 
+                alu_enable = 1'b1;
+                alu_output = operand_1 ^ operand_2;
+            end
+            {`ORI,      `OP_IMM} : 
+            begin 
+                alu_enable = 1'b1; 
+                alu_output = operand_1 | operand_2;
+            end
+            {`ANDI,     `OP_IMM} : 
+            begin 
+                alu_enable = 1'b1; 
+                alu_output = operand_1 & operand_2;
+            end
+            {`SRI,      `OP_IMM} : 
             begin
                 case (funct7)
-                    `LOGICAL    : 
-                    begin shift_direction = `RIGHT; shift_input = operand_1; shift_amount = operand_2[4 : 0]; alu_output = shift_result; end    
+                    `LOGICAL : 
+                    begin 
+                        shift_direction = `RIGHT; 
+                        shift_input = operand_1; 
+                        shift_amount = operand_2[4 : 0]; 
+                        alu_output = shift_result; 
+                    end    
                     `ARITHMETIC :
-                    begin shift_direction = `RIGHT; shift_input = operand_1; shift_amount = $signed(operand_2[4 : 0]); alu_output = shift_result; end     
+                    begin 
+                        shift_direction = `RIGHT; 
+                        shift_input = operand_1; 
+                        shift_amount = $signed(operand_2[4 : 0]); 
+                        alu_output = shift_result; 
+                    end     
                 endcase
             end
         
             // R-TYPE Instructions
-            {`ADDSUB, `OP}  : begin alu_enable = 1'b1; alu_output = adder_result;           end  
-            {`SLL, `OP}     : 
-            begin shift_direction = `LEFT; shift_input = operand_1; shift_amount = operand_2[4 : 0]; alu_output = shift_result; end
-            {`SLT, `OP}     : begin alu_enable = 1'b1; alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;    end
-            {`SLTU, `OP}    : begin alu_enable = 1'b1; alu_output = operand_1 < operand_2 ? 1 : 0;                      end
-            {`XOR, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 ^ operand_2;  end
-            {`OR, `OP}      : begin alu_enable = 1'b1; alu_output = operand_1 | operand_2;  end
-            {`AND, `OP}     : begin alu_enable = 1'b1; alu_output = operand_1 & operand_2;  end
-            {`SR, `OP}      :
+            {`ADDSUB,   `OP} : 
+            begin 
+                alu_enable = 1'b1; 
+                alu_output = adder_result;
+            end  
+            {`SLL,      `OP} : 
+            begin 
+                shift_direction = `LEFT; 
+                shift_input = operand_1; 
+                shift_amount = operand_2[4 : 0]; 
+                alu_output = shift_result;
+            end
+            {`SLT,      `OP} : 
+            begin 
+                alu_enable = 1'b1; 
+                alu_output = $signed(operand_1) < $signed(operand_2) ? 1 : 0;    
+            end
+            {`SLTU,     `OP} : 
+            begin 
+                alu_enable = 1'b1; 
+                alu_output = operand_1 < operand_2 ? 1 : 0;
+            end
+            {`XOR,      `OP} : 
+            begin 
+                alu_enable = 1'b1; 
+                alu_output = operand_1 ^ operand_2;
+            end
+            {`OR,       `OP} : 
+            begin 
+                alu_enable = 1'b1; 
+                alu_output = operand_1 | operand_2;
+            end
+            {`AND,      `OP} : 
+            begin 
+                alu_enable = 1'b1; 
+                alu_output = operand_1 & operand_2;  
+            end
+            {`SR,       `OP} :
             begin
                 case (funct7)
-                    `LOGICAL    : 
-                    begin shift_direction = `RIGHT; shift_input = operand_1; shift_amount = operand_2[4 : 0]; alu_output = shift_result; end
+                    `LOGICAL : 
+                    begin 
+                        shift_direction = `RIGHT; 
+                        shift_input = operand_1; 
+                        shift_amount = operand_2[4 : 0]; 
+                        alu_output = shift_result; 
+                    end
                     `ARITHMETIC : 
-                    begin shift_direction = `RIGHT; shift_input = operand_1; shift_amount = $signed(operand_2[4 : 0]); alu_output = shift_result; end
+                    begin 
+                        shift_direction = `RIGHT; 
+                        shift_input = operand_1; 
+                        shift_amount = $signed(operand_2[4 : 0]); 
+                        alu_output = shift_result; 
+                    end
                 endcase
             end           
-
-            default: begin alu_enable = 1'b0; alu_output = 32'bz; end
+            default: 
+            begin 
+                alu_enable = 1'b0; 
+                alu_output = 32'bz; 
+            end
         endcase
     end
 
@@ -146,16 +221,37 @@ module Arithmetic_Logic_Unit
     always @(*) 
     begin
         case ({funct3, opcode})
-            {`ADDI, `OP_IMM} : begin adder_enable = 1'b1; adder_input_1 = operand_1; adder_input_2 = operand_2; adder_Cin = 1'b0;  end 
+            {`ADDI, `OP_IMM} : 
+            begin 
+                adder_enable = 1'b1; 
+                adder_input_1 = operand_1; 
+                adder_input_2 = operand_2; 
+                adder_Cin = 1'b0;
+            end 
 
             {`ADDSUB, `OP} :
             begin
                 case (funct7)
-                    `ADD : begin adder_enable = 1'b1; adder_input_1 = operand_1; adder_input_2 = operand_2; adder_Cin = 1'b0;  end 
-                    `SUB : begin adder_enable = 1'b1; adder_input_1 = operand_1; adder_input_2 = ~operand_2; adder_Cin = 1'b1; end 
+                    `ADD : 
+                    begin 
+                        adder_enable = 1'b1; 
+                        adder_input_1 = operand_1; 
+                        adder_input_2 = operand_2; 
+                        adder_Cin = 1'b0;
+                    end 
+                    `SUB : 
+                    begin 
+                        adder_enable = 1'b1; 
+                        adder_input_1 = operand_1; 
+                        adder_input_2 = ~operand_2; 
+                        adder_Cin = 1'b1; 
+                    end 
                 endcase
             end
-            default: begin adder_enable = 1'b0; end
+            default : 
+            begin 
+                adder_enable = 1'b0; 
+            end
         endcase    
     end
 
