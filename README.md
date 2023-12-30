@@ -27,7 +27,11 @@ The core has undergone a complete synthesis flow to become an Integrated Circuit
 
 <div align="justify">
 
-This repository contains an open source CPU including RTL codes and assistant software, under the [GNU V3.0 license](https://en.wikipedia.org/wiki/GNU_General_Public_License) and is free to use. The platform's technical specifications are published under supervision of [IUST Electronics Research Center](http://idea.iust.ac.ir/content/76317/phoeniX-POINTS--A-RISC-V-Platform-for-Approximate-Computing-Version-0.1-Technical-Specifications). You can cite the document as:
+This repository contains an open source CPU including RTL codes and assistant software, under the [GNU V3.0 license](https://en.wikipedia.org/wiki/GNU_General_Public_License) and is free to use. The platform's technical specifications are published under supervision of [IUST Electronics Research Center](http://idea.iust.ac.ir/content/76317/phoeniX-POINTS--A-RISC-V-Platform-for-Approximate-Computing-Version-0.1-Technical-Specifications).
+
+</div>
+
+You can cite the document as:
 
 - A. Delavari, F. Ghoreishy, H. S. Shahhoseini and S. Mirzakuchaki. (2023), “phoeniX: A RISC-V Platform for Approximate Computing V0.1 Technical Specifications,” [Online]. Available: http://www.iust.ac.ir/content/76158/phoeniX-POINTS--A-RISC-V-Platform-for-Approximate-Computing
 
@@ -92,12 +96,12 @@ repository/
     │   ├── Clock_Genrator/
     │   └── ...
     ├── Synthesis/
-    │   ├── Qflow_TSMC_180nm/
+    │   ├── TSMC_018um/
     │   │   ├── layout/
     │   │   ├── synthesis/
     │   │   ├── log/
     │   │   └── ...
-    │   └── Vivado_Schematics
+    │   └── NanGate_45nm
     ├── Modules/
     │   ├── Address_Generator.v
     │   ├── Arithmetic_Logic_Unit.v
