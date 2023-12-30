@@ -13,7 +13,7 @@ module phoeniX_Testbench;
     parameter CLK_PERIOD = 2;
     reg clk = 1'b1;
     initial begin forever #(CLK_PERIOD/2) clk = ~clk; end
-    initial #(5000 * CLK_PERIOD) $finish;
+    initial #(4000 * CLK_PERIOD) $finish;
 
     reg reset = `ENABLE;
     
@@ -187,7 +187,7 @@ module phoeniX_Testbench;
 
     always @(*) 
     begin
-        if (uut.opcode_writeback_reg == `SYSTEM && uut.funct12_writeback_reg == `EBREAK) 
+        if (uut.opcode_MW_reg == `SYSTEM && uut.funct12_MW_reg == `EBREAK) 
         begin
             reset <= `ENABLE;
             repeat (5) @(posedge clk);
