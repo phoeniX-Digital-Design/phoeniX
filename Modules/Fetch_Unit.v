@@ -1,3 +1,5 @@
+`include "Defines.v"
+
 module Fetch_Unit
 (
 	input wire enable,                    
@@ -14,13 +16,11 @@ module Fetch_Unit
     output reg  [31 : 0]   memory_interface_address,
     output reg  [ 3 : 0]   memory_interface_frame_mask
 );
-    localparam  READ    = 1'b0;
-    localparam  WRITE   = 1'b1;
 
     always @(*) 
     begin
         memory_interface_enable = enable;
-        memory_interface_state = READ;
+        memory_interface_state = `READ;
         memory_interface_frame_mask = 4'b1111;
         memory_interface_address = pc;  
     end

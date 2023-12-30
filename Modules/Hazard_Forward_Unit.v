@@ -1,3 +1,5 @@
+`include "Defines.v"
+
 module Hazard_Forward_Unit 
 (
     input wire [ 4 : 0] source_index,          
@@ -17,22 +19,22 @@ module Hazard_Forward_Unit
 
     always @(*) 
     begin
-        if (source_index == destination_index_1 && enable_1 == 1'b1)
+        if (source_index == destination_index_1 && enable_1 == `ENABLE)
         begin
             forward_data <= data_1;
-            forward_enable <= 1'b1;
+            forward_enable <= `ENABLE;
         end
             
-        else if (source_index == destination_index_2 && enable_2 == 1'b1)
+        else if (source_index == destination_index_2 && enable_2 == `ENABLE)
         begin
             forward_data <= data_2;
-            forward_enable <= 1'b1;
+            forward_enable <= `ENABLE;
         end
             
         else
         begin
             forward_data <= 32'bz;
-            forward_enable <= 1'b0;
+            forward_enable <= `DISABLE;
         end
     end
 endmodule

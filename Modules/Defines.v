@@ -149,6 +149,9 @@
 `endif /*NOP_INSTRUCTION*/
 
 `ifndef CONTROL_SIGNALS
-    `define ENABLE      1'b1
     `define DISABLE     1'b0
+    `define ENABLE      1'b1
+    
+    `define READ        1'b0
+    `define WRITE       1'b1
 `endif /*CONTROL_SIGNALS*/
