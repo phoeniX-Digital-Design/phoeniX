@@ -2,7 +2,7 @@
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-	`define FIRMWARE "Software/Sample_C_Codes/factorial/factorial_firmware.hex"
+	`define FIRMWARE "Software/Sample_C_Codes/factorial_abi/factorial_abi_firmware.hex"
 `endif /*FIRMWARE*/
 
 module phoeniX_Testbench;
@@ -126,7 +126,7 @@ module phoeniX_Testbench;
     ////////////////
 
     // 4 MB Memory Instantiation
-    reg [31 : 0] Memory [0 : 1024 * 1024 - 1];
+    reg [31 : 0] Memory [0 : 8 * 1024 * 1024 - 1];
     initial $readmemh(`FIRMWARE, Memory);
 
     // Instruction Memory Interface Behaviour
