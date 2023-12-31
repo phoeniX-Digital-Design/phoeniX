@@ -2,7 +2,7 @@
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-	`define FIRMWARE "Software/Sample_C_Codes/factorial_abi/factorial_abi_firmware.hex"
+	`define FIRMWARE "Software/Sample_C_Codes/bubble_sort/bubble_sort_firmware.hex"
 `endif /*FIRMWARE*/
 
 module phoeniX_Testbench;
