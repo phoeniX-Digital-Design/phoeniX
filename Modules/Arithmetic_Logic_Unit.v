@@ -14,9 +14,13 @@
       custom made designs).
     - Instantiate your modules (Approximate or Accurate) between the comments in the code.
     - How to work with the speical purpose CSR:
-        CSR [0]      : APPROXIMATE = 1 | ACCURATE = 0
-        CSR [2  : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate or approximate circuits)
-        CSR [31 : 3] : APPROXIMATION_ERROR_CONTROL
+        CSR [0]       : APPROXIMATE = 1 | ACCURATE = 0
+        CSR [2   : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate or approximate circuits)
+        CSR [7   : 3] : TRUNCATION_CONTROL
+        CSR [11  : 8] : CUSTOM_FIELD_1
+        CSR [15 : 12] : CUSTOM_FIELD_2
+        CSR [31 : 16] : APPROXIMATION_ERROR_CONTROL
+
     - PLEASE DO NOT REMOVE ANY OF THE COMMENTS IN THIS FILE
     - Input and Output paramaters:
         Input:  control_status_register = {control_status_register[USER_ERROR_LEN:3], control_status_register[2:1] (module select), control_status_register[0]}
