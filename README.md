@@ -149,7 +149,7 @@ This repository includes [detailed documentation, user manual, and developer gui
 
 </div>
 
-![Alt text](https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Documents/Images/phoeniX_Block_Diagram.png "phoeniX Block Diagram")
+![Alt text](https://github.com/phoeniX-Digital-Design/phoeniX/blob/phoeniX-V0.3/Documents/Images/phoeniX_Block_Diagram_V03.png "phoeniX V0.3 Block Diagram")
 
 | Module                        | Description                                                                                   |
 | ----------------------------- | --------------------------------------------------------------------------------------------- |
