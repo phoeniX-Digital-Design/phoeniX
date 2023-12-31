@@ -193,7 +193,7 @@ module phoeniX_Testbench;
             repeat (5) @(posedge clk);
             $display("\n--> EXECUTION FINISHED <--\n");
             $display("Firmware File: %s\n", `FIRMWARE);
-            $display("ON TIME:\t%d\nOFF TIME:\t%d", enable_high_count * CLK_PERIOD, enable_low_count * CLK_PERIOD);
+            $display("ON  TIME:\t%d\nOFF TIME:\t%d", enable_high_count * CLK_PERIOD, enable_low_count * CLK_PERIOD);
             $dumpoff;
             $finish;
         end

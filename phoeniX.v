@@ -27,9 +27,9 @@ module phoeniX
     //////////////////////////////////////////
     output instruction_memory_interface_enable,
     output instruction_memory_interface_state,
-    output  [31 : 0] instruction_memory_interface_address,
-    output  [ 3 : 0] instruction_memory_interface_frame_mask,
-    input   [31 : 0] instruction_memory_interface_data, 
+    output [31 : 0] instruction_memory_interface_address,
+    output [ 3 : 0] instruction_memory_interface_frame_mask,
+    input  [31 : 0] instruction_memory_interface_data, 
 
     ///////////////////////////////////
     // Data Memory Interface Signals //
@@ -37,9 +37,9 @@ module phoeniX
     // input  data_memory_interface_ready,
     output data_memory_interface_enable,
     output data_memory_interface_state,
-    output  [31 : 0] data_memory_interface_address,
-    output  [ 3 : 0] data_memory_interface_frame_mask,
-    inout   [31 : 0] data_memory_interface_data
+    output [31 : 0] data_memory_interface_address,
+    output [ 3 : 0] data_memory_interface_frame_mask,
+    inout  [31 : 0] data_memory_interface_data
 );
     // ---------------------------------------------
     // Wire Declarations for Fetch/Decode Stage (FD)
