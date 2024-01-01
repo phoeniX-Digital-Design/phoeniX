@@ -105,6 +105,7 @@ module phoeniX_Testbench;
     begin
         $dumpfile("phoeniX.vcd");
         $dumpvars(0, phoeniX_Testbench);
+        $write("\n");
         // Reset
         repeat (5) @(posedge clk);
 		reset <= `DISABLE;
