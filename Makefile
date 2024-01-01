@@ -39,7 +39,7 @@ $(command): firmware.hex
 	rm -rf $(PROJECT_DIR)/*.tmp $(PROJECT_DIR)/*.mem $(PROJECT_DIR)/*.o $(PROJECT_DIR)/*.elf
 	iverilog -IModules -DFIRMWARE=\"$(PROJECT_DIR)/$(project)_firmware.hex\" -o $(CORE_NAME).vvp $(CORE_TESTBENCH)
 	vvp $(CORE_NAME).vvp 
-	gtkwave $(CORE_NAME).gtkw
+#	gtkwave $(CORE_NAME).gtkw
 
 firmware.hex: start.elf firmware.elf
 	@echo "Hello?"
