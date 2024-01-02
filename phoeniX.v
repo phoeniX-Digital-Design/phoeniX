@@ -34,7 +34,6 @@ module phoeniX
     ///////////////////////////////////
     // Data Memory Interface Signals //
     ///////////////////////////////////
-    // input  data_memory_interface_ready,
     output data_memory_interface_enable,
     output data_memory_interface_state,
     output [31 : 0] data_memory_interface_address,
