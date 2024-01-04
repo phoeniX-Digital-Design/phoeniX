@@ -44,9 +44,11 @@ int main()
 {
     int arr[] = {8, 3, 5, 1, 7, 2, 4};
     int n = sizeof(arr) / sizeof(arr[0]);
+    printf("Unsorted array:\n");
+    print_array(arr, n);
+    printf("\n");
     bubble_sort(arr, n);
-    int min = arr[0];
-    printf("Sorted array: \n");
+    printf("Sorted array:\n");
     print_array(arr, n);
     return 0;
 }
