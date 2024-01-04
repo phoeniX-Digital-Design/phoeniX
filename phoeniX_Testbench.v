@@ -2,7 +2,13 @@
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-	`define FIRMWARE "Software/Sample_C_Codes/bubble_sort/bubble_sort_firmware.hex"
+    // List of sample C codes included in Software/Sample_C_Codes directory
+	//`define FIRMWARE "Software/Sample_C_Codes/bubble_sort/bubble_sort_firmware.hex"
+    //`define FIRMWARE "Software/Sample_C_Codes/fibonacci/fibonacci_firmware.hex"
+    //`define FIRMWARE "Software/Sample_C_Codes/sum1ton/sum1ton_firmware.hex"
+    //`define FIRMWARE "Software/Sample_C_Codes/factorial/factorial_firmware.hex"
+    //`define FIRMWARE "Software/Sample_C_Codes/factorial_abi/factorial_abi_firmware.hex"
+    //`define FIRMWARE "Software/Sample_C_Codes/dhrystone/dhry32.hex"
 `endif /*FIRMWARE*/
 
 module phoeniX_Testbench;
@@ -13,7 +19,7 @@ module phoeniX_Testbench;
     parameter CLK_PERIOD = 2;
     reg clk = 1'b1;
     initial begin forever #(CLK_PERIOD/2) clk = ~clk; end
-    initial #(20000 * CLK_PERIOD) $finish;
+    //initial #(20000 * CLK_PERIOD) $finish;
 
     reg reset = `ENABLE;
     
@@ -105,7 +111,6 @@ module phoeniX_Testbench;
     begin
         $dumpfile("phoeniX.vcd");
         $dumpvars(0, phoeniX_Testbench);
-        $write("\n");
         // Reset
         repeat (5) @(posedge clk);
 		reset <= `DISABLE;
@@ -174,6 +179,7 @@ module phoeniX_Testbench;
         if (data_memory_interface_address == 32'h1000_0000)
         begin
             $write("%c", data_memory_interface_data[7 : 0]);
+            $fflush();
         end
     end
 
