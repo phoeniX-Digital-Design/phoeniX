@@ -8,7 +8,7 @@
     //`define FIRMWARE "Software/Sample_C_Codes/sum1ton/sum1ton_firmware.hex"
     //`define FIRMWARE "Software/Sample_C_Codes/factorial/factorial_firmware.hex"
     //`define FIRMWARE "Software/Sample_C_Codes/factorial_abi/factorial_abi_firmware.hex"
-    //`define FIRMWARE "Software/Sample_C_Codes/dhrystone/dhry32.hex"
+    `define FIRMWARE "Software/Sample_C_Codes/dhrystone/dhry32.hex"
 `endif /*FIRMWARE*/
 
 module phoeniX_Testbench;
