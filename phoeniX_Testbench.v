@@ -131,7 +131,7 @@ module phoeniX_Testbench;
     //   Memory   //
     ////////////////
 
-    // 4 MB Memory Instantiation
+    // 32 MB Memory Instantiation
     reg [31 : 0] Memory [0 : 8 * 1024 * 1024 - 1];
     initial $readmemh(`FIRMWARE, Memory);
 
