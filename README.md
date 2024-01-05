@@ -1,6 +1,6 @@
 ![License](https://img.shields.io/github/license/phoeniX-Digital-Design/AssembleX?color=dark-green)
 ![GCC Test](https://img.shields.io/badge/GCC_tests-passed-dark_green)
-![Version](https://img.shields.io/badge/Version-0.2-blue)
+![Version](https://img.shields.io/badge/Version-0.3.1-blue)
 ![ISA](https://img.shields.io/badge/RV32-IEM_extension-blue)
 
 <picture>
@@ -34,6 +34,8 @@ This repository contains an open source CPU including RTL codes and assistant so
 You can cite the document as:
 
 - A. Delavari, F. Ghoreishy, H. S. Shahhoseini and S. Mirzakuchaki. (2023), “phoeniX: A RISC-V Platform for Approximate Computing V0.1 Technical Specifications,” [Online]. Available: http://www.iust.ac.ir/content/76158/phoeniX-POINTS--A-RISC-V-Platform-for-Approximate-Computing
+
+
 
 - Designed By : [Arvin Delavari](https://github.com/ArvinDelavari) and [Faraz Ghoreishy](https://github.com/FarazGhoreishy)
 - Contact us : arvin7807@gmail.com - farazghoreishy@gmail.com
@@ -143,7 +145,7 @@ Each modules was designed with concepts of modularity and distributed-control in
 
 The proposed platform enables integration of approximate arithmetic units at the core level, with different structures, accuracies, timings and etc. without any need for editing rest of the core, especially in control logic. This platform is allowing configurable trade-offs between speed, accuracy and energy consumption based on specific application requirements. 
 
-This repository includes [detailed documentation, user manual, and developer guidelines]() for future works and updates. These resources make it extremely easy for users to execute C and Assembly code using the standard RISC-V GCC toolchain on the processor, and helps developers to understand its structure and architecture, in order to update and validate new designs using the base processor, or adding and testing approximate arithmetic circuits on the core, without any need of changes in other parts of the processor such as control logics and etc. With this knowledge, developers can enhance the processor, add new features, and develop different architectural techniques effectively.
+This repository includes detailed documentation, user manual, and developer guidelines for future works and updates. These resources make it extremely easy for users to execute C and Assembly code using the standard RISC-V GCC toolchain on the processor, and helps developers to understand its structure and architecture, in order to update and validate new designs using the base processor, or adding and testing approximate arithmetic circuits on the core, without any need of changes in other parts of the processor such as control logics and etc. With this knowledge, developers can enhance the processor, add new features, and develop different architectural techniques effectively.
 
 </div>
 
