@@ -1,0 +1,555 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Thu Jan  4 19:21:23 2024
+# Process ID: 14720
+# Current directory: C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.runs/synth_1
+# Command line: vivado.exe -log phoeniX.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source phoeniX.tcl
+# Log file: C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.runs/synth_1/phoeniX.vds
+# Journal file: C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.runs/synth_1\vivado.jou
+# Running On: DESKTOP-60P0CSL, OS: Windows, CPU Frequency: 2592 MHz, CPU Physical cores: 6, Host memory: 42726 MB
+#-----------------------------------------------------------
+source phoeniX.tcl -notrace
+Command: read_checkpoint -auto_incremental -incremental C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/utils_1/imports/synth_1/phoeniX.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/utils_1/imports/synth_1/phoeniX.dcp for incremental synthesis
+INFO: [Vivado 12-7989] Please ensure there are no constraint changes
+Command: synth_design -top phoeniX -part xc7s100fgga676-2
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7s100'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7s100'
+INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
+INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 4596
+INFO: [Synth 8-11241] undeclared symbol 'REGCCE', assumed default net type 'wire' [H:/Xilinx/Vivado/2022.2/data/verilog/src/unimacro/BRAM_SINGLE_MACRO.v:2170]
+WARNING: [Synth 8-6901] identifier 'jump_branch_enable_EX_wire' is used before its declaration [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:221]
+WARNING: [Synth 8-6901] identifier 'address_EX_wire' is used before its declaration [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:222]
+WARNING: [Synth 8-6901] identifier 'stall_condition' is used before its declaration [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:223]
+WARNING: [Synth 8-6901] identifier 'stall_condition' is used before its declaration [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:239]
+WARNING: [Synth 8-6901] identifier 'jump_branch_enable_EX_wire' is used before its declaration [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:361]
+WARNING: [Synth 8-6901] identifier 'stall_condition' is used before its declaration [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:361]
+WARNING: [Synth 8-6901] identifier 'stall_condition' is used before its declaration [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:361]
+WARNING: [Synth 8-6901] identifier 'stall_condition' is used before its declaration [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:377]
+WARNING: [Synth 8-6901] identifier 'stall_condition' is used before its declaration [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:581]
+WARNING: [Synth 8-6901] identifier 'stall_condition' is used before its declaration [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:595]
+WARNING: [Synth 8-10515] begin/end is required for generate-for in this mode of Verilog [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1466]
+INFO: [Synth 8-11241] undeclared symbol 'output_ready', assumed default net type 'wire' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2109]
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:03 ; elapsed = 00:00:05 . Memory (MB): peak = 1443.137 ; gain = 409.273
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'phoeniX' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:159]
+INFO: [Synth 8-6157] synthesizing module 'Fetch_Unit' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2431]
+INFO: [Synth 8-6157] synthesizing module 'Incrementer' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2473]
+	Parameter LEN bound to: 30 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'Incrementer_Unit' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2521]
+INFO: [Synth 8-6155] done synthesizing module 'Incrementer_Unit' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2521]
+INFO: [Synth 8-6157] synthesizing module 'Mux_2to1_Incrementer' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2538]
+INFO: [Synth 8-226] default block is never used [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2552]
+INFO: [Synth 8-6155] done synthesizing module 'Mux_2to1_Incrementer' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2538]
+INFO: [Synth 8-6155] done synthesizing module 'Incrementer' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2473]
+INFO: [Synth 8-6155] done synthesizing module 'Fetch_Unit' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2431]
+INFO: [Synth 8-6157] synthesizing module 'Instruction_Decoder' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2619]
+INFO: [Synth 8-6155] done synthesizing module 'Instruction_Decoder' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2619]
+INFO: [Synth 8-6157] synthesizing module 'Immediate_Generator' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2599]
+INFO: [Synth 8-6155] done synthesizing module 'Immediate_Generator' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2599]
+INFO: [Synth 8-6157] synthesizing module 'Arithmetic_Logic_Unit' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1115]
+	Parameter GENERATE_CIRCUIT_1 bound to: 1 - type: integer 
+	Parameter GENERATE_CIRCUIT_2 bound to: 0 - type: integer 
+	Parameter GENERATE_CIRCUIT_3 bound to: 0 - type: integer 
+	Parameter GENERATE_CIRCUIT_4 bound to: 0 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'Approximate_Accuracy_Controllable_Adder' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1476]
+	Parameter LEN bound to: 32 - type: integer 
+	Parameter APX_LEN bound to: 8 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'Half_Adder' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1750]
+INFO: [Synth 8-6155] done synthesizing module 'Half_Adder' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1750]
+INFO: [Synth 8-6157] synthesizing module 'Error_Configurable_Ripple_Carry_Adder' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1657]
+	Parameter LEN bound to: 3 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'Error_Configurable_Full_Adder' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1723]
+INFO: [Synth 8-6155] done synthesizing module 'Error_Configurable_Full_Adder' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1723]
+INFO: [Synth 8-6155] done synthesizing module 'Error_Configurable_Ripple_Carry_Adder' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1657]
+INFO: [Synth 8-6157] synthesizing module 'Basic_Unit' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1618]
+INFO: [Synth 8-6155] done synthesizing module 'Basic_Unit' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1618]
+INFO: [Synth 8-6157] synthesizing module 'Mux_2to1' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1635]
+	Parameter LEN bound to: 5 - type: integer 
+INFO: [Synth 8-226] default block is never used [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1649]
+INFO: [Synth 8-6155] done synthesizing module 'Mux_2to1' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1635]
+INFO: [Synth 8-6157] synthesizing module 'Ripple_Carry_Adder' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1691]
+	Parameter LEN bound to: 3 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'Full_Adder' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1737]
+INFO: [Synth 8-6155] done synthesizing module 'Full_Adder' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1737]
+INFO: [Synth 8-6155] done synthesizing module 'Ripple_Carry_Adder' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1691]
+INFO: [Synth 8-6157] synthesizing module 'Error_Configurable_Ripple_Carry_Adder__parameterized0' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1657]
+	Parameter LEN bound to: 4 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'Error_Configurable_Ripple_Carry_Adder__parameterized0' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1657]
+INFO: [Synth 8-6155] done synthesizing module 'Approximate_Accuracy_Controllable_Adder' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1476]
+WARNING: [Synth 8-7071] port 'Cout' of module 'Approximate_Accuracy_Controllable_Adder' is unconnected for instance 'approximate_accuracy_controllable_adder' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1378]
+WARNING: [Synth 8-7023] instance 'approximate_accuracy_controllable_adder' of module 'Approximate_Accuracy_Controllable_Adder' has 6 connections declared, but only 5 given [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1378]
+INFO: [Synth 8-155] case statement is not full and has no default [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1211]
+INFO: [Synth 8-155] case statement is not full and has no default [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1269]
+INFO: [Synth 8-155] case statement is not full and has no default [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1313]
+INFO: [Synth 8-226] default block is never used [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1339]
+INFO: [Synth 8-6157] synthesizing module 'Barrel_Shifter' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1418]
+INFO: [Synth 8-6157] synthesizing module 'Reverser_Circuit' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1452]
+	Parameter N bound to: 32 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'Reverser_Circuit' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1452]
+INFO: [Synth 8-6155] done synthesizing module 'Barrel_Shifter' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1418]
+INFO: [Synth 8-6155] done synthesizing module 'Arithmetic_Logic_Unit' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1115]
+INFO: [Synth 8-6157] synthesizing module 'Address_Generator' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:775]
+INFO: [Synth 8-6157] synthesizing module 'Address_Generator_CLA' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1064]
+	Parameter LEN bound to: 32 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'Full_Adder_CLA' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1102]
+INFO: [Synth 8-6155] done synthesizing module 'Full_Adder_CLA' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1102]
+INFO: [Synth 8-6155] done synthesizing module 'Address_Generator_CLA' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1064]
+WARNING: [Synth 8-7071] port 'C_out' of module 'Address_Generator_CLA' is unconnected for instance 'address_generator' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:806]
+WARNING: [Synth 8-7023] instance 'address_generator' of module 'Address_Generator_CLA' has 5 connections declared, but only 4 given [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:806]
+INFO: [Synth 8-6155] done synthesizing module 'Address_Generator' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:775]
+INFO: [Synth 8-6157] synthesizing module 'Jump_Branch_Unit' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2716]
+INFO: [Synth 8-6155] done synthesizing module 'Jump_Branch_Unit' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2716]
+INFO: [Synth 8-6157] synthesizing module 'Control_Status_Unit' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1765]
+INFO: [Synth 8-6155] done synthesizing module 'Control_Status_Unit' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1765]
+INFO: [Synth 8-6157] synthesizing module 'Load_Store_Unit' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2752]
+INFO: [Synth 8-6155] done synthesizing module 'Load_Store_Unit' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2752]
+INFO: [Synth 8-6157] synthesizing module 'Hazard_Forward_Unit' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2560]
+INFO: [Synth 8-6155] done synthesizing module 'Hazard_Forward_Unit' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2560]
+INFO: [Synth 8-6157] synthesizing module 'Register_File' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3546]
+	Parameter WIDTH bound to: 32 - type: integer 
+	Parameter DEPTH bound to: 5 - type: integer 
+WARNING: [Synth 8-4175] Real value in range should not be used [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3568]
+INFO: [Synth 8-6155] done synthesizing module 'Register_File' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3546]
+INFO: [Synth 8-6157] synthesizing module 'Control_Status_Register_File' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1792]
+INFO: [Synth 8-155] case statement is not full and has no default [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1836]
+INFO: [Synth 8-6155] done synthesizing module 'Control_Status_Register_File' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1792]
+INFO: [Synth 8-6155] done synthesizing module 'phoeniX' (0#1) [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:159]
+WARNING: [Synth 8-3848] Net adder_1_result in module/entity Arithmetic_Logic_Unit does not have driver. [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1156]
+WARNING: [Synth 8-3848] Net adder_2_result in module/entity Arithmetic_Logic_Unit does not have driver. [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1157]
+WARNING: [Synth 8-3848] Net adder_3_result in module/entity Arithmetic_Logic_Unit does not have driver. [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1158]
+WARNING: [Synth 8-6014] Unused sequential element funct12_EX_reg_reg was removed.  [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:370]
+WARNING: [Synth 8-6014] Unused sequential element funct7_MW_reg_reg was removed.  [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:587]
+WARNING: [Synth 8-6014] Unused sequential element funct12_MW_reg_reg was removed.  [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:588]
+WARNING: [Synth 8-6014] Unused sequential element instruction_type_MW_reg_reg was removed.  [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:591]
+WARNING: [Synth 8-6014] Unused sequential element pc_MW_reg_reg was removed.  [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:597]
+WARNING: [Synth 8-3848] Net mul_busy_EX_wire in module/entity phoeniX does not have driver. [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:411]
+WARNING: [Synth 8-3848] Net div_busy_EX_wire in module/entity phoeniX does not have driver. [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:412]
+WARNING: [Synth 8-3848] Net mul_output_EX_wire in module/entity phoeniX does not have driver. [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:408]
+WARNING: [Synth 8-3848] Net div_output_EX_wire in module/entity phoeniX does not have driver. [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:409]
+WARNING: [Synth 8-7129] Port Er[4] in module Approximate_Accuracy_Controllable_Adder is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[31] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[30] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[29] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[28] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[27] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[26] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[25] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[24] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[23] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[22] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[21] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[20] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[19] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[18] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[17] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[16] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[15] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[14] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[13] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[12] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[11] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port instruction[6] in module Immediate_Generator is either unconnected or has no load
+WARNING: [Synth 8-7129] Port instruction[5] in module Immediate_Generator is either unconnected or has no load
+WARNING: [Synth 8-7129] Port instruction[4] in module Immediate_Generator is either unconnected or has no load
+WARNING: [Synth 8-7129] Port instruction[3] in module Immediate_Generator is either unconnected or has no load
+WARNING: [Synth 8-7129] Port instruction[2] in module Immediate_Generator is either unconnected or has no load
+WARNING: [Synth 8-7129] Port instruction[1] in module Immediate_Generator is either unconnected or has no load
+WARNING: [Synth 8-7129] Port instruction[0] in module Immediate_Generator is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 1546.508 ; gain = 512.645
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:06 ; elapsed = 00:00:08 . Memory (MB): peak = 1546.508 ; gain = 512.645
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7s100fgga676-2
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:06 ; elapsed = 00:00:08 . Memory (MB): peak = 1546.508 ; gain = 512.645
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7s100fgga676-2
+WARNING: [Synth 8-327] inferring latch for variable 'alu_output_reg' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1178]
+WARNING: [Synth 8-327] inferring latch for variable 'adder_enable_reg' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1305]
+WARNING: [Synth 8-327] inferring latch for variable 'adder_input_1_reg' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1306]
+WARNING: [Synth 8-327] inferring latch for variable 'adder_input_2_reg' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1307]
+WARNING: [Synth 8-327] inferring latch for variable 'adder_Cin_reg' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1308]
+WARNING: [Synth 8-327] inferring latch for variable 'shift_input_reg' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1182]
+WARNING: [Synth 8-327] inferring latch for variable 'shift_amount_reg' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1182]
+WARNING: [Synth 8-327] inferring latch for variable 'shift_direction_reg' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1182]
+WARNING: [Synth 8-327] inferring latch for variable 'load_data_reg' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2851]
+WARNING: [Synth 8-327] inferring latch for variable 'store_data_reg_reg' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:2842]
+WARNING: [Synth 8-327] inferring latch for variable 'csr_read_data_reg' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1823]
+WARNING: [Synth 8-327] inferring latch for variable 'instruction_FD_reg_reg' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:238]
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:09 . Memory (MB): peak = 1569.137 ; gain = 535.273
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input    2 Bit       Adders := 1     
++---XORs : 
+	   2 Input     32 Bit         XORs := 1     
+	   2 Input      1 Bit         XORs := 56    
+	   3 Input      1 Bit         XORs := 50    
++---Registers : 
+	               32 Bit    Registers := 11    
+	               12 Bit    Registers := 1     
+	                7 Bit    Registers := 3     
+	                5 Bit    Registers := 3     
+	                3 Bit    Registers := 3     
+	                1 Bit    Registers := 7     
++---Muxes : 
+	   6 Input   32 Bit        Muxes := 2     
+	   2 Input   32 Bit        Muxes := 26    
+	   3 Input   32 Bit        Muxes := 3     
+	   7 Input   32 Bit        Muxes := 2     
+	   4 Input   32 Bit        Muxes := 4     
+	   5 Input   32 Bit        Muxes := 2     
+	   8 Input   32 Bit        Muxes := 2     
+	   2 Input   16 Bit        Muxes := 3     
+	   4 Input    8 Bit        Muxes := 1     
+	   2 Input    8 Bit        Muxes := 4     
+	   2 Input    5 Bit        Muxes := 13    
+	   7 Input    4 Bit        Muxes := 2     
+	   2 Input    4 Bit        Muxes := 1     
+	  15 Input    3 Bit        Muxes := 2     
+	   3 Input    2 Bit        Muxes := 1     
+	   7 Input    1 Bit        Muxes := 5     
+	   8 Input    1 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 51    
+	   4 Input    1 Bit        Muxes := 7     
+	   3 Input    1 Bit        Muxes := 7     
+	   6 Input    1 Bit        Muxes := 1     
+	   5 Input    1 Bit        Muxes := 1     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 160 (col length:80)
+BRAMs: 240 (col length: RAMB18 80 RAMB36 40)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+WARNING: [Synth 8-7129] Port Er[4] in module Approximate_Accuracy_Controllable_Adder is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[31] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[30] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[29] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[28] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[27] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[26] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[25] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[24] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[23] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[22] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[21] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[20] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[19] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[18] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[17] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[16] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[15] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[14] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[13] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[12] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port control_status_register[11] in module Arithmetic_Logic_Unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port instruction[6] in module Immediate_Generator is either unconnected or has no load
+WARNING: [Synth 8-7129] Port instruction[5] in module Immediate_Generator is either unconnected or has no load
+WARNING: [Synth 8-7129] Port instruction[4] in module Immediate_Generator is either unconnected or has no load
+WARNING: [Synth 8-7129] Port instruction[3] in module Immediate_Generator is either unconnected or has no load
+WARNING: [Synth 8-7129] Port instruction[2] in module Immediate_Generator is either unconnected or has no load
+WARNING: [Synth 8-7129] Port instruction[1] in module Immediate_Generator is either unconnected or has no load
+WARNING: [Synth 8-7129] Port instruction[0] in module Immediate_Generator is either unconnected or has no load
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[31]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[30]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[29]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[28]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[27]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[26]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[25]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[24]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[23]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[22]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[21]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[20]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[19]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[18]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[17]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[16]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[15]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[14]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[13]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[12]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[11]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[10]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[9]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[8]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[7]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[6]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[5]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[4]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[3]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[2]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[1]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_reg[0]) is unused and will be removed from module Control_Status_Register_File.
+WARNING: [Synth 8-3332] Sequential element (csr_read_data_regi_32) is unused and will be removed from module Control_Status_Register_File.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:17 ; elapsed = 00:00:21 . Memory (MB): peak = 1807.742 ; gain = 773.879
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:18 ; elapsed = 00:00:21 . Memory (MB): peak = 1807.742 ; gain = 773.879
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:18 ; elapsed = 00:00:22 . Memory (MB): peak = 1807.742 ; gain = 773.879
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:23 ; elapsed = 00:00:26 . Memory (MB): peak = 1807.742 ; gain = 773.879
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:23 ; elapsed = 00:00:26 . Memory (MB): peak = 1807.742 ; gain = 773.879
+---------------------------------------------------------------------------------
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin alucsr_reg_inferred__0_n_30 with 1st driver pin 'control_status_register_file/alucsr_reg_reg[6]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1813]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin alucsr_reg_inferred__0_n_30 with 2nd driver pin 'control_status_register_file/alucsr_reg_reg[6]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1837]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin alucsr_reg_inferred__0_n_36 with 1st driver pin 'control_status_register_file/alucsr_reg_reg[0]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1813]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin alucsr_reg_inferred__0_n_36 with 2nd driver pin 'control_status_register_file/alucsr_reg_reg[0]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1837]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin alucsr_reg_inferred__0_n_28 with 1st driver pin 'control_status_register_file/alucsr_reg_reg[8]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1813]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin alucsr_reg_inferred__0_n_28 with 2nd driver pin 'control_status_register_file/alucsr_reg_reg[8]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1837]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin alucsr_reg_inferred__0_n_31 with 1st driver pin 'control_status_register_file/alucsr_reg_reg[5]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1813]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin alucsr_reg_inferred__0_n_31 with 2nd driver pin 'control_status_register_file/alucsr_reg_reg[5]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1837]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin alucsr_reg_inferred__0_n_32 with 1st driver pin 'control_status_register_file/alucsr_reg_reg[4]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1813]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin alucsr_reg_inferred__0_n_32 with 2nd driver pin 'control_status_register_file/alucsr_reg_reg[4]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1837]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin alucsr_reg_inferred__0_n_33 with 1st driver pin 'control_status_register_file/alucsr_reg_reg[3]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1813]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin alucsr_reg_inferred__0_n_33 with 2nd driver pin 'control_status_register_file/alucsr_reg_reg[3]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1837]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin alucsr_reg_inferred__0_n_26 with 1st driver pin 'control_status_register_file/alucsr_reg_reg[10]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1813]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin alucsr_reg_inferred__0_n_26 with 2nd driver pin 'control_status_register_file/alucsr_reg_reg[10]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1837]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin alucsr_reg_inferred__0_n_27 with 1st driver pin 'control_status_register_file/alucsr_reg_reg[9]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1813]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin alucsr_reg_inferred__0_n_27 with 2nd driver pin 'control_status_register_file/alucsr_reg_reg[9]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1837]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin alucsr_reg_inferred__0_n_35 with 1st driver pin 'control_status_register_file/alucsr_reg_reg[1]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1813]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin alucsr_reg_inferred__0_n_35 with 2nd driver pin 'control_status_register_file/alucsr_reg_reg[1]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1837]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin alucsr_reg_inferred__0_n_34 with 1st driver pin 'control_status_register_file/alucsr_reg_reg[2]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1813]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin alucsr_reg_inferred__0_n_34 with 2nd driver pin 'control_status_register_file/alucsr_reg_reg[2]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:1837]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[31] with 1st driver pin 'register_file/Registers_reg[0][31]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[31] with 2nd driver pin 'register_file/Registers_reg[0][31]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[30] with 1st driver pin 'register_file/Registers_reg[0][30]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[30] with 2nd driver pin 'register_file/Registers_reg[0][30]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[29] with 1st driver pin 'register_file/Registers_reg[0][29]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[29] with 2nd driver pin 'register_file/Registers_reg[0][29]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[28] with 1st driver pin 'register_file/Registers_reg[0][28]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[28] with 2nd driver pin 'register_file/Registers_reg[0][28]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[27] with 1st driver pin 'register_file/Registers_reg[0][27]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[27] with 2nd driver pin 'register_file/Registers_reg[0][27]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[26] with 1st driver pin 'register_file/Registers_reg[0][26]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[26] with 2nd driver pin 'register_file/Registers_reg[0][26]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[25] with 1st driver pin 'register_file/Registers_reg[0][25]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[25] with 2nd driver pin 'register_file/Registers_reg[0][25]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[24] with 1st driver pin 'register_file/Registers_reg[0][24]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[24] with 2nd driver pin 'register_file/Registers_reg[0][24]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[23] with 1st driver pin 'register_file/Registers_reg[0][23]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[23] with 2nd driver pin 'register_file/Registers_reg[0][23]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[22] with 1st driver pin 'register_file/Registers_reg[0][22]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[22] with 2nd driver pin 'register_file/Registers_reg[0][22]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[21] with 1st driver pin 'register_file/Registers_reg[0][21]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[21] with 2nd driver pin 'register_file/Registers_reg[0][21]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[20] with 1st driver pin 'register_file/Registers_reg[0][20]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[20] with 2nd driver pin 'register_file/Registers_reg[0][20]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[19] with 1st driver pin 'register_file/Registers_reg[0][19]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[19] with 2nd driver pin 'register_file/Registers_reg[0][19]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[18] with 1st driver pin 'register_file/Registers_reg[0][18]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[18] with 2nd driver pin 'register_file/Registers_reg[0][18]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[17] with 1st driver pin 'register_file/Registers_reg[0][17]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[17] with 2nd driver pin 'register_file/Registers_reg[0][17]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[16] with 1st driver pin 'register_file/Registers_reg[0][16]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[16] with 2nd driver pin 'register_file/Registers_reg[0][16]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[15] with 1st driver pin 'register_file/Registers_reg[0][15]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[15] with 2nd driver pin 'register_file/Registers_reg[0][15]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[14] with 1st driver pin 'register_file/Registers_reg[0][14]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[14] with 2nd driver pin 'register_file/Registers_reg[0][14]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[13] with 1st driver pin 'register_file/Registers_reg[0][13]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[13] with 2nd driver pin 'register_file/Registers_reg[0][13]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[12] with 1st driver pin 'register_file/Registers_reg[0][12]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[12] with 2nd driver pin 'register_file/Registers_reg[0][12]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[11] with 1st driver pin 'register_file/Registers_reg[0][11]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[11] with 2nd driver pin 'register_file/Registers_reg[0][11]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[10] with 1st driver pin 'register_file/Registers_reg[0][10]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[10] with 2nd driver pin 'register_file/Registers_reg[0][10]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[9] with 1st driver pin 'register_file/Registers_reg[0][9]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[9] with 2nd driver pin 'register_file/Registers_reg[0][9]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[8] with 1st driver pin 'register_file/Registers_reg[0][8]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[8] with 2nd driver pin 'register_file/Registers_reg[0][8]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[7] with 1st driver pin 'register_file/Registers_reg[0][7]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[7] with 2nd driver pin 'register_file/Registers_reg[0][7]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[6] with 1st driver pin 'register_file/Registers_reg[0][6]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[6] with 2nd driver pin 'register_file/Registers_reg[0][6]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[5] with 1st driver pin 'register_file/Registers_reg[0][5]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[5] with 2nd driver pin 'register_file/Registers_reg[0][5]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[4] with 1st driver pin 'register_file/Registers_reg[0][4]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[4] with 2nd driver pin 'register_file/Registers_reg[0][4]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[3] with 1st driver pin 'register_file/Registers_reg[0][3]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[3] with 2nd driver pin 'register_file/Registers_reg[0][3]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[2] with 1st driver pin 'register_file/Registers_reg[0][2]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[2] with 2nd driver pin 'register_file/Registers_reg[0][2]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[1] with 1st driver pin 'register_file/Registers_reg[0][1]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[1] with 2nd driver pin 'register_file/Registers_reg[0][1]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[0] with 1st driver pin 'register_file/Registers_reg[0][0]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[0]__0[0] with 2nd driver pin 'register_file/Registers_reg[0][0]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[1]__0[31] with 1st driver pin 'register_file/Registers_reg[1][31]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[1]__0[31] with 2nd driver pin 'register_file/Registers_reg[1][31]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[1]__0[30] with 1st driver pin 'register_file/Registers_reg[1][30]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[1]__0[30] with 2nd driver pin 'register_file/Registers_reg[1][30]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[1]__0[29] with 1st driver pin 'register_file/Registers_reg[1][29]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[1]__0[29] with 2nd driver pin 'register_file/Registers_reg[1][29]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[1]__0[28] with 1st driver pin 'register_file/Registers_reg[1][28]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[1]__0[28] with 2nd driver pin 'register_file/Registers_reg[1][28]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[1]__0[27] with 1st driver pin 'register_file/Registers_reg[1][27]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[1]__0[27] with 2nd driver pin 'register_file/Registers_reg[1][27]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[1]__0[26] with 1st driver pin 'register_file/Registers_reg[1][26]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[1]__0[26] with 2nd driver pin 'register_file/Registers_reg[1][26]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[1]__0[25] with 1st driver pin 'register_file/Registers_reg[1][25]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[1]__0[25] with 2nd driver pin 'register_file/Registers_reg[1][25]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[1]__0[24] with 1st driver pin 'register_file/Registers_reg[1][24]__0/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3574]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin register_file/Registers[1]__0[24] with 2nd driver pin 'register_file/Registers_reg[1][24]/Q' [C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.srcs/sources_1/new/phoeniX.v:3581]
+INFO: [Common 17-14] Message 'Synth 8-6859' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|     1120|Failed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:23 ; elapsed = 00:00:26 . Memory (MB): peak = 1807.742 ; gain = 773.879
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:23 ; elapsed = 00:00:26 . Memory (MB): peak = 1807.742 ; gain = 773.879
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:23 ; elapsed = 00:00:27 . Memory (MB): peak = 1807.742 ; gain = 773.879
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:23 ; elapsed = 00:00:27 . Memory (MB): peak = 1807.742 ; gain = 773.879
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-------+------+
+|      |Cell   |Count |
++------+-------+------+
+|1     |BUFG   |     7|
+|2     |CARRY4 |    26|
+|3     |LUT1   |     3|
+|4     |LUT2   |   223|
+|5     |LUT3   |   156|
+|6     |LUT4   |   338|
+|7     |LUT5   |   237|
+|8     |LUT6   |  1052|
+|9     |MUXF7  |   256|
+|10    |FDRE   |  2651|
+|11    |FDSE   |    34|
+|12    |LD     |   239|
+|13    |IBUF   |    34|
+|14    |IOBUF  |    32|
+|15    |OBUF   |    39|
+|16    |OBUFT  |    37|
++------+-------+------+
+
+Report Instance Areas: 
++------+-------------------------------+-----------------------------+------+
+|      |Instance                       |Module                       |Cells |
++------+-------------------------------+-----------------------------+------+
+|1     |top                            |                             |  5364|
+|2     |  arithmetic_logic_unit        |Arithmetic_Logic_Unit        |   713|
+|3     |  control_status_register_file |Control_Status_Register_File |   236|
+|4     |  load_store_unit              |Load_Store_Unit              |   331|
+|5     |  register_file                |Register_File                |  2113|
++------+-------------------------------+-----------------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:23 ; elapsed = 00:00:27 . Memory (MB): peak = 1807.742 ; gain = 773.879
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 2240 critical warnings and 132 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:23 ; elapsed = 00:00:27 . Memory (MB): peak = 1807.742 ; gain = 773.879
+Synthesis Optimization Complete : Time (s): cpu = 00:00:23 ; elapsed = 00:00:27 . Memory (MB): peak = 1807.742 ; gain = 773.879
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.049 . Memory (MB): peak = 1810.422 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 553 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1857.477 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 271 instances were transformed.
+  IOBUF => IOBUF (IBUF, OBUFT): 32 instances
+  LD => LDCE: 239 instances
+
+Synth Design complete, checksum: d9dd7405
+INFO: [Common 17-83] Releasing license: Synthesis
+82 Infos, 132 Warnings, 100 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:25 ; elapsed = 00:00:29 . Memory (MB): peak = 1857.477 ; gain = 831.484
+INFO: [runtcl-6] Synthesis results are not added to the cache due to CRITICAL_WARNING
+INFO: [Common 17-1381] The checkpoint 'C:/Users/ASUS/OneDrive/Desktop/phoeniX/phoeniX.runs/synth_1/phoeniX.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file phoeniX_utilization_synth.rpt -pb phoeniX_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Thu Jan  4 19:22:01 2024...
