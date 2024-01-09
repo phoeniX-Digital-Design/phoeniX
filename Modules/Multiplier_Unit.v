@@ -362,177 +362,81 @@ endmodule
 
 module Approximate_Accuracy_Controllable_Multiplier_8bit
 (
-    input clk,
-
     input [6 : 0] Er,
     input [7 : 0] Operand_1,
     input [7 : 0] Operand_2,
 
     output [15 : 0] Result
 );
-
-    ////////////////////
-    //    Stage 1     //
-    ////////////////////
-
-    wire [10 : 0] P5_Stage_1;
-    wire [10 : 0] P6_Stage_1;
-    wire [14 : 0] V1_Stage_1;
-    wire [14 : 0] V2_Stage_1;
-
-    Multiplier_Stage_1 MS1 
-    (
-        Operand_1,
-        Operand_2,
-
-        P5_Stage_1,
-        P6_Stage_1,
-        V1_Stage_1,
-        V2_Stage_1
-    );
-
-    reg [10 : 0] P5_Stage_2;
-    reg [10 : 0] P6_Stage_2;
-    reg [14 : 0] V1_Stage_2;
-    reg [14 : 0] V2_Stage_2;
-
-    always @(posedge clk)
-    begin
-        P5_Stage_2 <= P5_Stage_1;
-        P6_Stage_2 <= P6_Stage_1;
-        V1_Stage_2 <= V1_Stage_1;
-        V2_Stage_2 <= V2_Stage_1;
-    end
     
-    ////////////////////
-    //    Stage 2     //
-    ////////////////////
-
-    wire [14 : 0] SumSignal_Stage_2;
-    wire [14 : 0] CarrySignal_Stage_2;
-
-    Multiplier_Stage_2 MS2
-    (
-        P5_Stage_2,
-        P6_Stage_2,
-        V1_Stage_2,
-        V2_Stage_2,
-
-        SumSignal_Stage_2,
-        CarrySignal_Stage_2
-    );
-    
-    reg [14 : 0] SumSignal_Stage_3;
-    reg [14 : 0] CarrySignal_Stage_3;
-
-    always @(posedge clk) 
-    begin
-        SumSignal_Stage_3 <= SumSignal_Stage_2;
-        CarrySignal_Stage_3 <= CarrySignal_Stage_2;
-    end
-    ////////////////////
-    //    Stage 3     //
-    ////////////////////
-
-    Multiplier_Stage_3 MS3
-    (
-        Er,
-        SumSignal_Stage_3,
-        CarrySignal_Stage_3,
-        Result
-    );
-endmodule
-
-module Multiplier_Stage_1
-(
-    input [7 : 0] Operand_1,
-    input [7 : 0] Operand_2,
-
-    output [10 : 0] P5,
-    output [10 : 0] P6,
-    output [14 : 0] V1,
-    output [14 : 0] V2
-);
-    wire [7 : 0] Partial_Product [1 : 8];
+    wire [7 : 0] PP [1 : 8];
 
     generate
         for (genvar i = 1; i < 9; i = i + 1)
         begin
-            assign Partial_Product[i] = {8{Operand_2[i - 1]}} & Operand_1;
+            assign PP[i] = {8{Operand_2[i - 1]}} & Operand_1;
         end
     endgenerate
 
+    // Stage 1 -  ATC_8 wires and instantiation
     wire [8 : 0] P1;
     wire [8 : 0] P2;
     wire [8 : 0] P3;
     wire [8 : 0] P4;
 
-    ATC_8 atc_8 
-    (
-        Partial_Product[1],
-        Partial_Product[2],
-        Partial_Product[3],
-        Partial_Product[4],
-        Partial_Product[5],
-        Partial_Product[6],
-        Partial_Product[7],
-        Partial_Product[8],
-        P1, P2, P3, P4, V1
-    );
+    wire [14 : 0] V1;
+
+    ATC_8 atc_8 (PP[1], PP[2], PP[3], PP[4], PP[5], PP[6], PP[7], PP[8], P1, P2, P3, P4, V1);
+
+    // Stage 1 - ATC_4 wires and instantiation
+    wire [10 : 0] P5;
+    wire [10 : 0] P6;
+
+    wire [14 : 0] V2;
 
     ATC_4 atc_4 (P1, P2, P3, P4, P5, P6, V2);
-endmodule
 
-module Multiplier_Stage_2
-(
-    input [10 : 0] P5,
-    input [10 : 0] P6,
-    input [14 : 0] V1,
-    input [14 : 0] V2,
+    // Stage 1 - Final row of iCACs (ATC_2)
 
-    output [14 : 0] SumSignal,
-    output [14 : 0] CarrySignal
-);
     wire [14 : 0] P7;
     wire [14 : 0] Q7;
 
     iCAC #(11, 4) iCAC_7 (P5, P6, P7, Q7);
 
+    // Stage 2
+
     wire [10 : 4] ORed_PPs = V1 [10 : 4] | V2 [10 : 4];
+
+    // Stage 3
+
+    wire [14 : 0] SumSignal, CarrySignal;
 
     assign SumSignal[0] = P7[0];
     assign CarrySignal[0] = 0;
     assign CarrySignal[1] = 0;
 
-    Half_Adder_Mul HA_1 (P7[1], V1[1], SumSignal[1], CarrySignal[2]);
+    Half_Adder_Mul HA_1 (P7[1], V1[1], CarrySignal[2], SumSignal[1]);
+    
+    Full_Adder_Mul FA_1 (P7[2], V1[2], V2[2], CarrySignal[3], SumSignal[2]);
+    Full_Adder_Mul FA_2 (P7[3], V1[3], V2[3], CarrySignal[4], SumSignal[3]);
 
-    Full_Adder_Mul FA_1 (P7[2], V1[2], V2[2], SumSignal[2], CarrySignal[3]);
-    Full_Adder_Mul FA_2 (P7[3], V1[3], V2[3], SumSignal[3], CarrySignal[4]);
+    Full_Adder_Mul FA_3 (P7[4], Q7[4], ORed_PPs[4], CarrySignal[5], SumSignal[4]);
+    Full_Adder_Mul FA_4 (P7[5], Q7[5], ORed_PPs[5], CarrySignal[6], SumSignal[5]);
+    Full_Adder_Mul FA_5 (P7[6], Q7[6], ORed_PPs[6], CarrySignal[7], SumSignal[6]);
+    Full_Adder_Mul FA_6 (P7[7], Q7[7], ORed_PPs[7], CarrySignal[8], SumSignal[7]);
+    Full_Adder_Mul FA_7 (P7[8], Q7[8], ORed_PPs[8], CarrySignal[9], SumSignal[8]);
+    Full_Adder_Mul FA_8 (P7[9], Q7[9], ORed_PPs[9], CarrySignal[10], SumSignal[9]);
+    Full_Adder_Mul FA_9 (P7[10], Q7[10], ORed_PPs[10], CarrySignal[11], SumSignal[10]);
 
-    Full_Adder_Mul FA_3 (P7[4], Q7[4], ORed_PPs[4], SumSignal[4], CarrySignal[5]);
-    Full_Adder_Mul FA_4 (P7[5], Q7[5], ORed_PPs[5], SumSignal[5], CarrySignal[6]);
-    Full_Adder_Mul FA_5 (P7[6], Q7[6], ORed_PPs[6], SumSignal[6], CarrySignal[7]);
-    Full_Adder_Mul FA_6 (P7[7], Q7[7], ORed_PPs[7], SumSignal[7], CarrySignal[8]);
-    Full_Adder_Mul FA_7 (P7[8], Q7[8], ORed_PPs[8], SumSignal[8], CarrySignal[9]);
-    Full_Adder_Mul FA_8 (P7[9], Q7[9], ORed_PPs[9], SumSignal[9], CarrySignal[10]);
-    Full_Adder_Mul FA_9 (P7[10], Q7[10], ORed_PPs[10], SumSignal[10], CarrySignal[11]);
+    Full_Adder_Mul FA_10 (P7[11], V1[11], V2[11], CarrySignal[12], SumSignal[11]);
+    Full_Adder_Mul FA_11 (P7[12], V1[12], V2[12], CarrySignal[13], SumSignal[12]);
 
-    Full_Adder_Mul FA_10 (P7[11], V1[11], V2[11], SumSignal[11], CarrySignal[12]);
-    Full_Adder_Mul FA_11 (P7[12], V1[12], V2[12], SumSignal[12], CarrySignal[13]);
-
-    Half_Adder_Mul HA_2 (P7[13], V1[13], SumSignal[13], CarrySignal[14]);
+    Half_Adder_Mul HA_2 (P7[13], V1[13], CarrySignal[14], SumSignal[13]);
 
     assign SumSignal[14] = P7[14];
-endmodule
 
-module Multiplier_Stage_3
-(
-    input [6 : 0] Er,
-    input [14 : 0] SumSignal,
-    input [14 : 0] CarrySignal,
-    
-    output [15 : 0] Result
-);
+    // Stage 4
+
     assign Result[0] = SumSignal[0];
     assign Result[1] = SumSignal[1];
 
@@ -541,9 +445,9 @@ module Multiplier_Stage_3
     assign Result[4] = SumSignal[4] | CarrySignal[4];
 
     wire [13 : 5] inter_Carry;
-
+    
     Error_Configurable_Full_Adder_Mul ECA_FA_1 (Er[0], SumSignal[5], CarrySignal[5], 1'b0, Result[5], inter_Carry[5]);
-
+    
     Error_Configurable_Full_Adder_Mul ECA_FA_2 (Er[1], SumSignal[6], CarrySignal[6], inter_Carry[5], Result[6], inter_Carry[6]);
     Error_Configurable_Full_Adder_Mul ECA_FA_3 (Er[2], SumSignal[7], CarrySignal[7], inter_Carry[6], Result[7], inter_Carry[7]);
     Error_Configurable_Full_Adder_Mul ECA_FA_4 (Er[3], SumSignal[8], CarrySignal[8], inter_Carry[7], Result[8], inter_Carry[8]);
@@ -552,9 +456,9 @@ module Multiplier_Stage_3
     Error_Configurable_Full_Adder_Mul ECA_FA_7 (Er[6], SumSignal[11], CarrySignal[11], inter_Carry[10], Result[11], inter_Carry[11]);
 
 
-    Full_Adder_Mul FA_12 (SumSignal[12], CarrySignal[12], inter_Carry[11], Result[12], inter_Carry[12]);
-    Full_Adder_Mul FA_13 (SumSignal[13], CarrySignal[13], inter_Carry[12], Result[13], inter_Carry[13]);
-    Full_Adder_Mul FA_14 (SumSignal[14], CarrySignal[14], inter_Carry[13], Result[14], Result[15]);
+    Full_Adder_Mul FA_12 (SumSignal[12], CarrySignal[12], inter_Carry[11], inter_Carry[12], Result[12]);
+    Full_Adder_Mul FA_13 (SumSignal[13], CarrySignal[13], inter_Carry[12], inter_Carry[13], Result[13]);
+    Full_Adder_Mul FA_14 (SumSignal[14], CarrySignal[14], inter_Carry[13], Result[15], Result[14]);
 endmodule
 
 module iCAC 
