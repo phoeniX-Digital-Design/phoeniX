@@ -42,9 +42,14 @@ module Control_Status_Register_File
     output reg [31 : 0] csr_read_data
 );
 
-    reg [31 : 0] alucsr_reg;       // Arithmetic Logic Unit Aproximation Control Register
-    reg [31 : 0] mulcsr_reg;       // Multiplier Unit Aproximation Control Register
-    reg [31 : 0] divcsr_reg;       // Divider Unit Aproximation Control Register
+    // Approximation Control CSRs
+    reg [31 : 0] alucsr_reg;        // Arithmetic Logic Unit Aproximation Control Status Register
+    reg [31 : 0] mulcsr_reg;        // Multiplier Unit Aproximation Control Status Register
+    reg [31 : 0] divcsr_reg;        // Divider Unit Aproximation Control Status Register
+
+    // Machine mode implemented CSRs
+    reg [31 : 0] marchid = 32'b0;   // Not implemented yet**
+    reg [31 : 0] misa = 32'b0;      // Not implemented yet**
 
     always @(posedge reset)
     begin
