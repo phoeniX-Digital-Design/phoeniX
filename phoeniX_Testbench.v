@@ -201,6 +201,7 @@ module phoeniX_Testbench;
             $display("\n--> EXECUTION FINISHED <--\n");
             $display("Firmware File: %s\n", `FIRMWARE);
             $display("ON  TIME:\t%d\nOFF TIME:\t%d", enable_high_count * CLK_PERIOD, enable_low_count * CLK_PERIOD);
+            $display("CPU USAGE:\t%d", 100 *(enable_high_count * CLK_PERIOD)/(enable_high_count * CLK_PERIOD + enable_low_count * CLK_PERIOD));
             $dumpoff;
             $finish;
         end
