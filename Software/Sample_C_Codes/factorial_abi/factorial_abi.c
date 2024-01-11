@@ -6,7 +6,7 @@ int main()
 {
     int result = 1;
     int n = 10;
-    result = factorial(0x1, n - 1);
+    result = factorial(0x1, n);
     // printf("Result of %d! is %d", n, result);
     return 0;
 }
