@@ -9,6 +9,7 @@ int main()
     {
         result *= i;
     }
-    printf("Result of %d! is %d\n", n, result);
+
+    // printf("Result of %d! is %d\n", n, result);
     return 0;
 }

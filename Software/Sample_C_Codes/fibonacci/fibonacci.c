@@ -12,8 +12,8 @@ int main()
         n3 = n1 + n2;    
         n1 = n2;    
         n2 = n3;    
-        printf("%d \t", n3);
     }  
-    printf("\nNumber %d result of Fibonacci sequence is %d\n", count, n3);
+
+    //printf("\nNumber %d result of Fibonacci sequence is %d\n", count, n3);
     return 0;  
 }
