@@ -46,7 +46,7 @@ module phoeniX_Testbench;
 
     phoeniX 
     #(
-        .RESET_ADDRESS(32'h0000_0000),
+        .RESET_ADDRESS(32'h00010000),
         .M_EXTENSION(1'b1),
         .E_EXTENSION(1'b0)
     ) 
@@ -114,6 +114,7 @@ module phoeniX_Testbench;
         // Reset
         repeat (5) @(posedge clk);
 		reset <= `DISABLE;
+        uut.register_file.Registers[2] = 32'h00010000;
     end
 
     integer enable_high_count = 0;
@@ -178,7 +179,7 @@ module phoeniX_Testbench;
         ////////////////////////////////////
         if (data_memory_interface_address == 32'h1000_0000)
         begin
-            $write("%c", data_memory_interface_data[7 : 0]);
+            $write("%c", data_memory_interface_data);
             $fflush();
         end
     end
