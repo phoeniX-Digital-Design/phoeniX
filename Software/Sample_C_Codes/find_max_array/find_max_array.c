@@ -26,6 +26,6 @@ int main()
 
 	// Function call
 	int max_array = largest(arr, n);
-	// printf("Largest in given array is %d", largest(arr, n));
+	printf("Largest in given array is %d", largest(arr, n));
 	return 0;
 }
