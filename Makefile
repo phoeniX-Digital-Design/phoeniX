@@ -43,37 +43,37 @@ OBJECT_S := $(addsuffix .o, $(basename $(SOURCE_S)))
 
 sample code: firmware.hex
 	@echo "Running project "$(project)"\n"
-	rm -rf $(PROJECT_DIR)/*.tmp $(PROJECT_DIR)/*.mem $(PROJECT_DIR)/*.o $(PROJECT_DIR)/*.elf
-	iverilog -IModules -DFIRMWARE=\"$(PROJECT_DIR)/$(project)_firmware.hex\" -o $(CORE_NAME).vvp $(CORE_TESTBENCH)
-	vvp $(CORE_NAME).vvp 
+	@rm -rf $(PROJECT_DIR)/*.tmp $(PROJECT_DIR)/*.mem $(PROJECT_DIR)/*.o $(PROJECT_DIR)/*.elf
+	@iverilog -IModules -DFIRMWARE=\"$(PROJECT_DIR)/$(project)_firmware.hex\" -o $(CORE_NAME).vvp $(CORE_TESTBENCH)
+	@vvp $(CORE_NAME).vvp 
 
 firmware.hex: start.elf firmware.elf
 	@echo "Creating firmware hex file\n"
-	cat $(PROJECT_DIR)/start.tmp $(PROJECT_DIR)/firmware.tmp > $(PROJECT_DIR)/firmware.mem
-	python3 $(FIRMWARE_DIR)/hex_converter.py $(PROJECT_DIR)/firmware.mem > $(PROJECT_DIR)/$(project)_firmware.hex
+	@cat $(PROJECT_DIR)/start.tmp $(PROJECT_DIR)/firmware.tmp > $(PROJECT_DIR)/firmware.mem
+	@python3 $(FIRMWARE_DIR)/hex_converter.py $(PROJECT_DIR)/firmware.mem > $(PROJECT_DIR)/$(project)_firmware.hex
 
 firmware.elf: $(OBJECT_C) $(OBJECT_S)
 	@echo "Creating firmware elf file\n"
-	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $(PROJECT_DIR)/syscalls.o $(FIRMWARE_DIR)/syscalls.c
+	@$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $(PROJECT_DIR)/syscalls.o $(FIRMWARE_DIR)/syscalls.c
 
-	$(TOOLCHAIN_PREFIX)gcc $(CFLAGS) $(CFLAG_LINKING) -o $(PROJECT_DIR)/$(project)_firmware.elf $^ $(PROJECT_DIR)/syscalls.o -T $(FIRMWARE_DIR)/riscv.ld -lstdc++
+	@$(TOOLCHAIN_PREFIX)gcc $(CFLAGS) $(CFLAG_LINKING) -o $(PROJECT_DIR)/$(project)_firmware.elf $^ $(PROJECT_DIR)/syscalls.o -T $(FIRMWARE_DIR)/riscv.ld -lstdc++
 	
-	$(TOOLCHAIN_PREFIX)objdump -d $(PROJECT_DIR)/$(project)_firmware.elf > $(PROJECT_DIR)/$(project)_firmware.txt
-	$(TOOLCHAIN_PREFIX)objcopy -O verilog $(PROJECT_DIR)/$(project)_firmware.elf $(PROJECT_DIR)/firmware.tmp
+	@$(TOOLCHAIN_PREFIX)objdump -d $(PROJECT_DIR)/$(project)_firmware.elf > $(PROJECT_DIR)/$(project)_firmware.txt
+	@$(TOOLCHAIN_PREFIX)objcopy -O verilog $(PROJECT_DIR)/$(project)_firmware.elf $(PROJECT_DIR)/firmware.tmp
 
 start.elf:
 	@echo "Creating start program elf file\n"
-	$(TOOLCHAIN_PREFIX)gcc $(CFLAGS) -nostdlib -o $(PROJECT_DIR)/$(project)_start.elf $(FIRMWARE_DIR)/start.s -T $(FIRMWARE_DIR)/start.ld -lstdc++
-	$(TOOLCHAIN_PREFIX)objcopy -O verilog $(PROJECT_DIR)/$(project)_start.elf $(PROJECT_DIR)/start.tmp
+	@$(TOOLCHAIN_PREFIX)gcc $(CFLAGS) -nostdlib -o $(PROJECT_DIR)/$(project)_start.elf $(FIRMWARE_DIR)/start.s -T $(FIRMWARE_DIR)/start.ld -lstdc++
+	@$(TOOLCHAIN_PREFIX)objcopy -O verilog $(PROJECT_DIR)/$(project)_start.elf $(PROJECT_DIR)/start.tmp
 
 $(OBJECT_C): $(SOURCE_C)
-	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $@ $<
+	@$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $@ $<
 
 $(OBJECT_S): $(SOURCE_S)
-	$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $@ $<
+	@$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) -o $@ $<
 
 view:
-	gtkwave $(CORE_NAME).gtkw
+	@gtkwave $(CORE_NAME).gtkw
 
 ###########################
 #	Dhrystone Make Flow	  #
@@ -83,32 +83,30 @@ DHRYSTONE_SOURCE := $(DHRYSTONE_DIR)/dhry_1.c $(DHRYSTONE_DIR)/dhry_2.c
 DHRYSTONE_OBJECTS := $(DHRYSTONE_DIR)/dhry_1.o $(DHRYSTONE_DIR)/dhry_2.o
 
 dhrystone: dhrystone_firmware.hex	
-	@echo "$(DHRYSTONE_OBJECTS)"
-	rm -rf $(DHRYSTONE_DIR)/*.tmp $(DHRYSTONE_DIR)/*.mem $(DHRYSTONE_DIR)/*.o $(DHRYSTONE_DIR)/*.elf $(FIRMWARE_DIR)/*.o
-	iverilog -IModules -DFIRMWARE=\"$(DHRYSTONE_DIR)/dhrystone_firmware.hex\" -o $(CORE_NAME).vvp $(CORE_TESTBENCH)
-	vvp $(CORE_NAME).vvp
+	@echo "Running Dhrystone benchmark ..."
+	@rm -rf $(DHRYSTONE_DIR)/*.tmp $(DHRYSTONE_DIR)/*.mem $(DHRYSTONE_DIR)/*.o $(DHRYSTONE_DIR)/*.elf $(FIRMWARE_DIR)/*.o
+	@iverilog -IModules -DFIRMWARE=\"$(DHRYSTONE_DIR)/dhrystone_firmware.hex\" -o $(CORE_NAME).vvp $(CORE_TESTBENCH)
+	@vvp $(CORE_NAME).vvp
 	
 
 dhrystone_firmware.hex: dhrystone_start.elf dhrystone_firmware.elf
-	cat $(DHRYSTONE_DIR)/dhrystone_start.tmp $(DHRYSTONE_DIR)/dhrystone_firmware.tmp > $(DHRYSTONE_DIR)/dhrystone_firmware.mem
-	python3 $(FIRMWARE_DIR)/hex_converter.py $(DHRYSTONE_DIR)/dhrystone_firmware.mem > $(DHRYSTONE_DIR)/dhrystone_firmware.hex
+	@cat $(DHRYSTONE_DIR)/dhrystone_start.tmp $(DHRYSTONE_DIR)/dhrystone_firmware.tmp > $(DHRYSTONE_DIR)/dhrystone_firmware.mem
+	@python3 $(FIRMWARE_DIR)/hex_converter.py $(DHRYSTONE_DIR)/dhrystone_firmware.mem > $(DHRYSTONE_DIR)/dhrystone_firmware.hex
 
 dhrystone_firmware.elf: 
-	$(TOOLCHAIN_PREFIX)gcc -c $(DHRYSTONE_FLAGS) $(CFLAGS) -Wno-implicit-int -Wno-implicit-function-declaration -o $(DHRYSTONE_DIR)/dhry_1.o $(DHRYSTONE_DIR)/dhry_1.c
-	$(TOOLCHAIN_PREFIX)gcc -c $(DHRYSTONE_FLAGS) $(CFLAGS) -Wno-implicit-int -Wno-implicit-function-declaration -o $(DHRYSTONE_DIR)/dhry_2.o $(DHRYSTONE_DIR)/dhry_2.c
+	@$(TOOLCHAIN_PREFIX)gcc -c $(DHRYSTONE_FLAGS) $(CFLAGS) -Wno-implicit-int -Wno-implicit-function-declaration -o $(DHRYSTONE_DIR)/dhry_1.o $(DHRYSTONE_DIR)/dhry_1.c
+	@$(TOOLCHAIN_PREFIX)gcc -c $(DHRYSTONE_FLAGS) $(CFLAGS) -Wno-implicit-int -Wno-implicit-function-declaration -o $(DHRYSTONE_DIR)/dhry_2.o $(DHRYSTONE_DIR)/dhry_2.c
 
-	$(TOOLCHAIN_PREFIX)gcc -c $(DHRYSTONE_FLAGS) $(CFLAGS) -o $(FIRMWARE_DIR)/syscalls.o $(FIRMWARE_DIR)/syscalls.c
-	$(TOOLCHAIN_PREFIX)gcc -c $(DHRYSTONE_FLAGS) $(CFLAGS) -o $(FIRMWARE_DIR)/stdlib.o $(FIRMWARE_DIR)/stdlib.c
+	@$(TOOLCHAIN_PREFIX)gcc -c $(DHRYSTONE_FLAGS) $(CFLAGS) -o $(FIRMWARE_DIR)/syscalls.o $(FIRMWARE_DIR)/syscalls.c
+	@$(TOOLCHAIN_PREFIX)gcc -c $(DHRYSTONE_FLAGS) $(CFLAGS) -o $(FIRMWARE_DIR)/stdlib.o $(FIRMWARE_DIR)/stdlib.c
 
-	$(TOOLCHAIN_PREFIX)gcc $(DHRYSTONE_FLAGS) $(CFLAGS) -Wl,-Bstatic,-T,$(FIRMWARE_DIR)/riscv.ld,--strip-debug -o $(DHRYSTONE_DIR)/dhrystone_firmware.elf $(DHRYSTONE_OBJECTS) $(FIRMWARE_DIR)/stdlib.o $(FIRMWARE_DIR)/syscalls.o -lgcc -lc
-	$(TOOLCHAIN_PREFIX)objcopy -O verilog $(DHRYSTONE_DIR)/dhrystone_firmware.elf $(DHRYSTONE_DIR)/dhrystone_firmware.tmp
-	$(TOOLCHAIN_PREFIX)objdump -d $(DHRYSTONE_DIR)/dhrystone_firmware.elf > $(DHRYSTONE_DIR)/dhrystone_firmware.txt
+	@$(TOOLCHAIN_PREFIX)gcc $(DHRYSTONE_FLAGS) $(CFLAGS) -Wl,-Bstatic,-T,$(FIRMWARE_DIR)/riscv.ld,--strip-debug -o $(DHRYSTONE_DIR)/dhrystone_firmware.elf $(DHRYSTONE_OBJECTS) $(FIRMWARE_DIR)/stdlib.o $(FIRMWARE_DIR)/syscalls.o -lgcc -lc
+	@$(TOOLCHAIN_PREFIX)objcopy -O verilog $(DHRYSTONE_DIR)/dhrystone_firmware.elf $(DHRYSTONE_DIR)/dhrystone_firmware.tmp
+	@$(TOOLCHAIN_PREFIX)objdump -d $(DHRYSTONE_DIR)/dhrystone_firmware.elf > $(DHRYSTONE_DIR)/dhrystone_firmware.txt
 
 dhrystone_start.elf:
-	@echo "\n$(DHRYSTONE_SOURCE)\n"
-	@echo "\n$(DHRYSTONE_OBJECTS)\n"
-	$(TOOLCHAIN_PREFIX)gcc $(DHRYSTONE_FLAGS) $(CFLAGS) -nostdlib -o $(DHRYSTONE_DIR)/dhrystone_start.elf $(FIRMWARE_DIR)/start.s -T $(FIRMWARE_DIR)/start.ld -lstdc++
-	$(TOOLCHAIN_PREFIX)objcopy -O verilog $(DHRYSTONE_DIR)/dhrystone_start.elf $(DHRYSTONE_DIR)/dhrystone_start.tmp
+	@$(TOOLCHAIN_PREFIX)gcc $(DHRYSTONE_FLAGS) $(CFLAGS) -nostdlib -o $(DHRYSTONE_DIR)/dhrystone_start.elf $(FIRMWARE_DIR)/start.s -T $(FIRMWARE_DIR)/start.ld -lstdc++
+	@$(TOOLCHAIN_PREFIX)objcopy -O verilog $(DHRYSTONE_DIR)/dhrystone_start.elf $(DHRYSTONE_DIR)/dhrystone_start.tmp
 
 .PHONY: dhrystone
 
