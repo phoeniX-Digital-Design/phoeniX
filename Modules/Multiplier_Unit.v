@@ -68,9 +68,8 @@ module Multiplier_Unit
     reg  [31 : 0] multiplier_input_1;   // Latched modules input 1
     reg  [31 : 0] multiplier_input_2;   // Latched modules input 2
 
-    reg multiplier_busy;                // Multiplexer result for multipliers busy signals
-
-    wire [63 : 0] result;               // Multiplexer result for multipliers 64-bit result
+    reg multiplier_busy;                
+    wire [63 : 0] result;               
 
     reg  multiplier_0_enable;
     reg  multiplier_1_enable;
