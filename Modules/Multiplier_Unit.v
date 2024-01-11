@@ -226,15 +226,15 @@ endmodule
 // --------------------------------------------------------------------------------------------------------
 module Approximate_Accuracy_Controllable_Multiplier 
 (
-    input clk,
-    input enable,
+    input wire clk,
+    input wire enable,
 
-    input [6 : 0] Er,
-    input [31 : 0] Operand_1,
-    input [31 : 0] Operand_2,
+    input wire [ 6 : 0] Er,
+    input wire [31 : 0] Operand_1,
+    input wire [31 : 0] Operand_2,
 
-    output [63 : 0] Result,
-    output Busy
+    output reg [63 : 0] Result,
+    output reg Busy
 );
     
     wire [31 : 0] Partial_Product [0 : 3];
@@ -292,18 +292,21 @@ module Approximate_Accuracy_Controllable_Multiplier
         .Busy(Partial_Busy[3])
     );
 
-    assign Result = {32'b0, Partial_Product[0]} + {16'b0, Partial_Product[1], 16'b0} + {16'b0, Partial_Product[2], 16'b0} + {Partial_Product[3], 32'b0};
-    assign Busy  = &{Partial_Busy[0], Partial_Busy[1], Partial_Busy[2], Partial_Busy[3]};
+    always @(*) 
+    begin
+        Result = {32'b0, Partial_Product[0]} + {16'b0, Partial_Product[1], 16'b0} + {16'b0, Partial_Product[2], 16'b0} + {Partial_Product[3], 32'b0};
+        Busy = &{Partial_Busy[0], Partial_Busy[1], Partial_Busy[2], Partial_Busy[3]};
+    end
 endmodule
 
 module Approximate_Accuracy_Controllable_Multiplier_16bit 
 (
-    input clk,
-    input enable,
+    input wire clk,
+    input wire enable,
 
-    input [6 : 0] Er,
-    input [15 : 0] Operand_1,
-    input [15 : 0] Operand_2,
+    input wire [ 6 : 0] Er,
+    input wire [15 : 0] Operand_1,
+    input wire [15 : 0] Operand_2,
 
     output reg [31 : 0] Result,
     output reg Busy
@@ -311,16 +314,15 @@ module Approximate_Accuracy_Controllable_Multiplier_16bit
 
     reg     [ 7 : 0] mul_input_1;
     reg     [ 7 : 0] mul_input_2;
-    
     wire    [15 : 0] mul_result;
-    reg     [15 : 0] mul_result_1;
-    reg     [15 : 0] mul_result_2;
-    reg     [15 : 0] mul_result_3;
-    reg     [15 : 0] mul_result_4;
+
+    reg     [15 : 0] partial_result_1;
+    reg     [15 : 0] partial_result_2;
+    reg     [15 : 0] partial_result_3;
+    reg     [15 : 0] partial_result_4;
 
     Approximate_Accuracy_Controllable_Multiplier_8bit mul
     (
-        .clk(clk),
         .Er(Er),
         .Operand_1(mul_input_1),
         .Operand_2(mul_input_2),
@@ -332,30 +334,42 @@ module Approximate_Accuracy_Controllable_Multiplier_16bit
 
     always @(posedge clk) 
     begin
-        if (~enable)   
-        begin 
-            state <= 3'b000;
-        end
-        else
-        begin
-            state <= next_state;
-        end
-            
+        if (~enable)    state <= 3'b000;
+        else            state <= next_state;
     end
 
     always @(*) 
     begin
-        next_state = 'bx;
-
+        next_state = 'bz;
+       
         case (state)
-            3'b000 : begin Busy <= 1'b0; next_state <= 3'b001; end
-            3'b001 : begin mul_input_1 <= Operand_1[ 7 : 0]; mul_input_2 <= Operand_2[ 7 : 0]; next_state <= 3'b010; Busy <= 1'b1; end
-            3'b010 : begin mul_input_1 <= Operand_1[15 : 8]; mul_input_2 <= Operand_2[ 7 : 0]; next_state <= 3'b011; end
-            3'b011 : begin mul_input_1 <= Operand_1[ 7 : 0]; mul_input_2 <= Operand_2[15 : 8]; mul_result_1 <= mul_result; next_state <= 3'b100; end
-            3'b100 : begin mul_input_1 <= Operand_1[15 : 8]; mul_input_2 <= Operand_2[15 : 8]; mul_result_2 <= mul_result; next_state <= 3'b101; end
-            3'b101 : begin mul_result_3 <= mul_result; next_state = 3'b110; end
-            3'b110 : begin mul_result_4 <= mul_result; next_state = 3'b111; end
-            3'b111 : begin Result = {16'b0, mul_result_1} + {8'b0, mul_result_2, 8'b0} + {8'b0, mul_result_3, 8'b0} + {mul_result_4, 16'b0}; next_state <= 3'b000; end
+            3'b000 : 
+            begin 
+                mul_input_1 <= 'bz; 
+                mul_input_2 <= 'bz; 
+                
+                partial_result_1 <= 'bz; 
+                partial_result_2 <= 'bz; 
+                partial_result_3 <= 'bz; 
+                partial_result_4 <= 'bz; 
+                
+                Busy <= 1'b0; 
+                next_state <= 3'b001; 
+            end
+            3'b001 : begin mul_input_1 <= Operand_1[ 7 : 0]; mul_input_2 <= Operand_2[ 7 : 0]; partial_result_1 <= mul_result; next_state <= 3'b010; Busy <= 1'b1; end
+            3'b010 : begin mul_input_1 <= Operand_1[15 : 8]; mul_input_2 <= Operand_2[ 7 : 0]; partial_result_2 <= mul_result; next_state <= 3'b011; end
+            3'b011 : begin mul_input_1 <= Operand_1[ 7 : 0]; mul_input_2 <= Operand_2[15 : 8]; partial_result_3 <= mul_result; next_state <= 3'b100; end
+            3'b100 : begin mul_input_1 <= Operand_1[15 : 8]; mul_input_2 <= Operand_2[15 : 8]; partial_result_4 <= mul_result; next_state <= 3'b101; end
+            3'b101 : 
+            begin 
+                Result =    {16'b0, partial_result_1} +
+                            {8'b0,  partial_result_2, 8'b0} +
+                            {8'b0,  partial_result_3, 8'b0} +
+                            {partial_result_4, 16'b0}; 
+
+                next_state <= 3'b000; 
+                Busy <= 1'b0;
+            end
         endcase 
     end
 endmodule
