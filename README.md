@@ -1,6 +1,6 @@
 ![License](https://img.shields.io/github/license/phoeniX-Digital-Design/AssembleX?color=dark-green)
 ![GCC Test](https://img.shields.io/badge/GCC_tests-passed-dark_green)
-![Version](https://img.shields.io/badge/Version-0.2-blue)
+![Version](https://img.shields.io/badge/Version-0.3-blue)
 ![ISA](https://img.shields.io/badge/RV32-IEM_extension-blue)
 
 <picture>
@@ -27,9 +27,15 @@ The core has undergone a complete synthesis flow to become an Integrated Circuit
 
 <div align="justify">
 
-This repository contains an open source CPU including RTL codes and assistant software, under the [GNU V3.0 license](https://en.wikipedia.org/wiki/GNU_General_Public_License) and is free to use. The platform's technical specifications are published under supervision of [IUST Electronics Research Center](http://idea.iust.ac.ir/content/76317/phoeniX-POINTS--A-RISC-V-Platform-for-Approximate-Computing-Version-0.1-Technical-Specifications). You can cite the document as:
+This repository contains an open source CPU including RTL codes and assistant software, under the [GNU V3.0 license](https://en.wikipedia.org/wiki/GNU_General_Public_License) and is free to use. The platform's technical specifications are published under supervision of [IUST Electronics Research Center](http://idea.iust.ac.ir/content/76317/phoeniX-POINTS--A-RISC-V-Platform-for-Approximate-Computing-Version-0.1-Technical-Specifications).
+
+</div>
+
+You can cite the document as:
 
 - A. Delavari, F. Ghoreishy, H. S. Shahhoseini and S. Mirzakuchaki. (2023), “phoeniX: A RISC-V Platform for Approximate Computing V0.1 Technical Specifications,” [Online]. Available: http://www.iust.ac.ir/content/76158/phoeniX-POINTS--A-RISC-V-Platform-for-Approximate-Computing
+
+
 
 - Designed By : [Arvin Delavari](https://github.com/ArvinDelavari) and [Faraz Ghoreishy](https://github.com/FarazGhoreishy)
 - Contact us : arvin7807@gmail.com - farazghoreishy@gmail.com
@@ -51,9 +57,9 @@ This repository contains an open source CPU including RTL codes and assistant so
 ## Features
 <div align="justify">
 
- - **DLX 5 stage pipline**
+ - **Optimized 3 stage pipline**
 
- The classic DLX 5-stage pipeline in a processor improves instruction throughput by dividing execution into sequential stages. By incorporating data forwarding and bypassing options (such as forwarding data from execution, memory or writeback stage) the pipeline minimizes stalls caused by data hazards. As a result, the pipeline achieves higher performance, reduced stalls, and improved instruction-level parallelism, enabling concurrent processing of independent instructions.
+ The 3-stage pipeline in a processor improves instruction throughput by dividing execution into sequential stages with minimal internal fragmentation. By incorporating data forwarding and bypassing options (such as forwarding data from execution, memory or writeback stage) the pipeline minimizes stalls caused by data hazards. As a result, the pipeline achieves higher performance, reduced stalls, and improved instruction-level parallelism, enabling concurrent processing of independent instructions.
 
  - **Modularity and Extensiveness**
 
@@ -65,7 +71,7 @@ Secondly, modularity aids in design verification and testing, as individual modu
 
 Additionally, modular designs can lead to improved overall system reliability, as faults and failures in one module are less likely to affect the functionality of the entire processor.
 
-- **Special features for Approximate Computing**
+- **A Novel Platform for Approximate Computing**
 
 The phoeniX RISC-V core introduces novel features that will help the emerging field of approximate computing techniques. With its modular design and extensive architecture, phoeniX presents a configurable platform for exploring and implementing approximate computing methodologies for developers and designers. 
 
@@ -82,6 +88,7 @@ repository/
     │   └── setup.sh
     ├── Documents/
     │   ├── Images/
+    │   ├── phoeniX_Documentation_V0.2/   
     │   └── RISCV_Original_Documents/
     ├── Features/
     │   ├── AXI4-Lite/
@@ -89,12 +96,12 @@ repository/
     │   ├── Clock_Genrator/
     │   └── ...
     ├── Synthesis/
-    │   ├── Qflow_TSMC_180nm/
+    │   ├── TSMC_018um/
     │   │   ├── layout/
     │   │   ├── synthesis/
     │   │   ├── log/
     │   │   └── ...
-    │   └── Vivado_Schematics
+    │   └── NanGate_45nm
     ├── Modules/
     │   ├── Address_Generator.v
     │   ├── Arithmetic_Logic_Unit.v
@@ -142,7 +149,7 @@ This repository includes detailed documentation, user manual, and developer guid
 
 </div>
 
-![Alt text](https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Documents/Images/phoeniX_Block_Diagram.png "phoeniX Block Diagram")
+![Alt text](https://github.com/phoeniX-Digital-Design/phoeniX/blob/phoeniX-V0.3/Documents/Images/phoeniX_Block_Diagram_V03.PNG "phoeniX V0.3 Block Diagram")
 
 | Module                        | Description                                                                                   |
 | ----------------------------- | --------------------------------------------------------------------------------------------- |
@@ -224,6 +231,7 @@ phoeniX convention for naming projects is as follows; The main source file of th
 
 Sample projects provided at this time are `bubble_sort`, `fibonacci`, `find_max_array`, `sum1ton`.
 To run any of these sample projects simply run `make sample` followed by the name of the project passed as a variable named project to the Makefile.
+
 ```shell
 make sample project={project}
 ```
