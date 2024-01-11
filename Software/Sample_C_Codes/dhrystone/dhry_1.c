@@ -114,6 +114,11 @@ main ()
         /* Arr_2_Glob [8][7] would have an undefined value.             */
         /* Warning: With 16-Bit processors and Number_Of_Runs > 32000,  */
         /* overflow may occur for this array element.                   */
+  printf("TELL ME WHYYYYYY\n");
+  printf("99\n");
+  int NineNine = 99;
+  
+  printf("Nine Nine = %d\n", NineNine);
 
   printf ("\n");
   printf ("Dhrystone Benchmark, Version 2.1 (Language: C)\n");
@@ -423,5 +428,4 @@ register int    l;
         while (l--) *d++ = *s++;
 }
 #endif
-
 
