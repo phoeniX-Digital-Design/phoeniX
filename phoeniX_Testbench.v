@@ -2,14 +2,16 @@
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-    // List of sample C codes included in Software/Sample_C_Codes directory
-	//`define FIRMWARE "Software/Sample_C_Codes/bubble_sort/bubble_sort_firmware.hex"
-    //`define FIRMWARE "Software/Sample_C_Codes/fibonacci/fibonacci_firmware.hex"
-    //`define FIRMWARE "Software/Sample_C_Codes/sum1ton/sum1ton_firmware.hex"
-    //`define FIRMWARE "Software/Sample_C_Codes/factorial/factorial_firmware.hex"
-    //`define FIRMWARE "Software/Sample_C_Codes/factorial_abi/factorial_abi_firmware.hex"
     `define FIRMWARE "Software/Sample_C_Codes/dhrystone/dhry32.hex"
 `endif /*FIRMWARE*/
+
+`ifndef START_ADDRESS
+    `define START_ADDRESS   32'h0000_0000
+`endif /*START_ADDRESS*/
+
+`ifndef DUMPFILE_PATH
+    `define DUMPFILE_PATH "phoeniX.vcd"
+`endif /*DUMPFILE_PATH*/
 
 module phoeniX_Testbench;
 
@@ -46,7 +48,7 @@ module phoeniX_Testbench;
 
     phoeniX 
     #(
-        .RESET_ADDRESS(32'h00010000),
+        .RESET_ADDRESS(`START_ADDRESS),
         .M_EXTENSION(1'b1),
         .E_EXTENSION(1'b0)
     ) 
@@ -105,16 +107,17 @@ module phoeniX_Testbench;
         wire [31 : 0] alu_csr   = uut.control_status_register_file.alucsr_reg;
         wire [31 : 0] mul_csr   = uut.control_status_register_file.mulcsr_reg;
         wire [31 : 0] div_csr   = uut.control_status_register_file.divcsr_reg;
+        wire [63 : 0] mcycle    = uut.control_status_register_file.mcycle_reg;
+        wire [63 : 0] minstret  = uut.control_status_register_file.minstret_reg;
     `endif
 
     initial
     begin
-        $dumpfile("phoeniX.vcd");
+        $dumpfile(`DUMPFILE_PATH);
         $dumpvars(0, phoeniX_Testbench);
         // Reset
         repeat (5) @(posedge clk);
 		reset <= `DISABLE;
-        uut.register_file.Registers[2] = 32'h00010000;
     end
 
     integer enable_high_count = 0;
@@ -202,7 +205,7 @@ module phoeniX_Testbench;
             $display("\n--> EXECUTION FINISHED <--\n");
             $display("Firmware File: %s\n", `FIRMWARE);
             $display("ON  TIME:\t%d\nOFF TIME:\t%d", enable_high_count * CLK_PERIOD, enable_low_count * CLK_PERIOD);
-            $display("CPU USAGE:\t%d", 100 *(enable_high_count * CLK_PERIOD)/(enable_high_count * CLK_PERIOD + enable_low_count * CLK_PERIOD));
+            $display("CPU USAGE:\t%d%%", 100 *(enable_high_count * CLK_PERIOD)/(enable_high_count * CLK_PERIOD + enable_low_count * CLK_PERIOD));
             $dumpoff;
             $finish;
         end
