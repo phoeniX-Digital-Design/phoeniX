@@ -69,9 +69,13 @@
 `endif /*CSR_INSTRUCTIONS*/
 
 `ifndef EXECUTION_UNITS_CSR
-    `define alucsr     12'h800
-    `define mulcsr     12'h801
-    `define divcsr     12'h802
+    `define alucsr      12'h800
+    `define mulcsr      12'h801
+    `define divcsr      12'h802
+    `define mcycle      12'hC00
+    `define mcycleh     12'hC80 
+    `define minstret    12'hC02
+    `define minstreth   12'hC82               
 `endif /*EXECUTION_UNITS_CSR*/
 
 `ifndef MUL_DIV_INSTRCUTIONS
