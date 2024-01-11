@@ -19,26 +19,26 @@ module phoeniX
     parameter E_EXTENSION   = 1'b0
 ) 
 (
-    input wire clk,
-    input wire reset,
+    input clk,
+    input reset,
 
     //////////////////////////////////////////
     // Instruction Memory Interface Signals //
     //////////////////////////////////////////
-    output reg instruction_memory_interface_enable,
-    output reg instruction_memory_interface_state,
-    output reg [31 : 0] instruction_memory_interface_address,
-    output reg [ 3 : 0] instruction_memory_interface_frame_mask,
-    input wire [31 : 0] instruction_memory_interface_data, 
+    output instruction_memory_interface_enable,
+    output instruction_memory_interface_state,
+    output [31 : 0] instruction_memory_interface_address,
+    output [ 3 : 0] instruction_memory_interface_frame_mask,
+    input  [31 : 0] instruction_memory_interface_data, 
 
     ///////////////////////////////////
     // Data Memory Interface Signals //
     ///////////////////////////////////
-    output reg data_memory_interface_enable,
-    output reg data_memory_interface_state,
-    output reg [31 : 0] data_memory_interface_address,
-    output reg [ 3 : 0] data_memory_interface_frame_mask,
-    inout wire [31 : 0] data_memory_interface_data
+    output data_memory_interface_enable,
+    output data_memory_interface_state,
+    output [31 : 0] data_memory_interface_address,
+    output [ 3 : 0] data_memory_interface_frame_mask,
+    inout  [31 : 0] data_memory_interface_data
 );
     // ---------------------------------------------
     // Wire Declarations for Fetch/Decode Stage (FD)
