@@ -226,15 +226,15 @@ endmodule
 // --------------------------------------------------------------------------------------------------------
 module Approximate_Accuracy_Controllable_Multiplier 
 (
-    input clk,
-    input enable,
+    input wire clk,
+    input wire enable,
 
-    input [6 : 0] Er,
-    input [31 : 0] Operand_1,
-    input [31 : 0] Operand_2,
+    input wire [ 6 : 0] Er,
+    input wire [31 : 0] Operand_1,
+    input wire [31 : 0] Operand_2,
 
-    output [63 : 0] Result,
-    output Busy
+    output reg [63 : 0] Result,
+    output reg Busy
 );
     
     wire [31 : 0] Partial_Product [0 : 3];
@@ -292,18 +292,21 @@ module Approximate_Accuracy_Controllable_Multiplier
         .Busy(Partial_Busy[3])
     );
 
-    assign Result = {32'b0, Partial_Product[0]} + {16'b0, Partial_Product[1], 16'b0} + {16'b0, Partial_Product[2], 16'b0} + {Partial_Product[3], 32'b0};
-    assign Busy  = &{Partial_Busy[0], Partial_Busy[1], Partial_Busy[2], Partial_Busy[3]};
+    always @(*) 
+    begin
+        Result = {32'b0, Partial_Product[0]} + {16'b0, Partial_Product[1], 16'b0} + {16'b0, Partial_Product[2], 16'b0} + {Partial_Product[3], 32'b0};
+        Busy = &{Partial_Busy[0], Partial_Busy[1], Partial_Busy[2], Partial_Busy[3]};
+    end
 endmodule
 
 module Approximate_Accuracy_Controllable_Multiplier_16bit 
 (
-    input clk,
-    input enable,
+    input wire clk,
+    input wire enable,
 
-    input [6 : 0] Er,
-    input [15 : 0] Operand_1,
-    input [15 : 0] Operand_2,
+    input wire [ 6 : 0] Er,
+    input wire [15 : 0] Operand_1,
+    input wire [15 : 0] Operand_2,
 
     output reg [31 : 0] Result,
     output reg Busy
@@ -311,16 +314,15 @@ module Approximate_Accuracy_Controllable_Multiplier_16bit
 
     reg     [ 7 : 0] mul_input_1;
     reg     [ 7 : 0] mul_input_2;
-    
     wire    [15 : 0] mul_result;
-    reg     [15 : 0] mul_result_1;
-    reg     [15 : 0] mul_result_2;
-    reg     [15 : 0] mul_result_3;
-    reg     [15 : 0] mul_result_4;
+
+    reg     [15 : 0] partial_result_1;
+    reg     [15 : 0] partial_result_2;
+    reg     [15 : 0] partial_result_3;
+    reg     [15 : 0] partial_result_4;
 
     Approximate_Accuracy_Controllable_Multiplier_8bit mul
     (
-        .clk(clk),
         .Er(Er),
         .Operand_1(mul_input_1),
         .Operand_2(mul_input_2),
@@ -332,180 +334,103 @@ module Approximate_Accuracy_Controllable_Multiplier_16bit
 
     always @(posedge clk) 
     begin
-        if (~enable)   
-        begin 
-            state <= 3'b000;
-        end
-        else
-        begin
-            state <= next_state;
-        end
-            
+        if (~enable)    state <= 3'b000;
+        else            state <= next_state;
     end
 
     always @(*) 
     begin
-        next_state = 'bx;
-
+        next_state = 'bz;
+       
         case (state)
-            3'b000 : begin Busy <= 1'b0; next_state <= 3'b001; end
-            3'b001 : begin mul_input_1 <= Operand_1[ 7 : 0]; mul_input_2 <= Operand_2[ 7 : 0]; next_state <= 3'b010; Busy <= 1'b1; end
-            3'b010 : begin mul_input_1 <= Operand_1[15 : 8]; mul_input_2 <= Operand_2[ 7 : 0]; next_state <= 3'b011; end
-            3'b011 : begin mul_input_1 <= Operand_1[ 7 : 0]; mul_input_2 <= Operand_2[15 : 8]; mul_result_1 <= mul_result; next_state <= 3'b100; end
-            3'b100 : begin mul_input_1 <= Operand_1[15 : 8]; mul_input_2 <= Operand_2[15 : 8]; mul_result_2 <= mul_result; next_state <= 3'b101; end
-            3'b101 : begin mul_result_3 <= mul_result; next_state = 3'b110; end
-            3'b110 : begin mul_result_4 <= mul_result; next_state = 3'b111; end
-            3'b111 : begin Result = {16'b0, mul_result_1} + {8'b0, mul_result_2, 8'b0} + {8'b0, mul_result_3, 8'b0} + {mul_result_4, 16'b0}; next_state <= 3'b000; end
+            3'b000 : 
+            begin 
+                mul_input_1 <= 'bz; 
+                mul_input_2 <= 'bz; 
+                
+                partial_result_1 <= 'bz; 
+                partial_result_2 <= 'bz; 
+                partial_result_3 <= 'bz; 
+                partial_result_4 <= 'bz; 
+                
+                Busy <= 1'b0; 
+                next_state <= 3'b001; 
+            end
+            3'b001 : begin mul_input_1 <= Operand_1[ 7 : 0]; mul_input_2 <= Operand_2[ 7 : 0]; partial_result_1 <= mul_result; next_state <= 3'b010; Busy <= 1'b1; end
+            3'b010 : begin mul_input_1 <= Operand_1[15 : 8]; mul_input_2 <= Operand_2[ 7 : 0]; partial_result_2 <= mul_result; next_state <= 3'b011; end
+            3'b011 : begin mul_input_1 <= Operand_1[ 7 : 0]; mul_input_2 <= Operand_2[15 : 8]; partial_result_3 <= mul_result; next_state <= 3'b100; end
+            3'b100 : begin mul_input_1 <= Operand_1[15 : 8]; mul_input_2 <= Operand_2[15 : 8]; partial_result_4 <= mul_result; next_state <= 3'b101; end
+            3'b101 : 
+            begin 
+                Result =    {16'b0, partial_result_1} +
+                            {8'b0,  partial_result_2, 8'b0} +
+                            {8'b0,  partial_result_3, 8'b0} +
+                            {partial_result_4, 16'b0}; 
+
+                next_state <= 3'b000; 
+                Busy <= 1'b0;
+            end
         endcase 
     end
 endmodule
 
 module Approximate_Accuracy_Controllable_Multiplier_8bit
 (
-    input clk,
-
     input [6 : 0] Er,
     input [7 : 0] Operand_1,
     input [7 : 0] Operand_2,
 
     output [15 : 0] Result
 );
-
-    ////////////////////
-    //    Stage 1     //
-    ////////////////////
-
-    wire [10 : 0] P5_Stage_1;
-    wire [10 : 0] P6_Stage_1;
-    wire [14 : 0] V1_Stage_1;
-    wire [14 : 0] V2_Stage_1;
-
-    Multiplier_Stage_1 MS1 
-    (
-        Operand_1,
-        Operand_2,
-
-        P5_Stage_1,
-        P6_Stage_1,
-        V1_Stage_1,
-        V2_Stage_1
-    );
-
-    reg [10 : 0] P5_Stage_2;
-    reg [10 : 0] P6_Stage_2;
-    reg [14 : 0] V1_Stage_2;
-    reg [14 : 0] V2_Stage_2;
-
-    always @(posedge clk)
-    begin
-        P5_Stage_2 <= P5_Stage_1;
-        P6_Stage_2 <= P6_Stage_1;
-        V1_Stage_2 <= V1_Stage_1;
-        V2_Stage_2 <= V2_Stage_1;
-    end
     
-    ////////////////////
-    //    Stage 2     //
-    ////////////////////
-
-    wire [14 : 0] SumSignal_Stage_2;
-    wire [14 : 0] CarrySignal_Stage_2;
-
-    Multiplier_Stage_2 MS2
-    (
-        P5_Stage_2,
-        P6_Stage_2,
-        V1_Stage_2,
-        V2_Stage_2,
-
-        SumSignal_Stage_2,
-        CarrySignal_Stage_2
-    );
-    
-    reg [14 : 0] SumSignal_Stage_3;
-    reg [14 : 0] CarrySignal_Stage_3;
-
-    always @(posedge clk) 
-    begin
-        SumSignal_Stage_3 <= SumSignal_Stage_2;
-        CarrySignal_Stage_3 <= CarrySignal_Stage_2;
-    end
-    ////////////////////
-    //    Stage 3     //
-    ////////////////////
-
-    Multiplier_Stage_3 MS3
-    (
-        Er,
-        SumSignal_Stage_3,
-        CarrySignal_Stage_3,
-        Result
-    );
-endmodule
-
-module Multiplier_Stage_1
-(
-    input [7 : 0] Operand_1,
-    input [7 : 0] Operand_2,
-
-    output [10 : 0] P5,
-    output [10 : 0] P6,
-    output [14 : 0] V1,
-    output [14 : 0] V2
-);
-    wire [7 : 0] Partial_Product [1 : 8];
+    wire [7 : 0] PP [1 : 8];
 
     generate
         for (genvar i = 1; i < 9; i = i + 1)
         begin
-            assign Partial_Product[i] = {8{Operand_2[i - 1]}} & Operand_1;
+            assign PP[i] = {8{Operand_2[i - 1]}} & Operand_1;
         end
     endgenerate
 
+    // Stage 1 -  ATC_8 wires and instantiation
     wire [8 : 0] P1;
     wire [8 : 0] P2;
     wire [8 : 0] P3;
     wire [8 : 0] P4;
 
-    ATC_8 atc_8 
-    (
-        Partial_Product[1],
-        Partial_Product[2],
-        Partial_Product[3],
-        Partial_Product[4],
-        Partial_Product[5],
-        Partial_Product[6],
-        Partial_Product[7],
-        Partial_Product[8],
-        P1, P2, P3, P4, V1
-    );
+    wire [14 : 0] V1;
+
+    ATC_8 atc_8 (PP[1], PP[2], PP[3], PP[4], PP[5], PP[6], PP[7], PP[8], P1, P2, P3, P4, V1);
+
+    // Stage 1 - ATC_4 wires and instantiation
+    wire [10 : 0] P5;
+    wire [10 : 0] P6;
+
+    wire [14 : 0] V2;
 
     ATC_4 atc_4 (P1, P2, P3, P4, P5, P6, V2);
-endmodule
 
-module Multiplier_Stage_2
-(
-    input [10 : 0] P5,
-    input [10 : 0] P6,
-    input [14 : 0] V1,
-    input [14 : 0] V2,
+    // Stage 1 - Final row of iCACs (ATC_2)
 
-    output [14 : 0] SumSignal,
-    output [14 : 0] CarrySignal
-);
     wire [14 : 0] P7;
     wire [14 : 0] Q7;
 
     iCAC #(11, 4) iCAC_7 (P5, P6, P7, Q7);
 
+    // Stage 2
+
     wire [10 : 4] ORed_PPs = V1 [10 : 4] | V2 [10 : 4];
+
+    // Stage 3
+
+    wire [14 : 0] SumSignal, CarrySignal;
 
     assign SumSignal[0] = P7[0];
     assign CarrySignal[0] = 0;
     assign CarrySignal[1] = 0;
 
     Half_Adder_Mul HA_1 (P7[1], V1[1], SumSignal[1], CarrySignal[2]);
-
+    
     Full_Adder_Mul FA_1 (P7[2], V1[2], V2[2], SumSignal[2], CarrySignal[3]);
     Full_Adder_Mul FA_2 (P7[3], V1[3], V2[3], SumSignal[3], CarrySignal[4]);
 
@@ -523,16 +448,9 @@ module Multiplier_Stage_2
     Half_Adder_Mul HA_2 (P7[13], V1[13], SumSignal[13], CarrySignal[14]);
 
     assign SumSignal[14] = P7[14];
-endmodule
 
-module Multiplier_Stage_3
-(
-    input [6 : 0] Er,
-    input [14 : 0] SumSignal,
-    input [14 : 0] CarrySignal,
-    
-    output [15 : 0] Result
-);
+    // Stage 4
+
     assign Result[0] = SumSignal[0];
     assign Result[1] = SumSignal[1];
 
@@ -541,9 +459,9 @@ module Multiplier_Stage_3
     assign Result[4] = SumSignal[4] | CarrySignal[4];
 
     wire [13 : 5] inter_Carry;
-
+    
     Error_Configurable_Full_Adder_Mul ECA_FA_1 (Er[0], SumSignal[5], CarrySignal[5], 1'b0, Result[5], inter_Carry[5]);
-
+    
     Error_Configurable_Full_Adder_Mul ECA_FA_2 (Er[1], SumSignal[6], CarrySignal[6], inter_Carry[5], Result[6], inter_Carry[6]);
     Error_Configurable_Full_Adder_Mul ECA_FA_3 (Er[2], SumSignal[7], CarrySignal[7], inter_Carry[6], Result[7], inter_Carry[7]);
     Error_Configurable_Full_Adder_Mul ECA_FA_4 (Er[3], SumSignal[8], CarrySignal[8], inter_Carry[7], Result[8], inter_Carry[8]);
@@ -552,9 +470,9 @@ module Multiplier_Stage_3
     Error_Configurable_Full_Adder_Mul ECA_FA_7 (Er[6], SumSignal[11], CarrySignal[11], inter_Carry[10], Result[11], inter_Carry[11]);
 
 
-    Full_Adder_Mul FA_12 (SumSignal[12], CarrySignal[12], inter_Carry[11], Result[12], inter_Carry[12]);
-    Full_Adder_Mul FA_13 (SumSignal[13], CarrySignal[13], inter_Carry[12], Result[13], inter_Carry[13]);
-    Full_Adder_Mul FA_14 (SumSignal[14], CarrySignal[14], inter_Carry[13], Result[14], Result[15]);
+    Full_Adder_Mul FA_12 (SumSignal[12], CarrySignal[12], inter_Carry[11], inter_Carry[12], Result[12]);
+    Full_Adder_Mul FA_13 (SumSignal[13], CarrySignal[13], inter_Carry[12], inter_Carry[13], Result[13]);
+    Full_Adder_Mul FA_14 (SumSignal[14], CarrySignal[14], inter_Carry[13], Result[15], Result[14]);
 endmodule
 
 module iCAC 
