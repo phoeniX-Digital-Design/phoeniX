@@ -163,12 +163,6 @@ module phoeniX_Testbench;
         instruction_memory_interface_data <= 32'bz;
     end
 
-    integer log_file;
-    initial 
-    begin
-        if(`FIRMWARE == "Dhrystone/dhrystone_firmware.hex")
-            log_file = $fopen("Dhrystone/dhrystone.log", "w");  
-    end
 
     // Data Memory Interface Behaviour
     always @(negedge clk)
