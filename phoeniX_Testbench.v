@@ -155,11 +155,11 @@ module phoeniX_Testbench;
         instruction_memory_interface_data <= 32'bz;
     end
 
-     integer fd;
-
+    integer log_file;
     initial 
     begin
-        fd = $fopen("Dhrystone/dhrystone.log", "w");  
+        if(`FIRMWARE == "Dhrystone/dhrystone_firmware.hex")
+            log_file = $fopen("Dhrystone/dhrystone.log", "w");  
     end
 
     // Data Memory Interface Behaviour
@@ -192,7 +192,7 @@ module phoeniX_Testbench;
             $write("%c", data_memory_interface_data);
             $fflush();
             if(`FIRMWARE == "Dhrystone/dhrystone_firmware.hex")
-                $fwrite(fd, "%c", data_memory_interface_data);
+                $fwrite(log_file, "%c", data_memory_interface_data);
         end
     end
 
