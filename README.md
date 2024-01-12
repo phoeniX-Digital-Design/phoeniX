@@ -1,6 +1,6 @@
 ![License](https://img.shields.io/github/license/phoeniX-Digital-Design/AssembleX?color=dark-green)
 ![GCC Test](https://img.shields.io/badge/GCC_tests-passed-dark_green)
-![Version](https://img.shields.io/badge/Version-0.3-blue)
+![Version](https://img.shields.io/badge/Version-0.3.1-blue)
 ![ISA](https://img.shields.io/badge/RV32-IEM_extension-blue)
 
 <picture>
@@ -20,7 +20,7 @@ To evaluate the effectiveness of the platform, extensive experiments were conduc
 
 You can find a full list of RISC-V assembly instructions in the [ISA Specifications Documents](https://riscv.org/technical/specifications/).
 
-The core can be implemented as a softcore CPU on Xilinx 7 Ultrascale/Ultrascale+ series FPGA boards using logic synthesis. This allows flexible integration of the core's functionality within the FPGA fabric. The Xilinx 7 series FPGA boards provide a versatile platform for hosting the softcore CPU implementation, offering configurable features and adaptability.
+The core can be implemented as a softcore CPU on Xilinx 6, 7, Ultrascale and Ultrascale+ series FPGA boards using logic synthesis. This allows flexible integration of the core's functionality within the FPGA fabric. The Xilinx 7 series FPGA boards provide a versatile platform for hosting the softcore CPU implementation, offering configurable features and adaptability.
 
 The core has undergone a complete synthesis flow to become an Integrated Circuit using  **Cadence Genus** tool. The implementation was specifically carried out utilizing the `NanGate 45nm` Process Design Kit (PDK).
 </div>
@@ -88,8 +88,15 @@ repository/
     │   └── setup.sh
     ├── Documents/
     │   ├── Images/
-    │   ├── phoeniX_Documentation_V0.2/   
+    │   ├── phoeniX_Documentation/   
     │   └── RISCV_Original_Documents/
+    ├── Dhrystone/
+    |   ├── dhry.h
+    │   ├── dhry_1.c
+    │   ├── dhry_2.c
+    │   ├── dhrytone.log 
+    │   ├── dhrytone_firmware.hex 
+    │   └── dhrytone_firmware.txt
     ├── Features/
     │   ├── AXI4-Lite/
     │   ├── Branch_Prediction/
@@ -101,7 +108,8 @@ repository/
     │   │   ├── synthesis/
     │   │   ├── log/
     │   │   └── ...
-    │   └── NanGate_45nm
+    │   ├── NanGate_45nm
+    │   └── Vivado_2022
     ├── Modules/
     │   ├── Address_Generator.v
     │   ├── Arithmetic_Logic_Unit.v
@@ -111,6 +119,7 @@ repository/
     │   ├── start_procedure -> start.s
     │   ├── start_linker -> start.ld
     │   ├── riscv_linker -> riscv.ld
+    │   ├── standard_library -> stdlib.c
     │   └── syscalls -> syscalls.c
     ├── Software/
     │   ├── Sample_Assembly_Codes/
@@ -183,10 +192,10 @@ phoeniX currently supports 32-bit word memories with synchronized access time. T
 
 Designed with the influence of Harvard architecture, the phoeniX native memory interface ensures the elimination of structural hazard occurrences while accessing memory. It incorporates two distinctive address and data buses, specifically dedicated to instructions and data. As can be seen from the top module's port instantiations, both these memory interfaces have a data, address and control bus. Data bus related to data memory interface is bi-directional and therefore defined as `inout` net type while the data bus for instruction memory interface is uni-directional and is considered as an `input` from the processor's point of view. 
 
+</div>
+
 > [!WARNING]\
 > Unaligned Memory Accesses: phoeniX Load Store Unit does not support misaligned accesses. At the moment we are working to add support accesses that are not aligned on word boundaries by implementing the procedure with multiple separate aligned accesses requiring  additional clock cycles.
-
-</div>
 
 ## Building RISC-V Toolchain
 <div align="justify">
@@ -208,10 +217,10 @@ user@Ubuntu:~$ ./setup.sh
 
 Using your favorite editor open `.bashrc` file from the `home` directory of your ubuntu. Replace `{user}` with your own user name and add the following lines to the end of file. This will change your path environment variable and is required to run `RISC-V GNU Compiler` automatically without exporting `PATH` variable each time.
 
+</div>
+
 > [!NOTE]\
 > The script provided `setup.sh` and the following lines are set configure the toolchain based on `8.3.0` version of the compiler and toolchain for a `x86_64` machine. If you wish to install a different version please beware and change the required lines in `setup.sh` and the following lines.
-
-</div>
 
 ```sh
 export PATH=/home/{user}/riscv_toolchain/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/bin:$PATH
@@ -252,8 +261,9 @@ In order to run your own code on phoeniX, create a directory named to your proje
 make code project=my_project
 ```
 Provided that you name your project sub-directory correctly and the RISC-V Toolchain is configured without any troubles on your machine, the Makefile will compile all your source files separately, then using the linker script `riscv.ld` provided in `/Firmware` it links all the object files necessary together and creates `firmware.elf`. It then creates `start.elf` which is built from `start.s` and `start.ld` and concatenate these together and finally forms the `my_project_firmware.hex`. After that, `iverilog` and `gtkwave` are used to compile the design and view the selected waveforms.
-> Further Configurations
-: The default testbench provided as `phoeniX_Testbench.v` is currently set to support up to 4MBytes of memory and the stack pointer register `sp` is configured accordingly. If you wish to change this, you need configure both the testbench and the initial value the `sp` is set to in `/Firmware/start.s`. If you wish to use other specific libraries and header files not provided in `/Firmware` please beware you may need to change linker scripts `riscv.ld` and `start.ld`.
+
+> Further Configurations: The default testbench provided as `phoeniX_Testbench.v` is currently set to support up to 4MBytes of memory and the stack pointer register `sp` is configured accordingly. If you wish to change this, you need configure both the testbench and the initial value the `sp` is set to in `/Firmware/start.s`. If you wish to use other specific libraries and header files not provided in `/Firmware` please beware you may need to change linker scripts `riscv.ld` and `start.ld`.
+
 </div>
 
 ### Windows
@@ -294,26 +304,31 @@ Provided that you name your project sub-directory correctly the AssembleX softwa
 
 The code has been crafted to enable the utilization of the processor as a synthesizable and implementable soft-core on Xilinx Ultrascale and Ultrascale+ FPGA devices. The RTL synthesis of the phoeniX processor was done using Cadence Genus tool, using the `NanGate 45nm` technology, also known as the `FreePDK45, Open Cell Library` process technology. The Static Time Analysis (STA) results indicate that the maximum delay observed in the core modules, and consequently in the pipeline stages, is about less than 1900 picoseconds using the **45nm** technology. Setting the clock cycle time at **2 nanoseconds** allows for sufficient margin to account for the maximum delay across the modules, ensuring that data propagates through the pipeline within the specified time frame. By adhering to this timing requirement, the processor can achieve a performance level of **500MHz**, enabling efficient execution of instructions and supporting the desired operational specifications in embedded processors.
 
+| Dhyrstone Parameters         | phoeniX Status      |
+| ---------------------------- | ------------------- |
+| CPI                          | 1.119               |
+| Dhrystones per Second per MHz| 2033                |
+| DMIPS/MHz                    | 1.732               |
+
+
 This table provides a comparison of similar embedded processors to phoeniX, used in the industry, in terms of frequency, architecture, and manufacturing technology. This analysis helps to assess their performance and technical aspects, aiding decision-making for selecting the most suitable processor for various industrial applications. It is important to note that phoeniX is an embedded processor platform which is extensive, and execution units are replaceable; This means that these reported results of phoeniX core is extracted from the platform using its default (demo) execution engine.
 
 
-| Processor             | Max Frequency (MHz) | Technology Node (nm) | Brand             | Architecture   |
-| --------------------- | ------------------- | -------------------- | ----------------- | -------------- |
-| phoeniX               | 500                 | 45                   | IUST ERC          | RV32IEM        |
-| Cortex-M0             | 48                  | 90                   | ARM               | ARM Cortex-M0  |
-| Cortex-M0+            | 48                  | 90                   | ARM               | ARM Cortex-M0+ |
-| Cortex-M1             | 128                 | 180                  | ARM               | ARM Cortex-M1  |
-| Cortex-M3             | 120                 | 90                   | ARM               | ARM Cortex-M3  |
-| Cortex-M4             | 180                 | 90                   | ARM               | ARM Cortex-M4  |
-| Cortex-M7             | 400                 | 40                   | ARM               | ARM Cortex-M7  |
-| Cortex-M23            | 48                  | 55                   | ARM               | ARMv8-M        |
-| Cortex-M33            | 100                 | 40                   | ARM               | ARMv8-M        |
-| Cortex-A5             | 500                 | 40                   | ARM               | ARMv7-A        |
-| Cortex-A7             | 1000                | 28                   | ARM               | ARMv7-A        |
-| Cortex-A9             | 1500                | 28                   | ARM               | ARMv7-A        |
-| FE310                 | 150                 | 180                  | Si-Five           | RV32IMAC       |
-| ESP32                 | 240                 | 40                   | Espressif         | Xtensa LX6     |
-| PIC32MX795F512L       | 80                  | 90                   | Microchip         | MIPS32 M4K     |
+| Processor                    | Max Frequency (MHz) | Technology Node (nm) | Brand             | Architecture   |
+| ---------------------------- | ------------------- | -------------------- | ----------------- | -------------- |
+| phoeniX                      | 500                 | 45                   | IUST ERC          | RV32IEM        |
+| Cortex-M0                    | 48                  | 90                   | ARM               | ARM Cortex-M0  |
+| Cortex-M0+                   | 48                  | 90                   | ARM               | ARM Cortex-M0+ |
+| Cortex-M1                    | 128                 | 180                  | ARM               | ARM Cortex-M1  |
+| Cortex-M3                    | 120                 | 90                   | ARM               | ARM Cortex-M3  |
+| Cortex-M4 (DSP Extesnssion)  | 180                 | 90                   | ARM               | ARM Cortex-M4  |
+| Cortex-M7 (Dual issue)       | 400                 | 40                   | ARM               | ARM Cortex-M7  |
+| Cortex-M23                   | 48                  | 55                   | ARM               | ARMv8-M        |
+| Cortex-M33                   | 100                 | 40                   | ARM               | ARMv8-M        |
+| Cortex-A5 (Application Class)| 500                 | 40                   | ARM               | ARMv7-A        |
+| FE310                        | 150                 | 180                  | Si-Five           | RV32IMAC       |
+| ESP32-S2                     | 240                 | 40                   | Espressif         | Xtensa LX6     |
+| PIC32MX795F512L              | 80                  | 90                   | Microchip         | MIPS32 M4K     |
 
 </div>
 
