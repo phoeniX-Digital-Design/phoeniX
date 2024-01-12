@@ -5,7 +5,7 @@ int main()
     int n1 = 0;
     int n2 = 1;
     int n3;
-    int count = 7;
+    int count = 10;
 
     for(int i = 2; i < count; i++)     
     {    
