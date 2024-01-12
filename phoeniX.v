@@ -567,7 +567,7 @@ module phoeniX
     reg [1 : 2] stall_condition;
     /*
         1 -> Stall Condition 1 corresponds to instructions with multi-cycle execution
-        2 -> Stall Condition 3 corresponds to instructions with dependencies on previous instructions whose values are not available in the pipeline
+        2 -> Stall Condition 2 corresponds to instructions with dependencies on previous instructions whose values are not available in the pipeline
     */
 
     always @(*) 
@@ -630,4 +630,36 @@ module phoeniX
         .csr_write_data(csr_data_out_EX_wire),
         .csr_read_data(csr_data_FD_wire)
     );
+
+    ////////////////////////////////
+    //    Performance Counters    //
+    ////////////////////////////////
+
+    // -------------
+    // Cycle Counter
+    // -------------
+
+    always @(posedge clk) 
+    begin
+        if (reset)  control_status_register_file.mcycle_reg <= 32'b0;
+        else        control_status_register_file.mcycle_reg <= control_status_register_file.mcycle_reg + 32'd1; 
+    end
+
+    // -------------------
+    // Instruction Counter
+    // -------------------
+
+    always @(posedge clk) 
+    begin
+        if (reset)  control_status_register_file.minstret_reg <= 32'b0;
+        else if (!(
+            opcode_MW_reg       == `NOP_opcode  &
+            funct3_MW_reg       == `NOP_funct3  &  
+            funct7_MW_reg       == `NOP_funct7  & 
+            funct12_MW_reg      == `NOP_funct12 &
+            write_index_MW_reg  == `NOP_write_index    
+        ))
+                    control_status_register_file.minstret_reg <= control_status_register_file.minstret_reg + 32'b1;
+    end
+
 endmodule

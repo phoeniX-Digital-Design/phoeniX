@@ -109,8 +109,16 @@ module phoeniX_Testbench;
         wire [31 : 0] div_csr   = uut.control_status_register_file.divcsr_reg;
         wire [63 : 0] mcycle    = uut.control_status_register_file.mcycle_reg;
         wire [63 : 0] minstret  = uut.control_status_register_file.minstret_reg;
-    `endif
+    `endif /*DISABLE_DEBUG*/
 
+    `ifdef DHRYSTONE_LOG
+        integer log_file;
+        initial 
+        begin
+            log_file = $fopen("Dhrystone/dhrystone.log", "w");  
+        end
+    `endif /*DHRYSTONE_LOG*/
+    
     initial
     begin
         $dumpfile(`DUMPFILE_PATH);
@@ -191,8 +199,10 @@ module phoeniX_Testbench;
         begin
             $write("%c", data_memory_interface_data);
             $fflush();
-            if(`FIRMWARE == "Dhrystone/dhrystone_firmware.hex")
+
+            `ifdef DHRYSTONE_LOG
                 $fwrite(log_file, "%c", data_memory_interface_data);
+            `endif /*DHRYSTONE_LOG*/
         end
     end
 

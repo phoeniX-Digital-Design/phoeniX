@@ -85,7 +85,7 @@ DHRYSTONE_OBJECTS := $(DHRYSTONE_DIR)/dhry_1.o $(DHRYSTONE_DIR)/dhry_2.o
 dhrystone: dhrystone_firmware.hex	
 	@echo "Running Dhrystone benchmark ..."
 	@rm -rf $(DHRYSTONE_DIR)/*.tmp $(DHRYSTONE_DIR)/*.mem $(DHRYSTONE_DIR)/*.o $(DHRYSTONE_DIR)/*.elf $(FIRMWARE_DIR)/*.o
-	@iverilog -IModules -DFIRMWARE=\"$(DHRYSTONE_DIR)/dhrystone_firmware.hex\" -o $(CORE_NAME).vvp $(CORE_TESTBENCH)
+	@iverilog -IModules -DFIRMWARE=\"$(DHRYSTONE_DIR)/dhrystone_firmware.hex\" -DDHRYSTONE_LOG -o $(CORE_NAME).vvp $(CORE_TESTBENCH)
 	@vvp $(CORE_NAME).vvp
 	
 
