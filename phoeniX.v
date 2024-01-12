@@ -567,7 +567,7 @@ module phoeniX
     reg [1 : 2] stall_condition;
     /*
         1 -> Stall Condition 1 corresponds to instructions with multi-cycle execution
-        2 -> Stall Condition 3 corresponds to instructions with dependencies on previous instructions whose values are not available in the pipeline
+        2 -> Stall Condition 2 corresponds to instructions with dependencies on previous instructions whose values are not available in the pipeline
     */
 
     always @(*) 
