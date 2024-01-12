@@ -14,7 +14,7 @@
 
 module phoeniX 
 #(
-    parameter RESET_ADDRESS = 32'hFFFFFFFC,
+    parameter RESET_ADDRESS = 32'h1000_0000,
     parameter M_EXTENSION   = 1'b0,
     parameter E_EXTENSION   = 1'b0
 ) 
@@ -427,6 +427,7 @@ module phoeniX
     reg [31 : 0] address_MW_reg;
     reg [31 : 0] rs2_MW_reg;
     reg [31 : 0] execution_result_MW_reg;
+    reg [31 : 0] csr_rd_MW_reg;
 
     //////////////////////////////////////////////////
     //    EXECUTE TO MEMORY/WRITEBACK TRANSITION    //
@@ -466,6 +467,7 @@ module phoeniX
             address_MW_reg <= address_EX_wire;
             rs2_MW_reg <= rs2_EX_reg;
             execution_result_MW_reg <= execution_result_EX_reg;
+            csr_rd_MW_reg <= csr_rd_EX_wire;
         end
     end
 
@@ -506,6 +508,7 @@ module phoeniX
             `AUIPC  : write_data_MW_reg = address_MW_reg;
             `LOAD   : write_data_MW_reg = load_data_MW_wire;
             `LUI    : write_data_MW_reg = immediate_MW_reg;
+            `SYSTEM : write_data_MW_reg = csr_rd_MW_reg;
             default : write_data_MW_reg = 32'bz;
         endcase
     end
@@ -522,6 +525,7 @@ module phoeniX
 
         .data_1(    opcode_EX_reg == `LUI      ? immediate_EX_reg : 
                     opcode_EX_reg == `AUIPC    ? address_EX_wire  : 
+                    opcode_EX_reg == `SYSTEM   ? csr_rd_EX_wire   : 
                     execution_result_EX_reg
                 ),
 
@@ -543,6 +547,7 @@ module phoeniX
 
         .data_1(    opcode_EX_reg == `LUI      ? immediate_EX_reg : 
                     opcode_EX_reg == `AUIPC    ? address_EX_wire  : 
+                    opcode_EX_reg == `SYSTEM   ? csr_rd_EX_wire   : 
                     execution_result_EX_reg
                 ),
 

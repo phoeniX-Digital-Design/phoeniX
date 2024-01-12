@@ -48,6 +48,7 @@ int main()
     print_array(arr, n);
     printf("\n");
     bubble_sort(arr, n);
+    int min = arr[0];
     printf("Sorted array:\n");
     print_array(arr, n);
     return 0;

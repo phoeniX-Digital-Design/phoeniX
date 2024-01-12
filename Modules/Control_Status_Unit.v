@@ -46,11 +46,16 @@ module Control_Status_Register_File
     reg [31 : 0] mulcsr_reg;       // Multiplier Unit Aproximation Control Register
     reg [31 : 0] divcsr_reg;       // Divider Unit Aproximation Control Register
 
+    reg [63 : 0] mcycle_reg;
+    reg [63 : 0] minstret_reg;
+
     always @(posedge reset)
     begin
-        alucsr_reg = 32'b0;
-        mulcsr_reg = 32'b0;
-        divcsr_reg = 32'b0;
+        alucsr_reg      = 32'b0;
+        mulcsr_reg      = 32'b0;
+        divcsr_reg      = 32'b0;
+        mcycle_reg      = 64'b0;
+        minstret_reg    = 64'b0;
     end
 
     always @(*) 
@@ -58,10 +63,14 @@ module Control_Status_Register_File
         if (read_enable_csr)
         begin
             case (csr_read_index)
-                `alucsr : csr_read_data = alucsr_reg;
-                `mulcsr : csr_read_data = mulcsr_reg;
-                `divcsr : csr_read_data = divcsr_reg;
-                default : csr_read_data = 32'bz;
+                `alucsr :       csr_read_data = alucsr_reg;
+                `mulcsr :       csr_read_data = mulcsr_reg;
+                `divcsr :       csr_read_data = divcsr_reg;
+                `mcycle :       csr_read_data = mcycle_reg[31 :  0];
+                `mcycleh :      csr_read_data = mcycle_reg[63 : 32];
+                `minstret :     csr_read_data = minstret_reg[31 :  0];
+                `minstreth :    csr_read_data = minstret_reg[63 : 32];
+                default :       csr_read_data = 32'bz;
             endcase
         end
         else csr_read_data <= 32'bz;
@@ -77,5 +86,11 @@ module Control_Status_Register_File
                 `divcsr : divcsr_reg <= csr_write_data;
             endcase
         end  
+    end
+
+    always @(posedge clk) 
+    begin
+        if (reset)  mcycle_reg <= 32'b0;
+        else        mcycle_reg <= mcycle_reg + 32'd1; 
     end
 endmodule

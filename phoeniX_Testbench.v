@@ -2,8 +2,16 @@
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-	`define FIRMWARE "Software/Sample_C_Codes/factorial_abi/factorial_abi_firmware.hex"
+    `define FIRMWARE "Software/Sample_C_Codes/dhrystone/dhry32.hex"
 `endif /*FIRMWARE*/
+
+`ifndef START_ADDRESS
+    `define START_ADDRESS   32'h0000_0000
+`endif /*START_ADDRESS*/
+
+`ifndef DUMPFILE_PATH
+    `define DUMPFILE_PATH "phoeniX.vcd"
+`endif /*DUMPFILE_PATH*/
 
 module phoeniX_Testbench;
 
@@ -13,7 +21,7 @@ module phoeniX_Testbench;
     parameter CLK_PERIOD = 2;
     reg clk = 1'b1;
     initial begin forever #(CLK_PERIOD/2) clk = ~clk; end
-    initial #(20000 * CLK_PERIOD) $finish;
+    //initial #(20000 * CLK_PERIOD) $finish;
 
     reg reset = `ENABLE;
     
@@ -40,7 +48,7 @@ module phoeniX_Testbench;
 
     phoeniX 
     #(
-        .RESET_ADDRESS(32'h0000_0000),
+        .RESET_ADDRESS(`START_ADDRESS),
         .M_EXTENSION(1'b1),
         .E_EXTENSION(1'b0)
     ) 
@@ -99,13 +107,14 @@ module phoeniX_Testbench;
         wire [31 : 0] alu_csr   = uut.control_status_register_file.alucsr_reg;
         wire [31 : 0] mul_csr   = uut.control_status_register_file.mulcsr_reg;
         wire [31 : 0] div_csr   = uut.control_status_register_file.divcsr_reg;
+        wire [63 : 0] mcycle    = uut.control_status_register_file.mcycle_reg;
+        wire [63 : 0] minstret  = uut.control_status_register_file.minstret_reg;
     `endif
 
     initial
     begin
-        $dumpfile("phoeniX.vcd");
+        $dumpfile(`DUMPFILE_PATH);
         $dumpvars(0, phoeniX_Testbench);
-        $write("\n");
         // Reset
         repeat (5) @(posedge clk);
 		reset <= `DISABLE;
@@ -126,7 +135,7 @@ module phoeniX_Testbench;
     //   Memory   //
     ////////////////
 
-    // 4 MB Memory Instantiation
+    // 32 MB Memory Instantiation
     reg [31 : 0] Memory [0 : 8 * 1024 * 1024 - 1];
     initial $readmemh(`FIRMWARE, Memory);
 
@@ -173,7 +182,8 @@ module phoeniX_Testbench;
         ////////////////////////////////////
         if (data_memory_interface_address == 32'h1000_0000)
         begin
-            $write("%c", data_memory_interface_data[7 : 0]);
+            $write("%c", data_memory_interface_data);
+            $fflush();
         end
     end
 
@@ -195,6 +205,7 @@ module phoeniX_Testbench;
             $display("\n--> EXECUTION FINISHED <--\n");
             $display("Firmware File: %s\n", `FIRMWARE);
             $display("ON  TIME:\t%d\nOFF TIME:\t%d", enable_high_count * CLK_PERIOD, enable_low_count * CLK_PERIOD);
+            $display("CPU USAGE:\t%d%%", 100 *(enable_high_count * CLK_PERIOD)/(enable_high_count * CLK_PERIOD + enable_low_count * CLK_PERIOD));
             $dumpoff;
             $finish;
         end

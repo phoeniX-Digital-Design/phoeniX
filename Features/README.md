@@ -10,5 +10,6 @@ Current featured modules are:
 - AXI4 Lite Interface
 - 2-bit Dynamic Branch Prediction
 - Clock Generator Module
+- Vector Arithmetic Logic Unit
 
 </div>
