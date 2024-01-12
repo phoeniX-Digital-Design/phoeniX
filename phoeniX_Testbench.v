@@ -2,7 +2,7 @@
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-    `define FIRMWARE "Software/Sample_C_Codes/dhrystone/dhry32.hex"
+    `define FIRMWARE "Dhrystone/dhrystone_firmware.hex"
 `endif /*FIRMWARE*/
 
 `ifndef START_ADDRESS
@@ -155,6 +155,13 @@ module phoeniX_Testbench;
         instruction_memory_interface_data <= 32'bz;
     end
 
+     integer fd;
+
+    initial 
+    begin
+        fd = $fopen("Dhrystone/dhrystone.log", "w");  
+    end
+
     // Data Memory Interface Behaviour
     always @(negedge clk)
     begin
@@ -184,6 +191,8 @@ module phoeniX_Testbench;
         begin
             $write("%c", data_memory_interface_data);
             $fflush();
+            if(`FIRMWARE == "Dhrystone/dhrystone_firmware.hex")
+                $fwrite(fd, "%c", data_memory_interface_data);
         end
     end
 
