@@ -42,7 +42,7 @@ void print_array(int arr[], int size)
 // Driver program to test above functions
 int main()
 {
-    int arr[] = {8, 3, 5, 1, 7, 2, 4};
+    int arr[] = {12, 3, 51, 1, 7, 2, 4};
     int n = sizeof(arr) / sizeof(arr[0]);
     printf("Unsorted array:\n");
     print_array(arr, n);
