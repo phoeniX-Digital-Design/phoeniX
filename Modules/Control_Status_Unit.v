@@ -87,10 +87,4 @@ module Control_Status_Register_File
             endcase
         end  
     end
-
-    always @(posedge clk) 
-    begin
-        if (reset)  mcycle_reg <= 32'b0;
-        else        mcycle_reg <= mcycle_reg + 32'd1; 
-    end
 endmodule
