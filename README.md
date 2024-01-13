@@ -313,6 +313,7 @@ The code has been crafted to enable the utilization of the processor as a synthe
 
 This table provides a comparison of similar embedded processors to phoeniX, used in the industry, in terms of frequency, architecture, and manufacturing technology. This analysis helps to assess their performance and technical aspects, aiding decision-making for selecting the most suitable processor for various industrial applications. It is important to note that phoeniX is an embedded processor platform which is extensive, and execution units are replaceable; This means that these reported results of phoeniX core is extracted from the platform using its default (demo) execution engine.
 
+</div>
 
 | Processor                    | Max Frequency (MHz) | Technology Node (nm) | Brand             | Architecture   |
 | ---------------------------- | ------------------- | -------------------- | ----------------- | -------------- |
@@ -322,12 +323,8 @@ This table provides a comparison of similar embedded processors to phoeniX, used
 | Cortex-M1                    | 128                 | 180                  | ARM               | ARM Cortex-M1  |
 | Cortex-M3                    | 120                 | 90                   | ARM               | ARM Cortex-M3  |
 | Cortex-M4 (DSP Extesnssion)  | 180                 | 90                   | ARM               | ARM Cortex-M4  |
-| Cortex-M7 (Dual issue)       | 400                 | 40                   | ARM               | ARM Cortex-M7  |
-| Cortex-M23                   | 48                  | 55                   | ARM               | ARMv8-M        |
-| Cortex-M33                   | 100                 | 40                   | ARM               | ARMv8-M        |
+| Cortex-M7 (Dual issue + FPU) | 400                 | 40                   | ARM               | ARM Cortex-M7  |
 | Cortex-A5 (Application Class)| 500                 | 40                   | ARM               | ARMv7-A        |
 | FE310                        | 150                 | 180                  | Si-Five           | RV32IMAC       |
 | ESP32-S2                     | 240                 | 40                   | Espressif         | Xtensa LX6     |
 | PIC32MX795F512L              | 80                  | 90                   | Microchip         | MIPS32 M4K     |
-
-</div>
