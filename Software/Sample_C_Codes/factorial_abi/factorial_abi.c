@@ -5,7 +5,8 @@ extern int factorial(int x, int y);
 int main()
 {
     int result = 1;
-    int count = 5;
-    result = factorial(0x1, count);
+    int n = 10;
+    result = factorial(0x1, n);
+    // printf("Result of %d! is %d", n, result);
     return 0;
 }

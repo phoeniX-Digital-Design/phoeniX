@@ -9,7 +9,7 @@ void swap(int* xp, int* yp)
 }
   
 // An optimized version of Bubble Sort
-void bubbleSort(int arr[], int n)
+void bubble_sort(int arr[], int n)
 {
     int i, j;
     bool swapped;
@@ -24,7 +24,6 @@ void bubbleSort(int arr[], int n)
                 swapped = true;
             }
         }
-  
         // If no two elements were swapped by inner loop,
         // then break
         if (swapped == false)
@@ -33,21 +32,24 @@ void bubbleSort(int arr[], int n)
 }
   
 // Function to print an array
-// void printArray(int arr[], int size)
-// {
-//     int i;
-//     for (i = 0; i < size; i++)
-//         printf("%d ", arr[i]);
-// }
+void print_array(int arr[], int size)
+{
+    int i;
+    for (i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+}
   
 // Driver program to test above functions
 int main()
 {
-    int arr[] = { 64, 34, 25, 12, 22, 11, 90 };
+    int arr[] = {12, 3, 51, 1, 7, 2, 4};
     int n = sizeof(arr) / sizeof(arr[0]);
-    bubbleSort(arr, n);
+    printf("Unsorted array:\n");
+    print_array(arr, n);
+    printf("\n");
+    bubble_sort(arr, n);
     int min = arr[0];
-    // printf("Sorted array: \n");
-    // printArray(arr, n);
+    printf("Sorted array:\n");
+    print_array(arr, n);
     return 0;
 }

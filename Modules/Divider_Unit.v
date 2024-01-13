@@ -14,9 +14,12 @@
       custom made designs).
     - Instantiate your modules (Approximate or Accurate) between the comments in the code.
     - How to work with the speical purpose CSR:
-        CSR [0]      : APPROXIMATE = 1 | ACCURATE = 0
-        CSR [2  : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate or approximate circuits)
-        CSR [31 : 3] : APPROXIMATION_ERROR_CONTROL
+        CSR [0]       : APPROXIMATE = 1 | ACCURATE = 0
+        CSR [2   : 1] : CIRCUIT_SELECT (Defined for switching between 4 accuarate or approximate circuits)
+        CSR [7   : 3] : TRUNCATION_CONTROL
+        CSR [11  : 8] : CUSTOM_FIELD_1
+        CSR [15 : 12] : CUSTOM_FIELD_2
+        CSR [31 : 16] : APPROXIMATION_ERROR_CONTROL
     - PLEASE DO NOT REMOVE ANY OF THE COMMENTS IN THIS FILE
     - Input and Output paramaters:
         Input:  clk           = Source clock signal
@@ -38,16 +41,16 @@ module Divider_Unit
     parameter GENERATE_CIRCUIT_4 = 0
 )
 (
-    input clk, 
+    input wire clk, 
 
-    input [6 : 0] opcode, 
-    input [6 : 0] funct7, 
-    input [2 : 0] funct3, 
+    input wire [ 6 : 0] opcode, 
+    input wire [ 6 : 0] funct7, 
+    input wire [ 2 : 0] funct3, 
 
-    input [31 : 0] control_status_register, 
+    input wire [31 : 0] control_status_register, 
 
-    input [31 : 0] rs1, 
-    input [31 : 0] rs2, 
+    input wire [31 : 0] rs1, 
+    input wire [31 : 0] rs2, 
 
     output reg divider_unit_busy,  
     output reg [31 : 0] divider_unit_output 
@@ -177,7 +180,7 @@ module Divider_Unit
         begin
             // Circuit 1 (default) instantiation
             //----------------------------------
-            Approximate_Accuracy_Controlable_Divider divider_1 
+            Approximate_Accuracy_Controlable_Divider approximate_accuracy_controlable_divider 
             (
                 .clk(clk),
                 .Er(divider_accuracy),
@@ -194,16 +197,7 @@ module Divider_Unit
         begin
             // Circuit 2 instantiation
             //-------------------------------
-            Approximate_Accuracy_Controlable_Divider divider_2 
-            (
-                .clk(clk),
-                .Er(8'b0000_0000),
-                .operand_1(divider_input_1),  
-                .operand_2(divider_input_1),  
-                .div(divider_1_result),  
-                .rem(divider_1_remainder), 
-                .busy(divider_1_busy)
-            );
+
             //-------------------------------
             // End of Circuit 2 instantiation
         end

@@ -13,6 +13,6 @@ int main()
         n1 = n2;    
         n2 = n3;    
     }  
+    printf("\nNumber %d from Fibonacci sequence is %d\n", count, n3);
     return 0;  
 }
-

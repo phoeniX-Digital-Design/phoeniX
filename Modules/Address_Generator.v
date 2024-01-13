@@ -2,10 +2,10 @@
 
 module Address_Generator
 (
-    input [ 6 : 0] opcode, 
-    input [31 : 0] rs1,            
-    input [31 : 0] pc,
-    input [31 : 0] immediate,
+    input wire [ 6 : 0] opcode, 
+    input wire [31 : 0] rs1,            
+    input wire [31 : 0] pc,
+    input wire [31 : 0] immediate,
 
     output reg [31 : 0] address
 );
@@ -27,6 +27,18 @@ module Address_Generator
         endcase 
     end
 
+    Address_Generator_CLA 
+    #(
+        .LEN(32)
+    ) 
+    address_generator
+    (    
+        .A(adder_input_1),
+        .B(adder_input_2),
+        .C_in(1'b0),
+        .Sum(adder_result)
+    );
+/*
     Kogge_Stone_Adder adder_address_generator 
     (
         .carry_in(1'b0), 
@@ -34,6 +46,7 @@ module Address_Generator
         .input_B(adder_input_2),
         .sum(adder_result)
     );
+*/
 endmodule
 
 module Kogge_Stone_Adder
@@ -240,7 +253,6 @@ module Kogge_Stone_Adder
     assign carry_out   = g_stage_6[31];
     assign sum[0]      = carry_stage_6 ^ p_stage_6[0];
     assign sum[31 : 1] = g_stage_6[30 : 0] ^ p_stage_6[31 : 1];
-
 endmodule
 
 module PG
@@ -275,4 +287,55 @@ module Grey_Cell
     output wire output_g
 );
     assign output_g = input_gk | (input_gj & input_pk);
+endmodule
+
+module Address_Generator_CLA #(parameter LEN = 32) 
+(
+    input [LEN - 1 : 0] A,
+    input [LEN - 1 : 0] B,
+    input C_in,
+    
+    output [LEN - 1 : 0] Sum,
+    output C_out
+);
+
+    wire [LEN : 0] Carry;
+    wire [LEN : 0] CarryX;
+    wire [LEN - 1 : 0] P;
+    wire [LEN - 1 : 0] G;
+    assign P = A | B;   // Bitwise AND
+    assign G = A & B;   // Bitwise OR
+
+    assign Carry[0] = C_in;
+
+    genvar i;
+
+    generate
+        for (i = 1 ; i <= LEN; i = i + 1)
+        begin
+            assign Carry[i] = G[i - 1] | (P[i - 1] & Carry[i - 1]);
+        end
+    endgenerate
+
+    generate
+        for (i = 0; i < LEN; i = i + 1)
+        begin
+            Full_Adder_CLA FA (.A(A[i]), .B(B[i]), .C_in(Carry[i]), .C_out(CarryX[i + 1]), .Sum(Sum[i]));
+        end
+    assign C_out = Carry[LEN];
+    endgenerate
+
+endmodule
+
+module Full_Adder_CLA 
+(
+    input A,
+    input B,
+    input C_in,
+
+    output C_out,
+    output Sum
+);
+    assign Sum = A ^ B ^ C_in;
+    assign C_out = (A && B) || (A && C_in) || (B && C_in); 
 endmodule

@@ -2,8 +2,16 @@
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-	`define FIRMWARE "Software/User_Codes/TellMeWhy/TellMeWhy_firmware.hex"
+    `define FIRMWARE "Dhrystone/dhrystone_firmware.hex"
 `endif /*FIRMWARE*/
+
+`ifndef START_ADDRESS
+    `define START_ADDRESS   32'h0000_0000
+`endif /*START_ADDRESS*/
+
+`ifndef DUMPFILE_PATH
+    `define DUMPFILE_PATH "phoeniX.vcd"
+`endif /*DUMPFILE_PATH*/
 
 module phoeniX_Testbench;
 
@@ -13,9 +21,9 @@ module phoeniX_Testbench;
     parameter CLK_PERIOD = 2;
     reg clk = 1'b1;
     initial begin forever #(CLK_PERIOD/2) clk = ~clk; end
-    initial #(5000 * CLK_PERIOD) $finish;
+    //initial #(20000 * CLK_PERIOD) $finish;
 
-    reg reset = 1'b1;
+    reg reset = `ENABLE;
     
     //////////////////////////////////////////
     // Instruction Memory Interface Signals //
@@ -40,7 +48,7 @@ module phoeniX_Testbench;
 
     phoeniX 
     #(
-        .RESET_ADDRESS(32'h0000_0000),
+        .RESET_ADDRESS(`START_ADDRESS),
         .M_EXTENSION(1'b1),
         .E_EXTENSION(1'b0)
     ) 
@@ -98,15 +106,26 @@ module phoeniX_Testbench;
         wire [31 : 0] x31_t6 	= uut.register_file.Registers[31];
         wire [31 : 0] alu_csr   = uut.control_status_register_file.alucsr_reg;
         wire [31 : 0] mul_csr   = uut.control_status_register_file.mulcsr_reg;
-    `endif
+        wire [31 : 0] div_csr   = uut.control_status_register_file.divcsr_reg;
+        wire [63 : 0] mcycle    = uut.control_status_register_file.mcycle_reg;
+        wire [63 : 0] minstret  = uut.control_status_register_file.minstret_reg;
+    `endif /*DISABLE_DEBUG*/
 
+    `ifdef DHRYSTONE_LOG
+        integer log_file;
+        initial 
+        begin
+            log_file = $fopen("Dhrystone/dhrystone.log", "w");  
+        end
+    `endif /*DHRYSTONE_LOG*/
+    
     initial
     begin
-        $dumpfile("phoeniX.vcd");
+        $dumpfile(`DUMPFILE_PATH);
         $dumpvars(0, phoeniX_Testbench);
         // Reset
         repeat (5) @(posedge clk);
-		reset <= 1'b0;
+		reset <= `DISABLE;
     end
 
     integer enable_high_count = 0;
@@ -120,28 +139,13 @@ module phoeniX_Testbench;
             enable_low_count = enable_low_count + 1;    
     end
 
-    always @(*) 
-    begin
-        if (uut.opcode_writeback_reg == `SYSTEM && uut.funct12_writeback_reg == `EBREAK) 
-        begin
-            reset <= 1'b1;
-            repeat (5) @(posedge clk);
-            $display("\n--> EXECUTION FINISHED <--\n");
-            $display("ON TIME:\t%d\nOFF TIME:\t%d", enable_high_count * CLK_PERIOD, enable_low_count * CLK_PERIOD);
-            $dumpoff;
-            $finish;
-        end
-    end
-
     ////////////////
     //   Memory   //
     ////////////////
 
-    // 4 MB Memory Instantiation
-    reg [31 : 0] Memory [0 : 1024 * 1024 - 1];
+    // 32 MB Memory Instantiation
+    reg [31 : 0] Memory [0 : 8 * 1024 * 1024 - 1];
     initial $readmemh(`FIRMWARE, Memory);
-    localparam  READ    = 1'b0;
-    localparam  WRITE   = 1'b1;
 
     // Instruction Memory Interface Behaviour
     always @(negedge clk)
@@ -149,7 +153,7 @@ module phoeniX_Testbench;
         if (!instruction_memory_interface_enable) instruction_memory_interface_data <= 32'bz;
         else
         begin
-            if (instruction_memory_interface_state == READ)
+            if (instruction_memory_interface_state == `READ)
                 instruction_memory_interface_data <= Memory[instruction_memory_interface_address >> 2];
         end    
     end
@@ -158,6 +162,7 @@ module phoeniX_Testbench;
     begin
         instruction_memory_interface_data <= 32'bz;
     end
+
 
     // Data Memory Interface Behaviour
     always @(negedge clk)
@@ -168,14 +173,14 @@ module phoeniX_Testbench;
         end
         else
         begin
-            if (data_memory_interface_state == WRITE) 
+            if (data_memory_interface_state == `WRITE) 
             begin
                 if (data_memory_interface_frame_mask[3]) Memory[data_memory_interface_address >> 2][ 7 :  0] <= data_memory_interface_data[ 7 :  0];
                 if (data_memory_interface_frame_mask[2]) Memory[data_memory_interface_address >> 2][15 :  8] <= data_memory_interface_data[15 :  8];
                 if (data_memory_interface_frame_mask[1]) Memory[data_memory_interface_address >> 2][23 : 16] <= data_memory_interface_data[23 : 16];
                 if (data_memory_interface_frame_mask[0]) Memory[data_memory_interface_address >> 2][31 : 24] <= data_memory_interface_data[31 : 24];
             end 
-            if (data_memory_interface_state == READ)
+            if (data_memory_interface_state == `READ)
             begin
                 data_memory_interface_data_reg <= Memory[data_memory_interface_address >> 2];
             end
@@ -186,12 +191,36 @@ module phoeniX_Testbench;
         ////////////////////////////////////
         if (data_memory_interface_address == 32'h1000_0000)
         begin
-            $write("%c", data_memory_interface_data[7 : 0]);
+            $write("%c", data_memory_interface_data);
+            $fflush();
+
+            `ifdef DHRYSTONE_LOG
+                $fwrite(log_file, "%c", data_memory_interface_data);
+            `endif /*DHRYSTONE_LOG*/
         end
     end
 
     always @(posedge clk) 
     begin
         data_memory_interface_data_reg <= 32'bz;
+    end
+
+    //////////////////
+    // System Calls //
+    //////////////////
+
+    always @(*) 
+    begin
+        if (uut.opcode_MW_reg == `SYSTEM && uut.funct12_MW_reg == `EBREAK) 
+        begin
+            reset <= `ENABLE;
+            repeat (5) @(posedge clk);
+            $display("\n--> EXECUTION FINISHED <--\n");
+            $display("Firmware File: %s\n", `FIRMWARE);
+            $display("ON  TIME:\t%d\nOFF TIME:\t%d", enable_high_count * CLK_PERIOD, enable_low_count * CLK_PERIOD);
+            $display("CPU USAGE:\t%d%%", 100 *(enable_high_count * CLK_PERIOD)/(enable_high_count * CLK_PERIOD + enable_low_count * CLK_PERIOD));
+            $dumpoff;
+            $finish;
+        end
     end
 endmodule
