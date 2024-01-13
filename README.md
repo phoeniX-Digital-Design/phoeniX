@@ -307,7 +307,7 @@ The code has been crafted to enable the utilization of the processor as a synthe
 | Dhyrstone Parameters         | phoeniX Status      |
 | ---------------------------- | ------------------- |
 | CPI                          | 1.119               |
-| Dhrystones per Second per MHz| 2033                |
+| Dhrystones per Second per MHz| 3044                |
 | DMIPS/MHz                    | 1.732               |
 
 
