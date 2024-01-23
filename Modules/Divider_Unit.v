@@ -96,7 +96,7 @@ module Divider_Unit
     begin
         operand_1 = rs1;
         operand_2 = rs2;
-        divider_unit_busy = busy;
+        //divider_unit_busy = busy;
         case ({funct7, funct3, opcode})
             {`MULDIV, `DIV, `OP} : begin
                 enable  = 1'b1;
@@ -146,6 +146,11 @@ module Divider_Unit
         endcase
     end
 
+    //always @(posedge clk)
+    //begin
+    //    if (divider_0_enable) approximate_accuracy_controlable_divider.cycle = 5'd31;
+    //end
+
     always @(negedge divider_unit_busy) enable <= 1'b0;
 
     assign result = (divider_0_enable) ? divider_0_result :
@@ -180,15 +185,31 @@ module Divider_Unit
         begin
             // Circuit 1 (default) instantiation
             //----------------------------------
+            /*
             Approximate_Accuracy_Controlable_Divider approximate_accuracy_controlable_divider 
             (
                 .clk(clk),
+                .enable(divider_0_enable),
                 .Er(divider_accuracy),
-                .operand_1(divider_input_1),  
-                .operand_2(divider_input_1),  
+                .operand_1(divider_input_1),
+                .operand_2(divider_input_2),  
                 .div(divider_0_result),  
                 .rem(divider_0_remainder), 
                 .busy(divider_0_busy)
+            );
+            */
+
+            //assign divider_0_result    = divider_input_1 / divider_input_2;
+            //assign divider_0_remainder = divider_input_1 % divider_input_2;
+            //assign divider_0_busy = 0;
+            test_div div
+            (
+                .clk(clk),
+                .divider_input_1(divider_input_1),
+                .divider_input_2(divider_input_2),
+                .divider_0_result(divider_0_result),
+                .divider_0_remainder(divider_0_remainder),
+                .divider_0_busy(divider_0_busy)
             );
             //----------------------------------
             // End of Circuit 1 instantiation
@@ -228,6 +249,8 @@ endmodule
 module Approximate_Accuracy_Controlable_Divider
 (  
     input  clk,                 // Clock signal
+
+    input enable,
 
     input  [7  : 0] Er,         // Error rate
 
@@ -273,7 +296,7 @@ module Approximate_Accuracy_Controlable_Divider
     
     always @(*) 
     begin
-        if ((output_ready == 1) && (busy == 0))
+        if ((output_ready == 1))
         begin
             assign latched_div_result = div_result;  
             assign latched_rem_result = rem_result;
@@ -284,7 +307,7 @@ module Approximate_Accuracy_Controlable_Divider
     end
     always @(*) 
     begin
-        if ((output_ready == 1) && (busy == 0))
+        if ((output_ready == 1))
         begin
             div = latched_div_result;
             rem = latched_rem_result;
@@ -298,26 +321,33 @@ module Approximate_Accuracy_Controlable_Divider
     assign rem_result = work;
 
     assign output_ready = ~active;
-    assign busy = active;
+    assign busy = ~output_ready;
+
+    reg [4 : 0] enable_counter = 0;
+
+    always @(posedge enable) 
+    begin 
+        cycle = 32'd0; //active = 1;
+        enable_counter = enable_counter + 1'b1;
+    end
 
     // The state machine  
     always @(posedge clk) 
     begin  
-        if (active) 
+        if (active)
         begin  
-            // remun an iteration of the divide.  
             if (sub[32] == 0) 
             begin  
-                work  <= sub[31 : 0];
+                work   <= sub[31 : 0];
                 result <= {result[30 : 0], 1'b1};
             end  
             else 
             begin  
-                work <= {work[30 : 0], result[31]};
+                work   <= {work[30 : 0], result[31]};
                 result <= {result[30 : 0], 1'b0};
             end  
             if (cycle == 0) begin active <= 0; end  
-            cycle <= cycle - 5'd1;  
+            cycle <= cycle - 5'd1;
         end
         else
         begin  
@@ -326,7 +356,7 @@ module Approximate_Accuracy_Controlable_Divider
             result <= operand_1;  
             denom  <= operand_2;  
             work   <= 32'b0;  
-            active <= 1;  
+            active <= 1;
         end  
     end  
 endmodule
@@ -618,3 +648,22 @@ endmodule
 
 // ----------------------------------------------------------------------------------------------------
 // *** End of divider module definition ***
+
+module test_div
+(
+    input wire clk,
+    input wire [31 : 0] divider_input_1,
+    input wire [31 : 0] divider_input_2,
+    output reg [31 : 0] divider_0_result,
+    output reg [31 : 0] divider_0_remainder,
+    output reg divider_0_busy
+);
+    always @(*) 
+    begin
+        divider_0_busy = 1;
+        repeat (32) @(posedge clk);
+        divider_0_result    = divider_input_1 / divider_input_2;
+        divider_0_remainder = divider_input_1 % divider_input_2;
+        divider_0_busy = 0;
+    end
+endmodule
