@@ -9,7 +9,7 @@ CORE_TESTBENCH := $(CORE_NAME)_Testbench.v
 TOOLCHAIN_PREFIX := riscv64-unknown-elf-
 
 MABI := ilp32
-MARCH := rv32i
+MARCH := rv32im
 
 DHRYSTONE_FLAGS := -O3 -DTIME -DRISCV
 
