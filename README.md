@@ -313,7 +313,7 @@ The code has been crafted to enable the utilization of the processor as a synthe
 
 | Dhyrstone Parameters         | phoeniX (RV32IM)    |
 | ---------------------------- | ------------------- |
-| CPI                          | 1.018               |
+| CPI                          | 1.137               |
 | Dhrystones per Second per MHz| 3324                |
 | DMIPS/MHz                    | 1.891               |
 
