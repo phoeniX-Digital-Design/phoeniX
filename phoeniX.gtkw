@@ -1,23 +1,24 @@
 [*]
-[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
-[*] Fri Jan 12 08:15:59 2024
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Fri Jan 19 15:55:38 2024
 [*]
-[dumpfile] "/home/faraz/git/phoeniX-Digital-Design/phoeniX/phoeniX.vcd"
-[dumpfile_mtime] "Fri Jan 12 08:15:20 2024"
-[dumpfile_size] 12703165
-[savefile] "/home/faraz/git/phoeniX-Digital-Design/phoeniX/phoeniX.gtkw"
-[timestart] 875
-[size] 1848 1016
+[dumpfile] "C:\Users\ASUS\OneDrive\Desktop\RV32-Core\phoeniX.vcd"
+[dumpfile_mtime] "Fri Jan 19 15:55:33 2024"
+[dumpfile_size] 124242
+[savefile] "C:\Users\ASUS\OneDrive\Desktop\RV32-Core\phoeniX.gtkw"
+[timestart] 0
+[size] 1536 793
 [pos] -1 -1
-*-3.517318 887 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-3.459617 26 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] phoeniX_Testbench.
 [treeopen] phoeniX_Testbench.uut.
 [treeopen] phoeniX_Testbench.uut.fetch_unit.
+[treeopen] phoeniX_Testbench.uut.genblk1.
 [treeopen] phoeniX_Testbench.uut.load_store_unit.
 [treeopen] phoeniX_Testbench.uut.register_file.
-[sst_width] 48
+[sst_width] 288
 [signals_width] 487
-[sst_expanded] 0
+[sst_expanded] 1
 [sst_vpaned_height] 298
 @28
 phoeniX_Testbench.reset
@@ -317,10 +318,16 @@ phoeniX_Testbench.mul_csr[31:0]
 phoeniX_Testbench.div_csr[31:0]
 @200
 -
-@25
+@24
 phoeniX_Testbench.mcycle[63:0]
 phoeniX_Testbench.minstret[63:0]
 @200
 -
+@24
+phoeniX_Testbench.uut.genblk1.divider_unit.divider_0_result[31:0]
+phoeniX_Testbench.uut.genblk1.divider_unit.divider_0_remainder[31:0]
+@28
+phoeniX_Testbench.uut.genblk1.divider_unit.divider_0_busy
+phoeniX_Testbench.uut.genblk1.divider_unit.divider_unit_busy
 [pattern_trace] 1
 [pattern_trace] 0
