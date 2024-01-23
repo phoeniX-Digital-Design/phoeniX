@@ -3,6 +3,7 @@
 
 `ifndef FIRMWARE
     `define FIRMWARE "Dhrystone/dhrystone_firmware.hex"
+   //`define FIRMWARE "Software/Sample_Assembly_Codes/division/division_firmware.hex"
 `endif /*FIRMWARE*/
 
 `ifndef START_ADDRESS
@@ -213,6 +214,7 @@ module phoeniX_Testbench;
     begin
         if (uut.opcode_MW_reg == `SYSTEM && uut.funct12_MW_reg == `EBREAK) 
         begin
+            repeat (32) @(posedge clk);
             reset <= `ENABLE;
             repeat (5) @(posedge clk);
             $display("\n--> EXECUTION FINISHED <--\n");
