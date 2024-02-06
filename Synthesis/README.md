@@ -12,9 +12,9 @@ First synthesis process was obtained using the [Qflow tool](http://opencircuitde
 
 Here is a picture of final layout result of the phoeniX core using Qflow in TSMC 180nm Technology:
 
-![GDS](https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Synthesis/Qflow_TSMC_180nm/Pictures/GDS.png)
+![phoeniX_GDS_Layout](https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Synthesis/TSMC_018um/Pictures/GDS.png)
 
-![MAG](https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Synthesis/Qflow_TSMC_180nm/Pictures/MAG.png)
+![phoeniX_MAG_Layout](https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Synthesis/TSMC_018um/Pictures/MAG.png)
 
 <div align="justify">
 
@@ -24,26 +24,32 @@ The main RTL synthesis of the phoeniX processor was done using Cadence Genus too
 
 This table provides a comparison of similar embedded processors to phoeniX, used in the industry, in terms of frequency, architecture, and manufacturing technology. This analysis helps to assess their performance and technical aspects, aiding decision-making for selecting the most suitable processor for various industrial applications. It is important to note that phoeniX is an embedded processor platform which is extensive, and execution units are replaceable; This means that these reported results of phoeniX core is extracted from the platform using its default (demo) execution engine.
 
-| Processor             | Max Frequency (MHz) | Technology Node (nm) | Brand             | Architecture   |
-| --------------------- | ------------------- | -------------------- | ----------------- | -------------- |
-| phoeniX               | 500                 | 45                   | IUST ERC          | RV32IEM        |
-| Cortex-M0             | 48                  | 90                   | ARM               | ARM Cortex-M0  |
-| Cortex-M0+            | 48                  | 90                   | ARM               | ARM Cortex-M0+ |
-| Cortex-M1             | 128                 | 180                  | ARM               | ARM Cortex-M1  |
-| Cortex-M3             | 120                 | 90                   | ARM               | ARM Cortex-M3  |
-| Cortex-M4             | 180                 | 90                   | ARM               | ARM Cortex-M4  |
-| Cortex-M7             | 400                 | 40                   | ARM               | ARM Cortex-M7  |
-| Cortex-M23            | 48                  | 55                   | ARM               | ARMv8-M        |
-| Cortex-M33            | 100                 | 40                   | ARM               | ARMv8-M        |
-| Cortex-A5             | 500                 | 40                   | ARM               | ARMv7-A        |
-| Cortex-A7             | 1000                | 28                   | ARM               | ARMv7-A        |
-| Cortex-A9             | 1500                | 28                   | ARM               | ARMv7-A        |
-| FE310                 | 150                 | 180                  | Si-Five           | RV32IMAC       |
-| ESP32                 | 240                 | 40                   | Espressif         | Xtensa LX6     |
-| PIC32MX795F512L       | 80                  | 90                   | Microchip         | MIPS32 M4K     |
+| Processor                    | Max Frequency (MHz) | Technology Node (nm) | Architecture | Pipeline         |
+| ---------------------------- | ------------------- | -------------------- | ------------ | ---------------- |
+| phoeniX V0.3                 | 500                 | 45                   | RV32IEM      | 3-stage in order |
+| phoeniX V0.2                 | 500                 | 45                   | RV32IEM      | 5-stage in order |
+| phoeniX V0.1                 | 500                 | 45                   | RV32I        | 5-stage in order |
+| phoeniX V0.1                 | 200                 | 180                  | RV32I        | 5-stage in order |
+
+| Processor                    | Max Frequency (MHz) | Technology Node (nm) | Brand             | Architecture   |
+| ---------------------------- | ------------------- | -------------------- | ----------------- | -------------- |
+| phoeniX V0.3                 | 500                 | 45                   | IUST ERC          | RV32IEM        |
+| Cortex-M0                    | 48                  | 90                   | ARM               | ARM Cortex-M0  |
+| Cortex-M0+                   | 48                  | 90                   | ARM               | ARM Cortex-M0+ |
+| Cortex-M1                    | 128                 | 180                  | ARM               | ARM Cortex-M1  |
+| Cortex-M3                    | 120                 | 90                   | ARM               | ARM Cortex-M3  |
+| Cortex-M4 (FPU + DSP support)| 240                 | 90                   | ARM               | ARM Cortex-M4  |
+| Cortex-M7 (Superscaler core) | 600                 | 40                   | ARM               | ARM Cortex-M7  |
+| Cortex-A5 (Application Class)| 500                 | 40                   | ARM               | ARMv7-A        |
+| FE310                        | 150                 | 180                  | Si-Five           | RV32IMAC       |
+| ESP32-S3                     | 240                 | 40                   | Espressif         | Xtensa LX6     |
 
 ## FPGA Implementation
 
-The core can be implemented as a softcore CPU on `Xilinx 7 Ultrascale/Ultrascale+` series FPGA boards using logic synthesis. This allows flexible integration of the core's functionality within the FPGA fabric. The **Xilinx 7 series FPGA boards** provide a versatile platform for hosting the softcore CPU implementation, offering configurable features and adaptability.
+The core can be implemented as a softcore CPU on `Xilinx` series FPGA boards using logic synthesis. This allows flexible integration of the core's functionality within the FPGA fabric. The **Xilinx 7 series FPGA boards** provide a versatile platform for hosting the softcore CPU implementation, offering configurable features and adaptability.
+
+| Processor                    | Max Frequency (MHz) | Technology Node (nm) | Architecture | Pipeline         |
+| ---------------------------- | ------------------- | -------------------- | ------------ | ---------------- |
+| phoeniXS6                    | 100 (on FPGA)       | Xilinx SPARTAN6      | RV32I        | 3-stage in order |
 
 </div>
