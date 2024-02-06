@@ -275,9 +275,6 @@ main ()
   printf("Number_Of_Runs: %d\n", Number_Of_Runs);
   printf("User_Time: %d cycles, %d insn\n", User_Time, User_Insn);
 
-  int test_cycle;
-	asm volatile ("rdcycle %0" : "=r"(test_cycle));
-
   int Cycles_Per_Instruction_x1000 = (1000 * User_Time) / User_Insn;
   printf("Cycles_Per_Instruction: %d.%d%d%d\n", Cycles_Per_Instruction_x1000 / 1000,
 		(Cycles_Per_Instruction_x1000 / 100) % 10,
