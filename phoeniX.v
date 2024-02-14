@@ -436,7 +436,7 @@ module phoeniX
     begin
         if (stall_condition[1])
         begin
-            write_enable_MW_reg <= `ENABLE;  
+            write_enable_MW_reg <= `DISABLE;  
 
             opcode_MW_reg <= `NOP_opcode;
             funct3_MW_reg <= `NOP_funct3;
@@ -661,5 +661,4 @@ module phoeniX
         ))
                     control_status_register_file.minstret_reg <= control_status_register_file.minstret_reg + 32'b1;
     end
-
 endmodule
