@@ -57,7 +57,7 @@ You can cite the document as:
 ## Features
 <div align="justify">
 
- - **Optimized 3 stage pipline**
+ - **Optimized 3 stage pipeline**
 
  The 3-stage pipeline in a processor improves instruction throughput by dividing execution into sequential stages with minimal internal fragmentation. By incorporating data forwarding and bypassing options (such as forwarding data from execution, memory or writeback stage) the pipeline minimizes stalls caused by data hazards. As a result, the pipeline achieves higher performance, reduced stalls, and improved instruction-level parallelism, enabling concurrent processing of independent instructions.
 
@@ -75,7 +75,7 @@ Additionally, modular designs can lead to improved overall system reliability, a
 
 The phoeniX RISC-V core introduces novel features that will help the emerging field of approximate computing techniques. With its modular design and extensive architecture, phoeniX presents a configurable platform for exploring and implementing approximate computing methodologies for developers and designers. 
 
-This platform enables researchers and developers to delve into the field realm of approximate computing, where trade-offs between accuracy and computational efficiency can be carefully balanced. By offering a range of specialized instructions, optimized datapaths, and adaptable precision controls, phoeniX empowers users to use the help of approximation in diverse application domains, openning the way for advancements in energy-efficient computing, machine learning, image processing, and etc.
+This platform enables researchers and developers to delve into the field realm of approximate computing, where trade-offs between accuracy and computational efficiency can be carefully balanced. By offering a range of specialized instructions, optimized datapaths, and adaptable precision controls, phoeniX empowers users to use the help of approximation in diverse application domains, opening the way for advancements in energy-efficient computing, machine learning, image processing, and etc.
 
 </div>
 
@@ -302,7 +302,7 @@ Provided that you name your project sub-directory correctly the AssembleX softwa
 ## Synthesis Result
 <div align="justify">
 
-The code has been crafted to enable the utilization of the processor as a synthesizable and implementable soft-core on Xilinx Ultrascale and Ultrascale+ FPGA devices. The RTL synthesis of the phoeniX processor was done using Cadence Genus tool, using the `NanGate 45nm` technology, also known as the `FreePDK45, Open Cell Library` process technology. The Static Time Analysis (STA) results indicate that the maximum delay observed in the core modules, and consequently in the pipeline stages, is about less than 1900 picoseconds using the **45nm** technology. Setting the clock cycle time at **2 nanoseconds** allows for sufficient margin to account for the maximum delay across the modules, ensuring that data propagates through the pipeline within the specified time frame. By adhering to this timing requirement, the processor can achieve a performance level of **500MHz**, enabling efficient execution of instructions and supporting the desired operational specifications in embedded processors.
+The code has been crafted to enable the utilization of the processor as a synthesizable and implementable soft-core on Xilinx FPGA devices. The ASIC RTL synthesis of the phoeniX processor was done using Cadence Genus tool, using the `NanGate 45nm` technology, also known as the `FreePDK45, Open Cell Library` process technology. The Static Time Analysis (STA) results indicate that the maximum delay observed in the core modules, and consequently in the pipeline stages, is about less than 1900 picoseconds using the **45nm** technology. Setting the clock cycle time at **2 nanoseconds** allows for sufficient margin to account for the maximum delay across the modules, ensuring that data propagates through the pipeline within the specified time frame. By adhering to this timing requirement, the processor can achieve a performance level of **500MHz**, enabling efficient execution of instructions and supporting the desired operational specifications in embedded processors.
 </div>
 
 | Dhyrstone Parameters         | phoeniX (RV32I)     |
@@ -319,20 +319,14 @@ The code has been crafted to enable the utilization of the processor as a synthe
 
 <div align="justify">
 
-This table provides a comparison of similar embedded processors to phoeniX, used in the industry, in terms of frequency, architecture, and manufacturing technology. This analysis helps to assess their performance and technical aspects, aiding decision-making for selecting the most suitable processor for various industrial applications. It is important to note that phoeniX is an embedded processor platform which is extensive, and execution units are replaceable; This means that these reported results of phoeniX core is extracted from the platform using its default (demo) execution engine.
+It is important to note that phoeniX is an embedded processor platform which is extensive, and execution units are replaceable; This means that the following reported results of phoeniX core is extracted from the platform using its default (demo) execution engine.
 
 </div>
 
-| Processor                    | Max Frequency (MHz) | Technology Node (nm) | Brand      | Architecture   |
-| ---------------------------- | ------------------- | -------------------- | ---------- | -------------- |
-| phoeniX V0.3                 | 500                 | 45                   | IUST ERC   | RV32IEM        |
-| Cortex-M0                    | 48                  | 90                   | ARM        | ARM Cortex-M0  |
-| Cortex-M0+                   | 48                  | 90                   | ARM        | ARM Cortex-M0+ |
-| Cortex-M1                    | 128                 | 180                  | ARM        | ARM Cortex-M1  |
-| Cortex-M3                    | 120                 | 90                   | ARM        | ARM Cortex-M3  |
-| Cortex-M4 (DSP + FPU)        | 240                 | 65                   | ARM        | ARM Cortex-M4  |
-| Cortex-M7 (Superscaler)      | 600                 | 40                   | ARM        | ARM Cortex-M7  |
-| Cortex-A5 (Application Class)| 500                 | 40                   | ARM        | ARMv7-A        |
-| FE310                        | 150                 | 180                  | Si-Five    | RV32IMAC       |
-| ESP32-S2                     | 240                 | 40                   | Espressif  | Xtensa LX6     |
-| PIC32MX795F512L              | 80                  | 90                   | Microchip  | MIPS32 M4K     |
+| Processor                    | Max Frequency (MHz) | Technology Node (nm) | Architecture | Pipeline         |
+| ---------------------------- | ------------------- | -------------------- | ------------ | ---------------- |
+| phoeniX V0.3                 | 500                 | 45                   | RV32IEM      | 3-stage in order |
+| phoeniX V0.2                 | 500                 | 45                   | RV32IEM      | 5-stage in order |
+| phoeniX V0.1                 | 500                 | 45                   | RV32I        | 5-stage in order |
+| phoeniX V0.1                 | 220                 | 180                  | RV32I        | 5-stage in order |
+| phoeniXS6                    | 100 (on FPGA)       | Xilinx SPARTAN6      | RV32I        | 3-stage in order |

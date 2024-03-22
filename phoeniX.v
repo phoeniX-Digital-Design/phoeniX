@@ -19,14 +19,14 @@ module phoeniX
     parameter E_EXTENSION   = 1'b0
 ) 
 (
-    input clk,
-    input reset,
+    input           clk,
+    input           reset,
 
     //////////////////////////////////////////
     // Instruction Memory Interface Signals //
     //////////////////////////////////////////
-    output instruction_memory_interface_enable,
-    output instruction_memory_interface_state,
+    output          instruction_memory_interface_enable,
+    output          instruction_memory_interface_state,
     output [31 : 0] instruction_memory_interface_address,
     output [ 3 : 0] instruction_memory_interface_frame_mask,
     input  [31 : 0] instruction_memory_interface_data, 
@@ -34,8 +34,8 @@ module phoeniX
     ///////////////////////////////////
     // Data Memory Interface Signals //
     ///////////////////////////////////
-    output data_memory_interface_enable,
-    output data_memory_interface_state,
+    output          data_memory_interface_enable,
+    output          data_memory_interface_state,
     output [31 : 0] data_memory_interface_address,
     output [ 3 : 0] data_memory_interface_frame_mask,
     inout  [31 : 0] data_memory_interface_data
@@ -436,7 +436,7 @@ module phoeniX
     begin
         if (stall_condition[1])
         begin
-            write_enable_MW_reg <= `ENABLE;  
+            write_enable_MW_reg <= `DISABLE;  
 
             opcode_MW_reg <= `NOP_opcode;
             funct3_MW_reg <= `NOP_funct3;
@@ -661,5 +661,4 @@ module phoeniX
         ))
                     control_status_register_file.minstret_reg <= control_status_register_file.minstret_reg + 32'b1;
     end
-
 endmodule
