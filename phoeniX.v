@@ -216,7 +216,7 @@ module phoeniX
         if (jump_branch_enable_EX_wire || (!(stall_condition[1]) & stall_condition[2]))
         begin
             write_enable_EX_reg <= `DISABLE;  
-            rs1_EX_reg <= 32'd0;
+            rs1_EX_reg <= 32'bz;
             rs2_EX_reg <= 32'bz;
 
             opcode_EX_reg <= `NOP_opcode;
