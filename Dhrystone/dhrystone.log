@@ -22,7 +22,7 @@ Arr_1_Glob[8]:       7
 Arr_2_Glob[8][7]:    110
         should be:   Number_Of_Runs + 10
 Ptr_Glob->
-  Ptr_Comp:          219056
+  Ptr_Comp:          215736
         should be:   (implementation-dependent)
   Discr:             0
         should be:   0
@@ -33,7 +33,7 @@ Ptr_Glob->
   Str_Comp:          DHRYSTONE PROGRAM, SOME STRING
         should be:   DHRYSTONE PROGRAM, SOME STRING
 Next_Ptr_Glob->
-  Ptr_Comp:          219056
+  Ptr_Comp:          215736
         should be:   (implementation-dependent), same as above
   Discr:             0
         should be:   0
@@ -57,7 +57,7 @@ Str_2_Loc:           DHRYSTONE PROGRAM, 2'ND STRING
         should be:   DHRYSTONE PROGRAM, 2'ND STRING
 
 Number_Of_Runs: 100
-User_Time: 32846 cycles, 29341 insn
-Cycles_Per_Instruction: 1.119
-Dhrystones_Per_Second_Per_MHz: 3044
-DMIPS_Per_MHz: 1.732
+User_Time: 30079 cycles, 26442 insn
+Cycles_Per_Instruction: 1.137
+Dhrystones_Per_Second_Per_MHz: 3324
+DMIPS_Per_MHz: 1.891
