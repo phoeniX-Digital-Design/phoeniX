@@ -292,7 +292,7 @@ module Arithmetic_Logic_Unit
     // --------------------------------------------------------------------------------------------------
     generate 
         if (GENERATE_CIRCUIT_1)
-        begin
+        begin : ALU_Adder_Generate_Block_1
             // Circuit 1 (default) instantiation
             //----------------------------------
             Approximate_Accuracy_Controllable_Adder 
@@ -312,7 +312,7 @@ module Arithmetic_Logic_Unit
             // End of Circuit 1 instantiation
         end
         if (GENERATE_CIRCUIT_2)
-        begin
+        begin : ALU_Adder_Generate_Block_2
             // Circuit 2 instantiation
             //-------------------------------
 
@@ -320,7 +320,7 @@ module Arithmetic_Logic_Unit
             // End of Circuit 2 instantiation
         end
         if (GENERATE_CIRCUIT_3)
-        begin
+        begin : ALU_Adder_Generate_Block_3
             // Circuit 3 instantiation
             //-------------------------------
 
@@ -328,7 +328,7 @@ module Arithmetic_Logic_Unit
             // End of Circuit 3 instantiation
         end
         if (GENERATE_CIRCUIT_4)
-        begin
+        begin : ALU_Adder_Generate_Block_4
             // Circuit 4 instantiation
             //-------------------------------
 
@@ -441,7 +441,7 @@ module Approximate_Accuracy_Controllable_Adder
         // ------------------- //
 
         for (i = 4; i < APX_LEN; i = i + 4)
-        begin
+        begin : Adder_Approximate_Part_Generate_Block
             wire HA_Carry;
             wire EC_RCA_Carry;
             wire [i + 3 : i] EC_RCA_Output;
@@ -491,7 +491,7 @@ module Approximate_Accuracy_Controllable_Adder
         // ------------- //
 
         for (i = APX_LEN; i < LEN; i = i + 4)
-        begin
+        begin : Adder_Exact_Part_Generate_Block
             wire HA_Carry;
             wire RCA_Carry;
             wire [i + 3 : i] RCA_Output;
@@ -598,7 +598,7 @@ module Error_Configurable_Ripple_Carry_Adder
     genvar i;
     generate
         for (i = 0; i < LEN; i = i + 1)
-        begin
+        begin : Error_Configurable_Ripple_Carry_Adder_Generate_Block
             Error_Configurable_Full_Adder ECFA 
             (
                 .Er(Er[i]),
@@ -631,7 +631,7 @@ module Ripple_Carry_Adder
     genvar i;
     generate
         for (i = 0; i < LEN; i = i + 1)
-        begin
+        begin : Ripple_Carry_Adder_Generate_Block
             Full_Adder FA 
             (
                 .A(A[i]), 
