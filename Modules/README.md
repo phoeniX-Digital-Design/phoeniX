@@ -201,11 +201,10 @@ Multiplier unit with integrated approximate circuit:
 | multiplier_unit_busy        |     1    |   output  |Multiplier unit's busy signaling for correct timing and stalling in pipeline|
 | multiplier_unit_output      | [31 : 0] |   output  |      Result of multiplier unit's operations on selected operands           |
 
-NMED, MRED and ER for 8-bit version of the purposed approximate dynamic error configurable multiplier:
+NMED, MRED and ER for 7-bit version of the purposed approximate dynamic error configurable multiplier:
 
 | Error Level | NMED | MRED | ER    |
 | ----------- | ---- | ---- | ----- |
-| 7’1b mask   | 0.25 | 0.85 | 36.16 |
 | 6’1b mask   | 0.25 | 0.85 | 36.16 |
 | 5’1b mask   | 0.26 | 0.97 | 39.73 |
 | 4’1b mask   | 0.28 | 1.33 | 44.33 |

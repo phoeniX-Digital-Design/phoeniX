@@ -22,7 +22,7 @@ You can find a full list of RISC-V assembly instructions in the [ISA Specificati
 
 The core can be implemented as a softcore CPU on Xilinx 6, 7, Ultrascale and Ultrascale+ series FPGA boards using logic synthesis. This allows flexible integration of the core's functionality within the FPGA fabric. The Xilinx 7 series FPGA boards provide a versatile platform for hosting the softcore CPU implementation, offering configurable features and adaptability.
 
-The core has undergone a complete synthesis flow to become an Integrated Circuit using  **Cadence Genus** tool. The implementation was specifically carried out utilizing the `NanGate 45nm` Process Design Kit (PDK).
+The core has undergone a complete synthesis flow to become an Integrated Circuit using **Design Compiler** tool. The implementation was specifically carried out utilizing the `NanGate 45nm` Process Design Kit (PDK).
 </div>
 
 <div align="justify">
@@ -35,12 +35,12 @@ You can cite the document as:
 
 </div>
 
-- A. Delavari, F. Ghoreishy, H. S. Shahhoseini and S. Mirzakuchaki. (2023), “phoeniX: A RISC-V Platform for Approximate Computing V0.1 Technical Specifications,” [Online]. Available: http://www.iust.ac.ir/content/76158/phoeniX-POINTS--A-RISC-V-Platform-for-Approximate-Computing
+- A. Delavari, F. Ghoreishy, H. S. Shahhoseini and S. Mirzakuchaki (2023), “phoeniX: A RISC-V Platform for Approximate Computing Technical Specifications,” [Online]. Available: http://www.iust.ac.ir/content/76158/phoeniX-POINTS--A-RISC-V-Platform-for-Approximate-Computing
 
 
 
-- Designed By : [Arvin Delavari](https://github.com/ArvinDelavari) and [Faraz Ghoreishy](https://github.com/FarazGhoreishy)
-- Contact us : arvin7807@gmail.com - farazghoreishy@gmail.com
+- Designed By: [Arvin Delavari](https://github.com/ArvinDelavari) and [Faraz Ghoreishy](https://github.com/FarazGhoreishy)
+- Contact us: arvin7807@gmail.com - farazghoreishy@gmail.com
 - Iran University of Science and Technology, Summer 2023 - Present
 
 ## Table of Contents
@@ -302,7 +302,7 @@ Provided that you name your project sub-directory correctly the AssembleX softwa
 ## Synthesis Result
 <div align="justify">
 
-The code has been crafted to enable the utilization of the processor as a synthesizable and implementable soft-core on Xilinx FPGA devices. The ASIC RTL synthesis of the phoeniX processor was done using Cadence Genus tool, using the `NanGate 45nm` technology, also known as the `FreePDK45, Open Cell Library` process technology. The Static Time Analysis (STA) results indicate that the maximum delay observed in the core modules, and consequently in the pipeline stages, is about less than 1900 picoseconds using the **45nm** technology. Setting the clock cycle time at **2 nanoseconds** allows for sufficient margin to account for the maximum delay across the modules, ensuring that data propagates through the pipeline within the specified time frame. By adhering to this timing requirement, the processor can achieve a performance level of **500MHz**, enabling efficient execution of instructions and supporting the desired operational specifications in embedded processors.
+The code has been crafted to enable the utilization of the processor as a synthesizable and implementable soft-core on Xilinx FPGA devices. The RTL synthesis of the phoeniX processor was done using Synopsys Design Compiler, using the `NanGate 45nm` technology.  By adhering the timing requirements, the processor can achieve a performance level of **620MHz**, enabling efficient execution of instructions and supporting the desired operational specifications in embedded processors.
 </div>
 
 | Dhyrstone Parameters         | phoeniX (RV32I)     |
@@ -325,8 +325,7 @@ It is important to note that phoeniX is an embedded processor platform which is 
 
 | Processor                    | Max Frequency (MHz) | Technology Node (nm) | Architecture | Pipeline         |
 | ---------------------------- | ------------------- | -------------------- | ------------ | ---------------- |
-| phoeniX V0.3                 | 500                 | 45                   | RV32IEM      | 3-stage in order |
+| phoeniX V0.3                 | 620                 | 45                   | RV32IEM      | 3-stage in order |
 | phoeniX V0.2                 | 500                 | 45                   | RV32IEM      | 5-stage in order |
-| phoeniX V0.1                 | 500                 | 45                   | RV32I        | 5-stage in order |
 | phoeniX V0.1                 | 220                 | 180                  | RV32I        | 5-stage in order |
 | phoeniXS6                    | 100 (on FPGA)       | Xilinx SPARTAN6      | RV32I        | 3-stage in order |
