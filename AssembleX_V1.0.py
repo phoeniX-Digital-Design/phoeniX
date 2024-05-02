@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------
-# |                       AssembleX V0.1                         |
+# |                       AssembleX V1.0                         |
 # | ------------------------------------------------------------ |
 # | Custom-built RISC-V assembly code executant for phoeniX core |
 # |          By : Arvin Delavari - Faraz Ghoreishy               |
@@ -24,6 +24,8 @@ else:
 
 input_file  = list(glob.iglob(os.path.join("Software", directory, project_name, '*' + ".txt")))[0]
 output_file = os.path.join("Software", directory, project_name, output_name)
+print(input_file)
+print(output_file)
 
 # Read the contents of the input file (assembly text file)
 with open(input_file, "r") as file:
@@ -50,26 +52,18 @@ with open(testbench_file, 'r') as file:
 with open(testbench_file, 'w') as file:
     for line in lines:
         # Change instruction memory source file
-        if line.startswith("\t`define FIRMWARE"):
+        if line.startswith("    `define FIRMWARE "):
             print("Line found!")
             # Modify the input file name
             output_file = output_file.replace("\\", "\\\\")
-            modified_line = line.replace(line,'\t`define FIRMWARE '+ '"' + output_file + '"' +'\n' )
+            print(output_file)
+            modified_line = line.replace(line,'    `define FIRMWARE '+ '"' + output_file + '"' +'\n' )
+            print(modified_line)
             file.write(modified_line)
         else:
             file.write(line)
 
-# OS : cmd commands to execute Verilog simulations:
+# OS: cmd commands to execute Verilog simulations:
 os.system("iverilog -IModules -o phoeniX.vvp phoeniX_Testbench.v") 
 os.system("vvp phoeniX.vvp") 
-# with open(testbench_file, 'w') as file:
-#     for line in lines:
-#         # Change testbench file
-#         if line.startswith("\t`define FIRMWARE"):
-#             print("Line found!")
-#             # Remove firmware file address
-#             modified_line = line.replace(line,'\t`define FIRMWARE\n')
-#             file.write(modified_line)
-#         else:
-#             file.write(line)
 os.system("gtkwave phoeniX.gtkw") 
