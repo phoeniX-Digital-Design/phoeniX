@@ -305,17 +305,11 @@ Provided that you name your project sub-directory correctly the AssembleX softwa
 The code has been crafted to enable the utilization of the processor as a synthesizable and implementable soft-core on Xilinx FPGA devices. The RTL synthesis of the phoeniX processor was done using Synopsys Design Compiler, using the `NanGate 45nm` technology.  By adhering the timing requirements, the processor can achieve a performance level of **620MHz**, enabling efficient execution of instructions and supporting the desired operational specifications in embedded processors.
 </div>
 
-| Dhyrstone Parameters         | phoeniX (RV32I)     |
-| ---------------------------- | ------------------- |
-| CPI                          | 1.119               |
-| Dhrystones per Second per MHz| 3044                |
-| DMIPS/MHz                    | 1.732               |
-
-| Dhyrstone Parameters         | phoeniX (RV32IM)    |
-| ---------------------------- | ------------------- |
-| CPI                          | 1.137               |
-| Dhrystones per Second per MHz| 3324                |
-| DMIPS/MHz                    | 1.891               |
+| Dhyrstone Parameters         | phoeniX (RV32I)     | phoeniX (RV32IM)    |
+| ---------------------------- | ------------------- | ------------------- |
+| CPI                          | 1.119               | 1.137               |
+| Dhrystones per Second per MHz| 3044                | 3324                |
+| DMIPS/MHz                    | 1.732               | 1.891               |
 
 <div align="justify">
 
