@@ -1,3 +1,5 @@
+`include "Defines.v"
+
 module Register_File
 #(
     parameter WIDTH = 32,
@@ -23,15 +25,15 @@ module Register_File
 	reg [WIDTH - 1 : 0] Registers [0 : $pow(2, DEPTH) - 1];      
 
     integer i;    	
-    always @(posedge reset)
+    
+    always @(posedge clk or posedge reset)
     begin
-        for (i = 0; i < $pow(2, DEPTH); i = i + 1)
-            Registers[i] = {WIDTH{1'b0}};
-    end
-	
-    always @(posedge clk)
-    begin
-        if (write_enable == 1'b1 && write_index != 0)
+        if (reset)
+        begin
+            for (i = 0; i < $pow(2, DEPTH); i = i + 1)
+                Registers[i] = {WIDTH{1'b0}};
+        end
+        else if (write_enable == `ENABLE)
         begin
             Registers[write_index] <= write_data;
         end
@@ -39,12 +41,12 @@ module Register_File
 
     always @(*) 
     begin
-        if (read_enable_1 == 1'b1)
+        if (read_enable_1 == `ENABLE)
             read_data_1 <= Registers[read_index_1];
         else
             read_data_1 <= {WIDTH{1'bz}};
 
-        if (read_enable_2 == 1'b1)
+        if (read_enable_2 == `ENABLE)
             read_data_2 <= Registers[read_index_2];
         else
             read_data_2 <= {WIDTH{1'bz}};
