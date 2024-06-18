@@ -1,0 +1,18 @@
+  Terms
+  Nets
+  StdCells
+  Modules
+    Module: M_EXTENSION_Generate_Block.divider_unit
+    Module: register_file
+    Module: M_EXTENSION_Generate_Block.multiplier_unit
+    Module: arithmetic_logic_unit
+    Module: control_status_register_file
+    Module: load_store_unit
+    Module: jump_branch_unit
+    Module: address_generator
+    Module: fetch_unit
+    Module: control_status_unit
+    Module: hazard_forward_unit_source_2
+    Module: hazard_forward_unit_source_1
+    Module: immediate_generator
+    Module: instruction_decoder
