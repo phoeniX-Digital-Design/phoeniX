@@ -1,6 +1,6 @@
 ![License](https://img.shields.io/github/license/phoeniX-Digital-Design/AssembleX?color=dark-green)
 ![GCC Test](https://img.shields.io/badge/GCC_tests-passed-dark_green)
-![Version](https://img.shields.io/badge/Version-0.3.1-blue)
+![Version](https://img.shields.io/badge/Version-0.4-blue)
 ![ISA](https://img.shields.io/badge/RV32-IEM_extension-blue)
 
 <picture>
