@@ -12,9 +12,9 @@ First synthesis process was obtained using the [Qflow tool](http://opencircuitde
 
 Here is a picture of final layout result of the phoeniX core using Qflow in 180nm Technology:
 
-![phoeniX_GDS_Layout](https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Synthesis/TSMC_018um/Pictures/GDS.png)
+![phoeniX_GDS_Layout](https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Synthesis/Yosys_TSMC180/layout_pictures/GDS.png)
 
-![phoeniX_MAG_Layout](https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Synthesis/TSMC_018um/Pictures/MAG.png)
+![phoeniX_MAG_Layout](https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Synthesis/Yosys_TSMC180/layout_pictures/MAG.png)
 
 <div align="justify">
 
@@ -22,14 +22,14 @@ Here is a picture of final layout result of the phoeniX core using Qflow in 180n
 
 The main RTL synthesis of the phoeniX processor was done using Synopsys Design Compiler tool, using the `NanGate OpenCell Library` and `FreePDK45` technology. By adhering to the timing requirements, the processor can achieve a performance level of **500 - 620MHz**, enabling efficient execution of instructions and supporting the desired operational specifications in embedded processors.
 
-![phoeniX_45nm_Layout](https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Synthesis/DC_45nm/Pictures/phoeniX_RV32IEM_layout_45nm.png)
+![phoeniX_45nm_Layout](https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Synthesis/DesignCompiler_NanGate45/layout_image/phoeniX_RV32IEM_layout_45nm.png)
 
 </div>
 
 > [!NOTE]\
 > It is important to note that phoeniX is an embedded processor platform which is extensive, and execution units are reconfigurable; This means that any reported results of phoeniX core in different documenation may vary due to the integrated execution units. Results in the table below is extracted from the platform using its default (demo) execution engine. 
 
-The `Synthesis/DC45nm` includes a `tcl` file (synthesis script) customized for the target processor.
+The `Synthesis/DesignCompiler_NanGate45` includes a `tcl` file (synthesis script) customized for the target processor.
 
 ```console
 [user@USER ~]$ dc_shell-t -f compile_dc.tcl
