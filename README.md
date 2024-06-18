@@ -16,13 +16,11 @@ The constant demand for energy-efficient and high-performance embedded systems m
 
 The proposed platform enables integration of approximate arithmetic units at the core level, with different structures, accuracies, timings and etc. without any need for editing rest of the core, especially in control logic. This platform is allowing configurable trade-offs between speed, accuracy and energy consumption based on specific application requirements. Additionally, the platform includes a modular architecture that enables easy integration of various specialized units, such as hardware accelerators and coprocessors, to enhance performance for specific tasks. 
 
-To evaluate the effectiveness of the platform, extensive experiments were conducted on a set of benchmark applications, showcasing significant energy and speed improvements compared to conventional RISC-V platforms. Overall, the results demonstrate the potentials of the proposed modular and extensive approximate computing processor platform for energy-efficient and high-performance embedded systems.
-
 You can find a full list of RISC-V assembly instructions in the [ISA Specifications Documents](https://riscv.org/technical/specifications/).
 
 The core can be implemented as a softcore CPU on Xilinx 6, 7, Ultrascale and Ultrascale+ series FPGA boards using logic synthesis. This allows flexible integration of the core's functionality within the FPGA fabric. The Xilinx 7 series FPGA boards provide a versatile platform for hosting the softcore CPU implementation, offering configurable features and adaptability.
 
-The core has undergone a complete synthesis flow to become an Integrated Circuit using **Design Compiler** tool. The implementation was specifically carried out utilizing the `NanGate 45nm` Process Design Kit (PDK).
+The core has undergone a complete synthesis flow to become an integrated circuit using **Design Compiler** tool. The implementation was specifically carried out utilizing 45nm CMOS technology.
 </div>
 
 <div align="justify">
@@ -38,9 +36,8 @@ You can cite the document as:
 - A. Delavari, F. Ghoreishy, H. S. Shahhoseini and S. Mirzakuchaki (2023), “phoeniX: A RISC-V Platform for Approximate Computing Technical Specifications,” [Online]. Available: http://www.iust.ac.ir/content/76158/phoeniX-POINTS--A-RISC-V-Platform-for-Approximate-Computing
 
 
-
 - Designed By: [Arvin Delavari](https://github.com/ArvinDelavari) and [Faraz Ghoreishy](https://github.com/FarazGhoreishy)
-- Contact us: arvin7807@gmail.com - farazghoreishy@gmail.com
+- Contact us: arvin_delavari@elec.iust.ac.ir - faraz_ghoreishy@elec.iust.ac.ir
 - Iran University of Science and Technology, Summer 2023 - Present
 
 ## Table of Contents
@@ -108,7 +105,7 @@ repository/
     │   │   ├── synthesis/
     │   │   ├── log/
     │   │   └── ...
-    │   ├── NanGate_45nm
+    │   ├── DC_45nm
     │   └── Vivado_2022
     ├── Modules/
     │   ├── Address_Generator.v
@@ -299,17 +296,20 @@ Provided that you name your project sub-directory correctly the AssembleX softwa
 </div>
 
 
-## Synthesis Result
+## Result
 <div align="justify">
 
-The code has been crafted to enable the utilization of the processor as a synthesizable and implementable soft-core on Xilinx FPGA devices. The RTL synthesis of the phoeniX processor was done using Synopsys Design Compiler, using the `NanGate 45nm` technology.  By adhering the timing requirements, the processor can achieve a performance level of **620MHz**, enabling efficient execution of instructions and supporting the desired operational specifications in embedded processors.
+The code has been crafted to enable the utilization of the processor as a synthesizable and implementable soft-core on Xilinx FPGA devices. The RTL synthesis of the phoeniX processor was done using Synopsys Design Compiler, using the `NanGate 45nm` technology. By adhering the timing requirements, the processor can achieve a performance level of **500 - 620MHz**, enabling efficient execution of instructions and supporting the desired operational specifications in embedded processors.
+
+![phoeniX_45nm_Layout](https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Synthesis/DC_45nm/Pictures/phoeniX_RV32IEM_layout_45nm.png)
+
 </div>
 
-| Dhyrstone Parameters         | phoeniX (RV32I)     | phoeniX (RV32IM)    |
-| ---------------------------- | ------------------- | ------------------- |
-| CPI                          | 1.119               | 1.137               |
-| Dhrystones per Second per MHz| 3044                | 3324                |
-| DMIPS/MHz                    | 1.732               | 1.891               |
+| Dhyrstone Parameters         | phoeniX (RV32I) | phoeniX (RV32IM) |
+| ---------------------------- | --------------- | ---------------- |
+| CPI                          | 1.119           | 1.137            |
+| Dhrystones per Second per MHz| 3044            | 3324             |
+| DMIPS/MHz                    | 1.732           | 1.891            |
 
 <div align="justify">
 
@@ -319,7 +319,8 @@ It is important to note that phoeniX is an embedded processor platform which is 
 
 | Processor                    | Max Frequency (MHz) | Technology Node (nm) | Architecture | Pipeline         |
 | ---------------------------- | ------------------- | -------------------- | ------------ | ---------------- |
+| phoeniX V0.4                 | 620                 | 45                   | RV32IEM      | 3-stage in order |
 | phoeniX V0.3                 | 620                 | 45                   | RV32IEM      | 3-stage in order |
-| phoeniX V0.2                 | 500                 | 45                   | RV32IEM      | 5-stage in order |
+| phoeniX V0.2                 | 500                 | 45                   | RV32I        | 3-stage in order |
 | phoeniX V0.1                 | 220                 | 180                  | RV32I        | 5-stage in order |
 | phoeniXS6                    | 100 (on FPGA)       | Xilinx SPARTAN6      | RV32I        | 3-stage in order |
