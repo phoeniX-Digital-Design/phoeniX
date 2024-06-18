@@ -1,3 +1,13 @@
+//  The phoeniX RISC-V Processor
+//  A Reconfigurable Embedded Platform for Approximate Computing and Fault-Tolerant Applications
+
+//  Description: Hazard Detection and Data Forwarding Unit Module
+//  Copyright 2024 Iran University of Science and Technology. <phoenix.digital.electronics@gmail.com>
+
+//  Permission to use, copy, modify, and/or distribute this software for any
+//  purpose with or without fee is hereby granted, provided that the above
+//  copyright notice and this permission notice appear in all copies.
+
 `include "Defines.v"
 
 module Hazard_Forward_Unit 
