@@ -1,3 +1,13 @@
+//  The phoeniX RISC-V Processor
+//  A Reconfigurable Embedded Platform for Approximate Computing and Fault-Tolerant Applications
+
+//  Description: The phoeniX Processor Top Module
+//  Copyright 2024 Iran University of Science and Technology. <iustCompOrg@gmail.com>
+
+//  Permission to use, copy, modify, and/or distribute this software for any
+//  purpose with or without fee is hereby granted, provided that the above
+//  copyright notice and this permission notice appear in all copies.
+
 `include "Defines.v"
 `include "Fetch_Unit.v"
 `include "Instruction_Decoder.v"
@@ -16,7 +26,7 @@
 module phoeniX 
 #(
     parameter RESET_ADDRESS = 32'h0000_0000,
-    parameter M_EXTENSION   = 1'b0,
+    parameter M_EXTENSION   = 1'b1,
     parameter E_EXTENSION   = 1'b0
 ) 
 (
@@ -51,6 +61,10 @@ module phoeniX
     // --------------------------------------------
     reg [31 : 0] pc_FD_reg;
 
+    reg [1 : 2] stall_condition;
+    // 1 -> Stall Condition 1 corresponds to instructions with multi-cycle execution
+    // 2 -> Stall Condition 2 corresponds to instructions with dependencies on previous instructions whose values are not available in the pipeline
+
     // ------------------------
     // Fetch Unit Instantiation
     // ------------------------
@@ -66,6 +80,9 @@ module phoeniX
         .memory_interface_address(instruction_memory_interface_address),
         .memory_interface_frame_mask(instruction_memory_interface_frame_mask)    
     );
+
+    wire [31 : 0] address_EX_wire;
+    wire jump_branch_enable_EX_wire;
 
     // ------------------------
     // Program Counter Register 
@@ -260,15 +277,16 @@ module phoeniX
     // ------------------------------------
     // Wire Declaration for Execution Units
     // ------------------------------------
+    wire [31 : 0] alucsr_wire;
+    wire [31 : 0] mulcsr_wire;
+    wire [31 : 0] divcsr_wire;
+
     wire [31 : 0] alu_output_EX_wire;
     wire [31 : 0] mul_output_EX_wire;
     wire [31 : 0] div_output_EX_wire;
 
     wire mul_busy_EX_wire;
     wire div_busy_EX_wire;
-
-    wire [31 : 0] address_EX_wire;
-    wire jump_branch_enable_EX_wire;
 
     wire [31 : 0] csr_rd_EX_wire;
     wire [31 : 0] csr_data_out_EX_wire;
@@ -288,7 +306,7 @@ module phoeniX
         .opcode(opcode_EX_reg),
         .funct3(funct3_EX_reg),
         .funct7(funct7_EX_reg),
-        .control_status_register(control_status_register_file.alucsr_reg),    
+        .control_status_register(alucsr_wire),    
         .rs1(rs1_EX_reg),
         .rs2(rs2_EX_reg),
         .immediate(immediate_EX_reg),
@@ -313,7 +331,7 @@ module phoeniX
             .opcode(opcode_EX_reg),
             .funct3(funct3_EX_reg),
             .funct7(funct7_EX_reg),
-            .control_status_register(control_status_register_file.mulcsr_reg),    
+            .control_status_register(mulcsr_wire),    
             .rs1(rs1_EX_reg),
             .rs2(rs2_EX_reg),
             .multiplier_unit_busy(mul_busy_EX_wire),
@@ -333,7 +351,7 @@ module phoeniX
             .opcode(opcode_EX_reg),
             .funct3(funct3_EX_reg),
             .funct7(funct7_EX_reg),
-            .control_status_register(control_status_register_file.divcsr_reg),    
+            .control_status_register(divcsr_wire),    
             .rs1(rs1_EX_reg),
             .rs2(rs2_EX_reg),
             .divider_unit_busy(div_busy_EX_wire),
@@ -565,12 +583,6 @@ module phoeniX
     //          Bubble Unit           //
     ////////////////////////////////////    
 
-    reg [1 : 2] stall_condition;
-    /*
-        1 -> Stall Condition 1 corresponds to instructions with multi-cycle execution
-        2 -> Stall Condition 2 corresponds to instructions with dependencies on previous instructions whose values are not available in the pipeline
-    */
-
     always @(*) 
     begin
         if (mul_busy_EX_wire || div_busy_EX_wire)
@@ -622,6 +634,12 @@ module phoeniX
         .clk(clk),
         .reset(reset),
 
+        .opcode(opcode_MW_reg),
+        .funct3(funct3_MW_reg),
+        .funct7(funct7_MW_reg),
+        .funct12(funct12_MW_reg),
+        .write_index(write_index_MW_reg),
+
         .read_enable_csr(read_enable_csr_FD_wire),
         .write_enable_csr(write_enable_csr_EX_reg),
 
@@ -629,37 +647,11 @@ module phoeniX
         .csr_write_index(csr_index_EX_reg),
 
         .csr_write_data(csr_data_out_EX_wire),
-        .csr_read_data(csr_data_FD_wire)
+        .csr_read_data(csr_data_FD_wire),
+
+        .alucsr_wire(alucsr_wire),
+        .mulcsr_wire(mulcsr_wire),
+        .divcsr_wire(divcsr_wire)
     );
 
-    ////////////////////////////////
-    //    Performance Counters    //
-    ////////////////////////////////
-
-    // -------------
-    // Cycle Counter
-    // -------------
-
-    always @(posedge clk) 
-    begin
-        if (reset)  control_status_register_file.mcycle_reg <= 32'b0;
-        else        control_status_register_file.mcycle_reg <= control_status_register_file.mcycle_reg + 32'd1; 
-    end
-
-    // -------------------
-    // Instruction Counter
-    // -------------------
-
-    always @(posedge clk) 
-    begin
-        if (reset)  control_status_register_file.minstret_reg <= 32'b0;
-        else if (!(
-            opcode_MW_reg       == `NOP_opcode  &
-            funct3_MW_reg       == `NOP_funct3  &  
-            funct7_MW_reg       == `NOP_funct7  & 
-            funct12_MW_reg      == `NOP_funct12 &
-            write_index_MW_reg  == `NOP_write_index    
-        ))
-                    control_status_register_file.minstret_reg <= control_status_register_file.minstret_reg + 32'b1;
-    end
 endmodule
