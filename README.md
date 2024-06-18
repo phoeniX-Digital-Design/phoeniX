@@ -301,7 +301,7 @@ Provided that you name your project sub-directory correctly the AssembleX softwa
 
 The code has been crafted to enable the utilization of the processor as a synthesizable and implementable soft-core on Xilinx FPGA devices. The RTL synthesis of the phoeniX processor was done using Synopsys Design Compiler, using the `NanGate 45nm` technology. By adhering the timing requirements, the processor can achieve a performance level of **500 - 620MHz**, enabling efficient execution of instructions and supporting the desired operational specifications in embedded processors.
 
-![phoeniX_45nm_Layout](https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Synthesis/DC_45nm/Pictures/phoeniX_RV32IEM_layout_45nm.png)
+![phoeniX_45nm_Layout](https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Synthesis/DesignCompiler_NanGate45/layout_image/phoeniX_RV32IEM_layout_45nm.png)
 
 </div>
 
