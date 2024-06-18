@@ -1,3 +1,13 @@
+//  The phoeniX RISC-V Processor
+//  A Reconfigurable Embedded Platform for Approximate Computing and Fault-Tolerant Applications
+
+//  Description: Divider Unit Module
+//  Copyright 2024 Iran University of Science and Technology. <iustCompOrg@gmail.com>
+
+//  Permission to use, copy, modify, and/or distribute this software for any
+//  purpose with or without fee is hereby granted, provided that the above
+//  copyright notice and this permission notice appear in all copies.
+
 /*
     phoeniX RV32IMX Divider: Designer Guidelines
     ==========================================================================================================================
@@ -52,7 +62,7 @@ module Divider_Unit
     input wire [31 : 0] rs1, 
     input wire [31 : 0] rs2, 
 
-    output reg divider_unit_busy,  
+    output              divider_unit_busy,  
     output reg [31 : 0] divider_unit_output 
 );
 
@@ -63,14 +73,13 @@ module Divider_Unit
     
     reg  [31 : 0] input_1;
     reg  [31 : 0] input_2;
+
+    wire [ 7 : 0] divider_accuracy;
+    wire [31 : 0] divider_input_1;   // Latched Module input 1
+    wire [31 : 0] divider_input_2;   // Latched Module input 2
     
     wire [31 : 0] result;
     wire [31 : 0] remainder;
-    wire busy;
-
-    reg  [ 7 : 0] divider_accuracy;
-    reg  [31 : 0] divider_input_1;   // Latched Module input 1
-    reg  [31 : 0] divider_input_2;   // Latched Module input 2
 
     reg  divider_0_enable;
     reg  divider_1_enable;
@@ -92,119 +101,175 @@ module Divider_Unit
     wire divider_2_busy;
     wire divider_3_busy;
 
+    reg reset_enable_signals = 0;
+    reg [1 : 0] signal_state;
+    reg [1 : 0] next_state;
+
+    localparam signal_zero = 2'b00;
+    localparam signal_high = 2'b01;
+    localparam signal_low  = 2'b10;
+
+    reg reset_controller_enable;
+    reg state_machine_enable;
+
     always @(*) 
     begin
         operand_1 = rs1;
         operand_2 = rs2;
-        //divider_unit_busy = busy;
-        case ({funct7, funct3, opcode})
-            {`MULDIV, `DIV, `OP} : begin
-                enable  = 1'b1;
-                input_1 = operand_1;
-                input_2 = $signed(operand_2);
-                divider_unit_output = result;
-            end
-            {`MULDIV, `DIVU, `OP} : begin
-                enable  = 1'b1;
-                input_1 = operand_1;
-                input_2 = operand_2;
-                divider_unit_output = result;
-            end
-            {`MULDIV, `REM, `OP} : begin 
-                enable  = 1'b1;
-                input_1 = operand_1;
-                input_2 = $signed(operand_2);
-                divider_unit_output = remainder;
-            end
-            {`MULDIV, `REMU, `OP} : begin
-                enable  = 1'b1;
-                input_1 = operand_1;
-                input_2 = operand_2;
-                divider_unit_output = $signed(remainder);
-            end
-            default: 
-            begin 
-                divider_unit_output = 32'bz; divider_unit_busy = 1'b0; enable = 1'b0; 
-                divider_0_enable = 1'b0; divider_1_enable = 1'b0;
-                divider_2_enable = 1'b0; divider_3_enable = 1'b0;
-                input_1 = 32'bz; input_2 = 32'bz;
-            end              
-        endcase
+        if (!reset_enable_signals)
+        begin
+            case ({funct7, funct3, opcode})
+                {`MULDIV, `DIV, `OP} : begin
+                    input_1 = operand_1;
+                    input_2 = $signed(operand_2);
+                    divider_unit_output = result;
+                    case (control_status_register[2 : 1])
+                        2'b00:   begin divider_0_enable = 1'b1; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
+                        2'b01:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b1; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
+                        2'b10:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b0; divider_2_enable = 1'b1; divider_3_enable = 1'b0; end
+                        2'b11:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b1; end 
+                        default: begin divider_0_enable = 1'b1; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
+                    endcase
+                end
+                {`MULDIV, `DIVU, `OP} : begin
+                    input_1 = operand_1;
+                    input_2 = operand_2;
+                    divider_unit_output = result;
+                    case (control_status_register[2 : 1])
+                        2'b00:   begin divider_0_enable = 1'b1; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
+                        2'b01:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b1; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
+                        2'b10:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b0; divider_2_enable = 1'b1; divider_3_enable = 1'b0; end
+                        2'b11:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b1; end 
+                        default: begin divider_0_enable = 1'b1; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
+                    endcase
+                end
+                {`MULDIV, `REM, `OP} : begin 
+                    input_1 = operand_1;
+                    input_2 = $signed(operand_2);
+                    divider_unit_output = remainder;
+                    case (control_status_register[2 : 1])
+                        2'b00:   begin divider_0_enable = 1'b1; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
+                        2'b01:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b1; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
+                        2'b10:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b0; divider_2_enable = 1'b1; divider_3_enable = 1'b0; end
+                        2'b11:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b1; end 
+                        default: begin divider_0_enable = 1'b1; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
+                    endcase
+                end
+                {`MULDIV, `REMU, `OP} : begin
+                    input_1 = operand_1;
+                    input_2 = operand_2;
+                    divider_unit_output = $signed(remainder);
+                    case (control_status_register[2 : 1])
+                        2'b00:   begin divider_0_enable = 1'b1; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
+                        2'b01:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b1; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
+                        2'b10:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b0; divider_2_enable = 1'b1; divider_3_enable = 1'b0; end
+                        2'b11:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b1; end 
+                        default: begin divider_0_enable = 1'b1; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
+                    endcase
+                end
+                default: 
+                begin 
+                    divider_unit_output = 32'bz; 
+                    divider_0_enable = 1'b0; divider_1_enable = 1'b0;
+                    divider_2_enable = 1'b0; divider_3_enable = 1'b0;
+                end              
+            endcase
+        end else if (reset_enable_signals) 
+        begin
+            divider_0_enable = 1'b0; divider_1_enable = 1'b0;
+            divider_2_enable = 1'b0; divider_3_enable = 1'b0;
+        end
     end
 
-    always @(posedge enable) 
+    assign divider_unit_busy = (divider_0_enable | divider_1_enable | divider_2_enable | divider_3_enable);
+
+    always @(divider_0_busy or divider_1_busy or divider_2_busy or divider_3_busy or reset_controller_enable) 
+    begin 
+        if (!divider_0_busy) begin state_machine_enable <= 1; end 
+        else if (!divider_1_busy) begin state_machine_enable <= 1; end 
+        else if (!divider_2_busy) begin state_machine_enable <= 1; end
+        else if (!divider_3_busy) begin state_machine_enable <= 1; end
+        else if (reset_controller_enable) begin state_machine_enable <= 0; end
+    end
+
+    always @(posedge clk or negedge state_machine_enable) 
     begin
-        divider_input_1 <= input_1;
-        divider_input_2 <= input_2;
-        divider_accuracy <= control_status_register[10 : 3] | {8{~control_status_register[0]}};
-        case (control_status_register[2 : 1])
-            2'b00:   begin divider_0_enable = 1'b1; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
-            2'b01:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b1; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
-            2'b10:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b0; divider_2_enable = 1'b1; divider_3_enable = 1'b0; end
-            2'b11:   begin divider_0_enable = 1'b0; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b1; end 
-            default: begin divider_0_enable = 1'b1; divider_1_enable = 1'b0; divider_2_enable = 1'b0; divider_3_enable = 1'b0; end
+        if (!state_machine_enable) signal_state <= signal_zero;
+        else signal_state <= next_state;
+    end
+
+    always @(*) 
+    begin
+        case (signal_state)
+            signal_zero:   
+                begin 
+                    if (state_machine_enable) 
+                    begin reset_enable_signals <= 0; next_state <= signal_high; reset_controller_enable <= 0; end
+                    else if (!state_machine_enable)
+                    begin reset_enable_signals <= 0; next_state <= signal_low;  reset_controller_enable <= 0; end
+                end
+            signal_high:   
+                begin 
+                    if (state_machine_enable) 
+                    begin reset_enable_signals <= 1; next_state <= signal_low; reset_controller_enable <= 0; end
+                    else if (!state_machine_enable)
+                    begin reset_enable_signals <= 0; next_state <= signal_low; reset_controller_enable <= 0; end 
+                end
+            signal_low:    
+                begin 
+                    if (state_machine_enable) 
+                    begin reset_enable_signals <= 0; next_state <= signal_low; reset_controller_enable <= 1; end
+                    else if (!state_machine_enable)
+                    begin reset_enable_signals <= 0; next_state <= signal_low; reset_controller_enable <= 0; end
+                end
+            default:       
+                begin 
+                    if (state_machine_enable) 
+                    begin reset_enable_signals <= 0; next_state <= signal_low; reset_controller_enable <= 1; end
+                    else if (!state_machine_enable)
+                    begin reset_enable_signals <= 0; next_state <= signal_low; reset_controller_enable <= 0; end
+                end
         endcase
     end
 
-    //always @(posedge clk)
-    //begin
-    //    if (divider_0_enable) approximate_accuracy_controlable_divider.cycle = 5'd31;
-    //end
+    assign divider_0_enable_wire = (!reset_enable_signals) ? divider_0_enable : 0;
+    assign divider_1_enable_wire = (!reset_enable_signals) ? divider_1_enable : 0; 
+    assign divider_2_enable_wire = (!reset_enable_signals) ? divider_2_enable : 0; 
+    assign divider_3_enable_wire = (!reset_enable_signals) ? divider_3_enable : 0;  
 
-    always @(negedge divider_unit_busy) enable <= 1'b0;
+    // Assigning divider circuits' inputs
+    reg circuits_input_enable = 0;
+    wire enables_combine = (divider_0_enable | divider_1_enable | divider_2_enable | divider_3_enable);
+    always @(posedge enables_combine) 
+    begin circuits_input_enable = 1; end
+    assign divider_input_1  = (circuits_input_enable) ? input_1 : 32'bz;
+    assign divider_input_2  = (circuits_input_enable) ? input_2 : 32'bz;
+    assign divider_accuracy = (circuits_input_enable) ? (control_status_register[10 : 3] | {8{~control_status_register[0]}}) : 8'bz;
 
+    // Assigning divider circuits' results to top unit result
     assign result = (divider_0_enable) ? divider_0_result :
                     (divider_1_enable) ? divider_1_result :
                     (divider_2_enable) ? divider_2_result :
                     (divider_3_enable) ? divider_3_result : divider_0_result;
-
+    
+    // Assigning divider circuits' remainder results to top unit result
     assign remainder =  (divider_0_enable) ? divider_0_remainder :
                         (divider_1_enable) ? divider_1_remainder :
                         (divider_2_enable) ? divider_2_remainder :
                         (divider_3_enable) ? divider_3_remainder : divider_0_remainder;
-  
-    always @(*) 
-    begin
-        if (divider_0_enable)
-            divider_unit_busy <= divider_0_busy;
-        else if (divider_1_enable)
-            divider_unit_busy <= divider_1_busy;
-        else if (divider_2_enable)
-            divider_unit_busy <= divider_2_busy;
-        else if (divider_3_enable)
-            divider_unit_busy <= divider_3_busy;
-        else
-            divider_unit_busy <= 1'b0; 
-    end
 
     // *** Instantiate your divider here ***
     // Please instantiate your divider module according to the guidelines and naming conventions of phoeniX
     // ----------------------------------------------------------------------------------------------------
     generate 
         if (GENERATE_CIRCUIT_1)
-        begin
+        begin : Divider_1_Generate_Block
             // Circuit 1 (default) instantiation
             //----------------------------------
-            /*
-            Approximate_Accuracy_Controlable_Divider approximate_accuracy_controlable_divider 
-            (
-                .clk(clk),
-                .enable(divider_0_enable),
-                .Er(divider_accuracy),
-                .operand_1(divider_input_1),
-                .operand_2(divider_input_2),  
-                .div(divider_0_result),  
-                .rem(divider_0_remainder), 
-                .busy(divider_0_busy)
-            );
-            */
-
-            //assign divider_0_result    = divider_input_1 / divider_input_2;
-            //assign divider_0_remainder = divider_input_1 % divider_input_2;
-            //assign divider_0_busy = 0;
             test_div div
             (
                 .clk(clk),
+                .enable(divider_0_enable),
                 .divider_input_1(divider_input_1),
                 .divider_input_2(divider_input_2),
                 .divider_0_result(divider_0_result),
@@ -215,7 +280,7 @@ module Divider_Unit
             // End of Circuit 1 instantiation
         end
         if (GENERATE_CIRCUIT_2)
-        begin
+        begin : Divider_2_Generate_Block
             // Circuit 2 instantiation
             //-------------------------------
 
@@ -223,7 +288,7 @@ module Divider_Unit
             // End of Circuit 2 instantiation
         end
         if (GENERATE_CIRCUIT_3)
-        begin
+        begin : Divider_3_Generate_Block
             // Circuit 3 instantiation
             //-------------------------------
 
@@ -231,7 +296,7 @@ module Divider_Unit
             // End of Circuit 3 instantiation
         end
         if (GENERATE_CIRCUIT_4)
-        begin
+        begin : Divider_4_Generate_Block
             // Circuit 4 instantiation
             //-------------------------------
 
@@ -652,18 +717,22 @@ endmodule
 module test_div
 (
     input wire clk,
+    input wire enable,
     input wire [31 : 0] divider_input_1,
     input wire [31 : 0] divider_input_2,
     output reg [31 : 0] divider_0_result,
     output reg [31 : 0] divider_0_remainder,
     output reg divider_0_busy
 );
-    always @(*) 
+    always @(posedge clk) 
     begin
-        divider_0_busy = 1;
-        repeat (32) @(posedge clk);
-        divider_0_result    = divider_input_1 / divider_input_2;
-        divider_0_remainder = divider_input_1 % divider_input_2;
-        divider_0_busy = 0;
+        if (enable)
+        begin 
+            divider_0_busy = 1;
+            repeat (8) @(posedge clk);
+            divider_0_result    = divider_input_1 / divider_input_2;
+            divider_0_remainder = divider_input_1 % divider_input_2;
+            divider_0_busy = 0;
+        end 
     end
 endmodule

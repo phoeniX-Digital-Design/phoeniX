@@ -1,3 +1,13 @@
+//  The phoeniX RISC-V Processor
+//  A Reconfigurable Embedded Platform for Approximate Computing and Fault-Tolerant Applications
+
+//  Description: Multiplier Unit Module
+//  Copyright 2024 Iran University of Science and Technology. <iustCompOrg@gmail.com>
+
+//  Permission to use, copy, modify, and/or distribute this software for any
+//  purpose with or without fee is hereby granted, provided that the above
+//  copyright notice and this permission notice appear in all copies.
+
 /*
     phoeniX RV32IMX Multiplier: Designer Guidelines
     ==========================================================================================================================
@@ -52,11 +62,9 @@ module Multiplier_Unit
     input wire [31 : 0] rs1, 
     input wire [31 : 0] rs2,  
 
-    output reg multiplier_unit_busy, 
+    output              multiplier_unit_busy, 
     output reg [31 : 0] multiplier_unit_output  
 );
-
-    reg  multiplier_enable;
 
     reg  [31 : 0] operand_1;            // RS1 latch
     reg  [31 : 0] operand_2;            // RS2 latch
@@ -64,11 +72,10 @@ module Multiplier_Unit
     reg  [31 : 0] input_1;              // Modules input 1
     reg  [31 : 0] input_2;              // Modules input 2
 
-    reg  [ 6 : 0] multiplier_accuracy;
-    reg  [31 : 0] multiplier_input_1;   // Latched modules input 1
-    reg  [31 : 0] multiplier_input_2;   // Latched modules input 2
+    wire [ 6 : 0] multiplier_accuracy;
+    wire [31 : 0] multiplier_input_1;   // Latched modules input 1
+    wire [31 : 0] multiplier_input_2;   // Latched modules input 2
 
-    reg multiplier_busy;                
     wire [63 : 0] result;               
 
     reg  multiplier_0_enable;
@@ -86,102 +93,173 @@ module Multiplier_Unit
     wire multiplier_2_busy;
     wire multiplier_3_busy;
 
+    reg reset_enable_signals = 0;
+    reg [1 : 0] signal_state;
+    reg [1 : 0] next_state;
+
+    localparam signal_zero = 2'b00;
+    localparam signal_high = 2'b01;
+    localparam signal_low  = 2'b10;
+
+    reg reset_controller_enable;
+    reg state_machine_enable;
+
     always @(*) 
     begin
         operand_1 = rs1;
         operand_2 = rs2;
+        if (!reset_enable_signals)
+        begin
         case ({funct7, funct3, opcode})
             {`MULDIV, `MUL, `OP} : 
             begin
-                multiplier_enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = $signed(operand_2);
                 multiplier_unit_output = result[31 : 0];
+                case (control_status_register[2 : 1])
+                    2'b00:   begin multiplier_0_enable = 1'b1; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
+                    2'b01:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b1; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
+                    2'b10:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b1; multiplier_3_enable = 1'b0; end
+                    2'b11:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b1; end 
+                    default: begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
+                endcase
             end
             {`MULDIV, `MULH, `OP} : 
             begin 
-                multiplier_enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = $signed(operand_2);
                 multiplier_unit_output = result >>> 32;
+                case (control_status_register[2 : 1])
+                    2'b00:   begin multiplier_0_enable = 1'b1; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
+                    2'b01:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b1; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
+                    2'b10:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b1; multiplier_3_enable = 1'b0; end
+                    2'b11:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b1; end 
+                    default: begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
+                endcase
             end
             {`MULDIV, `MULHSU, `OP} : 
             begin
-                multiplier_enable  = 1'b1;
                 input_1 = $signed(operand_1);
                 input_2 = operand_2;
                 multiplier_unit_output = result >>> 32;
+                case (control_status_register[2 : 1])
+                    2'b00:   begin multiplier_0_enable = 1'b1; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
+                    2'b01:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b1; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
+                    2'b10:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b1; multiplier_3_enable = 1'b0; end
+                    2'b11:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b1; end 
+                    default: begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
+                endcase
             end
             {`MULDIV, `MULHU, `OP} : 
             begin
-                multiplier_enable  = 1'b1;
                 input_1 = operand_1;
                 input_2 = operand_2;
                 multiplier_unit_output = result >> 32;
+                case (control_status_register[2 : 1])
+                    2'b00:   begin multiplier_0_enable = 1'b1; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
+                    2'b01:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b1; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
+                    2'b10:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b1; multiplier_3_enable = 1'b0; end
+                    2'b11:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b1; end 
+                    default: begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
+                endcase
             end
             default: 
             begin
                 multiplier_unit_output = 32'bz; 
-                multiplier_enable   = 1'b0; 
                 multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0;
                 multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0;
-            end             
+            end
+        endcase
+        end else if (reset_enable_signals) 
+        begin
+            multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0;
+            multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0;
+        end
+    end
+
+    assign multiplier_unit_busy = (multiplier_0_enable | multiplier_1_enable | multiplier_2_enable | multiplier_3_enable);
+
+    always @(multiplier_0_busy or multiplier_1_busy or multiplier_2_busy or multiplier_3_busy or reset_controller_enable) 
+    begin 
+        if (!multiplier_0_busy) begin state_machine_enable <= 1; end 
+        else if (!multiplier_1_busy) begin state_machine_enable <= 1; end 
+        else if (!multiplier_2_busy) begin state_machine_enable <= 1; end
+        else if (!multiplier_3_busy) begin state_machine_enable <= 1; end
+        else if (reset_controller_enable) begin state_machine_enable <= 0; end
+    end
+
+    always @(posedge clk or negedge state_machine_enable) 
+    begin
+        if (!state_machine_enable) signal_state <= signal_zero;
+        else signal_state <= next_state;
+    end
+    
+    always @(*) 
+    begin
+        case (signal_state)
+            signal_zero:   
+                begin 
+                    if (state_machine_enable) 
+                    begin reset_enable_signals <= 0; next_state <= signal_high; reset_controller_enable <= 0; end
+                    else if (!state_machine_enable)
+                    begin reset_enable_signals <= 0; next_state <= signal_low;  reset_controller_enable <= 0; end
+                end
+            signal_high:   
+                begin 
+                    if (state_machine_enable) 
+                    begin reset_enable_signals <= 1; next_state <= signal_low; reset_controller_enable <= 0; end
+                    else if (!state_machine_enable)
+                    begin reset_enable_signals <= 0; next_state <= signal_low; reset_controller_enable <= 0; end 
+                end
+            signal_low:    
+                begin 
+                    if (state_machine_enable) 
+                    begin reset_enable_signals <= 0; next_state <= signal_low; reset_controller_enable <= 1; end
+                    else if (!state_machine_enable)
+                    begin reset_enable_signals <= 0; next_state <= signal_low; reset_controller_enable <= 0; end
+                end
+            default:       
+                begin 
+                    if (state_machine_enable) 
+                    begin reset_enable_signals <= 0; next_state <= signal_low; reset_controller_enable <= 1; end
+                    else if (!state_machine_enable)
+                    begin reset_enable_signals <= 0; next_state <= signal_low; reset_controller_enable <= 0; end
+                end
         endcase
     end
 
-    always @(*) multiplier_unit_busy = multiplier_enable; 
-    always @(negedge multiplier_busy) 
-    begin
-        multiplier_enable <= 1'b0;
-        multiplier_input_1 <= 32'bz;
-        multiplier_input_2 <= 32'bz;
-        multiplier_accuracy <= 7'bz;
-    end
-    always @(posedge multiplier_enable) 
-    begin
-        multiplier_input_1 <= input_1;
-        multiplier_input_2 <= input_2;
-        multiplier_accuracy <= control_status_register[9 : 3] | {7{~control_status_register[0]}};
-        case (control_status_register[2 : 1])
-            2'b00:   begin multiplier_0_enable = 1'b1; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
-            2'b01:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b1; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
-            2'b10:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b1; multiplier_3_enable = 1'b0; end
-            2'b11:   begin multiplier_0_enable = 1'b0; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b1; end 
-            default: begin multiplier_0_enable = 1'b1; multiplier_1_enable = 1'b0; multiplier_2_enable = 1'b0; multiplier_3_enable = 1'b0; end
-        endcase
-    end
+    assign multiplier_0_enable_wire = (!reset_enable_signals) ? multiplier_0_enable : 0;
+    assign multiplier_1_enable_wire = (!reset_enable_signals) ? multiplier_1_enable : 0; 
+    assign multiplier_2_enable_wire = (!reset_enable_signals) ? multiplier_2_enable : 0; 
+    assign multiplier_3_enable_wire = (!reset_enable_signals) ? multiplier_3_enable : 0;  
 
+    // Assigning multiplier circuits' inputs
+    reg circuits_input_enable = 0;
+    wire enables_combine = (multiplier_0_enable | multiplier_1_enable | multiplier_2_enable | multiplier_3_enable);
+    always @(posedge enables_combine) 
+    begin circuits_input_enable = 1; end
+    assign multiplier_input_1  = (circuits_input_enable) ? input_1 : 32'bz;
+    assign multiplier_input_2  = (circuits_input_enable) ? input_2 : 32'bz;
+    assign multiplier_accuracy = (circuits_input_enable) ? (control_status_register[9 : 3] | {7{~control_status_register[0]}}) : 7'bz;
+
+    // Assigning multiplier circuits' results to top unit result
     assign result = (multiplier_0_enable) ? multiplier_0_result :
                     (multiplier_1_enable) ? multiplier_1_result :
                     (multiplier_2_enable) ? multiplier_2_result :
                     (multiplier_3_enable) ? multiplier_3_result : multiplier_0_result;
-  
-    always @(*) 
-    begin
-        if (multiplier_0_enable)
-            multiplier_busy <= multiplier_0_busy;
-        else if (multiplier_1_enable)
-            multiplier_busy <= multiplier_1_busy;
-        else if (multiplier_2_enable)
-            multiplier_busy <= multiplier_2_busy;
-        else if (multiplier_3_enable)
-            multiplier_busy <= multiplier_3_busy;
-        else
-            multiplier_busy <= 1'b0; 
-    end
 
     // *** Instantiate your multiplier circuit here ***
     // Please instantiate your multiplier module according to the guidelines and naming conventions of phoeniX
     // -------------------------------------------------------------------------------------------------------
     generate 
         if (GENERATE_CIRCUIT_1)
-        begin
+        begin : Multiplier_1_Generate_Block
             // Circuit 1 (default) instantiation
             //----------------------------------
             Approximate_Accuracy_Controllable_Multiplier approximate_accuracy_controllable_multiplier 
             (
                 .clk(clk),
-                .enable(multiplier_0_enable),
+                .enable(multiplier_0_enable_wire),
                 .Er(multiplier_accuracy),
                 .Operand_1(multiplier_input_1), 
                 .Operand_2(multiplier_input_2),  
@@ -192,7 +270,7 @@ module Multiplier_Unit
             // End of Circuit 1 instantiation
         end
         if (GENERATE_CIRCUIT_2)
-        begin
+        begin : Multiplier_2_Generate_Block
             // Circuit 2 instantiation
             //-------------------------------
 
@@ -200,7 +278,7 @@ module Multiplier_Unit
             // End of Circuit 2 instantiation
         end
         if (GENERATE_CIRCUIT_3)
-        begin
+        begin : Multiplier_3_Generate_Block
             // Circuit 3 instantiation
             //-------------------------------
 
@@ -208,7 +286,7 @@ module Multiplier_Unit
             // End of Circuit 3 instantiation
         end
         if (GENERATE_CIRCUIT_4)
-        begin
+        begin : Multiplier_4_Generate_Block
             // Circuit 4 instantiation
             //-------------------------------
 
@@ -220,8 +298,8 @@ module Multiplier_Unit
     // *** End of multiplier module instantiation ***
 endmodule
 
-// Add your custom multilpier circuit here ***
-// Please create your multilpier module according to the guidelines and naming conventions of phoeniX
+// Add your custom multiplier circuit here ***
+// Please create your multiplier module according to the guidelines and naming conventions of phoeniX
 // --------------------------------------------------------------------------------------------------------
 module Approximate_Accuracy_Controllable_Multiplier 
 (
@@ -339,7 +417,7 @@ module Approximate_Accuracy_Controllable_Multiplier_16bit
 
     always @(*) 
     begin
-        next_state = 'bz;
+        next_state <= 'bz;
        
         case (state)
             3'b000 : 
@@ -386,7 +464,7 @@ module Approximate_Accuracy_Controllable_Multiplier_8bit
 
     generate
         for (genvar i = 1; i < 9; i = i + 1)
-        begin
+        begin : PP_Generation
             assign PP[i] = {8{Operand_2[i - 1]}} & Operand_1;
         end
     endgenerate

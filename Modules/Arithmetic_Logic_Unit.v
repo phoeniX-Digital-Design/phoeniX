@@ -1,3 +1,12 @@
+//  The phoeniX RISC-V Processor
+//  A Reconfigurable Embedded Platform for Approximate Computing and Fault-Tolerant Applications
+
+//  Description: Arithmetic Logic Unit (ALU) Module
+//  Copyright 2024 Iran University of Science and Technology. <iustCompOrg@gmail.com>
+
+//  Permission to use, copy, modify, and/or distribute this software for any
+//  purpose with or without fee is hereby granted, provided that the above
+//  copyright notice and this permission notice appear in all copies.
 /*
     phoeniX RV32IEM ALU: Designer Guidelines
     ==========================================================================================================================
@@ -100,7 +109,7 @@ module Arithmetic_Logic_Unit
             // I-TYPE Intructions
             {`ADDI,     `OP_IMM} : 
             begin 
-                alu_enable = 1'b1; alu_output = adder_result;
+                alu_output = adder_result;
             end
             {`SLLI,     `OP_IMM} : 
             begin 
@@ -108,27 +117,22 @@ module Arithmetic_Logic_Unit
             end 
             {`SLTI,     `OP_IMM} : 
             begin 
-                alu_enable = 1'b1; 
                 alu_output = $signed(operand_1) < $signed(operand_2) ? 32'd1 : 32'd0;  
             end
             {`SLTIU,    `OP_IMM} : 
             begin 
-                alu_enable = 1'b1; 
                 alu_output = operand_1 < operand_2 ? 32'd1 : 32'd0;
             end
             {`XORI,     `OP_IMM} : 
             begin 
-                alu_enable = 1'b1;
                 alu_output = operand_1 ^ operand_2;
             end
             {`ORI,      `OP_IMM} : 
             begin 
-                alu_enable = 1'b1; 
                 alu_output = operand_1 | operand_2;
             end
             {`ANDI,     `OP_IMM} : 
             begin 
-                alu_enable = 1'b1; 
                 alu_output = operand_1 & operand_2;
             end
             {`SRI,      `OP_IMM} : 
@@ -153,8 +157,7 @@ module Arithmetic_Logic_Unit
         
             // R-TYPE Instructions
             {`ADDSUB,   `OP} : 
-            begin 
-                alu_enable = 1'b1; 
+            begin  
                 alu_output = adder_result;
             end  
             {`SLL,      `OP} : 
@@ -165,28 +168,23 @@ module Arithmetic_Logic_Unit
                 alu_output = shift_result;
             end
             {`SLT,      `OP} : 
-            begin 
-                alu_enable = 1'b1; 
+            begin  
                 alu_output = $signed(operand_1) < $signed(operand_2) ? 32'd1 : 32'd0;    
             end
             {`SLTU,     `OP} : 
-            begin 
-                alu_enable = 1'b1; 
+            begin  
                 alu_output = operand_1 < operand_2 ? 32'd1 : 32'd0;
             end
             {`XOR,      `OP} : 
-            begin 
-                alu_enable = 1'b1; 
+            begin   
                 alu_output = operand_1 ^ operand_2;
             end
             {`OR,       `OP} : 
-            begin 
-                alu_enable = 1'b1; 
+            begin    
                 alu_output = operand_1 | operand_2;
             end
             {`AND,      `OP} : 
             begin 
-                alu_enable = 1'b1; 
                 alu_output = operand_1 & operand_2;  
             end
             {`SR,       `OP} :
@@ -210,7 +208,6 @@ module Arithmetic_Logic_Unit
             end           
             default: 
             begin 
-                alu_enable = 1'b0; 
                 alu_output = 32'bz; 
             end
         endcase

@@ -1,3 +1,13 @@
+//  The phoeniX RISC-V Processor
+//  A Reconfigurable Embedded Platform for Approximate Computing and Fault-Tolerant Applications
+
+//  Description: 32x32 Register File Module
+//  Copyright 2024 Iran University of Science and Technology. <iustCompOrg@gmail.com>
+
+//  Permission to use, copy, modify, and/or distribute this software for any
+//  purpose with or without fee is hereby granted, provided that the above
+//  copyright notice and this permission notice appear in all copies.
+
 `include "Defines.v"
 
 module Register_File
@@ -22,7 +32,7 @@ module Register_File
     output reg [WIDTH - 1 : 0] read_data_1,
     output reg [WIDTH - 1 : 0] read_data_2
 );
-	reg [WIDTH - 1 : 0] Registers [0 : $pow(2, DEPTH) - 1];      
+	reg [WIDTH - 1 : 0] Registers [0 : 2**DEPTH - 1];      
 
     integer i;    	
     
@@ -30,7 +40,7 @@ module Register_File
     begin
         if (reset)
         begin
-            for (i = 0; i < $pow(2, DEPTH); i = i + 1)
+            for (i = 0; i < 2**DEPTH; i = i + 1)
                 Registers[i] <= {WIDTH{1'b0}};
         end
         else if (write_enable == `ENABLE)
