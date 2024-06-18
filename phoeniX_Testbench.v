@@ -1,8 +1,18 @@
+//  The phoeniX RISC-V Processor
+//  A Reconfigurable Embedded Platform for Approximate Computing and Fault-Tolerant Applications
+
+//  Description: Test environment for phoeniX processor (iverilog)
+//  Copyright 2024 Iran University of Science and Technology. <phoenix.digital.electronics@gmail.com>
+
+//  Permission to use, copy, modify, and/or distribute this software for any
+//  purpose with or without fee is hereby granted, provided that the above
+//  copyright notice and this permission notice appear in all copies.
+
 `timescale 1 ns / 1 ns
 `include "phoeniX.v"
 
 `ifndef FIRMWARE
-    `define FIRMWARE "Software\\User_Codes\\test\\test_firmware.hex"
+    `define FIRMWARE "Software\\User_Codes\\Test_Codes\\test_firmware.hex"
 `endif /*FIRMWARE*/
 
 `ifndef START_ADDRESS
@@ -104,9 +114,9 @@ module phoeniX_Testbench;
         wire [31 : 0] x29_t4 	= uut.register_file.Registers[29];
         wire [31 : 0] x30_t5 	= uut.register_file.Registers[30];
         wire [31 : 0] x31_t6 	= uut.register_file.Registers[31];
-        wire [31 : 0] alu_csr   = uut.control_status_register_file.alucsr_reg;
-        wire [31 : 0] mul_csr   = uut.control_status_register_file.mulcsr_reg;
-        wire [31 : 0] div_csr   = uut.control_status_register_file.divcsr_reg;
+        wire [31 : 0] alu_csr   = uut.alucsr_wire;
+        wire [31 : 0] mul_csr   = uut.mulcsr_wire;
+        wire [31 : 0] div_csr   = uut.divcsr_wire;
         wire [63 : 0] mcycle    = uut.control_status_register_file.mcycle_reg;
         wire [63 : 0] minstret  = uut.control_status_register_file.minstret_reg;
     `endif /*DISABLE_DEBUG*/
