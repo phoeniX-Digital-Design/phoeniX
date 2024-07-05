@@ -25,10 +25,10 @@ DMIPS_Per_MHz: 1.732
 Dhrystone Result on phoeniX (RV32IM):
 ```
 Number_Of_Runs: 100
-User_Time: 30079 cycles, 26442 insn
-Cycles_Per_Instruction: 1.137
-Dhrystones_Per_Second_Per_MHz: 3324
-DMIPS_Per_MHz: 1.891
+User_Time: 31248 cycles, 26442 insn
+Cycles_Per_Instruction: 1.181
+Dhrystones_Per_Second_Per_MHz: 3200
+DMIPS_Per_MHz: 1.821
 ```
 
 </div>
