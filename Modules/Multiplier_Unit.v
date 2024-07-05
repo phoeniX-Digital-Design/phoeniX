@@ -46,7 +46,7 @@
 module Multiplier_Unit
 #(
     parameter GENERATE_CIRCUIT_1 = 1,
-    parameter GENERATE_CIRCUIT_2 = 0,
+    parameter GENERATE_CIRCUIT_2 = 1,
     parameter GENERATE_CIRCUIT_3 = 0,
     parameter GENERATE_CIRCUIT_4 = 0
 )
@@ -273,7 +273,15 @@ module Multiplier_Unit
         begin : Multiplier_2_Generate_Block
             // Circuit 2 instantiation
             //-------------------------------
-
+            sample_multiplier mul
+            (
+                .clk(clk),
+                .enable(multiplier_0_enable_wire),
+                .multiplier_input_1(multiplier_input_1),
+                .multiplier_input_2(multiplier_input_2),
+                .multiplier_0_result(multiplier_0_result),
+                .multiplier_0_busy(multiplier_0_busy)
+            );
             //-------------------------------
             // End of Circuit 2 instantiation
         end
@@ -665,6 +673,27 @@ module ATC_8
     iCAC #(8, 1) iCAC_4 (PP_7, PP_8, P4, Q4);
 
     assign V1 = Q1 | Q2 << 2 | Q3 << 4 | Q4 << 6;
+endmodule
+
+module sample_multiplier
+(
+    input wire clk,
+    input wire enable,
+    input wire [31 : 0] multiplier_input_1,
+    input wire [31 : 0] multiplier_input_2,
+    output reg [63 : 0] multiplier_0_result,
+    output reg multiplier_0_busy
+);
+    always @(posedge clk) 
+    begin
+        if (enable)
+        begin 
+            multiplier_0_busy = 1;
+            repeat (5) @(posedge clk);
+            multiplier_0_result = multiplier_input_1 * multiplier_input_2;
+            multiplier_0_busy = 0;
+        end 
+    end
 endmodule
 
 // --------------------------------------------------------------------------------------------------

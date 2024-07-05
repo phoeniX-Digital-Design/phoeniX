@@ -266,7 +266,7 @@ module Divider_Unit
         begin : Divider_1_Generate_Block
             // Circuit 1 (default) instantiation
             //----------------------------------
-            test_div div
+            sample_divider div
             (
                 .clk(clk),
                 .enable(divider_0_enable),
@@ -714,7 +714,7 @@ endmodule
 // ----------------------------------------------------------------------------------------------------
 // *** End of divider module definition ***
 
-module test_div
+module sample_divider
 (
     input wire clk,
     input wire enable,
