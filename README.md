@@ -10,28 +10,27 @@
 
 <div align="justify">
  
-**phoeniX** RISC-V processor platform is designed in Verilog HDL based on the 32-bit Base Instrcution Set of [RISC-V Instruction Set Architecture](http://riscv.org/) and can execute `RV32IEM` instructions (user have options to choose between `I` and `E`, and also to activate/deactivate `M` extensions), with special features supported for **approximate computing** techniques. In fact, **phoeniX** is a novel modular and extensive RISC-V platform for approximate computing.
+The **phoeniX** RISC-V processor platform is designed in Verilog HDL based on the 32-bit Base Instrcution Set of [RISC-V Instruction Set Architecture](http://riscv.org/) V2.2 and is able to execute `RV32IEM` instructions, with specialized features supported for **approximate computing** techniques. In fact, **phoeniX** is a novel modular and extensive RISC-V platform for approximate computing.
 
-The constant demand for energy-efficient and high-performance embedded systems motivates the development of new processor architectures, leading to modern concepts in computer engineering and digital systems, which **approximate computing** is a well-known example of. This project includes a novel modular and extensive approximate computing embedded processor platform named **phoeniX**, using the standard RISC-V ISA extensions, which aims to maximize energy efficiency while maintaining acceptable application-level accuracy. 
+The demand for energy-efficient and high-performance embedded systems motivates the development of new processor architectures, leading to modern concepts in computer engineering and digital systems, which **approximate computing** is a well-known example of. This project includes a novel reconfigurable approximate computing embedded platform named **phoeniX**, using the standard RISC-V ISA extensions, which aims to maximize energy-efficiency while maintaining acceptable application-level accuracy. 
 
-The proposed platform enables integration of approximate arithmetic units at the core level, with different structures, accuracies, timings and etc. without any need for editing rest of the core, especially in control logic. This platform is allowing configurable trade-offs between speed, accuracy and energy consumption based on specific application requirements. Additionally, the platform includes a modular architecture that enables easy integration of various specialized units, such as hardware accelerators and coprocessors, to enhance performance for specific tasks. 
+The platform enables integration of approximate arithmetic circuits at the core level, with different structures, accuracies, timings and etc. without any need for modification in rest of the core, especially in control logic. This platform allows configurable trade-offs between speed, accuracy and power consumption based on application requirements. Additionally, the platform includes a modular architecture that enables easy integration of specialized units, such as hardware accelerators and co-processors, to enhance performance for specific tasks. 
 
 You can find a full list of RISC-V assembly instructions in the [ISA Specifications Documents](https://riscv.org/technical/specifications/).
 
-The core can be implemented as a softcore CPU on Xilinx 6, 7, Ultrascale and Ultrascale+ series FPGA boards using logic synthesis. This allows flexible integration of the core's functionality within the FPGA fabric. The Xilinx 7 series FPGA boards provide a versatile platform for hosting the softcore CPU implementation, offering configurable features and adaptability.
-
-The core has undergone a complete synthesis flow to become an integrated circuit using **Design Compiler** tool. The implementation was specifically carried out utilizing 45nm CMOS technology.
 </div>
 
 <div align="justify">
 
-This repository contains an open source CPU including RTL codes and assistant software, under the [GNU V3.0 license](https://en.wikipedia.org/wiki/GNU_General_Public_License) and is free to use. The platform's technical specifications are published under supervision of [IUST Electronics Research Center](http://idea.iust.ac.ir/content/76317/phoeniX-POINTS--A-RISC-V-Platform-for-Approximate-Computing-Version-0.1-Technical-Specifications).
+This repository contains an open source RISC-V embedded core, including RTL codes and assistant software, under the [GNU V3.0 license](https://en.wikipedia.org/wiki/GNU_General_Public_License) and is free to use. The platform's technical specifications are published under supervision of [IUST Electronics Research Center](http://idea.iust.ac.ir/content/76317/phoeniX-POINTS--A-RISC-V-Platform-for-Approximate-Computing-Version-0.1-Technical-Specifications).
 
 </div>
 
-You can cite the document as:
+Publications:
 
 </div>
+
+- A. Delavari, F. Ghoreishy, H. S. Shahhoseini and S. Mirzakuchaki, "A Reconfigurable Approximate Computing RISC-V Platform for Fault-Tolerant Applications," 2024 27th Euromicro Conference on Digital System Design (DSD), Paris, France, 2024.
 
 - A. Delavari, F. Ghoreishy, H. S. Shahhoseini and S. Mirzakuchaki (2023), “phoeniX: A RISC-V Platform for Approximate Computing Technical Specifications,” [Online]. Available: http://www.iust.ac.ir/content/76158/phoeniX-POINTS--A-RISC-V-Platform-for-Approximate-Computing
 
@@ -44,10 +43,10 @@ You can cite the document as:
 
 - [Features](#Features)
 - [Directory Map](#Directory-Map)
-- [phoeniX Core Structure](#phoeniX-Core-Structure)
-- [phoeniX Memory Interface](#phoeniX-Memory-Interface)
+- [Core's Structure](#phoeniX-Core-Structure)
+- [Memory Interface](#phoeniX-Memory-Interface)
 - [Building RISC-V Toolchain](#Building-RISC-V-Toolchain)
-- [phoeniX Execution Flow](#phoeniX-Execution-Flow)
+- [Execution Flow](#phoeniX-Execution-Flow)
 - [Synthesis Result](#Synthesis-Result)
 
 
@@ -60,9 +59,9 @@ You can cite the document as:
 
  - **Modularity and Extensiveness**
 
-Modularity in processor design promotes flexibility, reusability, scalability, simpler testing, and increased system reliability by breaking down the processor into smaller, independent modules that form the building blocks. Each one of these building blocks can be designed, optimized, and tested separately. This approach offers several benefits. 
+Modularity in design promotes flexibility, reusability, scalability, simpler testing, and system reliability by breaking down the design into smaller, independent modules that form the building blocks. Each of these blocks can be designed, optimized, and tested separately. This approach offers several benefits. 
 
-First, modularity increases flexibility and reusability, as individual modules can be easily interchanged or upgraded without requiring significant changes to the main core. This enables efficient customization and adaptation to different application requirements (e.g. adding a multiplier/divider module to the design would cause significant changes to a centralized control unit, but in this methodolgy, designing self-controlled execution units would lead to a much simple integration of the module to the main core).
+First, modularity increases flexibility, as individual modules can be easily interchanged without requiring modifications to the main core. This enables customization and adaptation to different application requirements (e.g. adding an execution unit module to the design would cause changes to a centralized control unit, but in this methodolgy, designing self-controlled execution units would lead to a much simple integration of the module to the main core).
 
 Secondly, modularity aids in design verification and testing, as individual modules can be tested in isolated testbenches, simplifying the debugging process and reducing the overall development time. 
 
@@ -70,7 +69,7 @@ Additionally, modular designs can lead to improved overall system reliability, a
 
 - **A Novel Platform for Approximate Computing**
 
-The phoeniX RISC-V core introduces novel features that will help the emerging field of approximate computing techniques. With its modular design and extensive architecture, phoeniX presents a configurable platform for exploring and implementing approximate computing methodologies for developers and designers. 
+The phoeniX RISC-V core introduces novel features that will help the emerging field of approximate computing. With its modular design and extensive architecture, phoeniX presents a reconfigurable platform for exploring and implementing hardwarw approximation methodologies for developers and designers. 
 
 This platform enables researchers and developers to delve into the field realm of approximate computing, where trade-offs between accuracy and computational efficiency can be carefully balanced. By offering a range of specialized instructions, optimized datapaths, and adaptable precision controls, phoeniX empowers users to use the help of approximation in diverse application domains, opening the way for advancements in energy-efficient computing, machine learning, image processing, and etc.
 
@@ -301,7 +300,7 @@ Provided that you name your project sub-directory correctly the AssembleX softwa
 ## Result
 <div align="justify">
 
-The code has been crafted to enable the utilization of the processor as a synthesizable and implementable soft-core on Xilinx FPGA devices. The RTL synthesis of the phoeniX processor was done using Synopsys Design Compiler, using the `NanGate 45nm` technology. By adhering the timing requirements, the processor can achieve a performance level of **500 - 620MHz**, enabling efficient execution of instructions and supporting the desired operational specifications in embedded processors.
+The code has been crafted to enable the utilization of the processor as a synthesizable and implementable soft-core on Xilinx FPGA devices. The synthesis and implementation of the phoeniX processor was done using Synopsys Design Compiler, by the `NanGate 45nm` CMOS technology. By adhering the timing requirements, the processor can achieve a performance level of **500 - 620MHz**, enabling efficient execution of instructions and supporting the desired operational specifications in embedded processors.
 
 ![phoeniX_45nm_Layout](https://github.com/phoeniX-Digital-Design/phoeniX/blob/main/Synthesis/DesignCompiler_NanGate45/layout_image/phoeniX_RV32IEM_layout_45nm.png)
 
