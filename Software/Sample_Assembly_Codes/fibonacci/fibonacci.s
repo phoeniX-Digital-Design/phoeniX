@@ -1,6 +1,3 @@
-.text
-.globl	main
-
 main:
     li      sp,     0xffc
 	addi	sp,     sp,         -48
