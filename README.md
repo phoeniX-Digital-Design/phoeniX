@@ -1,6 +1,6 @@
 ![License](https://img.shields.io/github/license/phoeniX-Digital-Design/AssembleX?color=dark-green)
 ![GCC Test](https://img.shields.io/badge/GCC_tests-passed-dark_green)
-![Version](https://img.shields.io/badge/Version-0.4-blue)
+![Version](https://img.shields.io/badge/Version-0.4.1-blue)
 ![ISA](https://img.shields.io/badge/RV32-IEM_extension-blue)
 
 <picture>
@@ -34,6 +34,7 @@ Publications:
 
 - A. Delavari, F. Ghoreishy, H. S. Shahhoseini and S. Mirzakuchaki (2023), “phoeniX: A RISC-V Platform for Approximate Computing Technical Specifications,” [Online]. Available: http://www.iust.ac.ir/content/76158/phoeniX-POINTS--A-RISC-V-Platform-for-Approximate-Computing
 
+Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 
 - Designed By: [Arvin Delavari](https://github.com/ArvinDelavari) and [Faraz Ghoreishy](https://github.com/FarazGhoreishy)
 - Contact us: arvin_delavari@elec.iust.ac.ir - faraz_ghoreishy@elec.iust.ac.ir
@@ -271,15 +272,14 @@ We have meticulously developed a lightweight and user-friendly software solution
 
 This tool  enhances the efficiency of the code execution process, offering a streamlined experience for users seeking to enter the realm of assembly programming on pheoniX processor in a very simple and user-friendly way.
 
-Before running the script, note that the assembly output of the Venus Simulator for the code must be also saved in the project directory.
-To run any of these sample projects simply run python `AssembleX_V1.0.py sample` followed by the name of the project passed as a variable named project to the Python script.
+To run any of these sample projects simply run python `AssembleX.py sample` followed by the name of the project passed as a variable named project to the Python script.
 The input command format for the terminal follows the structure illustrated below:
 ```shell
-python AssembleX_V1.0.py sample {project_name}
+python AssembleX.py sample {project_name}
 ```
 For example:
 ```shell
-python AssembleX_V1.0.py sample fibonacci
+python AssembleX.py sample fibonacci
 ```
 After execution of this script, firmware file will be generated and this final file can be directly fed to our Verilog testbench. AssembleX automatically runs the testbench and calls upon gtkwave to display the selected signals in the waveform viewer application, gtkwave.
 </div>
@@ -290,7 +290,7 @@ After execution of this script, firmware file will be generated and this final f
 In order to run your own code on phoeniX, create a directory named to your project such as `/my_project` in `/Software/User_Codes`. Put all your `user_code.s` files in my_project and run the following command from the main directory:
 
 ```shell
-python AssembleX_V1.0.py code my_project
+python AssembleX.py code my_project
 ```
 
 Provided that you name your project sub-directory correctly the AssembleX software will create `my_project_firmware.hex` and fed it directly to the testbench of phoeniX processor. After that, iverilog and GTKWave are used to compile the design and view the selected waveforms.
