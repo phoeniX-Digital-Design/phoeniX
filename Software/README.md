@@ -3,19 +3,19 @@ Software
 <div align="justify">
 
 This directory contains source files the assembler, sample codes and user codes which will be executed on the phoeniX processor. In this directory, there are three subdirectories included:
+
 - `AssembleX`
 - `Sample_Assembly_Codes`
 - `Sample_C_Codes`
 - `User_Codes`
 
-The code execution and simulation on the phoeniX RISC-V processor follow two distinct branches: one for Linux systems and another for Windows systems.
 </div>
 
 ### AssembleX V3.0
 
 <div align="justify">
 
-The `AssembleX` software is an assembly code executant designed for the [phoeniX project](https://github.com/phoeniX-Digital-Design/phoeniX). AssembleX is powered by [riscv-assembler](https://github.com/celebi-pkg/riscv-assembler) and [PQR5ASM](https://github.com/iammituraj/pqr5asm) open-source projects. Current version of AssembleX (V3.0) supports `RV32IM` extenstions of standard RISC-V ISA.
+The `AssembleX` software is an assembly code executant designed for the [phoeniX project](https://github.com/phoeniX-Digital-Design/phoeniX). AssembleX is powered by [riscv-assembler](https://github.com/celebi-pkg/riscv-assembler) and [PQR5ASM](https://github.com/iammituraj/pqr5asm) open-source projects. AssembleX V3.0 supports `RV32IM` extenstions of standard RISC-V ISA.
 
 </div>
 
