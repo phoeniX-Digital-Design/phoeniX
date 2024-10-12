@@ -11,7 +11,7 @@ To execute dhrystone benchmark program on phoeniX, enter the following command i
 ```shell
 make dhrystone
 ```
-Make sure to set the `MARCH` parameter in the Makefile correctly. Currently available options are : `rv32i`, `rv32e`, `rv32im` and `rv32em`.
+Make sure to set the `MARCH` parameter in the Makefile correctly. Currently available options are: `rv32i`, `rv32e`, `rv32im` and `rv32em`.
 
 Dhrystone Result on phoeniX (RV32I):
 ```
