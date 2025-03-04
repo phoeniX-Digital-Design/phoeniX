@@ -341,7 +341,7 @@ module Barrel_Shifter
 (
     input  [31 : 0] input_value, 
     input  [4  : 0] shift_amount,
-    input           direction,          // direction = 1 : RIGHT, direction = 0 : LEFT
+    input           direction,  // direction = 1 : RIGHT, direction = 0 : LEFT
 
     output [31 : 0] result 
 );
