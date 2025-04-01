@@ -21,9 +21,12 @@ The platform enables integration of approximate arithmetic circuits at the core 
 This repository contains an open source RISC-V embedded core, including RTL codes and assistant softwares, under the [GNU V3.0 license](https://en.wikipedia.org/wiki/GNU_General_Public_License) and is free to use. The platform's technical specifications are published under supervision of [IUST Electronics Research Center](http://idea.iust.ac.ir/content/76317/phoeniX-POINTS--A-RISC-V-Platform-for-Approximate-Computing-Version-0.1-Technical-Specifications).
 
 
-Publications:
+- Publications:
+
+If you use these works in your research, please cite the following papers:
+
 <details>
-<summary><b>Evaluation of Run-Time Energy Efficiency using Controlled Approximation in a RISC-V Core</b></summary>
+<summary><b>Evaluation of Run-Time Energy Efficiency using Controlled Approximation in a RISC-V Core [2024]</b></summary>
 <p>
 
 ```
@@ -44,7 +47,7 @@ Publications:
 </details>
 
 <details>
-<summary><b>A Reconfigurable Approximate Computing RISC-V Platform for Fault-Tolerant Applications</b></summary>
+<summary><b>A Reconfigurable Approximate Computing RISC-V Platform for Fault-Tolerant Applications [2024]</b></summary>
 <p>
     
 ```
@@ -64,7 +67,7 @@ Publications:
 </details>
 
 <details>
-<summary><b>PhoeniX: A RISC-V Platform for Approximate Computing Technical Specifications</b></summary>
+<summary><b>PhoeniX: A RISC-V Platform for Approximate Computing Technical Specifications [2023]</b></summary>
 <p>
 
 ```
