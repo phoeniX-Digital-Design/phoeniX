@@ -22,12 +22,62 @@ This repository contains an open source RISC-V embedded core, including RTL code
 
 
 Publications:
+<details>
+<summary><b>Evaluation of Run-Time Energy Efficiency using Controlled Approximation in a RISC-V Core</b></summary>
+<p>
 
-- A. Delavari, F. Ghoreishy, H. S. Shahhoseini and S. Mirzakuchaki, “Evaluation of Run-Time Energy Efficiency using Controlled Approximation in a RISC-V Core,” 2024 6th Iranian International Conference on Microelectronics (IICM), Tabriz, Iran, 2024.
+```
+@INPROCEEDINGS{10824628,
+  author={Delavari, Arvin and Ghoreishy, Faraz and Shahhoseini, Hadi Shahriar and Mirzakuchaki, Sattar},
+  booktitle={2024 6th Iranian International Conference on Microelectronics (IICM)}, 
+  title={Evaluation of Run-Time Energy Efficiency Using Controlled Approximation in a RISC-V Core}, 
+  year={2024},
+  volume={},
+  number={},
+  pages={1-7},
+  keywords={Program processors;Power demand;Accuracy;Embedded systems;Approximate computing;Process control;Energy efficiency;Hardware;Software;Real-time systems;Embedded systems;RISC-V;approximate computing;low-power design;energy efficient embedded systems;very large scale integration},
+  doi={10.1109/IICM65053.2024.10824628}}
 
-- A. Delavari, F. Ghoreishy, H. S. Shahhoseini and S. Mirzakuchaki, “A Reconfigurable Approximate Computing RISC-V Platform for Fault-Tolerant Applications,” 2024 27th Euromicro Conference on Digital System Design (DSD), Paris, France, 2024, pp. 81-89.
+```
 
-- A. Delavari, F. Ghoreishy, H. S. Shahhoseini and S. Mirzakuchaki (2023), “PhoeniX: A RISC-V Platform for Approximate Computing Technical Specifications,” [Online]. Available: http://www.iust.ac.ir/content/76158/phoeniX-POINTS--A-RISC-V-Platform-for-Approximate-Computing
+</p>
+</details>
+
+<details>
+<summary><b>A Reconfigurable Approximate Computing RISC-V Platform for Fault-Tolerant Applications</b></summary>
+<p>
+    
+```
+@INPROCEEDINGS{10741850,
+  author={Delavari, A. and Ghoreishy, F. and Shahhoseini, H. S. and Mirzakuchaki, S.},
+  booktitle={2024 27th Euromicro Conference on Digital System Design (DSD)}, 
+  title={A Reconfigurable Approximate Computing RISC-V Platform for Fault-Tolerant Applications}, 
+  year={2024},
+  volume={},
+  number={},
+  pages={81-89},
+  keywords={Fault tolerance;Accuracy;Embedded systems;Power demand;Image processing;Fault tolerant systems;Approximate computing;Process control;Energy efficiency;Timing;Approximate Computing;Low Power Design;RISC-V;Embedded Processor;Energy-Efficient Computation;Very Large Scale Integration},
+  doi={10.1109/DSD64264.2024.00020}}
+```
+
+</p>
+</details>
+
+<details>
+<summary><b>PhoeniX: A RISC-V Platform for Approximate Computing Technical Specifications</b></summary>
+<p>
+
+```
+@ONLINE{delavari2023phoenix,
+  author={Delavari, A. and Ghoreishy, F. and Shahhoseini, H. S. and Mirzakuchaki, S.},
+  title={PhoeniX: A RISC-V Platform for Approximate Computing Technical Specifications},
+  year={2023},
+  url={http://www.iust.ac.ir/content/76158/phoeniX-POINTS--A-RISC-V-Platform-for-Approximate-Computing}
+}
+```
+
+</p>
+</details>
 
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 
